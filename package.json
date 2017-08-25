@@ -1,0 +1,40 @@
+{
+  "name": "cem-admin",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "graphql": "^0.10.5",
+    "moment": "^2.18.1",
+    "prop-types": "^15.5.10",
+    "react": "^15.6.1",
+    "react-apollo": "^1.4.15",
+    "react-dom": "^15.6.1",
+    "react-helmet": "^5.1.3",
+    "react-redux": "^5.0.6",
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "1.0.11",
+    "redux": "^3.7.2",
+    "redux-form": "^7.0.3",
+    "subscriptions-transport-ws": "^0.8.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "eslint-config-prettier": "^2.3.0",
+    "eslint-plugin-prettier": "^2.2.0",
+    "husky": "^0.14.3",
+    "lint-staged": "^4.0.4",
+    "prettier": "^1.5.3",
+    "prettier-eslint": "^6.4.2"
+  },
+  "lint-staged": {
+    "{src,test}/**/*.js": [
+      "prettier --single-quote --trailing-comma all --write",
+      "git add"
+    ]
+  }
+}
