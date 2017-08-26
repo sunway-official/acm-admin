@@ -1,8 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
+import { BrowserRouter } from 'react-router-dom';
+import ApolloProvider from 'react-apollo/ApolloProvider';
+import initalizedData from './lib/initData';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import App from './containers/App';
+
+import registerServiceWorker from './lib/registerServiceWorker';
+
+ReactDOM.render(
+  <BrowserRouter>
+    <ApolloProvider
+      client={initalizedData.apolloClient}
+      store={initalizedData.store}
+    >
+      <App />
+    </ApolloProvider>
+  </BrowserRouter>,
+  document.getElementById('root'),
+);
 registerServiceWorker();
