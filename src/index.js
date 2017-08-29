@@ -6,8 +6,6 @@ import initalizedData from './lib/initData';
 
 import App from './containers/App';
 
-import registerServiceWorker from './lib/registerServiceWorker';
-
 ReactDOM.render(
   <BrowserRouter>
     <ApolloProvider
