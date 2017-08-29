@@ -2,6 +2,7 @@
   "name": "cem-admin",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://cem-admin-178217.appspot.com",
   "dependencies": {
     "graphql": "^0.11.1",
     "moment": "^2.18.1",
