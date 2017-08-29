@@ -23,5 +23,5 @@ Admin Page for CEM
 - Upload `app.yaml` and `build/` to the Bucket
 - Open Gcloud Console Shell
 - `rm -rf cem-admin && mkdir cem-admin && gsutil rsync -r gs://cem-admin ./cem-admin`
-- `gcloud app deploy` to start deploy project
+- `gcloud app deploy` to start deploying project
 - Open [this](http://cem-admin-178217.appspot.com) address in the browser
