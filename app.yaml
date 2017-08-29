@@ -7,6 +7,3 @@ handlers:
   upload: build/index.html
 - url: /
   static_dir: build
-env_variables:
-  REACT_APP_APOLLO_SERVER_ENDPOINT: http://cem-server-production.appspot.com/graphql
-  REACT_APP_APOLLO_SERVER_SUBSCRIPTION_ENDPOINT: ws://cem-server-production.appspot.com/subscriptions
