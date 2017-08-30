@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
+import BrowserRouter from 'react-router-dom/BrowserRouter';
 import ApolloProvider from 'react-apollo/ApolloProvider';
 import initalizedData from './lib/initData';
 
@@ -17,4 +17,3 @@ ReactDOM.render(
   </BrowserRouter>,
   document.getElementById('root'),
 );
-registerServiceWorker();
