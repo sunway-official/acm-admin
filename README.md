@@ -17,11 +17,11 @@ Admin Page for CEM
 - `cp .env.production.example .env`
 - `npm i` to install dependencies
 - `npm run build` to build project
-- Open [Gcloud Console](https://console.cloud.google.com/home/dashboard?project=cem-admin)
-- Open [Bucket](https://console.cloud.google.com/storage/browser/cem-admin?project=cem-admin-178217)
+- Open [Gcloud Console](https://console.cloud.google.com/home/dashboard?project=acm-dtu)
+- Open [Bucket](https://console.cloud.google.com/storage/browser/acm-dtu?project=acm-dtu)
 - Remove all files inside the Bucket
 - Upload `app.yaml` and `build/` to the Bucket
 - Open Gcloud Console Shell
-- `rm -rf cem-admin && mkdir cem-admin && gsutil rsync -r gs://cem-admin ./cem-admin`
+- `rm -rf acm-dtu && mkdir acm-dtu && gsutil rsync -r gs://acm-dtu ./acm-dtu`
 - `gcloud app deploy` to start deploying project
-- Open [this](http://cem-admin-178217.appspot.com) address in the browser
+- Open [this](http://acm-dtu.appspot.com) address in the browser
