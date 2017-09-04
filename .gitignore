@@ -10,7 +10,7 @@
 /build
 
 # vscode settings
-/.vscode
+.vscode/
 
 **/*.css
 
