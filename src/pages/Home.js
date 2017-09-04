@@ -1,3 +1,5 @@
 import React from 'react';
 
-export default () => <div>Home</div>;
+import './Home.css';
+
+export default () => <div className="test">Home</div>;
