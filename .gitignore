@@ -12,6 +12,8 @@
 # vscode settings
 /.vscode
 
+**/*.css
+
 # misc
 .DS_Store
 .env.local
