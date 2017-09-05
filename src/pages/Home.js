@@ -1,3 +1,15 @@
-import React from 'react';
+import React, { Component } from 'react';
+import style from './style.css';
 
-export default () => <div>Home</div>;
+class Home extends Component {
+  render() {
+    return (
+      <div className="ab">
+        <style dangerouslySetInnerHTML={{ __html: style }} />
+        <h1>Hello</h1>
+      </div>
+    );
+  }
+}
+
+export default Home;
