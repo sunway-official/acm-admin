@@ -5,7 +5,6 @@ import Home from '../pages/home/Home';
 import NoMatch from '../pages/NoMatch';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { muiTheme } from '../theme';
-
 export default () => (
   <MuiThemeProvider muiTheme={muiTheme}>
     <div>

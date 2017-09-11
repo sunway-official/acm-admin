@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { Col } from 'reactstrap';
-import { DatePicker, RaisedButton } from 'material-ui';
+import AppBar from '../appbar';
+import style from './style.css';
+
 class Home extends Component {
   render() {
     return (
       <div>
-        <RaisedButton>da</RaisedButton>
+        <style dangerouslySetInnerHTML={{ __html: style }} />
+        <AppBar />
       </div>
     );
   }

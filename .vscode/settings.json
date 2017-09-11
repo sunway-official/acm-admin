@@ -6,7 +6,6 @@
   "prettier.useTabs": false,
   "prettier.tabWidth": 2,
   "prettier.eslintIntegration": true,
-  "editor.formatOnSave": true,
   "flow.enabled": false,
   "files.exclude": {
     "**/.git": true,

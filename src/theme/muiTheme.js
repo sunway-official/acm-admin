@@ -1,10 +1,11 @@
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import { purple500 } from 'material-ui/styles/colors';
+import { teal500, grey50, grey900, tealA700 } from 'material-ui/styles/colors';
 
 const muiTheme = getMuiTheme({
   palette: {
-    textColor: purple500,
-    pickerHeaderColor: purple500,
+    primary1Color: tealA700,
+    textColor: grey50,
+    pickerHeaderColor: tealA700,
   },
 });
 
