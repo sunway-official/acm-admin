@@ -4,7 +4,9 @@
   "private": true,
   "homepage": "http://cem-admin-178217.appspot.com",
   "dependencies": {
+    "font-awesome": "^4.7.0",
     "graphql": "^0.9.0",
+    "material-ui": "^0.19.1",
     "moment": "^2.18.1",
     "node-sass-chokidar": "0.0.3",
     "npm-run-all": "^4.1.1",
@@ -13,16 +15,21 @@
     "react-apollo": "^1.4.15",
     "react-dom": "^15.6.1",
     "react-helmet": "^5.2.0",
+    "react-icons-kit": "^1.0.7",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.13",
+    "react-transition-group": "^2.2.0",
+    "reactstrap": "^4.8.0",
     "redux": "^3.7.2",
     "redux-form": "^7.0.3",
     "subscriptions-transport-ws": "^0.8.2"
   },
   "scripts": {
-    "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
-    "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
+    "build-css":
+      "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
+    "watch-css":
+      "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
     "start-js": "react-scripts start",
     "start": "npm-run-all -p watch-css start-js",
     "build": "npm run build-css && react-scripts build",

@@ -1,0 +1,14 @@
+.menu {
+  .badge {
+    padding: 0 20px 0 0 !important;
+    svg {
+      height: 30px !important;
+      width: 30px !important;
+      color: lightgray !important;
+    }
+  }
+
+  button {
+    z-index: 0 !important;
+  }
+}

@@ -1,0 +1,11 @@
+.list {
+  height: 100% !important;
+  .item {
+    border-top: 1px solid #2b3b55 !important;
+    padding: 15px !important;
+    &:hover {
+      background-color: #19273d !important;
+    }
+  }
+  background-color: #26344b !important;
+}
