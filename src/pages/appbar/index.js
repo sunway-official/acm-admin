@@ -1,47 +1,57 @@
 import React from 'react';
 import List from './list';
-import Menu from './menu';
-import { AppBar, Drawer, SvgIcon } from 'material-ui';
+import MenuAppBar from './menu';
+import { AppBar, Drawer } from 'material-ui';
+import { ActionReorder } from 'material-ui/svg-icons';
+import { images } from '../../theme';
+
 import style from './style.css';
 
-const ReorderIcon = props => (
-  <SvgIcon {...props}>
-    <path d="M3 15h18v-2H3v2zm0 4h18v-2H3v2zm0-8h18V9H3v2zm0-6v2h18V5H3z" />
-  </SvgIcon>
-);
-
-const ClearIcon = props => (
-  <SvgIcon {...props}>
-    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
-  </SvgIcon>
-);
 export default class AppBarExampleIcon extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { open: true };
+    this.state = {
+      open: true,
+    };
   }
 
   handleToggle = () => this.setState({ open: !this.state.open });
+  handleTouchTap = event => {
+    event.preventDefault();
+
+    this.setState({
+      anchorEl: event.currentTarget,
+    });
+  };
+
+  handleRequestClose = () => {
+    this.setState({});
+  };
   render() {
     return (
       <div>
         <style dangerouslySetInnerHTML={{ __html: style }} />
         <AppBar
-          className="navbar"
+          className="navbar main"
           iconElementLeft={
-            <ReorderIcon className="menu-icon" onClick={this.handleToggle} />
+            <ActionReorder
+              style={{ color: 'grey' }}
+              className="menu-icon"
+              onClick={this.handleToggle}
+            />
           }
         >
+          <img className="logo" src={images.defaultLogo} />
+
           <Drawer open={this.state.open}>
             <AppBar
+              title="ACM"
               className="sidebar"
-              iconElementLeft={<ClearIcon onClick={this.handleToggle} />}
-            >
-              ACM
-            </AppBar>
-            <List />
+              onClick={this.handleToggle}
+            />
+            <List onClick={this.handleRequestClose} />
           </Drawer>
-          <Menu />
+          <MenuAppBar />
         </AppBar>
       </div>
     );
