@@ -1,13 +1,19 @@
 import React, { Component } from 'react';
-import AppBar from '../appbar';
+import Layout from '../layout';
+import Footer from '../layout/footer';
 import style from './style.css';
+import People from '../people';
 
 class Home extends Component {
   render() {
     return (
       <div>
         <style dangerouslySetInnerHTML={{ __html: style }} />
-        <AppBar />
+        <Layout />
+        <div className="dashboard">
+          <People />
+        </div>
+        <Footer />
       </div>
     );
   }

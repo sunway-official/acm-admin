@@ -3,7 +3,7 @@ import List from './list';
 import MenuAppBar from './menu';
 import { AppBar, Drawer } from 'material-ui';
 import { ActionReorder } from 'material-ui/svg-icons';
-import { images } from '../../theme';
+import { images } from '../../../theme';
 
 import style from './style.css';
 
@@ -11,7 +11,7 @@ export default class AppBarExampleIcon extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: true,
+      open: false,
     };
   }
 

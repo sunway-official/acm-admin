@@ -1,4 +1,5 @@
 import React from 'react';
+import { Switch, Route } from 'react-router-dom';
 import { List, ListItem, Menu, MenuItem, Popover } from 'material-ui';
 import {
   ActionInfoOutline,
@@ -9,8 +10,8 @@ import {
   NotificationEventAvailable,
   HardwareKeyboardArrowRight,
 } from 'material-ui/svg-icons';
-// import ActionGrade from 'material-ui/svg-icons/action/grade';
 import style from './style.css';
+import Infor from '../../../info';
 class ListExampleSimple extends React.Component {
   constructor(props) {
     super(props);
@@ -41,12 +42,12 @@ class ListExampleSimple extends React.Component {
         <List className="list">
           <ListItem
             className="item"
-            primaryText="Information"
+            primaryText={'Information'}
             leftIcon={<ActionInfoOutline />}
           />
           <ListItem
             className="item"
-            primaryText="Schedule"
+            primaryText={<a href="/">Schedule</a>}
             leftIcon={<NotificationEventAvailable />}
           />
           <ListItem
@@ -64,28 +65,28 @@ class ListExampleSimple extends React.Component {
               onRequestClose={this.handleRequestClose}
               className="people"
             >
-              <Menu>
-                <MenuItem primaryText="Staff" />
-                <MenuItem primaryText="Speaker" />
-                <MenuItem primaryText="Author" />
-                <MenuItem primaryText="Review" />
-                <MenuItem primaryText="Participant" />
+              <Menu style={{ color: 'black' }} className="menu people-menu">
+                <MenuItem primaryText={<a href="/">Staff</a>} />
+                <MenuItem primaryText={<a href="/">Speaker</a>} />
+                <MenuItem primaryText={<a href="/">Author</a>} />
+                <MenuItem primaryText={<a href="/">Reviewer</a>} />
+                <MenuItem primaryText={<a href="/">Participant</a>} />
               </Menu>
             </Popover>
           </ListItem>
           <ListItem
             className="item"
-            primaryText="Paper"
+            primaryText={<a href="/">Paper</a>}
             leftIcon={<AvLibraryBooks />}
           />
           <ListItem
             className="item"
-            primaryText="Newfeed"
+            primaryText={<a href="/">Newfeed</a>}
             leftIcon={<ActionChromeReaderMode />}
           />
           <ListItem
             className="item"
-            primaryText="Statistic"
+            primaryText={<a href="/">Statistic</a>}
             leftIcon={<EditorShowChart />}
           />
         </List>

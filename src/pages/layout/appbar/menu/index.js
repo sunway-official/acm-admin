@@ -15,7 +15,7 @@ import {
   HardwareKeyboardArrowDown,
   ContentAdd,
 } from 'material-ui/svg-icons';
-import { images } from '../../../theme';
+import { images } from '../../../../theme';
 import style from './style.css';
 
 class BadgeExampleSimple extends Component {
