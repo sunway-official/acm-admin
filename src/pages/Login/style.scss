@@ -1,0 +1,49 @@
+body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(242, 247, 246, 0.73);
+  background-image: url(backgroundimage.jpg);
+}
+
+.card{
+  width: 33vw;
+  height: 75vh;
+  display: flex;
+  text-align: center;
+  .field{
+    height: 62px !important;
+    line-height: 12px !important;
+    top: 28px !important;
+  }
+  .btn {
+    &.login {
+      width: 250px !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+      padding-top: 10px !important;
+    }
+  }
+}
+#form-container {
+  box-shadow: 3px 3px 5px #aaa;
+}
+#login-title{
+  text-align: center;
+  color: #00bcd4;
+  padding-top: 20px;
+}
+.final-row{
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+  width: 250px;
+  padding-top: 10px;
+  text-decoration: none !important;
+  .register{
+  }
+  .forgot-password{
+    color: #bdc3c7;
+  }
+}
