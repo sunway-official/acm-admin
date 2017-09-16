@@ -51,15 +51,18 @@ const create = (initialState = {}) => {
   networkInterface.useAfter([
     {
       applyAfterware({ response }, next) {
-        response.clone().json().then(res => {
-          if (res.errors && res.errors[0].message === 'unauthorized') {
-            localStorage.removeItem('token');
-            localStorage.removeItem('refreshToken');
-            localStorage.removeItem('id');
-            console.log('Clear');
-            next();
-          }
-        });
+        response
+          .clone()
+          .json()
+          .then(res => {
+            if (res.errors && res.errors[0].message === 'unauthorized') {
+              localStorage.removeItem('token');
+              localStorage.removeItem('refreshToken');
+              localStorage.removeItem('id');
+              console.log('Clear');
+              next();
+            }
+          });
         const token = response.headers.get('X-Token');
         const refreshToken = response.headers.get('X-Refresh-Token');
         if (token && refreshToken) {
