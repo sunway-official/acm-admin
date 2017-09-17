@@ -2,7 +2,7 @@
   "name": "cem-admin",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://cem-admin-178217.appspot.com",
+  "homepage": "http://acm-dtu.appspot.com",
   "dependencies": {
     "apollo-link": "^0.5.4",
     "font-awesome": "^4.7.0",
@@ -27,8 +27,10 @@
     "subscriptions-transport-ws": "^0.8.3"
   },
   "scripts": {
-    "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
-    "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
+    "build-css":
+      "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
+    "watch-css":
+      "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
     "start-js": "react-scripts start",
     "start": "npm-run-all -p watch-css start-js",
     "build": "npm run build-css && react-scripts build",
