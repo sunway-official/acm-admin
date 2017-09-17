@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { List, ListItem, Menu, MenuItem, Popover } from 'material-ui';
 import {
   ActionInfoOutline,
@@ -11,7 +11,6 @@ import {
   HardwareKeyboardArrowRight,
 } from 'material-ui/svg-icons';
 import style from './style.css';
-import Infor from '../../../info';
 class ListExampleSimple extends React.Component {
   constructor(props) {
     super(props);
@@ -40,11 +39,13 @@ class ListExampleSimple extends React.Component {
       <div>
         <style dangerouslySetInnerHTML={{ __html: style }} />
         <List className="list">
-          <ListItem
-            className="item"
-            primaryText={'Information'}
-            leftIcon={<ActionInfoOutline />}
-          />
+          <Link to="/conference/info">
+            <ListItem
+              className="item"
+              primaryText={'Information'}
+              leftIcon={<ActionInfoOutline />}
+            />
+          </Link>
           <ListItem
             className="item"
             primaryText={<a href="/">Schedule</a>}
@@ -66,7 +67,9 @@ class ListExampleSimple extends React.Component {
               className="people"
             >
               <Menu style={{ color: 'black' }} className="menu people-menu">
-                <MenuItem primaryText={<a href="/">Staff</a>} />
+                <Link to="/conference/people/staff">
+                  <MenuItem primaryText={'Staff'} />
+                </Link>
                 <MenuItem primaryText={<a href="/">Speaker</a>} />
                 <MenuItem primaryText={<a href="/">Author</a>} />
                 <MenuItem primaryText={<a href="/">Reviewer</a>} />

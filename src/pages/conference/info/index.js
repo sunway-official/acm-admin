@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { images } from '../../theme';
 import style from './style.css';
 
 class Index extends Component {
@@ -7,6 +6,7 @@ class Index extends Component {
     return (
       <div>
         <style dangerouslySetInnerHTML={{ __html: style }} />
+        <div>Info page</div>
       </div>
     );
   }

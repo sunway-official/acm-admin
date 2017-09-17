@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import Table from './table';
+import StaffList from './staff/list';
 class Index extends Component {
   render() {
-    return <Table />;
+    return <StaffList />;
   }
 }
 
