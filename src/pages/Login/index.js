@@ -21,43 +21,43 @@ const renderField = ({ input, label, type, meta: { touched, error } }) => (
 const Login = props => {
   const { error, handleSubmit, submitting } = props;
   return (
-    <div className="card" id="form-container">
-      <div className="card-content">
-        <h1 id="login-title">Login</h1>
-        <form onSubmit={handleSubmit(submit)}>
-          <Field
-            className="field"
-            name="username"
-            type="text"
-            component={renderField}
-            label="Username"
-          />
-          <Field
-            className="field"
-            name="password"
-            type="password"
-            component={renderField}
-            label="Password"
-          />
-          {error && <strong> {error} </strong>}
-          <div>
+    <div className="login-body">
+      <div className="card" id="form-container">
+        <div className="card-content">
+          <h1 id="login-title">Login</h1>
+          <form onSubmit={handleSubmit(submit)}>
+            <Field
+              className="vinh"
+              name="username"
+              type="text"
+              component={renderField}
+              label="Username"
+            />
+            <Field
+              className="field"
+              name="password"
+              type="password"
+              component={renderField}
+              label="Password"
+            />
+            {error && <strong> {error} </strong>}
             <RaisedButton
               className="btn login"
               disabled={submitting}
               type="submit"
-              label="Log In"
+              label="Sign In"
               labelPosition="before"
               primary={true}
             />
+          </form>
+          <div className="final-row">
+            <a className="forgot-password" href="/">
+              Forgot Password
+            </a>
+            <a className="register" href="/register">
+              Register
+            </a>
           </div>
-        </form>
-        <div className="final-row">
-          <a className="forgot-password" href="/">
-            Forgot Password
-          </a>
-          <a className="register" href="/register">
-            Register
-          </a>
         </div>
       </div>
     </div>

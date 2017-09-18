@@ -1,19 +1,23 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import CustomRoute from './CustomRoute';
-import Home from '../pages/Home';
+import Home from '../pages/home/Home';
 import NoMatch from '../pages/NoMatch';
-import Login from '../pages/Login';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-
+import Login from '../pages/Login';
+import Register from '../pages/Register';
+import { muiTheme } from '../theme';
 export default () => (
-  <MuiThemeProvider>
+  <MuiThemeProvider muiTheme={muiTheme}>
     <div>
       <Switch>
-        <CustomRoute exact path="/" component={Home} />
+        <CustomRoute exact path="/" component={Home} />{' '}
         <Route path="/login" component={Login} />
-        <Route component={NoMatch} />
-      </Switch>
+        {''}
+        <Route path="/register" component={Register} />
+        {''}
+        <Route component={NoMatch} />{' '}
+      </Switch>{' '}
     </div>
   </MuiThemeProvider>
 );

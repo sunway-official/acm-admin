@@ -1,9 +1,9 @@
-.login-body {
+.register-body {
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #f9f9f9;
+  background-color: #e7e6e6;
   background-image: linear-gradient(
       rgba(241, 240, 240, 0.4),
       rgba(241, 240, 240, 0.4)
@@ -11,21 +11,25 @@
     url(backgroundimage.jpg);
 }
 .card {
-  width: 33vw;
-  height: 90vh;
+  width: 30vw;
+  height: 70vh;
   box-shadow: none !important;
   text-align: center;
   border-radius: 5px;
-  .field {
-    height: 50px !important;
-    line-height: 12px !important;
-    top: 28px !important;
+  .fullname {
+    width: 250px;
+    display: inline-flex;
+    justify-content: space-between;
+    .firstname {
+      width: 120px !important;
+    }
   }
+
   .btn {
-    &.login {
+    &.register {
       width: 250px !important;
       box-shadow: none !important;
-      margin-top: 20px;
+      margin-top: 30px;
     }
   }
 }
@@ -33,26 +37,12 @@
   //display: flex;
   justify-content: center;
   align-items: center;
-  background-color: white !important;
-  border: 1px solid #d8dee2;
+  background-color: rgba(247, 243, 243, 0.6);
+  box-shadow: 2px 2px 5px #cfcfcf;
 }
-#login-title {
+#register-title {
   text-align: center;
   color: #ff5722;
-  padding-top: 20px;
+  margin-top: 20px;
   margin-bottom: 0px !important;
-}
-.final-row {
-  display: flex;
-  justify-content: space-between;
-  margin: auto;
-  width: 250px;
-  padding-top: 20px;
-  text-decoration: none !important;
-  .register {
-    color: #63b8f0;
-  }
-  .forgot-password {
-    color: #bdc3c7;
-  }
 }

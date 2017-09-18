@@ -1,0 +1,31 @@
+.menu {
+  display: flex;
+  .badge {
+    padding: 0 20px 0 0 !important;
+    display: flex !important;
+    align-items: center;
+    height: 60px;
+
+    &:hover {
+      background: #f5f5f5;
+    }
+    svg {
+      height: 30px !important;
+      width: 30px !important;
+      color: lightgray !important;
+    }
+  }
+
+  button {
+    z-index: 0 !important;
+  }
+
+  .user-name {
+    padding-left: 10px;
+    color: gray;
+  }
+
+  .avatar {
+    margin-left: 15px;
+  }
+}

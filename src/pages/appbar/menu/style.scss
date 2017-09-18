@@ -1,0 +1,53 @@
+.menu {
+  display: flex;
+  margin-left: auto;
+  .badge {
+    padding: 0 20px 0 0 !important;
+    display: flex !important;
+    align-items: center;
+    height: 60px;
+
+    &.user {
+      padding: 0 !important;
+    }
+
+    &:hover {
+      background: #f5f5f5;
+    }
+    svg {
+      height: 30px !important;
+      width: 30px !important;
+      color: lightgray !important;
+    }
+  }
+
+  button {
+    z-index: 0 !important;
+  }
+
+  .user-name {
+    padding-left: 10px;
+    color: gray;
+  }
+
+  .avatar {
+    margin-left: 15px;
+  }
+  .new {
+    box-shadow: none !important;
+    margin-right: 30px;
+    display: flex !important;
+    align-items: center !important;
+
+    .group {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+    }
+    button {
+      border-radius: 60px !important;
+      height: 40px !important;
+      width: 120px !important;
+    }
+  }
+}
