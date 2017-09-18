@@ -42,7 +42,6 @@ export default class AppBarExampleIcon extends React.Component {
           }
         >
           <img className="logo" src={images.defaultLogo} alt="logo" />
-
           <Drawer open={this.state.open}>
             <AppBar
               title="ACM"
