@@ -1,7 +1,19 @@
 .navbar {
   background-color: white !important;
   align-items: center;
+  color: red !important;
+  position: fixed !important;
+  top: 0;
+  &.main {
+    h1 {
+      flex: none !important;
+    }
+  }
 
+  .logo {
+    height: 30px;
+    margin-left: 50px;
+  }
   .menu-icon {
     padding-left: 20px !important;
   }
@@ -9,10 +21,15 @@
     flex-direction: row-reverse;
     align-items: center;
     font-size: 30px;
+    justify-content: space-between;
     svg {
       height: 30px;
       width: 30px;
       color: white !important;
+    }
+
+    button {
+      margin: 0 !important;
     }
   }
 }

@@ -1,5 +1,6 @@
 {
   "javascript.validate.enable": false,
+  "javascript.format.enable": false,
   "editor.formatOnSave": true,
   "prettier.semi": true,
   "prettier.singleQuote": true,
@@ -7,6 +8,8 @@
   "prettier.useTabs": false,
   "prettier.tabWidth": 2,
   "prettier.eslintIntegration": true,
+  "prettier.printWidth": 80,
+  "prettier.jsxBracketSameLine": false,
   "flow.enabled": false,
   "files.exclude": {
     "**/.git": true,
