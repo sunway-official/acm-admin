@@ -1,0 +1,48 @@
+.register-body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #e7e6e6;
+  background-image: linear-gradient(
+      rgba(241, 240, 240, 0.4),
+      rgba(241, 240, 240, 0.4)
+    ),
+    url(backgroundimage.jpg);
+}
+.card {
+  width: 30vw;
+  height: 70vh;
+  box-shadow: none !important;
+  text-align: center;
+  border-radius: 5px;
+  .fullname {
+    width: 250px;
+    display: inline-flex;
+    justify-content: space-between;
+    .firstname {
+      width: 120px !important;
+    }
+  }
+
+  .btn {
+    &.register {
+      width: 250px !important;
+      box-shadow: none !important;
+      margin-top: 30px;
+    }
+  }
+}
+#form-container {
+  //display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(247, 243, 243, 0.6);
+  box-shadow: 2px 2px 5px #cfcfcf;
+}
+#register-title {
+  text-align: center;
+  color: #ff5722;
+  margin-top: 20px;
+  margin-bottom: 0px !important;
+}
