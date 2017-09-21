@@ -6,7 +6,6 @@ import {
   TableHeaderColumn,
   TableRow,
   TableRowColumn,
-  Subheader,
 } from 'material-ui';
 import Status from './status';
 import Action from './action';
@@ -14,9 +13,6 @@ class Index extends Component {
   render() {
     return (
       <div>
-        <Subheader>
-          <h1>Staff Management</h1>
-        </Subheader>
         <Table>
           <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
             <TableRow>

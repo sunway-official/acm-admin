@@ -25,7 +25,7 @@ export default class AppBarExampleIcon extends React.Component {
   };
 
   handleRequestClose = () => {
-    this.setState({});
+    this.setState({ open: false });
   };
   render() {
     return (
