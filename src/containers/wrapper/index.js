@@ -19,7 +19,6 @@ class Index extends Component {
             {this.props.children}
           </div>
         </div>
-        <Footer />
       </div>
     );
   }

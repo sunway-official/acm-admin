@@ -60,10 +60,11 @@ class ListExampleSimple extends React.Component {
           >
             <Popover
               open={this.state.open}
+              className="people"
               anchorEl={this.state.anchorEl}
               anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
               targetOrigin={{ horizontal: 'left', vertical: 'top' }}
-              className="people"
+              onRequestClose={this.handleRequestClose}
             >
               <Menu style={{ color: 'black' }} className="menu people-menu">
                 <Link to="/conference/people/staff">
