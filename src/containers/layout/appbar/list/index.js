@@ -63,12 +63,14 @@ class ListExampleSimple extends React.Component {
               anchorEl={this.state.anchorEl}
               anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
               targetOrigin={{ horizontal: 'left', vertical: 'top' }}
-              onRequestClose={this.handleRequestClose}
               className="people"
             >
               <Menu style={{ color: 'black' }} className="menu people-menu">
                 <Link to="/conference/people/staff">
-                  <MenuItem primaryText={'Staff'} />
+                  <MenuItem
+                    primaryText={'Staff'}
+                    onClick={this.handleRequestClose}
+                  />
                 </Link>
                 <MenuItem primaryText={<a href="/">Speaker</a>} />
                 <MenuItem primaryText={<a href="/">Author</a>} />
