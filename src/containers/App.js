@@ -9,6 +9,8 @@ import Login from '../pages/Login';
 import Register from '../pages/Register';
 import { muiTheme } from '../theme';
 import Wrapper from './wrapper';
+import Profile from '../pages/conference/people/staff/detail';
+
 export default () => (
   <MuiThemeProvider muiTheme={muiTheme}>
     <Wrapper>
@@ -17,6 +19,7 @@ export default () => (
         {''}
         <Route path="/register" component={Register} />
         {''}
+        <Route exact path="/profile" component={Profile} />{' '}
         <Route exact path="/" component={Dashboard} />{' '}
         <Route path="/conference/info" component={ConferenceInfo} />
         <Route

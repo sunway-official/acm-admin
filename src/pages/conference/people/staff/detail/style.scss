@@ -1,0 +1,92 @@
+.contain {
+  width: 88vw;
+  padding-top: 0px !important;
+  background-color: #eef1f5;
+}
+.form-container{
+  width: 88vw;
+  display: inline-flex;
+  justify-content: space-between;
+}
+.left-div {
+  width: 22vw;
+}
+.right-div {
+  width: 65vw;
+}
+.card {
+  box-shadow: none !important;
+  text-align: center;
+  border-radius: 2px;
+}
+#profile-title{
+  margin-left: 20px;
+  color: #5a7391;
+  margin-top: 0px !important;
+  padding-top: 10px;
+}
+#left-form-container {
+  //display: flex;
+  width: 22vw;
+  height: 75vh;
+  justify-content: left;
+  align-items: center;
+  background-color: #ffffff;
+  #avatar{
+    height: 140px;
+    width: 140px;
+    margin-bottom: 20px;
+    text-align: center;
+    display: inline-flex;
+    background-image: url(avatar-round.png);
+  }
+  .profile-usertitle-name {
+    color: #5a7391;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 7px;
+  }
+  .profile-usertitle-job {
+    text-transform: uppercase;
+    color: #5b9bd1;
+    font-size: 13px;
+    font-weight: 800;
+    margin-bottom: 20px;
+  }
+  .list-item{
+    text-align: left !important;
+  }
+}
+.list-item{
+  text-align: left !important;
+}
+#right-form-container {
+  //display: flex;
+  width: 65vw;
+  height: 75vh;
+  justify-content: right;
+  align-items: center;
+  background-color: white !important;
+  #avatar{
+    height: 150px;
+    width: 150px;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    vertical-align: middle;
+    display: inline-flex;
+    background-image: url(avatar-round.png);
+  }
+  .profile-usertitle-name {
+    color: #5a7391;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 7px;
+  }
+  .profile-usertitle-job {
+    text-transform: uppercase;
+    color: #5b9bd1;
+    font-size: 13px;
+    font-weight: 800;
+    margin-bottom: 7px;
+  }
+}
