@@ -42,13 +42,17 @@ export default class AppBarExampleIcon extends React.Component {
           }
         >
           <img className="logo" src={images.defaultLogo} alt="logo" />
-          <Drawer open={this.state.open}>
+          <Drawer
+            open={this.state.open}
+            onRequestChange={open => this.setState({ open })}
+            docked={false}
+          >
             <AppBar
               title="ACM"
               className="sidebar"
               onClick={this.handleToggle}
             />
-            <List onClick={this.handleRequestClose} />
+            <List />
           </Drawer>
           <MenuAppBar />
         </AppBar>
