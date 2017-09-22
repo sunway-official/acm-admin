@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import AppBar from '../layout/appbar';
-import Footer from '../layout/footer';
 import style from './style.css';
 import { Subheader, Divider } from 'material-ui';
 

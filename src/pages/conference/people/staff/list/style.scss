@@ -1,0 +1,14 @@
+.list {
+  &.staff {
+    width: 90%;
+  }
+}
+.button {
+  &.new {
+    &.mobile {
+      position: fixed;
+      right: 190px;
+      top: 215px;
+    }
+  }
+}
