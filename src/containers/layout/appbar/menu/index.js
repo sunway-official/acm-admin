@@ -17,6 +17,7 @@ import {
 } from 'material-ui/svg-icons';
 import { images } from '../../../../theme';
 import style from './style.css';
+import { Link } from 'react-router-dom';
 
 class BadgeExampleSimple extends Component {
   constructor(props) {
@@ -237,7 +238,9 @@ class BadgeExampleSimple extends Component {
               <MenuItem primaryText="A" />
               <MenuItem primaryText="Help &amp; feedback" />
               <MenuItem primaryText="Settings" />
-              <MenuItem primaryText="Sign out" />
+              <Link to="/login" className="link">
+                <MenuItem primaryText="Sign out" />
+              </Link>
             </Menu>{' '}
           </Popover>{' '}
         </div>{' '}

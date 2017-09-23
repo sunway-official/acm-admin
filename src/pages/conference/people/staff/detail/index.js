@@ -15,8 +15,7 @@ export default class UserProfile extends Component {
           <div className="left-div">
             <div className="card" id="left-form-container">
               <div className="card-content">
-                <h1 id="profile-title">User Profile</h1>
-                <Paper id="avatar" zDepth={1} circle={true}/>
+                <Paper id="avatar" zDepth={1} circle={true} />
                 <div className="profile-usertitle-name"> Thanh Vinh Lu </div>
                 <div className="profile-usertitle-job"> Developer </div>
                 <div className="profile-user-menu">

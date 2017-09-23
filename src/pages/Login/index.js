@@ -13,8 +13,8 @@ const renderField = ({ input, label, type, meta: { touched, error } }) => (
         hintText={label}
         floatingLabelText={label}
         type={type}
-        errorText={touched && error}
       />
+      {touched && error && <div> {error} </div>}
     </div>
   </div>
 );

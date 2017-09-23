@@ -13,21 +13,23 @@ import Profile from '../pages/conference/people/staff/detail';
 
 export default () => (
   <MuiThemeProvider muiTheme={muiTheme}>
-    <Wrapper>
-      <Switch>
-        <Route path="/login" component={Login} />
-        {''}
-        <Route path="/register" component={Register} />
-        {''}
-        <Route exact path="/profile" component={Profile} />{' '}
-        <Route exact path="/" component={Dashboard} />{' '}
-        <Route path="/conference/info" component={ConferenceInfo} />
-        <Route
-          path="/conference/people/staff"
-          component={ConferenceStaffList}
-        />
-        <Route component={NoMatch} />{' '}
-      </Switch>{' '}
-    </Wrapper>
+    <Switch>
+      <Route path="/login" component={Login}/>
+      {''}
+      <Route path="/register" component={Register} />
+      {''}
+      <Wrapper>
+        <Switch>
+          <Route exact path="/profile" component={Profile} />{' '}
+          <Route exact path="/" component={Dashboard} />{' '}
+          <Route path="/conference/info" component={ConferenceInfo} />
+          <Route
+            path="/conference/people/staff"
+            component={ConferenceStaffList}
+          />
+          <Route component={NoMatch} />{' '}
+        </Switch>{' '}
+      </Wrapper>
+    </Switch>
   </MuiThemeProvider>
 );

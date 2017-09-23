@@ -7,8 +7,7 @@ import SocialCake from 'material-ui/svg-icons/social/cake';
 import './style.css';
 import RaisedButton from 'material-ui/RaisedButton';
 import { DatePicker, TextField, ListItem } from 'material-ui';
-import DropDownMenu from 'material-ui/DropDownMenu';
-import MenuItem from 'material-ui/MenuItem';
+import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 
 export default class PersonalInfo extends Component {
   constructor(props) {
@@ -33,7 +32,7 @@ export default class PersonalInfo extends Component {
                   className="list-item"
                   primaryText="Name"
                   leftIcon={<ActionPermIdentity />}
-                  disabled="true"
+                  disabled={true}
                 />
               </TableRowColumn>
               <TableRowColumn className="second-column">
@@ -51,14 +50,18 @@ export default class PersonalInfo extends Component {
                   className="list-item"
                   primaryText="Gender"
                   leftIcon={<NotificationWC />}
-                  disabled="true"
+                  disabled={true}
                 />
               </TableRowColumn>
               <TableRowColumn className="second-column">
-                <DropDownMenu value={this.state.value} onChange={this.handleChange}>
-                  <MenuItem value={1} primaryText="Male" />
-                  <MenuItem value={2} primaryText="Female" />
-                </DropDownMenu>
+                <RadioButtonGroup
+                  name="shipSpeed"
+                  defaultSelected="male"
+                  className="radio gender"
+                >
+                  <RadioButton value="male" label="Male" />
+                  <RadioButton value="female" label="Female" />
+                </RadioButtonGroup>
               </TableRowColumn>
               <TableRowColumn />
             </TableRow>
@@ -68,7 +71,7 @@ export default class PersonalInfo extends Component {
                   className="list-item"
                   primaryText="Email"
                   leftIcon={<CommunicationMailOutline />}
-                  disabled="true"
+                  disabled={true}
                 />
               </TableRowColumn>
               <TableRowColumn className="second-column">
@@ -86,7 +89,7 @@ export default class PersonalInfo extends Component {
                   className="list-item"
                   primaryText="Birthday"
                   leftIcon={<SocialCake />}
-                  disabled="true"
+                  disabled={true}
                 />
               </TableRowColumn>
               <TableRowColumn className="second-column">

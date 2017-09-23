@@ -1,41 +1,38 @@
 .contain {
-  width: 88vw;
   padding-top: 0px !important;
   background-color: #eef1f5;
 }
-.form-container{
-  width: 88vw;
-  display: inline-flex;
-  justify-content: space-between;
+.form-container {
+  display: flex;
 }
 .left-div {
-  width: 22vw;
+  width: 300px;
 }
 .right-div {
-  width: 65vw;
+  width: 100%;
 }
 .card {
   box-shadow: none !important;
   text-align: center;
   border-radius: 2px;
 }
-#profile-title{
+#profile-title {
   margin-left: 20px;
   color: #5a7391;
   margin-top: 0px !important;
   padding-top: 10px;
 }
 #left-form-container {
-  //display: flex;
-  width: 22vw;
-  height: 75vh;
+  width: inherit;
+  border-right: solid 1px;
   justify-content: left;
   align-items: center;
   background-color: #ffffff;
-  #avatar{
+  #avatar {
     height: 140px;
     width: 140px;
     margin-bottom: 20px;
+    margin-top: 20px;
     text-align: center;
     display: inline-flex;
     background-image: url(avatar-round.png);
@@ -53,21 +50,19 @@
     font-weight: 800;
     margin-bottom: 20px;
   }
-  .list-item{
+  .list-item {
     text-align: left !important;
   }
 }
-.list-item{
+.list-item {
   text-align: left !important;
 }
 #right-form-container {
-  //display: flex;
-  width: 65vw;
-  height: 75vh;
+  width: inherit;
   justify-content: right;
   align-items: center;
   background-color: white !important;
-  #avatar{
+  #avatar {
     height: 150px;
     width: 150px;
     margin-top: 30px;

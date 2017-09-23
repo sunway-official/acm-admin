@@ -54,7 +54,7 @@ const Register = props => {
         <div className="card-content">
           <h1 id="register-title">Register</h1>
           <form onSubmit={handleSubmit}>
-            <div className="fullname">
+            <div className="register-field">
               <Field
                 className="firstname"
                 name="firstName"
@@ -68,10 +68,10 @@ const Register = props => {
                 label="Last Name"
               />
             </div>
-            <div className="fullname">
+            <div className="register-field">
               <Field name="email" component={renderField} label="Email" />
             </div>
-            <div className="fullname">
+            <div className="register-field">
               <Field
                 name="password"
                 type="password"
@@ -79,7 +79,7 @@ const Register = props => {
                 label="Password"
               />
             </div>
-            <div className="fullname">
+            <div className="register-field">
               <Field
                 name="confirm-password"
                 type="password"
