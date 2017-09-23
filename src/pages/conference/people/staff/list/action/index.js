@@ -28,7 +28,7 @@ export default class Index extends Component {
         <Dialog
           title="Delete"
           actions={actions}
-          modal={false}
+          modal={true}
           open={this.state.open}
           onRequestClose={this.handleClose}
         >

@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { FloatingActionButton, Dialog, RaisedButton } from 'material-ui';
+import ContentAdd from 'material-ui/svg-icons/content/add';
 import {
   Table,
   TableBody,
@@ -7,11 +9,7 @@ import {
   TableRow,
   TableRowColumn,
 } from 'material-ui';
-import Status from './status';
-import Action from './action';
-import { style } from './style.css';
-import Add from './add';
-
+import Status from '../status';
 const tableData = [
   {
     name: 'Pham Van Tri',
@@ -50,44 +48,65 @@ const tableData = [
     name: 'Tran Van Thuc',
   },
 ];
-class Index extends Component {
+export default class Index extends Component {
+  state = {
+    open: false,
+    fixedHeader: true,
+    multiSelectable: true,
+    showCheckboxes: true,
+    height: '300px',
+  };
+
+  handleOpen = () => {
+    this.setState({ open: true });
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
+  };
   render() {
+    const actions = [
+      <RaisedButton label="Add" primary={true} onClick={this.handleClose} />,
+      <RaisedButton label="Cancel" default={true} onClick={this.handleClose} />,
+    ];
     return (
-      <div className="d-flex">
-        <style dangerouslySetInnerHTML={{ __html: style }} />
-        <div className="list staff">
-          <Table fixedHeader={true}>
+      <div>
+        <FloatingActionButton onClick={this.handleOpen}>
+          <ContentAdd />
+        </FloatingActionButton>
+        <Dialog
+          title="Add New Staff"
+          actions={actions}
+          modal={true}
+          open={this.state.open}
+          onRequestClose={this.handleClose}
+        >
+          <Table
+            height={this.state.height}
+            fixedHeader={this.state.fixedHeader}
+            multiSelectable={this.state.multiSelectable}
+          >
             <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
               <TableRow>
                 <TableHeaderColumn>ID</TableHeaderColumn>
                 <TableHeaderColumn>Name</TableHeaderColumn>
                 <TableHeaderColumn>Status</TableHeaderColumn>
-                <TableHeaderColumn>Action</TableHeaderColumn>
               </TableRow>
             </TableHeader>
-            <TableBody displayRowCheckbox={false}>
+            <TableBody displayRowCheckbox={this.state.showCheckboxes}>
               {tableData.map((row, index) => (
                 <TableRow key={index}>
                   <TableRowColumn>{index}</TableRowColumn>
                   <TableRowColumn>{row.name}</TableRowColumn>
-
                   <TableRowColumn>
                     <Status />
-                  </TableRowColumn>
-                  <TableRowColumn>
-                    <Action />
                   </TableRowColumn>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
-        </div>
-        <div className="button new mobile">
-          <Add />
-        </div>
+        </Dialog>
       </div>
     );
   }
 }
-
-export default Index;
