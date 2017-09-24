@@ -4,8 +4,9 @@
   "private": true,
   "homepage": "http://acm-dtu.appspot.com",
   "dependencies": {
-    "bootstrap": "^3.3.7",
+    "apisauce": "^0.14.1",
     "apollo-link": "^0.5.4",
+    "bootstrap": "^3.3.7",
     "font-awesome": "^4.7.0",
     "graphql": "^0.10.5",
     "material-ui": "^0.19.1",
@@ -26,6 +27,7 @@
     "redux": "^3.7.2",
     "redux-form": "^7.0.4",
     "redux-form-material-ui": "^4.2.0",
+    "redux-thunk": "^2.2.0",
     "subscriptions-transport-ws": "^0.8.3"
   },
   "scripts": {
