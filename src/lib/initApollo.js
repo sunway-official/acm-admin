@@ -30,10 +30,6 @@ const create = (initialState = {}) => {
       },
     },
   );
-  const networkInterfaceWithSubscriptions = addGraphQLSubscriptions(
-    networkInterface,
-    wsClient,
-  );
   networkInterface.use([
     {
       applyMiddleware(req, next) {
@@ -73,6 +69,10 @@ const create = (initialState = {}) => {
       },
     },
   ]);
+  const networkInterfaceWithSubscriptions = addGraphQLSubscriptions(
+    networkInterface,
+    wsClient,
+  );
   return new ApolloClient({
     initialState,
     networkInterface: networkInterfaceWithSubscriptions,
