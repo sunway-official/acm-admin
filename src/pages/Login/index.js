@@ -1,69 +1,63 @@
-import React from 'react';
-import { Field, reduxForm } from 'redux-form';
-import submit from './submit';
-import TextField from 'material-ui/TextField';
-import './style.css';
-import RaisedButton from 'material-ui/RaisedButton';
+import React, { PureComponent } from 'react';
+import { gql, graphql } from 'react-apollo';
+import { SubmissionError } from 'redux-form';
+import LoginForm from './LoginForm';
 
-const renderField = ({ input, label, type, meta: { touched, error } }) => (
-  <div>
-    <div>
-      <TextField
-        {...input}
-        hintText={label}
-        floatingLabelText={label}
-        type={type}
-      />
-      {touched && error && <div> {error} </div>}
-    </div>
-  </div>
-);
-const Login = props => {
-  const { error, handleSubmit, submitting } = props;
-  return (
-    <div className="login-body">
-      <div className="card" id="form-container">
-        <div className="card-content">
-          <h1 id="login-title">Login</h1>
-          <form onSubmit={handleSubmit(submit)}>
-            <Field
-              className="vinh"
-              name="username"
-              type="text"
-              component={renderField}
-              label="Username"
-            />
-            <Field
-              className="field"
-              name="password"
-              type="password"
-              component={renderField}
-              label="Password"
-            />
-            {error && <strong> {error} </strong>}
-            <RaisedButton
-              className="btn login"
-              disabled={submitting}
-              type="submit"
-              label="Sign In"
-              labelPosition="before"
-              primary={true}
-            />
-          </form>
-          <div className="final-row">
-            <a className="forgot-password" href="/">
-              Forgot Password
-            </a>
-            <a className="register" href="/register">
-              Register
-            </a>
+import './style.css';
+
+class Login extends PureComponent {
+  constructor(props) {
+    super(props);
+
+    this.onLogin = this.onLogin.bind(this);
+  }
+  async onLogin({ email, password }) {
+    try {
+      const {
+        data: { login: { token, refreshToken } },
+      } = await this.props.loginMutation({
+        variables: { email, password },
+      });
+
+      localStorage.setItem('token', token);
+      localStorage.setItem('refreshToken', refreshToken);
+    } catch (e) {
+      console.error(e);
+      throw new SubmissionError({
+        email: 'Wrong email or password',
+        _error: 'Wrong email or password',
+      });
+    }
+  }
+  render() {
+    return (
+      <div className="login-body">
+        <div className="card" id="form-container">
+          <div className="card-content">
+            <h1 id="login-title">Login</h1>
+            <LoginForm onSubmit={this.onLogin} />
+            <div className="final-row">
+              <a className="forgot-password" href="/">
+                Forgot Password
+              </a>
+              <a className="register" href="/register">
+                Register
+              </a>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
-export default reduxForm({
-  form: 'submitValidation', // a unique identifier for this form
-})(Login);
+const LOGIN_MUTATION = gql`
+  mutation LoginMutation($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
+      token
+      refreshToken
+    }
+  }
+`;
+
+export default graphql(LOGIN_MUTATION, { name: 'loginMutation' })(Login);
