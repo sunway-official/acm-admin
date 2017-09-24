@@ -4,8 +4,8 @@ import { deepOrange500 } from 'material-ui/styles/colors';
 const muiTheme = getMuiTheme({
   palette: {
     primary1Color: deepOrange500,
+    accent1Color: deepOrange500,
     pickerHeaderColor: deepOrange500,
-    primary2Color: deepOrange500,
   },
 });
 

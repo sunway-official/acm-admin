@@ -1,46 +1,53 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import submit from './submit';
-import TextField from 'material-ui/TextField';
+import { TextField, RaisedButton, AppBar } from 'material-ui';
 import './style.css';
-import RaisedButton from 'material-ui/RaisedButton';
 
-const renderField = ({ input, label, type, meta: { touched, error } }) => (
+const renderField = ({
+  input,
+  label,
+  inputStyle,
+  type,
+  meta: { touched, error },
+}) => (
   <div>
-    <div>
-      <TextField
-        {...input}
-        hintText={label}
-        floatingLabelText={label}
-        type={type}
-      />
-      {touched && error && <div> {error} </div>}
-    </div>
+    <TextField
+      {...input}
+      floatingLabelText={label}
+      type={type}
+      errorText={touched && error}
+    />
   </div>
 );
 const Login = props => {
-  const { error, handleSubmit, submitting } = props;
+  const { handleSubmit, submitting } = props;
   return (
     <div className="login-body">
-      <div className="card" id="form-container">
+      <div className="login-card" id="login-form-container">
+        <AppBar
+          className="login-title"
+          title="SIGN IN"
+          showMenuIconButton={false}
+        />
         <div className="card-content">
-          <h1 id="login-title">Login</h1>
           <form onSubmit={handleSubmit(submit)}>
-            <Field
-              className="vinh"
-              name="username"
-              type="text"
-              component={renderField}
-              label="Username"
-            />
-            <Field
-              className="field"
-              name="password"
-              type="password"
-              component={renderField}
-              label="Password"
-            />
-            {error && <strong> {error} </strong>}
+            <div className="input">
+              <Field
+                name="email"
+                type="text"
+                component={renderField}
+                label="Email"
+              />
+            </div>
+            <div className="input">
+              <Field
+                name="password"
+                type="password"
+                component={renderField}
+                label="Password"
+              />
+            </div>
             <RaisedButton
               className="btn login"
               disabled={submitting}

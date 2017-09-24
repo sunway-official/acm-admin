@@ -1,8 +1,7 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
-import TextField from 'material-ui/TextField';
 import asyncValidate from './asyncValidate';
-import RaisedButton from 'material-ui/RaisedButton';
+import { TextField, RaisedButton, AppBar } from 'material-ui';
 import './style.css';
 
 const validate = values => {
@@ -16,7 +15,7 @@ const validate = values => {
   ];
   requiredFields.forEach(field => {
     if (!values[field]) {
-      errors[field] = 'Required!';
+      errors[field] = 'Required';
     }
   });
   if (
@@ -37,7 +36,6 @@ const renderField = ({
   ...custom
 }) => (
   <TextField
-    hintText={label}
     floatingLabelText={label}
     errorText={touched && error}
     type={type}
@@ -50,9 +48,13 @@ const Register = props => {
   const { handleSubmit, submitting } = props;
   return (
     <div className="register-body">
-      <div className="card" id="form-container">
+      <div className="register-card" id="register-form-container">
         <div className="card-content">
-          <h1 id="register-title">Register</h1>
+          <AppBar
+            className="register-title"
+            title="REGISTER"
+            showMenuIconButton={false}
+          />
           <form onSubmit={handleSubmit}>
             <div className="register-field">
               <Field

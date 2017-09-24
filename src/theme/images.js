@@ -3,4 +3,5 @@ export default {
   defaultLogo: require('../images/logo.png'),
   conferencerInfoBackground: require('../images/background/background1.jpg'),
   mapTemplate: require('../images/mapTemplate1.PNG'),
+  backgroundimage: require('../images/background/backgroundimage.jpg'),
 };

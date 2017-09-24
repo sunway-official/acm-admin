@@ -5,8 +5,8 @@ import ConferenceStaffList from '../pages/conference/people/staff/list';
 import Dashboard from '../pages/dashboard';
 import NoMatch from '../pages/NoMatch';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import Login from '../pages/Login';
-import Register from '../pages/Register';
+import Login from '../pages/login';
+import Register from '../pages/register';
 import { muiTheme } from '../theme';
 import Wrapper from './wrapper';
 import Profile from '../pages/conference/people/staff/detail';
@@ -14,9 +14,8 @@ import Profile from '../pages/conference/people/staff/detail';
 export default () => (
   <MuiThemeProvider muiTheme={muiTheme}>
     <Switch>
-      <Route path="/login" component={Login}/>
-      {''}
-      <Route path="/register" component={Register} />
+      <Route exact path="/register" component={Register} /> {''}
+      <Route exact path="/login" component={Login} /> {''}
       {''}
       <Wrapper>
         <Switch>
