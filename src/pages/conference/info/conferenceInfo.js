@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 import { Field, reduxForm, formValueSelector, FieldArray } from 'redux-form';
 import { RaisedButton, Subheader } from 'material-ui';
 import { TextField, DatePicker } from 'redux-form-material-ui';
@@ -12,7 +12,7 @@ const renderCoOrganizers = ({ fields, meta: { error, submitFailed } }) => (
     {fields.map((data, index) => (
       <div key={index}>
         <div className="d-flex group remove-btn">
-          <span>Co-Organizer #{index + 1 + 1}</span>
+          <span>Co-Organizer #{index + 1}</span>
           <RaisedButton label="Remove" onClick={() => fields.remove(index)} />
         </div>
         <div className="d-flex form-group">
@@ -60,9 +60,10 @@ const renderCoOrganizers = ({ fields, meta: { error, submitFailed } }) => (
     ))}
     <div className="d-flex add-btn btn-group">
       <RaisedButton
-        label="Add"
+        label="Add Co-Organizer "
         primary={true}
         onClick={() => fields.push({})}
+        className="add-btn"
       />
     </div>
   </div>
@@ -74,7 +75,12 @@ const email = value =>
     : undefined;
 class Info extends Component {
   render() {
-    const { handleSubmit, submitting, hasCoOrganizerValue } = this.props;
+    const {
+      handleSubmit,
+      submitting,
+      hasCoOrganizerValue,
+      pristine,
+    } = this.props;
     return (
       <form className="form conference-info" onSubmit={handleSubmit}>
         <div>
@@ -83,12 +89,12 @@ class Info extends Component {
             <Subheader className="header title">Basic Information</Subheader>
             <div>
               <div className="d-flex form-group">
-                <label>Topic :</label>
+                <label>Title :</label>
                 <Field
-                  name="topic"
+                  name="title"
                   component={TextField}
                   validate={required}
-                  hintText="Conference Topic"
+                  hintText="Conference Title"
                   fullWidth={true}
                 />
               </div>
@@ -114,6 +120,7 @@ class Info extends Component {
                     format={null}
                     textFieldStyle={{ width: '100%' }}
                     hintText="Start Date"
+                    autoOk={true}
                   />
                 </div>
                 <div className="d-flex form-group">
@@ -125,6 +132,7 @@ class Info extends Component {
                     format={null}
                     textFieldStyle={{ width: '100%' }}
                     hintText="End Date"
+                    autoOk={true}
                   />
                 </div>
               </div>
@@ -146,7 +154,7 @@ class Info extends Component {
               <div className="d-flex form-group">
                 <label>Email :</label>
                 <Field
-                  name="organizerMail"
+                  name="organizerEmail"
                   component={TextField}
                   validate={[required, email]}
                   hintText="Organizer Email"
@@ -176,71 +184,20 @@ class Info extends Component {
               </div>
             </div>
             <div>
-              <Subheader className="header title" htmlFor="hasCoOrganizer">
-                Co-Organizer
-              </Subheader>
               <div>
-                <Field
-                  name="hasCoOrganizer"
-                  id="hasCoOrganizer"
-                  type="checkbox"
-                  component="input"
-                />
-              </div>
-              {hasCoOrganizerValue && (
                 <div>
-                  <div className="d-flex form-group">
-                    <label>Name :</label>
-                    <Field
-                      name="coOrganizerName"
-                      component={TextField}
-                      hintText="Co-Organizer Name"
-                      fullWidth={true}
-                    />
-                  </div>
-                  <div className="d-flex form-group">
-                    <label>Email :</label>
-                    <Field
-                      name="coOrganizerMail"
-                      component={TextField}
-                      validate={[required, email]}
-                      hintText="Organizer Email"
-                      fullWidth={true}
-                    />
-                  </div>
-                  <div className="d-flex form-group">
-                    <label>Website :</label>
-                    <Field
-                      name="coOrganizerWebsite"
-                      component={TextField}
-                      validate={required}
-                      hintText="Organizer Website"
-                      fullWidth={true}
-                    />
-                  </div>
-                  <div className="d-flex form-group">
-                    <label>Phone Number :</label>
-                    <Field
-                      name="coOrganizerPhoneNumber"
-                      component={TextField}
-                      validate={required}
-                      hintText="Organizer Phone Number"
-                      fullWidth={true}
-                      normalize={normalizePhone}
-                    />
-                  </div>
                   <FieldArray
                     name="coOrganizers"
                     component={renderCoOrganizers}
                   />
                 </div>
-              )}
+              </div>
               <div className="d-flex save-btn btn-group">
                 <RaisedButton
                   label="Save"
                   primary={true}
                   type="submit"
-                  disabled={submitting}
+                  disabled={pristine || submitting}
                 />
               </div>
             </div>
@@ -250,18 +207,25 @@ class Info extends Component {
     );
   }
 }
-const selector = formValueSelector('conferenceInfo');
+// const selector = formValueSelector('conferenceInfo');
 
 Info = reduxForm({
   form: 'conferenceInfo',
-  initialValues: {},
+  initialValues: {
+    title: 'Android',
+    description: 'This Conference for ...',
+    organizerName: 'DTU',
+    organizerEmail: 'dtu@gmail.com',
+    organizerWebsite: 'dtu.edu.vn',
+    organizerPhoneNumber: '123-123-12312',
+  },
 })(Info);
 
-Info = connect(state => {
-  const hasCoOrganizerValue = selector(state, 'hasCoOrganizer');
-  return {
-    hasCoOrganizerValue,
-  };
-})(Info);
+// Info = connect(state => {
+//   const hasCoOrganizerValue = selector(state, 'hasCoOrganizer');
+//   return {
+//     hasCoOrganizerValue,
+//   };
+// })(Info);
 
 export default Info;
