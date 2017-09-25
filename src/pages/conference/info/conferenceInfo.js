@@ -5,6 +5,8 @@ import { RaisedButton, Subheader } from 'material-ui';
 import { TextField, DatePicker } from 'redux-form-material-ui';
 import { style } from './style.css';
 import normalizePhone from './normalizePhone';
+import { gql, graphql, compose } from 'react-apollo';
+import { formValues } from 'redux-form';
 
 const renderCoOrganizers = ({ fields, meta: { error, submitFailed } }) => (
   <div>
@@ -74,6 +76,15 @@ const email = value =>
     : undefined;
 class Info extends Component {
   render() {
+    // show loading and error
+    const { loading, error, getConferenceByID } = this.props.data;
+    if (loading) return <p>Loading ... </p>;
+    if (error) return <p>{error.message}</p>;
+
+    const conference = getConferenceByID;
+
+    console.log(conference.title);
+
     const { handleSubmit, submitting, hasCoOrganizerValue } = this.props;
     return (
       <form className="form conference-info" onSubmit={handleSubmit}>
@@ -87,6 +98,7 @@ class Info extends Component {
                 <Field
                   name="topic"
                   component={TextField}
+                  value="asldasldsa"
                   validate={required}
                   hintText="Conference Topic"
                   fullWidth={true}
@@ -101,6 +113,7 @@ class Info extends Component {
                   hintText="Conference Description"
                   multiLine
                   rows={1}
+                  defaultValue="fuck"
                   fullWidth={true}
                 />
               </div>
@@ -264,4 +277,24 @@ Info = connect(state => {
   };
 })(Info);
 
-export default Info;
+const mapStateToProps = state => {
+  return {
+    id: state.conference.id,
+  };
+};
+
+const GET_CONFERENCE_BY_ID_QUERY = gql`
+  query getConference($id: ID!) {
+    getConferenceByID(id: $id) {
+      id
+      title
+    }
+  }
+`;
+
+export default compose(
+  connect(mapStateToProps, undefined),
+  graphql(GET_CONFERENCE_BY_ID_QUERY, {
+    options: ownProps => ({ variables: { id: ownProps.id } }),
+  }),
+)(Info);

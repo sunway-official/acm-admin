@@ -20,7 +20,7 @@ export default () => (
         <Route path="/register" component={Register} />
         {''}
         <Route exact path="/" component={Dashboard} />{' '}
-        <Route path="/conference/info" component={ConferenceInfo} />
+        <Route path="/conference/:id/info" component={ConferenceInfo} />
         <Route
           path="/conference/people/staff"
           component={ConferenceStaffList}

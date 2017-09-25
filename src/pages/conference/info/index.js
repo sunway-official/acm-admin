@@ -1,10 +1,16 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Subheader, IconButton } from 'material-ui';
 import { Link } from 'react-router-dom';
 import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import ConferenceInfo from './conferenceInfo';
+import { connect } from 'react-redux';
+import { conferenceOperations } from '../../../store/ducks/conference';
 
-export default class Index extends Component {
+class Index extends PureComponent {
+  componentDidMount() {
+    const id = this.props.match.params.id;
+    this.props.getConferenceId(id);
+  }
   render() {
     return (
       <div className="conference">
@@ -28,3 +34,11 @@ export default class Index extends Component {
     );
   }
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getConferenceId: id => dispatch(conferenceOperations.getIdOperation(id)),
+  };
+};
+
+export default connect(undefined, mapDispatchToProps)(Index);

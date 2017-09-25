@@ -21,6 +21,8 @@ class Login extends PureComponent {
 
       localStorage.setItem('token', token);
       localStorage.setItem('refreshToken', refreshToken);
+
+      console.log(token);
     } catch (e) {
       console.error(e);
       throw new SubmissionError({
