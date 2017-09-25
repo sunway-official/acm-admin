@@ -70,7 +70,6 @@ class Index extends Component {
                 <TableRow key={index}>
                   <TableRowColumn>{index}</TableRowColumn>
                   <TableRowColumn>{row.name}</TableRowColumn>
-
                   <TableRowColumn>
                     <Status />
                   </TableRowColumn>

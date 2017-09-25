@@ -6,7 +6,7 @@ class Index extends Component {
     return (
       <div>
         <style dangerouslySetInnerHTML={{ __html: style }} />
-        <div className="dashboard">
+        <div className="dashboard content">
           <div>Homepage</div>
         </div>
       </div>

@@ -6,14 +6,12 @@ import {
   Menu,
   MenuItem,
   Popover,
-  RaisedButton,
 } from 'material-ui';
 import {
   SocialNotificationsNone,
   CommunicationMailOutline,
   ActionDateRange,
   HardwareKeyboardArrowDown,
-  ContentAdd,
 } from 'material-ui/svg-icons';
 import { images } from '../../../../theme';
 import style from './style.css';
@@ -22,7 +20,6 @@ class BadgeExampleSimple extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      openNew: false,
       openUser: false,
       openNotification: false,
       openMail: false,
@@ -30,14 +27,6 @@ class BadgeExampleSimple extends Component {
     };
   }
 
-  handleTouchTapNew = event => {
-    event.preventDefault();
-
-    this.setState({
-      openNew: true,
-      anchorEl: event.currentTarget,
-    });
-  };
   handleTouchTapUser = event => {
     event.preventDefault();
 
@@ -76,7 +65,6 @@ class BadgeExampleSimple extends Component {
       openNotification: false,
       openMail: false,
       openCalendar: false,
-      openNew: false,
     });
   };
   render() {
@@ -87,31 +75,6 @@ class BadgeExampleSimple extends Component {
             __html: style,
           }}
         />{' '}
-        <RaisedButton
-          onClick={this.handleTouchTapNew}
-          className="new"
-          primary={true}
-        >
-          <div className="group">
-            <ContentAdd style={{ color: 'white' }} />
-            <span style={{ color: 'white' }}>New</span>
-            <HardwareKeyboardArrowDown style={{ color: 'white' }} />
-          </div>
-          <Popover
-            open={this.state.openNew}
-            anchorEl={this.state.anchorEl}
-            anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-            targetOrigin={{ horizontal: 'left', vertical: 'top' }}
-            onRequestClose={this.handleRequestClose}
-          >
-            <Menu>
-              <MenuItem primaryText="New" />
-              <MenuItem primaryText="Help &amp; feedback" />
-              <MenuItem primaryText="Settings" />
-              <MenuItem primaryText="Sign out" />
-            </Menu>
-          </Popover>
-        </RaisedButton>
         <Badge
           className="badge"
           badgeContent={10}

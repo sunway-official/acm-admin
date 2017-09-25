@@ -3,29 +3,58 @@
 }
 
 .form {
-  width: 700px;
-  margin: auto;
-  justify-content: center;
-  .date,
-  .place {
-    justify-content: space-between;
-    margin-bottom: 30px;
-  }
-
-  .btn-group {
+  &.conference-info {
+    width: 600px;
+    margin: auto;
     justify-content: center;
-    margin-top: 70px;
-  }
+    .date,
+    .place {
+      justify-content: space-between;
+      margin-bottom: 30px;
+    }
 
-  .title {
-    font-size: 1.8em;
-  }
+    .btn-group {
+      justify-content: center;
+      &.remove-btn {
+        padding-top: 20px;
+      }
+      &.save-btn {
+        margin-top: 70px;
+      }
+    }
 
-  .header {
-    padding-top: 20px;
-    padding-left: 0 !important;
+    .form-group {
+      align-items: center;
+
+      label {
+        font-size: 18px;
+        width: 200px !important;
+        &.end {
+          width: 38px !important;
+        }
+      }
+    }
+    .header {
+      &.title {
+        font-size: 2em !important;
+      }
+    }
+  }
+  .group {
+    &.remove-btn {
+      justify-content: space-around;
+      align-items: center;
+      padding-top: 40px;
+    }
   }
 }
-.subheader {
-  font-size: 2.5em !important;
+.conference {
+  .content {
+    &.details {
+      width: 100%;
+    }
+  }
+  .header {
+    padding: 20px 0 20px 0 !important;
+  }
 }
