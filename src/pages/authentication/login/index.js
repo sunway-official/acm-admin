@@ -58,7 +58,7 @@ const Login = props => {
             />
           </form>
           <div className="final-row">
-            <a className="forgot-password" href="/">
+            <a className="forgot-password" href="/forgot">
               Forgot Password
             </a>
             <a className="register" href="/register">

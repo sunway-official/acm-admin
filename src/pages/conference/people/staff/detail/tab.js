@@ -3,6 +3,7 @@ import { Tabs, Tab } from 'material-ui/Tabs';
 // From https://github.com/oliviertassinari/react-swipeable-views
 import SwipeableViews from 'react-swipeable-views';
 import PersonalInfo from './personal-info/index';
+import CardExampleWithAvatar from './changeAvatar/index';
 
 const styles = {
   headline: {
@@ -45,7 +46,9 @@ export default class TabsExampleSwipeable extends React.Component {
           <div>
             <PersonalInfo />
           </div>
-          <div style={styles.slide}> Day la chinh ava </div>
+          <div style={styles.slide}>
+            <CardExampleWithAvatar />
+          </div>
           <div style={styles.slide}> chinh pass</div>
           <div style={styles.slide}>Feature Setting</div>
         </SwipeableViews>

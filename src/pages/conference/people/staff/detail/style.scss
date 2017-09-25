@@ -1,6 +1,6 @@
 .contain {
   padding-top: 0px !important;
-  background-color: #eef1f5;
+  background-color: white !important;
 }
 .form-container {
   display: flex;
@@ -24,7 +24,6 @@
 }
 #left-form-container {
   width: inherit;
-  border-right: solid 1px;
   justify-content: left;
   align-items: center;
   background-color: #ffffff;
