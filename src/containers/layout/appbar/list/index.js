@@ -69,6 +69,7 @@ class ListExampleSimple extends React.Component {
               <Menu style={{ color: 'black' }} className="menu people-menu">
                 <Link to="/conference/people/staff">
                   <MenuItem
+                    className="item"
                     primaryText={'Staff'}
                     onClick={this.handleRequestClose}
                   />
