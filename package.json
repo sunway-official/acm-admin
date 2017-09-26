@@ -33,11 +33,13 @@
     "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
     "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
     "start-js": "react-scripts start",
-    "start": "npm-run-all -p watch-css start-js",
+    "dev": "npm-run-all -p watch-css start-js",
     "build": "npm run build-css && react-scripts build",
     "eject": "react-scripts eject",
     "lint-staged": "lint-staged",
-    "precommit": "npm-run-all lint-staged"
+    "precommit": "npm-run-all lint-staged",
+    "start": "serve -s build",
+    "prestart": "npm install -g serve"
   },
   "devDependencies": {
     "eslint-config-prettier": "^2.5.0",

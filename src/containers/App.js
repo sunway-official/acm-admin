@@ -8,6 +8,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
 import WithThunk from '../pages/withThunk';
+import AuthRoute from '../components/AuthRoute';
 
 import { muiTheme } from '../theme';
 import Wrapper from './wrapper';
@@ -15,9 +16,9 @@ export default () => (
   <MuiThemeProvider muiTheme={muiTheme}>
     <Wrapper>
       <Switch>
-        <Route path="/login" component={Login} />
+        <AuthRoute needGuest path="/login" component={Login} />
         {''}
-        <Route path="/register" component={Register} />
+        <AuthRoute needGuest path="/register" component={Register} />
         {''}
         <Route exact path="/" component={Dashboard} />{' '}
         <Route path="/conference/info" component={ConferenceInfo} />
