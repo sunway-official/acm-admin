@@ -26,6 +26,7 @@ class BadgeExampleSimple extends Component {
       openMail: false,
       openCalendar: false,
     };
+    this.handleSignOut = this.handleSignOut.bind(this);
   }
 
   handleTouchTapUser = event => {
@@ -67,6 +68,11 @@ class BadgeExampleSimple extends Component {
       openMail: false,
       openCalendar: false,
     });
+  };
+
+  handleSignOut = () => {
+    localStorage.clear();
+    this.handleRequestClose();
   };
   render() {
     return (
@@ -201,8 +207,8 @@ class BadgeExampleSimple extends Component {
               <MenuItem primaryText="A" />
               <MenuItem primaryText="Help &amp; feedback" />
               <MenuItem primaryText="Settings" />
-              <Link to="/login" className="link">
-                <MenuItem primaryText="Sign out" />
+              <Link to="/login">
+                <MenuItem primaryText="Sign out" onClick={this.handleSignOut} />
               </Link>
             </Menu>{' '}
           </Popover>{' '}

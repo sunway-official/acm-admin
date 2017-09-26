@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
-import { gql, graphql } from 'react-apollo';
+import { gql, graphql, compose } from 'react-apollo';
 import { SubmissionError } from 'redux-form';
+import { withRouter } from 'react-router';
 import LoginForm from './LoginForm';
 import './style.css';
 import { AppBar } from 'material-ui';
@@ -21,7 +22,7 @@ class Login extends PureComponent {
       console.log('Form submitted succesfully', email, password);
       localStorage.setItem('token', token);
       localStorage.setItem('refreshToken', refreshToken);
-      //localStorage.removeItem();
+      this.props.history.replace('/');
     } catch (e) {
       console.error(e);
       throw new SubmissionError({
@@ -65,4 +66,7 @@ const LOGIN_MUTATION = gql`
   }
 `;
 
-export default graphql(LOGIN_MUTATION, { name: 'loginMutation' })(Login);
+export default compose(
+  graphql(LOGIN_MUTATION, { name: 'loginMutation' }),
+  withRouter,
+)(Login);

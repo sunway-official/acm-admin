@@ -9,6 +9,7 @@ import Login from '../pages/authentication/login';
 import Register from '../pages/authentication/register';
 import Forgot from '../pages/authentication/forgotPassword';
 import WithThunk from '../pages/withThunk';
+import AuthRoute from '../components/AuthRoute';
 
 import { muiTheme } from '../theme';
 import Wrapper from './wrapper';
@@ -17,20 +18,21 @@ import Profile from '../pages/conference/people/staff/detail';
 export default () => (
   <MuiThemeProvider muiTheme={muiTheme}>
     <Switch>
-      <Route exact path="/register" component={Register} /> {''}
-      <Route exact path="/login" component={Login} /> {''}
+      <AuthRoute needGuest path="/login" component={Login} />
       {''}
-      <Route exact path="/forgot" component={Forgot} /> {''}
+      <AuthRoute needGuest path="/register" component={Register} />
+      {''}
+      <AuthRoute needGuest path="/forgot" component={Forgot} />
       {''}
       <Wrapper>
         <Switch>
-          <Route exact path="/profile" component={Profile} />{' '}
           <Route exact path="/" component={Dashboard} />{' '}
           <Route path="/conference/info" component={ConferenceInfo} />
           <Route
             path="/conference/people/staff"
             component={ConferenceStaffList}
           />
+          <Route exact path="/profile" component={Profile} />{' '}
           <Route path="/withThunk" component={WithThunk} />
           <Route component={NoMatch} />{' '}
         </Switch>{' '}

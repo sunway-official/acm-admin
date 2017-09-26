@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardActions, CardMedia, CardText } from 'material-ui/Card';
+import { Card, CardActions, CardMedia } from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 import backgroundimage from '../../../../../../images/avatar-1606916_640.png';
 import './style.scss';

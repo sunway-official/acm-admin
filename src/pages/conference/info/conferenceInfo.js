@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // import { connect } from 'react-redux';
-import { Field, reduxForm, formValueSelector, FieldArray } from 'redux-form';
+import { Field, reduxForm, FieldArray } from 'redux-form';
 import { RaisedButton, Subheader } from 'material-ui';
 import { TextField, DatePicker } from 'redux-form-material-ui';
 import { style } from './style.css';

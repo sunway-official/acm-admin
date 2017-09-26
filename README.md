@@ -24,4 +24,4 @@ Admin Page for CEM
 - Open Gcloud Console Shell
 - `rm -rf acm-dtu && mkdir acm-dtu && gsutil rsync -r gs://acm-dtu ./acm-dtu`
 - `gcloud app deploy` to start deploying project
-- Open [this](http://acm-dtu.appspot.com) address in the browser
+- Open [this](http://acm-dtu.appspot.com) address in the browser 
