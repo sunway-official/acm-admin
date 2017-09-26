@@ -7,7 +7,7 @@ import SocialCake from 'material-ui/svg-icons/social/cake';
 import './style.css';
 import RaisedButton from 'material-ui/RaisedButton';
 import { DatePicker, TextField, ListItem } from 'material-ui';
-import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
+import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 
 export default class PersonalInfo extends Component {
   constructor(props) {
@@ -105,7 +105,11 @@ export default class PersonalInfo extends Component {
             label="Save Change"
             primary={true}
           />
-          <RaisedButton className="btn cancel" label="Cancel" primary={true} />
+          <RaisedButton
+            className="btn cancel"
+            label="Cancel"
+            secondary={true}
+          />
         </div>
       </div>
     );

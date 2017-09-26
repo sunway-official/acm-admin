@@ -1,0 +1,64 @@
+.d-flex {
+  display: flex;
+}
+
+.form {
+  &.conference-info {
+    width: 600px;
+    margin: auto;
+    justify-content: center;
+    .date,
+    .place {
+      justify-content: space-between;
+      margin-bottom: 30px;
+    }
+
+    .btn-group {
+      justify-content: center;
+      &.remove-btn {
+        padding-top: 20px;
+      }
+      &.save-btn {
+        margin-top: 70px;
+        justify-content: flex-end !important;
+      }
+      .add-btn {
+        margin-top: 40px;
+      }
+    }
+
+    .form-group {
+      align-items: center;
+
+      label {
+        font-size: 18px;
+        width: 200px !important;
+        &.end {
+          width: 38px !important;
+        }
+      }
+    }
+    .header {
+      &.title {
+        font-size: 2em !important;
+      }
+    }
+  }
+  .group {
+    &.remove-btn {
+      justify-content: space-around;
+      align-items: center;
+      padding-top: 40px;
+    }
+  }
+}
+.conference {
+  .content {
+    &.details {
+      width: 100%;
+    }
+  }
+  .header {
+    padding: 20px 0 20px 0 !important;
+  }
+}

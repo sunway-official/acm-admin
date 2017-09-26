@@ -18,9 +18,10 @@ class Login extends PureComponent {
       } = await this.props.loginMutation({
         variables: { email, password },
       });
-
+      console.log('Form submitted succesfully', email, password);
       localStorage.setItem('token', token);
       localStorage.setItem('refreshToken', refreshToken);
+      //localStorage.removeItem();
     } catch (e) {
       console.error(e);
       throw new SubmissionError({

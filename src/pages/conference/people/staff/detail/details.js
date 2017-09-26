@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import './style.css';
-import Paper from 'material-ui/Paper';
+import Avatar from 'material-ui/Avatar';
 import TabsExampleSwipeable from './tab';
 import { List, ListItem } from 'material-ui/List';
 import CommunicationMessage from 'material-ui/svg-icons/communication/message';
 import ActionSettings from 'material-ui/svg-icons/action/settings';
 import SocialCake from 'material-ui/svg-icons/social/cake';
+import { images } from '../../../../../theme';
 
 export default class UserProfile extends Component {
   render() {
@@ -15,7 +16,7 @@ export default class UserProfile extends Component {
           <div className="left-div">
             <div className="card" id="left-form-container">
               <div className="card-content">
-                <Paper id="avatar" zDepth={1} circle={true} />
+                <Avatar id="avatar" src={images.defaultAvatar} size={140} />
                 <div className="profile-usertitle-name"> Thanh Vinh Lu </div>
                 <div className="profile-usertitle-job"> Developer </div>
                 <div className="profile-user-menu">

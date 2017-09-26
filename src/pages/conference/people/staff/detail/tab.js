@@ -4,6 +4,7 @@ import { Tabs, Tab } from 'material-ui/Tabs';
 import SwipeableViews from 'react-swipeable-views';
 import PersonalInfo from './personal-info/index';
 import CardExampleWithAvatar from './changeAvatar/index';
+import ChangePassword from './changePassword';
 
 const styles = {
   headline: {
@@ -49,7 +50,9 @@ export default class TabsExampleSwipeable extends React.Component {
           <div style={styles.slide}>
             <CardExampleWithAvatar />
           </div>
-          <div style={styles.slide}> chinh pass</div>
+          <div style={styles.slide}>
+            <ChangePassword />
+          </div>
           <div style={styles.slide}>Feature Setting</div>
         </SwipeableViews>
       </div>
