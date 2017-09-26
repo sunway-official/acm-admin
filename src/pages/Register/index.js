@@ -47,7 +47,7 @@ const renderField = ({
   />
 );
 const Register = props => {
-  const { handleSubmit, pristine, reset, submitting } = props;
+  const { handleSubmit, submitting } = props;
   return (
     <div className="register-body">
       <div className="card" id="form-container">
