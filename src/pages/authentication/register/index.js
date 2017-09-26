@@ -4,6 +4,7 @@ import asyncValidate from './asyncValidate';
 import { TextField, RaisedButton, AppBar } from 'material-ui';
 import './style.css';
 
+const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 const validate = values => {
   const errors = {};
   const requiredFields = [
@@ -15,13 +16,10 @@ const validate = values => {
   ];
   requiredFields.forEach(field => {
     if (!values[field]) {
-      errors[field] = 'Required';
+      errors[field] = 'This field is required';
     }
   });
-  if (
-    values.email &&
-    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
-  ) {
+  if (values.email && !EMAIL_REGEX.test(values.email)) {
     errors.email = 'Invalid email address';
   }
   return errors;

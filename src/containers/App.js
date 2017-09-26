@@ -8,6 +8,8 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Login from '../pages/authentication/login';
 import Register from '../pages/authentication/register';
 import Forgot from '../pages/authentication/forgotPassword';
+import WithThunk from '../pages/withThunk';
+
 import { muiTheme } from '../theme';
 import Wrapper from './wrapper';
 import Profile from '../pages/conference/people/staff/detail';
@@ -29,6 +31,7 @@ export default () => (
             path="/conference/people/staff"
             component={ConferenceStaffList}
           />
+          <Route path="/withThunk" component={WithThunk} />
           <Route component={NoMatch} />{' '}
         </Switch>{' '}
       </Wrapper>

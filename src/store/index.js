@@ -1,4 +1,5 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+import thunk from 'redux-thunk';
 import { reducer as formReducer } from 'redux-form';
 import * as reducers from './ducks';
 
@@ -21,7 +22,7 @@ const create = (apollo, initialState = {}) =>
       apollo: apollo.reducer(), // Initialize Apollo Client
     }),
     initialState,
-    compose(applyMiddleware(apollo.middleware()), devtools), // Compose redux devtools
+    compose(applyMiddleware(apollo.middleware(), thunk), devtools), // Compose redux devtools
   );
 
 export default function initRedux(apollo, initialState = {}) {

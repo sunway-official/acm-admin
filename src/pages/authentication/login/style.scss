@@ -14,19 +14,6 @@
   box-shadow: none !important;
   text-align: center;
   border-radius: 5px;
-  .btn {
-    &.login {
-      width: 250px !important;
-      box-shadow: none !important;
-      margin-top: 20px;
-    }
-  }
-}
-.input {
-  width: 250px;
-  display: inline-flex;
-  justify-content: space-between;
-  text-align: left !important;
 }
 #login-form-container {
   width: 350px;
@@ -52,9 +39,10 @@
   text-decoration: none !important;
   font-size: 14px;
   .register {
-    color: #63b8f0;
+    color: #63b8f0 !important;
   }
   .forgot-password {
-    color: #bdc3c7;
+    color: #bdc3c7 !important;
   }
 }
+
