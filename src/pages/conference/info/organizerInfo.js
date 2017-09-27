@@ -59,6 +59,7 @@ class Organizer extends Component {
 
 Organizer = reduxForm({
   form: 'conferenceInfo',
+  required,
 })(Organizer);
 
 export default Organizer;

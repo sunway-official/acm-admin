@@ -50,7 +50,7 @@ class BasicInfo extends Component {
             <div className="d-flex form-group">
               <label className="end">To :</label>
               <Field
-                name="endtDate"
+                name="endDate"
                 component={DatePicker}
                 validate={required}
                 format={null}
@@ -69,6 +69,7 @@ class BasicInfo extends Component {
 
 BasicInfo = reduxForm({
   form: 'conferenceInfo',
+  required,
 })(BasicInfo);
 
 export default BasicInfo;
