@@ -10,8 +10,8 @@ const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 const validate = values => {
   const errors = {};
   const requiredFields = [
-    'firstname',
-    'lastname',
+    'firstName',
+    'lastName',
     'email',
     'password',
     'confirmPassword',
@@ -29,7 +29,7 @@ const validate = values => {
     values.confirmPassword &&
     values.password !== values.confirmPassword
   ) {
-    errors.password = 'Password does not match!';
+    errors.confirmPassword = 'Password does not match!';
   }
   return errors;
 };
@@ -88,7 +88,7 @@ const RegisterForm = ({
     </div>
     <div className="register-field">
       <Field
-        name="confirm-password"
+        name="confirmPassword"
         type="password"
         component={renderField}
         label="Confirm Password"

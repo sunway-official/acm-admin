@@ -1,13 +1,18 @@
-.change-pass-field {
-  width: 250px;
-  display: inline-flex;
+.changePassField {
+  width: 250px !important;
+  display: flex;
   justify-content: space-between;
   text-align: left !important;
+  align-items: center;
 }
-.btn {
-  &.change-pass {
-    width: 250px !important;
-    box-shadow: none !important;
-    margin-top: 20px;
+.buttonRow{
+  justify-content: space-around;
+  .btn {
+    &.changePass {
+      width: 120px !important;
+      box-shadow: none !important;
+      margin: 20px 10px 0px 0px;
+    }
   }
 }
+
