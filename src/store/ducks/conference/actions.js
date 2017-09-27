@@ -1,5 +1,20 @@
 import types from './types';
 
+const getConferenceRequested = () => ({
+  type: types.GET_CONFERENCE_REQUESTED,
+});
+
+const getConferenceSuccess = conference => ({
+  type: types.GET_CONFERENCE_SUCCESS,
+  payload: {
+    conference,
+  },
+});
+
+const getConferenceFailure = () => ({
+  type: types.GET_CONFERENCE_FAILURE,
+});
+
 const getIdRequested = () => ({
   type: types.GET_ID_REQUESTED,
 });
@@ -16,6 +31,9 @@ const getIdFailure = () => ({
 });
 
 export default {
+  getConferenceRequested,
+  getConferenceSuccess,
+  getConferenceFailure,
   getIdRequested,
   getIdSuccess,
   getIdFailure,

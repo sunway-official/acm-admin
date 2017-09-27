@@ -4,14 +4,23 @@ import { Link } from 'react-router-dom';
 import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import ConferenceInfo from './conferenceInfo';
 import { connect } from 'react-redux';
+import showResults from './showResults';
+import { graphql, gql, compose } from 'react-apollo';
 import { conferenceOperations } from '../../../store/ducks/conference';
 
 class Index extends PureComponent {
   componentDidMount() {
-    const id = this.props.match.params.id;
-    this.props.getConferenceId(id);
+    this.props.getConferenceId(this.props.match.params.id);
   }
   render() {
+    // console.log(this.props);
+    const { loading } = this.props.data;
+
+    if (loading) return <div>loading</div>;
+
+    const conference = this.props.data.getConferenceByID;
+    // console.log(c);
+    // console.log(this.props);
     return (
       <div className="conference">
         <Subheader className="subheader"> Conference Information</Subheader>
@@ -28,7 +37,7 @@ class Index extends PureComponent {
           <span>Conference Information</span>
         </div>
         <div className="dashboard content d-flex">
-          <ConferenceInfo />
+          <ConferenceInfo conference={conference} onSubmit={showResults} />
         </div>
       </div>
     );
@@ -41,4 +50,27 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(undefined, mapDispatchToProps)(Index);
+const GET_CONFERENCE_BY_ID_QUERY = gql`
+  query getConference($id: ID!) {
+    getConferenceByID(id: $id) {
+      id
+      title
+      description
+      start_date
+      end_date
+      organizerDetail {
+        name
+        email
+        website
+        phone
+      }
+    }
+  }
+`;
+
+export default compose(
+  connect(undefined, mapDispatchToProps),
+  graphql(GET_CONFERENCE_BY_ID_QUERY, {
+    options: ownProps => ({ variables: { id: ownProps.match.params.id } }),
+  }),
+)(Index);

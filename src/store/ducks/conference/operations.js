@@ -1,5 +1,14 @@
 import actions from './actions';
 
+const getConferenceOperation = conference => async dispatch => {
+  dispatch(actions.getConferenceRequested());
+  try {
+    return dispatch(actions.getConferenceSuccess(conference));
+  } catch (e) {
+    console.log(e);
+    return dispatch(actions.getConferenceFailure());
+  }
+};
 const getIdOperation = id => async dispatch => {
   dispatch(actions.getIdRequested());
   try {
@@ -11,5 +20,6 @@ const getIdOperation = id => async dispatch => {
 };
 
 export default {
+  getConferenceOperation,
   getIdOperation,
 };
