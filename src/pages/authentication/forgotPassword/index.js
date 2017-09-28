@@ -56,8 +56,8 @@ const Forgot = props => {
           />
           <form onSubmit={handleSubmit}>
             <div className="note">
-              Please enter your email address and we'll sent you instructions
-              on how to reset your pasword
+              Please enter your email address and we'll sent you instructions on
+              how to reset your pasword
             </div>
             <div className="forgot-field">
               <Field name="email" component={renderField} label="Email" />
