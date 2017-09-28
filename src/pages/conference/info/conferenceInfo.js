@@ -13,7 +13,7 @@ const validate = values => {
     'endDate',
     'organizerName',
     'organizerEmail',
-    'organizerPhoneNumber',
+    'organizerWebsite',
     'organizerPhoneNumber',
   ];
   requiredFields.forEach(field => {
