@@ -15,6 +15,7 @@ import {
 } from 'material-ui/svg-icons';
 import { images } from '../../../../theme';
 import style from './style.css';
+import { Link } from 'react-router-dom';
 
 class BadgeExampleSimple extends Component {
   constructor(props) {
@@ -25,6 +26,7 @@ class BadgeExampleSimple extends Component {
       openMail: false,
       openCalendar: false,
     };
+    this.handleSignOut = this.handleSignOut.bind(this);
   }
 
   handleTouchTapUser = event => {
@@ -66,6 +68,11 @@ class BadgeExampleSimple extends Component {
       openMail: false,
       openCalendar: false,
     });
+  };
+
+  handleSignOut = () => {
+    localStorage.clear();
+    this.handleRequestClose();
   };
   render() {
     return (
@@ -200,7 +207,15 @@ class BadgeExampleSimple extends Component {
               <MenuItem primaryText="A" />
               <MenuItem primaryText="Help &amp; feedback" />
               <MenuItem primaryText="Settings" />
-              <MenuItem primaryText="Sign out" />
+              <Link to="/userInfo">
+                <MenuItem
+                  primaryText="User Info"
+                  onClick={this.handleSignOut}
+                />
+              </Link>
+              <Link to="/login">
+                <MenuItem primaryText="Sign out" onClick={this.handleSignOut} />
+              </Link>
             </Menu>{' '}
           </Popover>{' '}
         </div>{' '}

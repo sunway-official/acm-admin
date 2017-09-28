@@ -1,0 +1,14 @@
+.field {
+  width: 250px;
+  display: inline-flex;
+  justify-content: space-between;
+  text-align: left !important;
+}
+.btn {
+  &.login {
+    width: 250px !important;
+    box-shadow: none !important;
+    margin-top: 20px;
+    color: #FA0B0B !important;
+  }
+}
