@@ -10,7 +10,7 @@ import {
 import Status from './status';
 import Action from './action';
 import { style } from './style.css';
-import Add from './add';
+// import Add from './add';
 
 const tableData = [
   {
@@ -81,12 +81,12 @@ class Index extends Component {
             </TableBody>
           </Table>
         </div>
-        <div className="button new mobile">
-          <Add />
-        </div>
       </div>
     );
   }
 }
 
 export default Index;
+//<div className="button new mobile">
+//   <Add />
+// </div>
