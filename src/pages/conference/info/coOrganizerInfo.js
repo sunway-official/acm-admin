@@ -80,6 +80,7 @@ class CoOrganizer extends Component {
 
 CoOrganizer = reduxForm({
   form: 'conferenceInfo',
+
   required,
 })(CoOrganizer);
 
