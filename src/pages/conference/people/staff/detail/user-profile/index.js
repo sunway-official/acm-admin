@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Subheader, IconButton } from 'material-ui';
 import { Link } from 'react-router-dom';
 import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
-import UserProfile from './details';
+import GeneralInfo from '../generalInfo';
+import ProfileTabs from './tab';
 
 export default class Index extends Component {
   render() {
@@ -29,10 +30,21 @@ export default class Index extends Component {
           <IconButton>
             <HardwareKeyboardArrowRight />
           </IconButton>
-          <span>Detail</span>
+          <span>Profile</span>
         </div>
         <div className="dashboard content d-flex">
-          <UserProfile />
+          <div className="contain">
+            <div className="form-container">
+              <GeneralInfo />
+              <div className="right-div">
+                <div className="card" id="right-form-container">
+                  <div className="card-content">
+                    <ProfileTabs />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );

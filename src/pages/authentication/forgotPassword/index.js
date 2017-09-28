@@ -1,6 +1,5 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
-import asyncValidate from './asyncValidate';
 import { TextField, RaisedButton, AppBar } from 'material-ui';
 import './style.css';
 
@@ -15,7 +14,7 @@ const validate = values => {
   ];
   requiredFields.forEach(field => {
     if (!values[field]) {
-      errors[field] = 'Required';
+      errors[field] = 'This field is required';
     }
   });
   if (
@@ -83,5 +82,4 @@ const Forgot = props => {
 export default reduxForm({
   form: 'MaterialUiForm', // a unique identifier for this form
   validate,
-  asyncValidate,
 })(Forgot);
