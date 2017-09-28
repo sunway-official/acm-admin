@@ -33,6 +33,7 @@ const renderField = ({
     floatingLabelText={label}
     errorText={touched && error}
     type={type}
+    fullWidth={true}
     {...input}
     {...custom}
     className={className}

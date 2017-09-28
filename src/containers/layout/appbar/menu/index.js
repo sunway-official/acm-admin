@@ -207,6 +207,12 @@ class BadgeExampleSimple extends Component {
               <MenuItem primaryText="A" />
               <MenuItem primaryText="Help &amp; feedback" />
               <MenuItem primaryText="Settings" />
+              <Link to="/userInfo">
+                <MenuItem
+                  primaryText="User Info"
+                  onClick={this.handleSignOut}
+                />
+              </Link>
               <Link to="/login">
                 <MenuItem primaryText="Sign out" onClick={this.handleSignOut} />
               </Link>

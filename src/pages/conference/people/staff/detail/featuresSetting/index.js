@@ -8,7 +8,8 @@ import {
   TableRowColumn,
 } from 'material-ui';
 import { style } from './style.css';
-import { RadioButton, RadioButtonGroup, RaisedButton } from 'material-ui';
+import { RaisedButton } from 'material-ui';
+import Toggle from 'material-ui/Toggle';
 
 const tableData = [
   {
@@ -24,7 +25,8 @@ const tableData = [
     feature: 'Manage Personal Information',
   },
 ];
-class Index extends Component {
+
+export default class Index extends Component {
   render() {
     return (
       <div className="d-flex">
@@ -36,24 +38,17 @@ class Index extends Component {
                 <TableHeaderColumn>ID</TableHeaderColumn>
                 <TableHeaderColumn>Feature</TableHeaderColumn>
                 <TableHeaderColumn />
-                <TableHeaderColumn>Action</TableHeaderColumn>
+                <TableHeaderColumn>Status</TableHeaderColumn>
               </TableRow>
             </TableHeader>
-            <TableBody displayRowCheckbox={false}>
+            <TableBody displayRowCheckbox={false} showRowHover={true}>
               {tableData.map((row, index) => (
                 <TableRow key={index}>
                   <TableRowColumn>{index}</TableRowColumn>
                   <TableRowColumn>{row.feature}</TableRowColumn>
                   <TableRowColumn />
                   <TableRowColumn>
-                    <RadioButtonGroup
-                      name="shipSpeed"
-                      defaultSelected="on"
-                      className="radio features"
-                    >
-                      <RadioButton value="on" label="On" />
-                      <RadioButton value="off" label="Off" />
-                    </RadioButtonGroup>
+                    <Toggle defaultToggled={true} />
                   </TableRowColumn>
                 </TableRow>
               ))}
@@ -76,5 +71,3 @@ class Index extends Component {
     );
   }
 }
-
-export default Index;

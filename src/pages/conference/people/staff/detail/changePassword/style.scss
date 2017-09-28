@@ -1,9 +1,11 @@
 .changePassField {
-  width: 250px !important;
   display: flex;
   justify-content: space-between;
   text-align: left !important;
   align-items: center;
+}
+#changePassContainer{
+  width: 40vw;
 }
 .buttonRow{
   justify-content: space-around;

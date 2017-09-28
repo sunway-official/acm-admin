@@ -21,7 +21,7 @@ export default class Index extends Component {
     ];
     return (
       <div>
-        <Link to="/profile" className="link">
+        <Link to="/" className="link">
           <RaisedButton label="Edit" primary={true}/>
         </Link>
         <RaisedButton label="Delete" default={true} onClick={this.handleOpen} />
