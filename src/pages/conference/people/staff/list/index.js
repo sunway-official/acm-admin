@@ -5,10 +5,6 @@ import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import List from './list';
 
 export default class Index extends Component {
-  constructor(props) {
-    super(props);
-  }
-  handleABC() {}
   render() {
     return (
       <div className="conference">
