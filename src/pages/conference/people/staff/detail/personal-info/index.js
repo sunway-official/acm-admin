@@ -39,7 +39,7 @@ export default class PersonalInfo extends Component {
                 <TextField
                   hintText="First Name"
                   id="text-field-default"
-                  defaultValue="Lu Thanh Vinh"
+                  defaultValue="Le Quoc Manh"
                 />
               </TableRowColumn>
               <TableRowColumn />
@@ -78,7 +78,7 @@ export default class PersonalInfo extends Component {
                 <TextField
                   hintText="Email"
                   id="text-field-default"
-                  defaultValue="luthanhvinhdtu@gmail.com"
+                  defaultValue="lequocmanh@gmail.com"
                 />
               </TableRowColumn>
               <TableRowColumn />

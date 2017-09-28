@@ -2,10 +2,10 @@ import React from 'react';
 import { Tabs, Tab } from 'material-ui/Tabs';
 // From https://github.com/oliviertassinari/react-swipeable-views
 import SwipeableViews from 'react-swipeable-views';
-import PersonalInfo from './personal-info/index';
+import PersonalInfo from '../personal-info';
 //import CardExampleWithAvatar from './changeAvatar/index';
-import ChangePassword from './changePassword';
-import './style.css';
+import ChangePassword from '../changePassword';
+import '../style.css';
 //import FeaturesSetting from './featuresSetting';
 
 const styles = {
@@ -20,7 +20,7 @@ const styles = {
   },
 };
 
-export default class TabsExampleSwipeable extends React.Component {
+export default class InfoTabs extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
