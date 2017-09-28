@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import BrowserRouter from 'react-router-dom/BrowserRouter';
 import ApolloProvider from 'react-apollo/ApolloProvider';
 import initalizedData from './lib/initData';
-
 import App from './containers/App';
 
 ReactDOM.render(

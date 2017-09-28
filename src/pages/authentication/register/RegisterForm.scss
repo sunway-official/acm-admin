@@ -1,0 +1,17 @@
+.register-field {
+  width: 250px;
+  display: inline-flex;
+  justify-content: space-between;
+  text-align: left !important;
+  .subname {
+    width: 120px !important;
+  }
+}
+
+.btn {
+  &.register {
+    width: 250px !important;
+    box-shadow: none !important;
+    margin-top: 20px;
+  }
+}

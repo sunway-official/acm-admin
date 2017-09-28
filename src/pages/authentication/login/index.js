@@ -3,8 +3,8 @@ import { gql, graphql, compose } from 'react-apollo';
 import { SubmissionError } from 'redux-form';
 import { withRouter } from 'react-router';
 import LoginForm from './LoginForm';
-
 import './style.css';
+import { AppBar } from 'material-ui';
 
 class Login extends PureComponent {
   constructor(props) {
@@ -19,7 +19,7 @@ class Login extends PureComponent {
       } = await this.props.loginMutation({
         variables: { email, password },
       });
-
+      console.log('Form submitted succesfully', email, password);
       localStorage.setItem('token', token);
       localStorage.setItem('refreshToken', refreshToken);
       this.props.history.replace('/');
@@ -34,12 +34,16 @@ class Login extends PureComponent {
   render() {
     return (
       <div className="login-body">
-        <div className="card" id="form-container">
+        <div className="login-card" id="login-form-container">
           <div className="card-content">
-            <h1 id="login-title">Login</h1>
+            <AppBar
+              className="login-title"
+              title="SIGN IN"
+              showMenuIconButton={false}
+            />
             <LoginForm onSubmit={this.onLogin} />
             <div className="final-row">
-              <a className="forgot-password" href="/">
+              <a className="forgot-password" href="/forgot">
                 Forgot Password
               </a>
               <a className="register" href="/register">

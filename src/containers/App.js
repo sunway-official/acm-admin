@@ -5,30 +5,38 @@ import ConferenceStaffList from '../pages/conference/people/staff/list';
 import Dashboard from '../pages/dashboard';
 import NoMatch from '../pages/NoMatch';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import Login from '../pages/Login';
-import Register from '../pages/Register';
+import Login from '../pages/authentication/login';
+import Register from '../pages/authentication/register';
+import Forgot from '../pages/authentication/forgotPassword';
 import WithThunk from '../pages/withThunk';
 import AuthRoute from '../components/AuthRoute';
 
 import { muiTheme } from '../theme';
 import Wrapper from './wrapper';
+import UserInfo from '../pages/conference/people/staff/detail';
+
 export default () => (
   <MuiThemeProvider muiTheme={muiTheme}>
-    <Wrapper>
-      <Switch>
-        <AuthRoute needGuest path="/login" component={Login} />
-        {''}
-        <AuthRoute needGuest path="/register" component={Register} />
-        {''}
-        <Route exact path="/" component={Dashboard} />{' '}
-        <Route path="/conference/info" component={ConferenceInfo} />
-        <Route
-          path="/conference/people/staff"
-          component={ConferenceStaffList}
-        />
-        <Route path="/withThunk" component={WithThunk} />
-        <Route component={NoMatch} />{' '}
-      </Switch>{' '}
-    </Wrapper>
+    <Switch>
+      <AuthRoute needGuest path="/login" component={Login} />
+      {''}
+      <AuthRoute needGuest path="/register" component={Register} />
+      {''}
+      <AuthRoute needGuest path="/forgot" component={Forgot} />
+      {''}
+      <Wrapper>
+        <Switch>
+          <Route exact path="/" component={Dashboard} />{' '}
+          <Route path="/conference/info" component={ConferenceInfo} />
+          <Route
+            path="/conference/people/staff"
+            component={ConferenceStaffList}
+          />
+          <Route exact path="/userInfo" component={UserInfo} />{' '}
+          <Route path="/withThunk" component={WithThunk} />
+          <Route component={NoMatch} />{' '}
+        </Switch>{' '}
+      </Wrapper>
+    </Switch>
   </MuiThemeProvider>
 );
