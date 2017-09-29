@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import GeneralInfo from '../generalInfo';
 import ProfileTabs from './tab';
+import UserAvatar from '../changeAvatar/userAvatar';
 
 export default class Index extends Component {
   render() {
@@ -35,7 +36,14 @@ export default class Index extends Component {
         <div className="dashboard content d-flex">
           <div className="contain">
             <div className="form-container">
-              <GeneralInfo />
+              <div className="left-div">
+                <div className="card" id="left-form-container">
+                  <div className="card-content">
+                    <UserAvatar />
+                    <GeneralInfo />
+                  </div>
+                </div>
+              </div>
               <div className="right-div">
                 <div className="card" id="right-form-container">
                   <div className="card-content">
