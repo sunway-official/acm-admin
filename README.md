@@ -20,8 +20,9 @@ Admin Page for CEM
 - Open [Gcloud Console](https://console.cloud.google.com/home/dashboard?project=acm-dtu)
 - Open [Bucket](https://console.cloud.google.com/storage/browser/acm-dtu?project=acm-dtu)
 - Remove all files inside the Bucket
-- Upload `app.yaml` and `build/` to the Bucket
+- Upload `app.yaml`, `build/` and `package.json` files to the Bucket
 - Open Gcloud Console Shell
 - `rm -rf acm-dtu && mkdir acm-dtu && gsutil rsync -r gs://acm-dtu ./acm-dtu`
+- `cd acm-dtu`
 - `gcloud app deploy` to start deploying project
-- Open [this](http://acm-dtu.appspot.com) address in the browser 
+- Open [this](http://acm-dtu.appspot.com) address in the browser
