@@ -4,9 +4,9 @@
   "private": true,
   "homepage": "http://acm-dtu.appspot.com",
   "dependencies": {
+    "apisauce": "^0.14.1",
     "apollo-link": "^0.5.4",
     "bootstrap": "^4.0.0-alpha.6",
-    "apisauce": "^0.14.1",
     "font-awesome": "^4.7.0",
     "graphql": "^0.10.5",
     "material-ui": "^0.19.1",
@@ -17,6 +17,7 @@
     "react": "^15.3.0",
     "react-apollo": "^1.4.15",
     "react-dom": "^15.3.0",
+    "react-flexbox-grid": "^1.1.5",
     "react-helmet": "^5.2.0",
     "react-icons-kit": "^1.0.7",
     "react-redux": "^5.0.6",

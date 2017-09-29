@@ -10,11 +10,11 @@ import Register from '../pages/authentication/register';
 import Forgot from '../pages/authentication/forgotPassword';
 import WithThunk from '../pages/withThunk';
 import AuthRoute from '../components/AuthRoute';
-
+import TestFlexBox from '../pages/conference/people/staff/detail/testFlexbox';
 import { muiTheme } from '../theme';
 import Wrapper from './wrapper';
-import UserInfo from '../pages/conference/people/staff/detail/user-info';
-import UserProfile from '../pages/conference/people/staff/detail/user-profile';
+import UserInfo from '../pages/conference/people/staff/detail/userInfo';
+import UserProfile from '../pages/conference/people/staff/detail/userProfile';
 
 export default () => (
   <MuiThemeProvider muiTheme={muiTheme}>
@@ -35,6 +35,7 @@ export default () => (
           />
           <Route exact path="/userInfo" component={UserInfo} />{' '}
           <Route exact path="/userProfile" component={UserProfile} />{' '}
+          <Route exact path="/test" component={TestFlexBox} />{' '}
           <Route path="/withThunk" component={WithThunk} />
           <Route component={NoMatch} />{' '}
         </Switch>{' '}
