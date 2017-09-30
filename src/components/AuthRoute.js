@@ -7,12 +7,12 @@ import { bindActionCreators } from 'redux';
 import { authActions } from '../store/ducks/auth';
 
 class AuthRoute extends PureComponent {
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.data.error) {
+  componentDidMount() {
+    if (this.props.data.error) {
       localStorage.clear();
     }
-    if (nextProps.data.me) {
-      this.props.setCurrentUser(nextProps.data.me);
+    if (this.props.data.me) {
+      this.props.setCurrentUser(this.props.data.me);
     }
   }
   render() {
