@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Subheader, IconButton } from 'material-ui';
+import { Subheader, IconButton, Tabs, Tab } from 'material-ui';
 import { Link } from 'react-router-dom';
 import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import ConferenceInfo from './conferenceInfo';
+import CoOrganizerList from './coOrganizer/coOrganizerList';
 import showResults from './showResults';
 
 export default class Index extends Component {
@@ -29,7 +30,14 @@ export default class Index extends Component {
           <span>Conference Information</span>
         </div>
         <div className="dashboard content d-flex">
-          <ConferenceInfo onSubmit={showResults} />
+          <Tabs style={{ width: '100%' }}>
+            <Tab label="Basic Information">
+              <ConferenceInfo onSubmit={showResults} />
+            </Tab>
+            <Tab label="Co-Organizer">
+              <CoOrganizerList />
+            </Tab>
+          </Tabs>
         </div>
       </div>
     );
