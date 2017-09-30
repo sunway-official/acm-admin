@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { RaisedButton, Dialog } from 'material-ui';
+import { Link } from 'react-router-dom';
 
 export default class Index extends Component {
   state = {
@@ -20,7 +21,9 @@ export default class Index extends Component {
     ];
     return (
       <div>
-        <RaisedButton label="Edit" primary={true} />
+        <Link to="/userProfile" className="link">
+          <RaisedButton label="Edit" primary={true} />
+        </Link>
         <RaisedButton label="Delete" default={true} onClick={this.handleOpen} />
         <Dialog
           title="Delete"

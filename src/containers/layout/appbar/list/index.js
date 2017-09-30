@@ -48,7 +48,7 @@ class ListExampleSimple extends React.Component {
           </Link>
           <ListItem
             className="item"
-            primaryText={<a href="/">Schedule</a>}
+            primaryText={<a href="/dashboard">Schedule</a>}
             leftIcon={<NotificationEventAvailable />}
           />
           <ListItem
@@ -74,26 +74,26 @@ class ListExampleSimple extends React.Component {
                     onClick={this.handleRequestClose}
                   />
                 </Link>
-                <MenuItem primaryText={<a href="/">Speaker</a>} />
-                <MenuItem primaryText={<a href="/">Author</a>} />
-                <MenuItem primaryText={<a href="/">Reviewer</a>} />
-                <MenuItem primaryText={<a href="/">Participant</a>} />
+                <MenuItem primaryText={<a href="/dashboard">Speaker</a>} />
+                <MenuItem primaryText={<a href="/dashboard">Author</a>} />
+                <MenuItem primaryText={<a href="/dashboard">Reviewer</a>} />
+                <MenuItem primaryText={<a href="/dashboard">Participant</a>} />
               </Menu>
             </Popover>
           </ListItem>
           <ListItem
             className="item"
-            primaryText={<a href="/">Paper</a>}
+            primaryText={<a href="/dashboard">Paper</a>}
             leftIcon={<AvLibraryBooks />}
           />
           <ListItem
             className="item"
-            primaryText={<a href="/">Newfeed</a>}
+            primaryText={<a href="/dashboard">Newfeed</a>}
             leftIcon={<ActionChromeReaderMode />}
           />
           <ListItem
             className="item"
-            primaryText={<a href="/">Statistic</a>}
+            primaryText={<a href="/dashboard">Statistic</a>}
             leftIcon={<EditorShowChart />}
           />
         </List>

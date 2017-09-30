@@ -64,6 +64,12 @@ const GET_CONFERENCE_BY_ID_QUERY = gql`
         website
         phone
       }
+      coOrganizerDetails {
+        name
+        email
+        website
+        phone
+      }
     }
   }
 `;

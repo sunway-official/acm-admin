@@ -7,86 +7,67 @@ import {
   TableRow,
   TableRowColumn,
 } from 'material-ui';
-import Status from './status';
-import Action from './action';
 import { style } from './style.css';
-// import Add from './add';
+import { RaisedButton } from 'material-ui';
+import Toggle from 'material-ui/Toggle';
 
 const tableData = [
   {
-    name: 'Pham Van Tri',
+    feature: 'Create Schedule',
   },
   {
-    name: 'Le Thi Thuy Dung',
+    feature: 'Update Schedule',
   },
   {
-    name: 'Le Quoc Manh',
+    feature: 'Staff Management',
   },
   {
-    name: 'Le Dinh Nhat Khanh',
-  },
-  {
-    name: 'Ly Bao Khanh',
-  },
-  {
-    name: 'Thai Thi Hong Minh',
-  },
-  {
-    name: 'Lu Thanh Vinh',
-  },
-  {
-    name: 'Tran Van Thuc',
-  },
-  {
-    name: 'Ly Bao Khanh',
-  },
-  {
-    name: 'Thai Thi Hong Minh',
-  },
-  {
-    name: 'Lu Thanh Vinh',
-  },
-  {
-    name: 'Tran Van Thuc',
+    feature: 'Manage Personal Information',
   },
 ];
-class Index extends Component {
+
+export default class Index extends Component {
   render() {
     return (
       <div className="d-flex">
         <style dangerouslySetInnerHTML={{ __html: style }} />
-        <div className="list staff">
+        <div className="list feature">
           <Table fixedHeader={true}>
             <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
               <TableRow>
                 <TableHeaderColumn>ID</TableHeaderColumn>
-                <TableHeaderColumn>Name</TableHeaderColumn>
+                <TableHeaderColumn>Feature</TableHeaderColumn>
+                <TableHeaderColumn />
                 <TableHeaderColumn>Status</TableHeaderColumn>
-                <TableHeaderColumn>Action</TableHeaderColumn>
               </TableRow>
             </TableHeader>
-            <TableBody displayRowCheckbox={false}>
+            <TableBody displayRowCheckbox={false} showRowHover={true}>
               {tableData.map((row, index) => (
                 <TableRow key={index}>
                   <TableRowColumn>{index}</TableRowColumn>
-                  <TableRowColumn>{row.name}</TableRowColumn>
+                  <TableRowColumn>{row.feature}</TableRowColumn>
+                  <TableRowColumn />
                   <TableRowColumn>
-                    <Status />
-                  </TableRowColumn>
-                  <TableRowColumn>
-                    <Action />
+                    <Toggle defaultToggled={true} />
                   </TableRowColumn>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
+          <div>
+            <RaisedButton
+              className="btn save-change"
+              label="Save Change"
+              primary={true}
+            />
+            <RaisedButton
+              className="btn cancel"
+              label="Cancel"
+              secondary={true}
+            />
+          </div>
         </div>
       </div>
     );
   }
 }
-
-export default Index;
-//<div className="button new mobile">
-//   <Add />
-// </div>

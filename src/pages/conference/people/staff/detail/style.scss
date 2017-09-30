@@ -1,0 +1,72 @@
+.contain {
+  padding-top: 0px !important;
+  background-color: white !important;
+}
+.form-container {
+  display: flex;
+}
+.left-div {
+  width: 300px;
+}
+.right-div {
+  width: 100%;
+}
+.card {
+  box-shadow: none !important;
+  text-align: center;
+  border-radius: 2px;
+}
+#profile-title {
+  margin-left: 20px;
+  color: #5a7391;
+  margin-top: 0px !important;
+  padding-top: 10px;
+}
+#left-form-container {
+  width: inherit;
+  justify-content: left;
+  align-items: center;
+  background-color: #ffffff;
+  .profile-usertitle-name {
+    color: #5a7391;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 7px;
+  }
+  .profile-usertitle-job {
+    text-transform: uppercase;
+    color: #5b9bd1;
+    font-size: 13px;
+    font-weight: 800;
+    margin-bottom: 20px;
+  }
+  .list-item {
+    text-align: left !important;
+  }
+}
+.list-item {
+  text-align: left !important;
+}
+#right-form-container {
+  width: inherit;
+  justify-content: right;
+  align-items: center;
+  background-color: white !important;
+  .profile-usertitle-name {
+    color: #5a7391;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 7px;
+  }
+  .profile-usertitle-job {
+    text-transform: uppercase;
+    color: #5b9bd1;
+    font-size: 13px;
+    font-weight: 800;
+    margin-bottom: 7px;
+  }
+}
+.personalInfoTab{
+  justify-content: center;
+  display: flex;
+}

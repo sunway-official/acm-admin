@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { SubmissionError } from 'redux-form';
 import { gql, graphql, compose } from 'react-apollo';
 import { withRouter } from 'react-router';
-
+import { AppBar } from 'material-ui';
 import RegisterForm from './RegisterForm';
 
 import './style.css';
@@ -31,9 +31,13 @@ class Register extends PureComponent {
   render() {
     return (
       <div className="register-body">
-        <div className="card" id="form-container">
+        <div className="card" id="register-form-container">
           <div className="card-content">
-            <h1 id="register-title">Register</h1>
+            <AppBar
+              className="register-title"
+              title="REGISTER"
+              showMenuIconButton={false}
+            />
             <RegisterForm onSubmit={this.onRegister} />
           </div>
         </div>
