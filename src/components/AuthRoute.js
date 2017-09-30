@@ -1,7 +1,10 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
-import { graphql, gql } from 'react-apollo';
+import { graphql, gql, compose } from 'react-apollo';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { authActions } from '../store/ducks/auth';
 
 class AuthRoute extends PureComponent {
   componentWillReceiveProps(nextProps) {
@@ -9,8 +12,7 @@ class AuthRoute extends PureComponent {
       localStorage.clear();
     }
     if (nextProps.data.me) {
-      // TODO: Add user id to local storage
-      // localStorage.setItem('userId', nextProps.data.me.id);
+      this.props.setCurrentUser(nextProps.data.me);
     }
   }
   render() {
@@ -52,12 +54,22 @@ const ME_QUERY = gql`
   query Me {
     me {
       id
+      firstname
+      lastname
     }
   }
 `;
 
-export default graphql(ME_QUERY, {
-  options: {
-    notifyOnNetworkStatusChange: true,
-  },
-})(AuthRoute);
+const mapDispatchToProps = dispatch => ({
+  setCurrentUser: bindActionCreators(authActions.setCurrentUser, dispatch),
+});
+
+export default compose(
+  graphql(ME_QUERY, {
+    options: {
+      notifyOnNetworkStatusChange: true,
+    },
+    name: 'data',
+  }),
+  connect(null, mapDispatchToProps),
+)(AuthRoute);

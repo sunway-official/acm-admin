@@ -1,5 +1,5 @@
-const TEST = 'cem-admin/auth/TEST';
+const SET_CURRENT_USER = 'cem-admin/auth/SET_CURRENT_USER';
 
 export default {
-  TEST,
+  SET_CURRENT_USER,
 };

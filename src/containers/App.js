@@ -20,24 +20,21 @@ export default () => (
   <MuiThemeProvider muiTheme={muiTheme}>
     <Switch>
       <AuthRoute needGuest path="/login" component={Login} />
-      {''}
       <AuthRoute needGuest path="/register" component={Register} />
-      {''}
       <AuthRoute needGuest path="/forgot" component={Forgot} />
-      {''}
       <Wrapper>
         <Switch>
-          <AuthRoute needAuth exact path="/" component={Dashboard} />{' '}
+          <AuthRoute needAuth exact path="/" component={Dashboard} />
           <AuthRoute path="/conference/:id/info" component={ConferenceInfo} />
           <AuthRoute
             path="/conference/people/staff"
             component={ConferenceStaffList}
           />
-          <AuthRoute exact path="/userInfo" component={UserInfo} />{' '}
-          <AuthRoute exact path="/userProfile" component={UserProfile} />{' '}
+          <AuthRoute exact path="/userInfo" component={UserInfo} />
+          <AuthRoute exact path="/userProfile" component={UserProfile} />
           <AuthRoute path="/withThunk" component={WithThunk} />
-          <AuthRoute component={NoMatch} />{' '}
-        </Switch>{' '}
+          <AuthRoute component={NoMatch} />
+        </Switch>
       </Wrapper>
     </Switch>
   </MuiThemeProvider>
