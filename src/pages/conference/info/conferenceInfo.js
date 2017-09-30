@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { reduxForm, Field } from 'redux-form';
+import { reduxForm, Field, formValueSelector } from 'redux-form';
 import { RaisedButton, Subheader, TextField, DatePicker } from 'material-ui';
 import { style } from './style.css';
 import normalizePhone from './normalizePhone';
+import { gql, graphql, compose } from 'react-apollo';
+import { connect } from 'react-redux';
 
 const validate = values => {
   const errors = {};
@@ -55,8 +57,30 @@ const renderDatePicker = ({
 );
 
 class Info extends Component {
+  constructor() {
+    super();
+    this.saveConference = this.saveConference.bind(this);
+  }
+
+  saveConference() {
+    const { mutate, id, title, description, startDate, endDate } = this.props;
+    console.log(startDate);
+    console.log(endDate);
+    mutate({
+      variables: {
+        id: id,
+        title: title,
+        description: description,
+        start_date: startDate,
+        end_date: endDate,
+      },
+    });
+    // console.log(this.props);
+  }
+
   render() {
-    const { handleSubmit, submitting } = this.props;
+    const { handleSubmit, submitting, pristine } = this.props;
+
     return (
       <form className="form conference-info" onSubmit={handleSubmit}>
         <div>
@@ -157,7 +181,8 @@ class Info extends Component {
                 label="Save"
                 primary={true}
                 type="submit"
-                disabled={submitting}
+                disabled={pristine || submitting}
+                onClick={this.saveConference}
               />
             </div>
           </div>
@@ -188,4 +213,64 @@ Info = reduxForm({
   validate,
 })(Info);
 
-export default Info;
+const mapStateToProps = (state, ownProps) => {
+  const conference = ownProps.conference;
+  const organizerDetail = conference.organizerDetail;
+  return {
+    id: state.conference.id,
+    initialValues: {
+      title: conference.title,
+      description: conference.description,
+      startDate: new Date(conference.start_date),
+      endDate: new Date(conference.end_date),
+      organizerName: organizerDetail.name,
+      organizerEmail: organizerDetail.email,
+      organizerWebsite: organizerDetail.website,
+      organizerPhoneNumber: organizerDetail.phone,
+    },
+  };
+};
+
+const selector = formValueSelector('conferenceInfo'); // <-- same as form name
+Info = connect(state => {
+  // can select values individually
+  const title = selector(state, 'title');
+  const description = selector(state, 'description');
+  const startDate = selector(state, 'startDate');
+  const endDate = selector(state, 'endDate');
+  return {
+    title,
+    description,
+    startDate,
+    endDate,
+  };
+})(Info);
+
+const UPDATE_CONFERENCE = gql`
+  mutation UpdateConference(
+    $id: ID!
+    $title: String!
+    $description: String!
+    $start_date: Date!
+    $end_date: Date!
+  ) {
+    updateConference(
+      id: $id
+      title: $title
+      description: $description
+      start_date: $start_date
+      end_date: $end_date
+    ) {
+      id
+      title
+      description
+      start_date
+      end_date
+    }
+  }
+`;
+
+export default compose(
+  connect(mapStateToProps, undefined),
+  graphql(UPDATE_CONFERENCE),
+)(Info);

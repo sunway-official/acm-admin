@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "homepage": "http://acm-dtu.appspot.com",
+  "engines": {
+    "node": "8.x"
+  },
   "dependencies": {
     "apollo-link": "^0.5.4",
     "bootstrap": "^4.0.0-alpha.6",
