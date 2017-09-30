@@ -1,30 +1,42 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
 import { graphql, gql } from 'react-apollo';
 
-const AuthRoute = ({
-  component: Component,
-  needAuth,
-  needGuest,
-  data: { loading, error },
-  ...rest
-}) =>
-  loading ? (
-    <div>Loading...</div>
-  ) : (
-    <Route
-      {...rest}
-      render={props =>
-        error && needAuth ? (
-          <Redirect to="/login" />
-        ) : !error && needGuest ? (
-          <Redirect to="/" />
-        ) : (
-          <Component {...props} />
-        )}
-    />
-  );
+class AuthRoute extends PureComponent {
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.data.error) {
+      localStorage.clear();
+    }
+    if (nextProps.data.me) {
+      // TODO: Add user id to local storage
+      // localStorage.setItem('userId', nextProps.data.me.id);
+    }
+  }
+  render() {
+    const {
+      component: Component,
+      needAuth,
+      needGuest,
+      data: { loading, error },
+      ...rest
+    } = this.props;
+
+    if (loading) {
+      return <div>Loading</div>;
+    }
+
+    if (error && needAuth) {
+      return <Route {...rest} render={props => <Redirect to="/login" />} />;
+    }
+
+    if (!error && needGuest) {
+      return <Route {...rest} render={props => <Redirect to="/" />} />;
+    }
+
+    return <Route {...rest} render={props => <Component {...props} />} />;
+  }
+}
 
 AuthRoute.propTypes = {
   needAuth: PropTypes.bool,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
 import ConferenceInfo from '../pages/conference/info';
 import ConferenceStaffList from '../pages/conference/people/staff/list';
 import Dashboard from '../pages/dashboard';
@@ -27,16 +27,16 @@ export default () => (
       {''}
       <Wrapper>
         <Switch>
-          <Route exact path="/" component={Dashboard} />{' '}
-          <Route path="/conference/:id/info" component={ConferenceInfo} />
-          <Route
+          <AuthRoute needAuth exact path="/" component={Dashboard} />{' '}
+          <AuthRoute path="/conference/:id/info" component={ConferenceInfo} />
+          <AuthRoute
             path="/conference/people/staff"
             component={ConferenceStaffList}
           />
-          <Route exact path="/userInfo" component={UserInfo} />{' '}
-          <Route exact path="/userProfile" component={UserProfile} />{' '}
-          <Route path="/withThunk" component={WithThunk} />
-          <Route component={NoMatch} />{' '}
+          <AuthRoute exact path="/userInfo" component={UserInfo} />{' '}
+          <AuthRoute exact path="/userProfile" component={UserProfile} />{' '}
+          <AuthRoute path="/withThunk" component={WithThunk} />
+          <AuthRoute component={NoMatch} />{' '}
         </Switch>{' '}
       </Wrapper>
     </Switch>
