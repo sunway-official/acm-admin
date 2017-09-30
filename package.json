@@ -31,8 +31,10 @@
     "subscriptions-transport-ws": "0.8.3"
   },
   "scripts": {
-    "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
-    "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
+    "build-css":
+      "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
+    "watch-css":
+      "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
     "start-js": "react-scripts start",
     "dev": "npm-run-all -p watch-css start-js",
     "build": "npm run build-css && react-scripts build",
@@ -53,7 +55,7 @@
   },
   "lint-staged": {
     "src/**/*.{js,jsx}": [
-      "prettier --tab-width 2 --single-quote --trailing-comma all --print-with 80 --write",
+      "prettier --single-quote --trailing-comma all --write",
       "git add"
     ]
   }
