@@ -3,15 +3,10 @@ import { Subheader, IconButton } from 'material-ui';
 import { Link } from 'react-router-dom';
 import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import ConferenceInfo from './conferenceInfo';
-import { connect } from 'react-redux';
 import showResults from './showResults';
-import { graphql, gql, compose } from 'react-apollo';
-import { conferenceOperations } from '../../../store/ducks/conference';
+import { graphql, gql } from 'react-apollo';
 
 class Index extends PureComponent {
-  componentDidMount() {
-    this.props.getConferenceId(this.props.match.params.id);
-  }
   render() {
     // console.log(this.props);
     const { loading } = this.props.data;
@@ -19,8 +14,6 @@ class Index extends PureComponent {
     if (loading) return <div>loading</div>;
 
     const conference = this.props.data.getConferenceByID;
-    // console.log(c);
-    // console.log(this.props);
     return (
       <div className="conference">
         <Subheader className="subheader"> Conference Information</Subheader>
@@ -43,12 +36,6 @@ class Index extends PureComponent {
     );
   }
 }
-
-const mapDispatchToProps = dispatch => {
-  return {
-    getConferenceId: id => dispatch(conferenceOperations.getIdOperation(id)),
-  };
-};
 
 const GET_CONFERENCE_BY_ID_QUERY = gql`
   query getConference($id: ID!) {
@@ -74,9 +61,6 @@ const GET_CONFERENCE_BY_ID_QUERY = gql`
   }
 `;
 
-export default compose(
-  connect(undefined, mapDispatchToProps),
-  graphql(GET_CONFERENCE_BY_ID_QUERY, {
-    options: ownProps => ({ variables: { id: ownProps.match.params.id } }),
-  }),
-)(Index);
+export default graphql(GET_CONFERENCE_BY_ID_QUERY, {
+  options: ownProps => ({ variables: { id: ownProps.match.params.id } }),
+})(Index);

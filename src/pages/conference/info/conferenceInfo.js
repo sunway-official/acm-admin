@@ -200,16 +200,6 @@ maxDate.setFullYear(
 );
 Info = reduxForm({
   form: 'conferenceInfo',
-  initialValues: {
-    title: 'Android',
-    description: 'This...',
-    startDate: minDate,
-    endDate: maxDate,
-    organizerName: 'Duy Tan University',
-    organizerEmail: 'duytan@gmail.com',
-    organizerWebsite: 'mydtu.com',
-    organizerPhoneNumber: '123-123-1233',
-  },
   validate,
 })(Info);
 
