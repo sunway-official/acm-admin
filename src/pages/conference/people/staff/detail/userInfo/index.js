@@ -8,6 +8,7 @@ import UserAvatar from '../changeAvatar/userAvatar';
 
 export default class Index extends Component {
   render() {
+    console.log(this.props);
     return (
       <div className="conference">
         <Subheader className="subheader"> User Info </Subheader>

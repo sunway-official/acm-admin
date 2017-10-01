@@ -40,6 +40,7 @@ export default class PersonalInfo extends Component {
                   disabled={true}
                   id="text-field-default"
                   defaultValue="Le Quoc Manh"
+                  underlineShow={false}
                 />
               </TableRowColumn>
               <TableRowColumn />
@@ -78,6 +79,7 @@ export default class PersonalInfo extends Component {
                   disabled={true}
                   id="text-field-default"
                   defaultValue="lequocmanh@gmail.com"
+                  underlineShow={false}
                 />
               </TableRowColumn>
               <TableRowColumn />
@@ -96,6 +98,7 @@ export default class PersonalInfo extends Component {
                   disabled={true}
                   id="text-field-default"
                   defaultValue="13-03-1996"
+                  underlineShow={false}
                 />
               </TableRowColumn>
               <TableRowColumn />
