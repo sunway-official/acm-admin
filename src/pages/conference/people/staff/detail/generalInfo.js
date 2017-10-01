@@ -13,11 +13,17 @@ export default class GeneralInfo extends React.Component {
         <div className="profile-usertitle-job"> Developer </div>
         <div className="profile-user-menu">
           <List>
-            <ListItem
-              className="list-item"
-              primaryText="Inbox"
-              leftIcon={<CommunicationMessage />}
-            />
+            <ListItem className="list-item" leftIcon={<CommunicationMessage />}>
+              <a href="#">
+                <i className="fa fa-facebook-square fa-lg" aria-hidden="true" />
+              </a>
+              <a>
+                <i className="fa fa-twitter-square fa-lg" aria-hidden="true" />
+              </a>
+              <a>
+                <i className="fa fa-linkedin-square fa-lg" aria-hidden="true" />
+              </a>
+            </ListItem>
             <ListItem
               className="list-item"
               primaryText="Male"

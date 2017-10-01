@@ -56,6 +56,7 @@ const ME_QUERY = gql`
       id
       firstname
       lastname
+      gender
     }
   }
 `;

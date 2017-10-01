@@ -45,8 +45,8 @@ const ChangePassword = props => {
   return (
     <div>
       <Grid fluid>
-        <Row>
-          <Col xs={12}>
+        <Row around="xs">
+          <Col xs={8}>
             <form onSubmit={handleSubmit}>
               <Row className="changePass">
                 <Field

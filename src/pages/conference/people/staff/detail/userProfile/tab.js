@@ -47,7 +47,7 @@ export default class InfoTabs extends React.Component {
           <div>
             <EditablePersonalInfo />
           </div>
-          <div style={styles.slide} className="personalInfoTab">
+          <div style={styles.slide}>
             <ChangePassword />
           </div>
         </SwipeableViews>
