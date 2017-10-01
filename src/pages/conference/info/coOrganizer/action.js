@@ -8,7 +8,6 @@ export default class Index extends Component {
     openEdit: false,
     openDelete: false,
   };
-  c;
 
   handleOpenDelete = () => {
     this.setState({ openDelete: true });

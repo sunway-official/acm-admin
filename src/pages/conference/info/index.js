@@ -3,25 +3,21 @@ import { Subheader, IconButton, Tabs, Tab } from 'material-ui';
 import { Link } from 'react-router-dom';
 import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import ConferenceInfo from './conferenceInfo';
-import { connect } from 'react-redux';
 import showResults from './showResults';
 import { graphql, gql, compose } from 'react-apollo';
 import { conferenceOperations } from '../../../store/ducks/conference';
 import CoOrganizerList from './coOrganizer/coOrganizerList';
 
 class Index extends PureComponent {
-  componentDidMount() {
-    this.props.getConferenceId(this.props.match.params.id);
-  }
   render() {
     // console.log(this.props);
     const { loading } = this.props.data;
 
-    if (loading) return <div>loading</div>;
+    if (loading) return <div>loading...</div>;
 
     const conference = this.props.data.getConferenceByID;
-    // console.log(c);
-    // console.log(this.props);
+    const coOrganizerDetails = conference.coOrganizerDetails;
+
     return (
       <div className="conference">
         <Subheader className="subheader"> Conference Information</Subheader>
@@ -40,10 +36,10 @@ class Index extends PureComponent {
         <div className="dashboard content d-flex">
           <Tabs style={{ width: '100%' }}>
             <Tab label="Basic Information">
-              <ConferenceInfo onSubmit={showResults} />
+              <ConferenceInfo onSubmit={showResults} conference={conference} />
             </Tab>
             <Tab label="Co-Organizer">
-              <CoOrganizerList />
+              <CoOrganizerList coOrganizerDetails={coOrganizerDetails} />
             </Tab>
           </Tabs>
         </div>
@@ -51,12 +47,6 @@ class Index extends PureComponent {
     );
   }
 }
-
-const mapDispatchToProps = dispatch => {
-  return {
-    getConferenceId: id => dispatch(conferenceOperations.getIdOperation(id)),
-  };
-};
 
 const GET_CONFERENCE_BY_ID_QUERY = gql`
   query getConference($id: ID!) {
@@ -73,6 +63,7 @@ const GET_CONFERENCE_BY_ID_QUERY = gql`
         phone
       }
       coOrganizerDetails {
+        id
         name
         email
         website
@@ -82,9 +73,6 @@ const GET_CONFERENCE_BY_ID_QUERY = gql`
   }
 `;
 
-export default compose(
-  connect(undefined, mapDispatchToProps),
-  graphql(GET_CONFERENCE_BY_ID_QUERY, {
-    options: ownProps => ({ variables: { id: ownProps.match.params.id } }),
-  }),
-)(Index);
+export default graphql(GET_CONFERENCE_BY_ID_QUERY, {
+  options: ownProps => ({ variables: { id: ownProps.match.params.id } }),
+})(Index);

@@ -8,70 +8,86 @@ import {
   TableHeaderColumn,
   TableRow,
   TableRowColumn,
+  RaisedButton,
+  Dialog,
 } from 'material-ui';
-import Action from './action';
+import CoOrganizerInfo from './coOrganizerInfo';
 
-const tableData = [
-  {
-    name: 'asd',
-    email: 'email',
-    website: 'website',
-    phoneNumber: 'phone',
-  },
-];
-// const CoOrganizerList = ({ data: { loading, error, getConferenceByID } }) => {
-//   if (loading) return <p>Loading ... </p>;
-//   if (error) return <p>{error.message}</p>;
-//   const data = getConferenceByID;
-const CoOrganizerList = () => {
-  return (
-    <div className="d-flex">
-      <div className="list staff">
-        <Table fixedHeader={true}>
-          <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
-            <TableRow>
-              <TableHeaderColumn>Name</TableHeaderColumn>
-              <TableHeaderColumn>Email</TableHeaderColumn>
-              <TableHeaderColumn>Website</TableHeaderColumn>
-              <TableHeaderColumn>Phone-number</TableHeaderColumn>
-              <TableHeaderColumn>Action</TableHeaderColumn>
-            </TableRow>
-          </TableHeader>
-          <TableBody displayRowCheckbox={false}>
-            {tableData.map(coOrganizer => (
-              <TableRow key={coOrganizer.name}>
-                <TableRowColumn>{coOrganizer.name}</TableRowColumn>
-                <TableRowColumn>{coOrganizer.email}</TableRowColumn>
-                <TableRowColumn>{coOrganizer.website}</TableRowColumn>
-                <TableRowColumn>{coOrganizer.phone}</TableRowColumn>
-                <TableRowColumn>
-                  <Action />
-                </TableRowColumn>
+class CoOrganizerList extends Component {
+  constructor() {
+    super();
+  }
+  state = {
+    openEdit: false,
+    openDelete: false,
+    coOrganizer: {},
+  };
+
+  handleOpenDelete = () => {
+    this.setState({ openDelete: true });
+  };
+  handleOpenEdit = coOrganizer => {
+    this.setState({ openEdit: true });
+    this.setState({
+      coOrganizer: coOrganizer,
+    });
+  };
+
+  handleClose = () => {
+    this.setState({ openDelete: false, openEdit: false });
+  };
+  render() {
+    const data = this.props.coOrganizerDetails;
+    const actions = [
+      <RaisedButton label="Cancel" default={true} onClick={this.handleClose} />,
+      <RaisedButton label="Submit" primary={true} />,
+    ];
+    return (
+      <div className="d-flex">
+        <div className="list staff">
+          <Table fixedHeader={true}>
+            <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
+              <TableRow>
+                <TableHeaderColumn>Name</TableHeaderColumn>
+                <TableHeaderColumn>Email</TableHeaderColumn>
+                <TableHeaderColumn>Website</TableHeaderColumn>
+                <TableHeaderColumn>Phone-number</TableHeaderColumn>
+                <TableHeaderColumn>Action</TableHeaderColumn>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody displayRowCheckbox={false}>
+              {data.map(coOrganizer => {
+                return (
+                  <TableRow key={coOrganizer.id}>
+                    <TableRowColumn>{coOrganizer.name}</TableRowColumn>
+                    <TableRowColumn>{coOrganizer.email}</TableRowColumn>
+                    <TableRowColumn>{coOrganizer.website}</TableRowColumn>
+                    <TableRowColumn>{coOrganizer.phone}</TableRowColumn>
+                    <TableRowColumn>
+                      <RaisedButton
+                        label="edit"
+                        primary={true}
+                        onClick={() => this.handleOpenEdit(coOrganizer)}
+                      />
+                      <Dialog
+                        title="Edit"
+                        actions={actions}
+                        modal={true}
+                        open={this.state.openEdit}
+                        onRequestClose={this.handleClose}
+                      >
+                        <CoOrganizerInfo data={this.state.coOrganizer} />
+                      </Dialog>
+                    </TableRowColumn>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </div>
       </div>
-    </div>
-  );
-};
-
-// const GET_ALL_COORGANIZER_DETAILS = gql`
-//   query getConferenceByID($id: ID!) {
-//     getConferenceByID(id: $id) {
-//       coOrganizerDetails {
-//         id
-//         name
-//         email
-//         website
-//         phone
-//       }
-//     }
-//   }
-// `;
-
-// export default graphql(GET_ALL_COORGANIZER_DETAILS, {
-//   options: ownProps => ({ variables: { id: ownProps.match.params.id } }),
-// })(CoOrganizerList);
+    );
+  }
+}
 
 export default CoOrganizerList;

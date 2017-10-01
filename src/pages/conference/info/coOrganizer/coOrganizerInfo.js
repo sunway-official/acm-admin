@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
 import { RaisedButton, Subheader, TextField } from 'material-ui';
+import { connect } from 'react-redux';
 import { style } from '../style.css';
 
 const validate = values => {
@@ -97,15 +98,23 @@ class Info extends Component {
     );
   }
 }
+
+const mapStateToProps = (state, ownProps) => {
+  const data = ownProps.data;
+  return {
+    initialValues: {
+      coOrganizerName: data.name,
+      coOrganizerEmail: data.email,
+      coOrganizerWebsite: data.website,
+      coOrganizerPhoneNumber: data.phone,
+    },
+  };
+};
+
 Info = reduxForm({
   form: 'coOrganizerInfo',
-  initialValues: {
-    coOrganizerName: 'Duy Tan University',
-    coOrganizerEmail: 'duytan@gmail.com',
-    coOrganizerWebsite: 'mydtu.com',
-    coOrganizerPhoneNumber: '123-123-1233',
-  },
+
   validate,
 })(Info);
 
-export default Info;
+export default connect(mapStateToProps, undefined)(Info);
