@@ -30,8 +30,8 @@ export default () => (
             path="/conference/people/staff"
             component={ConferenceStaffList}
           />
-          <AuthRoute exact path="/userInfo" component={UserInfo} />
           <AuthRoute exact path="/userProfile" component={UserProfile} />
+          <AuthRoute exact path="/userInfo" component={UserInfo} />
           <AuthRoute path="/withThunk" component={WithThunk} />
           <AuthRoute component={NoMatch} />
         </Switch>

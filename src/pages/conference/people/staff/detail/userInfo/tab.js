@@ -2,11 +2,9 @@ import React from 'react';
 import { Tabs, Tab } from 'material-ui/Tabs';
 // From https://github.com/oliviertassinari/react-swipeable-views
 import SwipeableViews from 'react-swipeable-views';
-import PersonalInfo from '../personalInfo';
-//import CardExampleWithAvatar from './changeAvatar/index';
-import ChangePassword from '../changePassword';
+import PersonalInfo from '../personalInfo/personalInfo';
+import FeaturesSetting from '../featuresSetting';
 import '../style.css';
-//import FeaturesSetting from './featuresSetting';
 
 const styles = {
   headline: {
@@ -20,7 +18,7 @@ const styles = {
   },
 };
 
-export default class InfoTabs extends React.Component {
+export default class ProfileTabs extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -38,7 +36,7 @@ export default class InfoTabs extends React.Component {
       <div>
         <Tabs onChange={this.handleChange} value={this.state.slideIndex}>
           <Tab label="Personal Info" value={0} />
-          <Tab label="Change Password" value={1} />
+          <Tab label="Features Setting" value={1} />
         </Tabs>
         <SwipeableViews
           index={this.state.slideIndex}
@@ -47,8 +45,8 @@ export default class InfoTabs extends React.Component {
           <div>
             <PersonalInfo />
           </div>
-          <div style={styles.slide}>
-            <ChangePassword />
+          <div style={styles.slide} className="personalInfoTab">
+            <FeaturesSetting />
           </div>
         </SwipeableViews>
       </div>
