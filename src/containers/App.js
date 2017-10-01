@@ -13,8 +13,8 @@ import AuthRoute from '../components/AuthRoute';
 
 import { muiTheme } from '../theme';
 import Wrapper from './wrapper';
-import UserInfo from '../pages/conference/people/staff/detail/user-info';
-import UserProfile from '../pages/conference/people/staff/detail/user-profile';
+import UserInfo from '../pages/conference/people/staff/detail/userInfo';
+import UserProfile from '../pages/conference/people/staff/detail/userProfile';
 
 export default () => (
   <MuiThemeProvider muiTheme={muiTheme}>
@@ -30,8 +30,8 @@ export default () => (
             path="/conference/people/staff"
             component={ConferenceStaffList}
           />
-          <AuthRoute exact path="/userInfo" component={UserInfo} />
           <AuthRoute exact path="/userProfile" component={UserProfile} />
+          <AuthRoute exact path="/userInfo" component={UserInfo} />
           <AuthRoute path="/withThunk" component={WithThunk} />
           <AuthRoute component={NoMatch} />
         </Switch>

@@ -63,14 +63,14 @@ class BadgeExampleSimple extends Component {
     });
   };
 
-  // handleRequestClose = () => {
-  //   this.setState({
-  //     openUser: false,
-  //     openNotification: false,
-  //     openMail: false,
-  //     openCalendar: false,
-  //   });
-  // };
+  handleRequestClose = () => {
+    this.setState({
+      openUser: false,
+      openNotification: false,
+      openMail: false,
+      openCalendar: false,
+    });
+  };
 
   handleSignOut() {
     localStorage.clear();
@@ -210,11 +210,8 @@ class BadgeExampleSimple extends Component {
               <MenuItem primaryText="A" />
               <MenuItem primaryText="Help &amp; feedback" />
               <MenuItem primaryText="Settings" />
-              <Link to="/userInfo">
-                <MenuItem
-                  primaryText="User Info"
-                  onClick={this.handleSignOut}
-                />
+              <Link to="/userProfile">
+                <MenuItem primaryText="User Profile" />
               </Link>
               <MenuItem primaryText="Sign out" onClick={this.handleSignOut} />
             </Menu>

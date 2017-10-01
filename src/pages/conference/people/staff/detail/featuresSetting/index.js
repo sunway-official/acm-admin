@@ -37,7 +37,6 @@ export default class Index extends Component {
               <TableRow>
                 <TableHeaderColumn>ID</TableHeaderColumn>
                 <TableHeaderColumn>Feature</TableHeaderColumn>
-                <TableHeaderColumn />
                 <TableHeaderColumn>Status</TableHeaderColumn>
               </TableRow>
             </TableHeader>
@@ -46,7 +45,6 @@ export default class Index extends Component {
                 <TableRow key={index}>
                   <TableRowColumn>{index}</TableRowColumn>
                   <TableRowColumn>{row.feature}</TableRowColumn>
-                  <TableRowColumn />
                   <TableRowColumn>
                     <Toggle defaultToggled={true} />
                   </TableRowColumn>

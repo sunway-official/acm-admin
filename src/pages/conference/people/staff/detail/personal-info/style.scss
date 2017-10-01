@@ -23,9 +23,13 @@
 .dropdown-gender {
   height: 45px !important;
 }
-.radio{
-  &.gender{
+.radio {
+  &.gender {
     display: inline-flex;
-    justify-content: space-around;
+    padding: 0px !important;
+    margin: 0px !important;
+    .male {
+      width: 60% !important;
+    }
   }
 }
