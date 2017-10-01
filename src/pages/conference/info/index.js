@@ -3,7 +3,6 @@ import { Subheader, IconButton, Tabs, Tab } from 'material-ui';
 import { Link } from 'react-router-dom';
 import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import ConferenceInfo from './conferenceInfo';
-import showResults from './showResults';
 import { graphql, gql } from 'react-apollo';
 import CoOrganizerList from './coOrganizer/coOrganizerList';
 
@@ -35,7 +34,7 @@ class Index extends PureComponent {
         <div className="dashboard content d-flex">
           <Tabs style={{ width: '100%' }}>
             <Tab label="Basic Information">
-              <ConferenceInfo onSubmit={showResults} conference={conference} />
+              <ConferenceInfo conference={conference} />
             </Tab>
             <Tab label="Co-Organizer">
               <CoOrganizerList coOrganizerDetails={coOrganizerDetails} />

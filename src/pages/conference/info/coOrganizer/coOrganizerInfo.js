@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { reduxForm, Field } from 'redux-form';
-import { RaisedButton, Subheader, TextField } from 'material-ui';
+import { reduxForm, Field, formValueSelector } from 'redux-form';
+import { RaisedButton, TextField } from 'material-ui';
+import { gql, graphql, compose } from 'react-apollo';
 import { connect } from 'react-redux';
-import { style } from '../style.css';
+import { style } from './style.css';
+import normalizePhone from '../normalizePhone';
 
 const validate = values => {
   const errors = {};
@@ -10,7 +12,7 @@ const validate = values => {
     'coOrganizerName',
     'coOrganizerEmail',
     'coOrganizerWebsite',
-    'coOrganizerPhoneNumber',
+    'coOrganizerPhone',
   ];
   requiredFields.forEach(field => {
     if (!values[field]) {
@@ -21,7 +23,7 @@ const validate = values => {
     values.organizerEmail &&
     !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.organizerEmail)
   ) {
-    errors.organizerEmail = 'Invalid email address';
+    errors.organizerEmail = 'Invalid email addrecss';
   }
   return errors;
 };
@@ -34,65 +36,83 @@ const renderTextField = ({
 }) => <TextField errorText={touched && error} {...input} {...custom} />;
 
 class Info extends Component {
+  constructor() {
+    super();
+    this.save = this.save.bind(this);
+  }
+
+  save() {
+    const {
+      UPDATE_COORGANIZER_MUTATION,
+      coOrganizerId,
+      coOrganizerName,
+      coOrganizerEmail,
+      coOrganizerWebsite,
+      coOrganizerPhone,
+    } = this.props;
+    UPDATE_COORGANIZER_MUTATION({
+      variables: {
+        id: coOrganizerId,
+        name: coOrganizerName,
+        email: coOrganizerEmail,
+        website: coOrganizerWebsite,
+        phone: coOrganizerPhone,
+      },
+    });
+  }
   render() {
-    const { handleSubmit, submitting } = this.props;
+    const { handleSubmit, submitting, pristine } = this.props;
     return (
       <form className="form conference-info" onSubmit={handleSubmit}>
+        <style dangerouslySetInnerHTML={{ __html: style }} />
         <div>
-          <style dangerouslySetInnerHTML={{ __html: style }} />
           <div>
-            <div>
-              <Subheader className="header title">
-                Co-Organizer Information
-              </Subheader>
-              <div>
-                <div className="d-flex form-group">
-                  <label>Name :</label>
-                  <Field
-                    name="coOrganizerName"
-                    component={renderTextField}
-                    hintText="Co-Organizer Name"
-                    fullWidth={true}
-                  />
-                </div>
-                <div className="d-flex form-group">
-                  <label>Email :</label>
-                  <Field
-                    name="coOrganizerEmail"
-                    component={renderTextField}
-                    hintText="Co-Organizer Email"
-                    fullWidth={true}
-                  />
-                </div>
-                <div className="d-flex form-group">
-                  <label>Website :</label>
-                  <Field
-                    name="coOrganizerWebsite"
-                    component={renderTextField}
-                    hintText="Co-Organizer Website"
-                    fullWidth={true}
-                  />
-                </div>
-                <div className="d-flex form-group">
-                  <label>Phone Number :</label>
-                  <Field
-                    name="coOrganizerPhoneNumber"
-                    component={renderTextField}
-                    hintText="Co-Organizer Phone Number"
-                    fullWidth={true}
-                  />
-                </div>
-              </div>
+            <div className="d-flex form-group">
+              <label>Name :</label>
+              <Field
+                name="coOrganizerName"
+                component={renderTextField}
+                hintText="Co-Organizer Name"
+                fullWidth={true}
+              />
             </div>
-            <div className="d-flex save-btn btn-group">
-              <RaisedButton
-                label="Save"
-                primary={true}
-                type="submit"
-                disabled={submitting}
+            <div className="d-flex form-group">
+              <label>Email :</label>
+              <Field
+                name="coOrganizerEmail"
+                component={renderTextField}
+                hintText="Co-Organizer Email"
+                fullWidth={true}
+              />
+            </div>
+            <div className="d-flex form-group">
+              <label>Website :</label>
+              <Field
+                name="coOrganizerWebsite"
+                component={renderTextField}
+                hintText="Co-Organizer Website"
+                fullWidth={true}
+              />
+            </div>
+            <div className="d-flex form-group">
+              <label>Phone Number :</label>
+              <Field
+                name="coOrganizerPhone"
+                component={renderTextField}
+                hintText="Co-Organizer Phone Number"
+                fullWidth={true}
+                normalize={normalizePhone}
               />
             </div>
           </div>
+        </div>
+        <div className="d-flex save-btn btn-group">
+          <RaisedButton
+            label="Save"
+            primary={true}
+            onClick={this.save}
+            disabled={pristine || submitting}
+          />
         </div>
       </form>
     );
@@ -102,14 +122,54 @@ class Info extends Component {
 const mapStateToProps = (state, ownProps) => {
   const data = ownProps.data;
   return {
+    coOrganizerId: data.id,
     initialValues: {
       coOrganizerName: data.name,
       coOrganizerEmail: data.email,
       coOrganizerWebsite: data.website,
-      coOrganizerPhoneNumber: data.phone,
+      coOrganizerPhone: data.phone,
     },
   };
 };
+
+const selector = formValueSelector('coOrganizerInfo');
+
+Info = connect(state => {
+  const coOrganizerName = selector(state, 'coOrganizerName');
+  const coOrganizerEmail = selector(state, 'coOrganizerEmail');
+  const coOrganizerWebsite = selector(state, 'coOrganizerWebsite');
+  const coOrganizerPhone = selector(state, 'coOrganizerPhone');
+  return {
+    coOrganizerName,
+    coOrganizerEmail,
+    coOrganizerWebsite,
+    coOrganizerPhone,
+  };
+})(Info);
+
+const UPDATE_COORGANIZER_MUTATION = gql`
+  mutation UpdateCoOrganizerDetail(
+    $id: ID!
+    $name: String!
+    $email: String!
+    $website: String!
+    $phone: String!
+  ) {
+    updateCoOrganizerDetail(
+      id: $id
+      name: $name
+      email: $email
+      website: $website
+      phone: $phone
+    ) {
+      id
+      name
+      email
+      website
+      phone
+    }
+  }
+`;
 
 Info = reduxForm({
   form: 'coOrganizerInfo',
@@ -117,4 +177,10 @@ Info = reduxForm({
   validate,
 })(Info);
 
-export default connect(mapStateToProps, undefined)(Info);
+export default compose(
+  connect(mapStateToProps, undefined),
+  graphql(UPDATE_COORGANIZER_MUTATION, {
+    name: 'UPDATE_COORGANIZER_MUTATION',
+  }),
+)(Info);
+// export default connect(mapStateToProps, undefined)(Info);

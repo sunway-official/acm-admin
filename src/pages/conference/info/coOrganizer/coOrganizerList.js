@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { gql, graphql } from 'react-apollo';
+import { style } from '../style.css';
 import {
   Table,
   TableBody,
@@ -8,7 +10,9 @@ import {
   TableRowColumn,
   RaisedButton,
   Dialog,
+  IconButton,
 } from 'material-ui';
+import { NavigationClose } from 'material-ui/svg-icons';
 import CoOrganizerInfo from './coOrganizerInfo';
 
 class CoOrganizerList extends Component {
@@ -34,11 +38,17 @@ class CoOrganizerList extends Component {
   render() {
     const data = this.props.coOrganizerDetails;
     const actions = [
-      <RaisedButton label="Cancel" default={true} onClick={this.handleClose} />,
-      <RaisedButton label="Submit" primary={true} />,
+      <IconButton
+        tooltip="Close"
+        className="cancel-btn dialog"
+        onClick={this.handleClose}
+      >
+        <NavigationClose />
+      </IconButton>,
     ];
     return (
       <div className="d-flex">
+        <style dangerouslySetInnerHTML={{ __html: style }} />
         <div className="list staff">
           <Table fixedHeader={true}>
             <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
@@ -64,25 +74,47 @@ class CoOrganizerList extends Component {
                         primary={true}
                         onClick={() => this.handleOpenEdit(coOrganizer)}
                       />
-                      <Dialog
-                        title="Edit"
-                        actions={actions}
-                        modal={true}
-                        open={this.state.openEdit}
-                        onRequestClose={this.handleClose}
-                      >
-                        <CoOrganizerInfo data={this.state.coOrganizer} />
-                      </Dialog>
                     </TableRowColumn>
                   </TableRow>
                 );
               })}
             </TableBody>
           </Table>
+          <Dialog
+            title="Edit Information"
+            actions={actions}
+            modal={true}
+            open={this.state.openEdit}
+            onRequestClose={this.handleClose}
+          >
+            <CoOrganizerInfo data={this.state.coOrganizer} />
+          </Dialog>
         </div>
       </div>
     );
   }
 }
 
-export default CoOrganizerList;
+const insertCoOrganizerDetail = gql`
+  mutation insertCoOrganizerDetail(
+    $name: String!
+    $email: String!
+    $website: String!
+    $phone: String!
+  ) {
+    insertCoOrganizerDetail(
+      name: $name
+      email: $email
+      website: $website
+      phone: $phone
+    ) {
+      id
+      name
+      email
+      website
+      phone
+    }
+  }
+`;
+
+export default graphql(insertCoOrganizerDetail)(CoOrganizerList);
