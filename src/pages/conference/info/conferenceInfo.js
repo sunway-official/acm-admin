@@ -137,7 +137,7 @@ class Info extends Component {
                     name="description"
                     component={renderTextField}
                     multiLine
-                    rows={1}
+                    rows={3}
                     fullWidth={true}
                   />
                 </div>
