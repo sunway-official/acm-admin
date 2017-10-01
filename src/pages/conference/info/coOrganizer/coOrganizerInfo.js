@@ -112,6 +112,7 @@ class Info extends Component {
             primary={true}
             onClick={this.save}
             disabled={pristine || submitting}
+            type="submit"
           />
         </div>
       </form>
@@ -120,14 +121,14 @@ class Info extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const data = ownProps.data;
+  const coOrganizerDetails = ownProps.coOrganizerDetails;
   return {
-    coOrganizerId: data.id,
+    coOrganizerId: coOrganizerDetails.id,
     initialValues: {
-      coOrganizerName: data.name,
-      coOrganizerEmail: data.email,
-      coOrganizerWebsite: data.website,
-      coOrganizerPhone: data.phone,
+      coOrganizerName: coOrganizerDetails.name,
+      coOrganizerEmail: coOrganizerDetails.email,
+      coOrganizerWebsite: coOrganizerDetails.website,
+      coOrganizerPhone: coOrganizerDetails.phone,
     },
   };
 };

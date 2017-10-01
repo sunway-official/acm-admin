@@ -36,7 +36,7 @@ class CoOrganizerList extends Component {
     this.setState({ openDelete: false, openEdit: false });
   };
   render() {
-    const data = this.props.coOrganizerDetails;
+    const coOrganizerDetails = this.props.coOrganizerDetails;
     const actions = [
       <IconButton
         tooltip="Close"
@@ -61,7 +61,7 @@ class CoOrganizerList extends Component {
               </TableRow>
             </TableHeader>
             <TableBody displayRowCheckbox={false}>
-              {data.map(coOrganizer => {
+              {coOrganizerDetails.map(coOrganizer => {
                 return (
                   <TableRow key={coOrganizer.id}>
                     <TableRowColumn>{coOrganizer.name}</TableRowColumn>
@@ -87,7 +87,10 @@ class CoOrganizerList extends Component {
             open={this.state.openEdit}
             onRequestClose={this.handleClose}
           >
-            <CoOrganizerInfo data={this.state.coOrganizer} />
+            <CoOrganizerInfo
+              coOrganizerDetails={this.state.coOrganizer}
+              onSubmit={this.handleClose}
+            />
           </Dialog>
         </div>
       </div>

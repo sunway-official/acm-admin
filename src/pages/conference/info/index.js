@@ -5,7 +5,6 @@ import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import ConferenceInfo from './conferenceInfo';
 import { graphql, gql } from 'react-apollo';
 import CoOrganizerList from './coOrganizer/coOrganizerList';
-
 class Index extends PureComponent {
   render() {
     // console.log(this.props);
@@ -34,7 +33,7 @@ class Index extends PureComponent {
         <div className="dashboard content d-flex">
           <Tabs style={{ width: '100%' }}>
             <Tab label="Basic Information">
-              <ConferenceInfo conference={conference} />
+              <ConferenceInfo conference={conference} onSubmit={() => {}} />
             </Tab>
             <Tab label="Co-Organizer">
               <CoOrganizerList coOrganizerDetails={coOrganizerDetails} />
