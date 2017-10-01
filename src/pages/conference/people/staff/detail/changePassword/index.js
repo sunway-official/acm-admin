@@ -2,6 +2,7 @@ import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { TextField, RaisedButton } from 'material-ui';
 import './style.css';
+import { Grid, Row, Col } from 'react-flexbox-grid';
 
 const validate = values => {
   const errors = {};
@@ -42,46 +43,56 @@ const renderField = ({
 const ChangePassword = props => {
   const { handleSubmit, submitting, invalid, pristine } = props;
   return (
-    <div className="changePassCard" id="changePassContainer">
-      <form onSubmit={handleSubmit}>
-        <div className="changePassField">
-          <Field
-            name="oldPassword"
-            type="password"
-            component={renderField}
-            label="Old Password"
-          />
-        </div>
-        <div className="changePassField">
-          <Field
-            name="newPassword"
-            type="password"
-            component={renderField}
-            label="New Password"
-          />
-        </div>
-        <div className="changePassField">
-          <Field
-            name="retypePassword"
-            type="password"
-            component={renderField}
-            label="Retype Password"
-          />
-        </div>
-        <div className="buttonRow">
-          <RaisedButton
-            className="btn changePass"
-            label="Save"
-            disabled={submitting || invalid || pristine}
-            primary={true}
-          />
-          <RaisedButton
-            className="btn changePass"
-            label="Cancel"
-            secondary={true}
-          />
-        </div>
-      </form>
+    <div>
+      <Grid fluid>
+        <Row>
+          <Col xs={12}>
+            <form onSubmit={handleSubmit}>
+              <Row className="changePass">
+                <Field
+                  name="oldPassword"
+                  type="password"
+                  component={renderField}
+                  label="Old Password"
+                />
+              </Row>
+              <Row className="changePass">
+                <Field
+                  name="newPassword"
+                  type="password"
+                  component={renderField}
+                  label="New Password"
+                />
+              </Row>
+              <Row className="changePass">
+                <Field
+                  name="retypePassword"
+                  type="password"
+                  component={renderField}
+                  label="Retype Password"
+                />
+              </Row>
+              <Row className="buttonRow">
+                <Col xsOffset={3} xs={3}>
+                  <RaisedButton
+                    className="btn changePass"
+                    label="Save"
+                    disabled={submitting || invalid || pristine}
+                    primary={true}
+                  />
+                </Col>
+                <Col xs={4}>
+                  <RaisedButton
+                    className="btn changePass"
+                    label="Cancel"
+                    secondary={true}
+                  />
+                </Col>
+              </Row>
+            </form>
+          </Col>
+        </Row>
+      </Grid>
     </div>
   );
 };

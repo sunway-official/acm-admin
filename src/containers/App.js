@@ -10,7 +10,7 @@ import Register from '../pages/authentication/register';
 import Forgot from '../pages/authentication/forgotPassword';
 import WithThunk from '../pages/withThunk';
 import AuthRoute from '../components/AuthRoute';
-
+import TestFlexBox from '../pages/conference/people/staff/detail/testFlexbox';
 import { muiTheme } from '../theme';
 import Wrapper from './wrapper';
 import UserInfo from '../pages/conference/people/staff/detail/userInfo';

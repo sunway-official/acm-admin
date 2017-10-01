@@ -6,7 +6,9 @@ import RaisedButton from 'material-ui/RaisedButton';
 import './RegisterForm.css';
 
 const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-
+const passwordRegex = new RegExp(
+  '^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{6,})',
+);
 const validate = values => {
   const errors = {};
   const requiredFields = [
@@ -30,6 +32,10 @@ const validate = values => {
     values.password !== values.confirmPassword
   ) {
     errors.confirmPassword = 'Password does not match!';
+  }
+  if (values.password && !passwordRegex.test(values.password)) {
+    errors.password =
+      'Password must contains at least 6 character include number and special character ';
   }
   return errors;
 };
