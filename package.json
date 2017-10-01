@@ -3,13 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "homepage": "http://acm-dtu.appspot.com",
+  "engines": {
+    "node": "8.x"
+  },
   "dependencies": {
     "apisauce": "^0.14.1",
-    "apollo-link": "^0.5.4",
-    "bootstrap": "^4.0.0-alpha.6",
     "font-awesome": "^4.7.0",
-    "graphql": "^0.10.5",
-    "material-ui": "^0.19.1",
+    "graphql": "0.10.5",
+    "material-ui": "^0.19.2",
     "moment": "^2.18.1",
     "node-sass-chokidar": "0.0.3",
     "npm-run-all": "^4.1.1",
@@ -22,15 +23,14 @@
     "react-icons-kit": "^1.0.7",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
-    "react-scripts": "1.0.13",
+    "react-scripts": "1.0.14",
     "react-swipeable-views": "^0.12.8",
-    "react-transition-group": "^1.1.2",
-    "reactstrap": "^4.8.0",
+    "react-transition-group": "^2.2.1",
     "redux": "^3.7.2",
     "redux-form": "^7.0.4",
-    "redux-form-material-ui": "^4.2.0",
+    "redux-form-material-ui": "^4.3.0",
     "redux-thunk": "^2.2.0",
-    "subscriptions-transport-ws": "^0.8.3"
+    "subscriptions-transport-ws": "0.8.3"
   },
   "scripts": {
     "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
@@ -45,16 +45,17 @@
     "prestart": "npm install -g serve"
   },
   "devDependencies": {
-    "eslint-config-prettier": "^2.5.0",
-    "eslint-plugin-prettier": "^2.2.0",
+    "eslint-config-prettier": "^2.6.0",
+    "eslint-plugin-prettier": "^2.3.1",
     "husky": "^0.14.3",
-    "lint-staged": "^4.2.1",
-    "prettier": "^1.7.0",
-    "prettier-eslint": "^8.1.0"
+    "lint-staged": "^4.2.3",
+    "npm-run-all": "^4.1.1",
+    "prettier": "^1.7.2",
+    "prettier-eslint": "^8.2.0"
   },
   "lint-staged": {
     "src/**/*.{js,jsx}": [
-      "prettier --tab-width 2 --single-quote --trailing-comma all --print-with 80 --write",
+      "prettier --single-quote --trailing-comma all --write",
       "git add"
     ]
   }

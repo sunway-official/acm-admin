@@ -23,8 +23,7 @@ class Register extends PureComponent {
     } catch (e) {
       console.error(e);
       throw new SubmissionError({
-        email: 'Wrong email or password',
-        _error: 'Wrong email or password',
+        _error: 'Failed to register, please try again later',
       });
     }
   }
