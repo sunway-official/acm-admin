@@ -8,13 +8,14 @@
   width: 40vw;
 }
 .buttonRow{
-  justify-content: space-around;
   .btn {
     &.changePass {
-      width: 120px !important;
+      width: 150px;
       box-shadow: none !important;
       margin: 20px 10px 0px 0px;
     }
   }
 }
-
+.changePass{
+  text-align: left !important;
+}

@@ -57,6 +57,7 @@ const GET_CONFERENCE_BY_ID_QUERY = gql`
       start_date
       end_date
       organizerDetail {
+        id
         name
         email
         website

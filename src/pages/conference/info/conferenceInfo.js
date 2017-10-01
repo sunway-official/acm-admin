@@ -60,19 +60,52 @@ class Info extends Component {
   constructor() {
     super();
     this.saveConference = this.saveConference.bind(this);
+    this.saveOrganizer = this.saveOrganizer.bind(this);
+    this.saveForm = this.saveForm.bind(this);
+  }
+
+  saveForm() {
+    this.saveConference();
+    this.saveOrganizer();
   }
 
   saveConference() {
-    const { mutate, id, title, description, startDate, endDate } = this.props;
-    console.log(startDate);
-    console.log(endDate);
-    mutate({
+    const {
+      UPDATE_CONFERENCE_MUTATION,
+      conference_id,
+      title,
+      description,
+      startDate,
+      endDate,
+    } = this.props;
+    UPDATE_CONFERENCE_MUTATION({
       variables: {
-        id: id,
+        id: conference_id,
         title: title,
         description: description,
         start_date: startDate,
         end_date: endDate,
+      },
+    });
+  }
+  saveOrganizer() {
+    const {
+      UPDATE_ORGANIZER_DETAIL_MUTATION,
+      organizerDetail_id,
+      organizerName,
+      organizerEmail,
+      organizerWebsite,
+      organizerPhoneNumber,
+    } = this.props;
+
+    console.log(this.props);
+    UPDATE_ORGANIZER_DETAIL_MUTATION({
+      variables: {
+        id: organizerDetail_id,
+        name: organizerName,
+        email: organizerEmail,
+        website: organizerWebsite,
+        phone: organizerPhoneNumber,
       },
     });
     // console.log(this.props);
@@ -182,7 +215,7 @@ class Info extends Component {
                 primary={true}
                 type="submit"
                 disabled={pristine || submitting}
-                onClick={this.saveConference}
+                onClick={this.saveForm}
               />
             </div>
           </div>
@@ -206,13 +239,16 @@ Info = reduxForm({
 const mapStateToProps = (state, ownProps) => {
   const conference = ownProps.conference;
   const organizerDetail = conference.organizerDetail;
+  // console.log(state);
   return {
-    id: state.conference.id,
+    conference_id: conference.id,
+    organizerDetail_id: organizerDetail.id,
     initialValues: {
       title: conference.title,
       description: conference.description,
       startDate: new Date(conference.start_date),
       endDate: new Date(conference.end_date),
+
       organizerName: organizerDetail.name,
       organizerEmail: organizerDetail.email,
       organizerWebsite: organizerDetail.website,
@@ -228,21 +264,29 @@ Info = connect(state => {
   const description = selector(state, 'description');
   const startDate = selector(state, 'startDate');
   const endDate = selector(state, 'endDate');
+  const organizerName = selector(state, 'organizerName');
+  const organizerEmail = selector(state, 'organizerEmail');
+  const organizerWebsite = selector(state, 'organizerWebsite');
+  const organizerPhoneNumber = selector(state, 'organizerPhoneNumber');
   return {
     title,
     description,
     startDate,
     endDate,
+    organizerName,
+    organizerEmail,
+    organizerWebsite,
+    organizerPhoneNumber,
   };
 })(Info);
 
-const UPDATE_CONFERENCE = gql`
+const UPDATE_CONFERENCE_MUTATION = gql`
   mutation UpdateConference(
     $id: ID!
-    $title: String!
-    $description: String!
-    $start_date: Date!
-    $end_date: Date!
+    $title: String
+    $description: String
+    $start_date: Date
+    $end_date: Date
   ) {
     updateConference(
       id: $id
@@ -260,7 +304,36 @@ const UPDATE_CONFERENCE = gql`
   }
 `;
 
+const UPDATE_ORGANIZER_DETAIL_MUTATION = gql`
+  mutation updateOrganizerDetail(
+    $id: ID!
+    $name: String
+    $email: String
+    $website: String
+    $phone: String
+  ) {
+    updateOrganizerDetail(
+      id: $id
+      name: $name
+      email: $email
+      website: $website
+      phone: $phone
+    ) {
+      id
+      name
+      email
+      website
+      phone
+    }
+  }
+`;
+
 export default compose(
   connect(mapStateToProps, undefined),
-  graphql(UPDATE_CONFERENCE),
+  graphql(UPDATE_CONFERENCE_MUTATION, {
+    name: 'UPDATE_CONFERENCE_MUTATION',
+  }),
+  graphql(UPDATE_ORGANIZER_DETAIL_MUTATION, {
+    name: 'UPDATE_ORGANIZER_DETAIL_MUTATION',
+  }),
 )(Info);

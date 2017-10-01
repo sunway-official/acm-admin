@@ -6,7 +6,7 @@ import CommunicationMailOutline from 'material-ui/svg-icons/communication/mail-o
 import SocialCake from 'material-ui/svg-icons/social/cake';
 import './style.css';
 import RaisedButton from 'material-ui/RaisedButton';
-import { DatePicker, TextField, ListItem } from 'material-ui';
+import { TextField, ListItem } from 'material-ui';
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 
 export default class PersonalInfo extends Component {
@@ -37,7 +37,7 @@ export default class PersonalInfo extends Component {
               </TableRowColumn>
               <TableRowColumn className="second-column">
                 <TextField
-                  hintText="First Name"
+                  disabled={true}
                   id="text-field-default"
                   defaultValue="Le Quoc Manh"
                 />
@@ -60,7 +60,6 @@ export default class PersonalInfo extends Component {
                   className="radio gender"
                 >
                   <RadioButton value="male" label="Male" />
-                  <RadioButton value="female" label="Female" />
                 </RadioButtonGroup>
               </TableRowColumn>
               <TableRowColumn />
@@ -76,7 +75,7 @@ export default class PersonalInfo extends Component {
               </TableRowColumn>
               <TableRowColumn className="second-column">
                 <TextField
-                  hintText="Email"
+                  disabled={true}
                   id="text-field-default"
                   defaultValue="lequocmanh@gmail.com"
                 />
@@ -93,7 +92,11 @@ export default class PersonalInfo extends Component {
                 />
               </TableRowColumn>
               <TableRowColumn className="second-column">
-                <DatePicker hintText="BirthDay" autoOk={true} />
+                <TextField
+                  disabled={true}
+                  id="text-field-default"
+                  defaultValue="13-03-1996"
+                />
               </TableRowColumn>
               <TableRowColumn />
             </TableRow>

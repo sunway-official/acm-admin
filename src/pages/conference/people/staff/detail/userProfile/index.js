@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
+import InfoTabs from './tab';
+import GeneralInfo from '../generalInfo';
 import { Subheader, IconButton } from 'material-ui';
 import { Link } from 'react-router-dom';
 import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
-import GeneralInfo from '../generalInfo';
-import ProfileTabs from './tab';
-import UserAvatar from '../changeAvatar/userAvatar';
+import EditUserAvatar from '../changeAvatar/editUserAvatar';
 
 export default class Index extends Component {
   render() {
@@ -21,17 +21,7 @@ export default class Index extends Component {
           <IconButton>
             <HardwareKeyboardArrowRight />
           </IconButton>
-          <span>People</span>
-          <IconButton>
-            <HardwareKeyboardArrowRight />
-          </IconButton>
-          <Link className="d-flex" to="/conference/people/staff">
-            <span>Staff</span>
-          </Link>
-          <IconButton>
-            <HardwareKeyboardArrowRight />
-          </IconButton>
-          <span>Profile</span>
+          <span>User Profile</span>
         </div>
         <div className="dashboard content d-flex">
           <div className="contain">
@@ -39,7 +29,7 @@ export default class Index extends Component {
               <div className="left-div">
                 <div className="card" id="left-form-container">
                   <div className="card-content">
-                    <UserAvatar />
+                    <EditUserAvatar />
                     <GeneralInfo />
                   </div>
                 </div>
@@ -47,7 +37,7 @@ export default class Index extends Component {
               <div className="right-div">
                 <div className="card" id="right-form-container">
                   <div className="card-content">
-                    <ProfileTabs />
+                    <InfoTabs />
                   </div>
                 </div>
               </div>

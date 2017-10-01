@@ -16,6 +16,8 @@ import {
 import { images } from '../../../../theme';
 import style from './style.css';
 import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router';
+import { withApollo, compose } from 'react-apollo';
 
 class BadgeExampleSimple extends Component {
   constructor(props) {
@@ -70,10 +72,11 @@ class BadgeExampleSimple extends Component {
     });
   };
 
-  handleSignOut = () => {
+  handleSignOut() {
     localStorage.clear();
-    this.handleRequestClose();
-  };
+    this.props.client.resetStore();
+    this.props.history.replace('/login');
+  }
   render() {
     return (
       <div className="menu">
@@ -81,7 +84,7 @@ class BadgeExampleSimple extends Component {
           dangerouslySetInnerHTML={{
             __html: style,
           }}
-        />{' '}
+        />
         <Badge
           className="badge"
           badgeContent={10}
@@ -93,8 +96,8 @@ class BadgeExampleSimple extends Component {
           onClick={this.handleTouchTapNotification}
         >
           <IconButton tooltip="Notifications">
-            <SocialNotificationsNone />{' '}
-          </IconButton>{' '}
+            <SocialNotificationsNone />
+          </IconButton>
           <Popover
             open={this.state.openNotification}
             anchorEl={this.state.anchorEl}
@@ -113,9 +116,9 @@ class BadgeExampleSimple extends Component {
               <MenuItem primaryText="Help &amp; feedback" />
               <MenuItem primaryText="Settings" />
               <MenuItem primaryText="Sign out" />
-            </Menu>{' '}
-          </Popover>{' '}
-        </Badge>{' '}
+            </Menu>
+          </Popover>
+        </Badge>
         <Badge
           className="badge"
           badgeContent={5}
@@ -127,8 +130,8 @@ class BadgeExampleSimple extends Component {
           onClick={this.handleTouchTapMail}
         >
           <IconButton tooltip="Mails">
-            <CommunicationMailOutline />{' '}
-          </IconButton>{' '}
+            <CommunicationMailOutline />
+          </IconButton>
           <Popover
             open={this.state.openMail}
             anchorEl={this.state.anchorEl}
@@ -147,9 +150,9 @@ class BadgeExampleSimple extends Component {
               <MenuItem primaryText="Help &amp; feedback" />
               <MenuItem primaryText="Settings" />
               <MenuItem primaryText="Sign out" />
-            </Menu>{' '}
-          </Popover>{' '}
-        </Badge>{' '}
+            </Menu>
+          </Popover>
+        </Badge>
         <Badge
           className="badge"
           badgeContent={4}
@@ -161,8 +164,8 @@ class BadgeExampleSimple extends Component {
           onClick={this.handleTouchTapCalendar}
         >
           <IconButton tooltip="Calendar">
-            <ActionDateRange />{' '}
-          </IconButton>{' '}
+            <ActionDateRange />
+          </IconButton>
           <Popover
             open={this.state.openCalendar}
             anchorEl={this.state.anchorEl}
@@ -181,15 +184,15 @@ class BadgeExampleSimple extends Component {
               <MenuItem primaryText="Help &amp; feedback" />
               <MenuItem primaryText="Settings" />
               <MenuItem primaryText="Sign out" />
-            </Menu>{' '}
-          </Popover>{' '}
-        </Badge>{' '}
+            </Menu>
+          </Popover>
+        </Badge>
         <div className="badge user" onClick={this.handleTouchTapUser}>
-          <Avatar className="avatar" src={images.defaultAvatar} />{' '}
-          <span className="user-name"> Manh </span>{' '}
+          <Avatar className="avatar" src={images.defaultAvatar} />
+          <span className="user-name"> Manh </span>
           <IconButton tooltip="User">
             <HardwareKeyboardArrowDown />
-          </IconButton>{' '}
+          </IconButton>
           <Popover
             open={this.state.openUser}
             anchorEl={this.state.anchorEl}
@@ -207,21 +210,16 @@ class BadgeExampleSimple extends Component {
               <MenuItem primaryText="A" />
               <MenuItem primaryText="Help &amp; feedback" />
               <MenuItem primaryText="Settings" />
-              <Link to="/userInfo">
-                <MenuItem
-                  primaryText="User Info"
-                  onClick={this.handleSignOut}
-                />
+              <Link to="/userProfile">
+                <MenuItem primaryText="User Profile" />
               </Link>
-              <Link to="/login">
-                <MenuItem primaryText="Sign out" onClick={this.handleSignOut} />
-              </Link>
-            </Menu>{' '}
-          </Popover>{' '}
-        </div>{' '}
+              <MenuItem primaryText="Sign out" onClick={this.handleSignOut} />
+            </Menu>
+          </Popover>
+        </div>
       </div>
     );
   }
 }
 
-export default BadgeExampleSimple;
+export default compose(withRouter, withApollo)(BadgeExampleSimple);

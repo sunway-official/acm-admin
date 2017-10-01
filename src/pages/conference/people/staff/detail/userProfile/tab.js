@@ -2,7 +2,7 @@ import React from 'react';
 import { Tabs, Tab } from 'material-ui/Tabs';
 // From https://github.com/oliviertassinari/react-swipeable-views
 import SwipeableViews from 'react-swipeable-views';
-import PersonalInfo from '../personal-info';
+import EditablePersonalInfo from '../personalInfo/editablePersonalInfo';
 //import CardExampleWithAvatar from './changeAvatar/index';
 import ChangePassword from '../changePassword';
 import '../style.css';
@@ -45,7 +45,7 @@ export default class InfoTabs extends React.Component {
           onChangeIndex={this.handleChange}
         >
           <div>
-            <PersonalInfo />
+            <EditablePersonalInfo />
           </div>
           <div style={styles.slide} className="personalInfoTab">
             <ChangePassword />
