@@ -4,8 +4,7 @@ import { Link } from 'react-router-dom';
 import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import ConferenceInfo from './conferenceInfo';
 import showResults from './showResults';
-import { graphql, gql, compose } from 'react-apollo';
-import { conferenceOperations } from '../../../store/ducks/conference';
+import { graphql, gql } from 'react-apollo';
 import CoOrganizerList from './coOrganizer/coOrganizerList';
 
 class Index extends PureComponent {

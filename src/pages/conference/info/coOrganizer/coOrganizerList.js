@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { gql, graphql, compose } from 'react-apollo';
-import { connect } from 'react-redux';
 import {
   Table,
   TableBody,
@@ -14,9 +12,6 @@ import {
 import CoOrganizerInfo from './coOrganizerInfo';
 
 class CoOrganizerList extends Component {
-  constructor() {
-    super();
-  }
   state = {
     openEdit: false,
     openDelete: false,
