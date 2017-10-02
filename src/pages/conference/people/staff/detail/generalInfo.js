@@ -1,7 +1,7 @@
 import React from 'react';
 import './style.css';
 import { List, ListItem } from 'material-ui';
-import CommunicationMessage from 'material-ui/svg-icons/communication/message';
+import ActionInfoOutline from 'material-ui/svg-icons/action/info-outline';
 import SocialCake from 'material-ui/svg-icons/social/cake';
 import NotificationWC from 'material-ui/svg-icons/notification/wc';
 
@@ -13,8 +13,8 @@ export default class GeneralInfo extends React.Component {
         <div className="profile-usertitle-job"> Developer </div>
         <div className="profile-user-menu">
           <List>
-            <ListItem className="list-item" leftIcon={<CommunicationMessage />}>
-              <a href="#">
+            <ListItem className="list-item" leftIcon={<ActionInfoOutline />}>
+              <a href="">
                 <i className="fa fa-facebook-square fa-lg" aria-hidden="true" />
               </a>
               <a>

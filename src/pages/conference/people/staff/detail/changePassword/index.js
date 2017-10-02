@@ -1,8 +1,9 @@
-import React from 'react';
-import { Field, reduxForm } from 'redux-form';
-import { TextField, RaisedButton } from 'material-ui';
 import './style.css';
-import { Grid, Row, Col } from 'react-flexbox-grid';
+
+import { RaisedButton, TextField } from 'material-ui';
+import React from 'react';
+import { Col, Grid, Row } from 'react-flexbox-grid';
+import { Field, reduxForm } from 'redux-form';
 
 const validate = values => {
   const errors = {};
@@ -46,6 +47,11 @@ const ChangePassword = props => {
     <div>
       <Grid fluid>
         <Row around="xs">
+          <Col xs={2}>
+            <Row className="firstColunm old"> Old Password </Row>
+            <Row className="firstColunm"> New Password </Row>
+            <Row className="firstColunm"> Retype Password </Row>
+          </Col>
           <Col xs={8}>
             <form onSubmit={handleSubmit}>
               <Row className="changePass">
@@ -72,26 +78,22 @@ const ChangePassword = props => {
                   label="Retype Password"
                 />
               </Row>
-              <Row className="buttonRow">
-                <Col xsOffset={3} xs={3}>
-                  <RaisedButton
-                    className="btn changePass"
-                    label="Save"
-                    disabled={submitting || invalid || pristine}
-                    primary={true}
-                  />
-                </Col>
-                <Col xs={4}>
-                  <RaisedButton
-                    className="btn changePass"
-                    label="Cancel"
-                    secondary={true}
-                  />
-                </Col>
-              </Row>
             </form>
           </Col>
         </Row>
+        <div>
+          <RaisedButton
+            className="btn changePass"
+            label="Save"
+            disabled={submitting || invalid || pristine}
+            primary={true}
+          />
+          <RaisedButton
+            className="btn changePass"
+            label="Cancel"
+            secondary={true}
+          />
+        </div>
       </Grid>
     </div>
   );
