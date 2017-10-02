@@ -1,21 +1,22 @@
-.changePassField {
-  display: flex;
-  justify-content: space-between;
-  text-align: left !important;
-  align-items: center;
-}
-#changePassContainer{
+#changePassContainer {
   width: 40vw;
 }
-.buttonRow{
-  .btn {
-    &.changePass {
-      width: 150px;
-      box-shadow: none !important;
-      margin: 20px 10px 0px 0px;
-    }
+.btn {
+  &.changePass {
+    width: 150px !important;
+    box-shadow: none !important;
+    margin: 30px 0px 0px 30px;
+    border-radius: 3px !important;
   }
 }
-.changePass{
+.changePass {
   text-align: left !important;
+}
+.firstColunm {
+  height: 72px !important;
+  align-items: center;
+  &.old {
+    padding-top: 15px;
+    margin-top: 10px;
+  }
 }

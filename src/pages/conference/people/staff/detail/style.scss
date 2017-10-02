@@ -66,7 +66,19 @@
     margin-bottom: 7px;
   }
 }
-.personalInfoTab{
-  justify-content: center;
-  display: flex;
+.fa{
+  color: #4267b2;
+  margin-right: 15px;
+  -webkit-transition:all 0.5s ease-out;
+  -moz-transition:all 0.5s ease-out;
+  -ms-transition:all 0.5s ease-out;
+  -o-transition:all 0.5s ease-out;
+  transition:all 0.5s ease-out;
+}
+.fa:hover {
+  -webkit-transform:scale(1.5);
+  -moz-transform:scale(1.5);
+  -ms-transform:scale(1.5);
+  -o-transform:scale(1.5);
+  transform:scale(1.5);
 }
