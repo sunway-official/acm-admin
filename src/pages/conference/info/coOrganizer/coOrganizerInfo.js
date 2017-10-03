@@ -4,6 +4,7 @@ import { RaisedButton, TextField } from 'material-ui';
 import { gql, graphql, compose } from 'react-apollo';
 import { connect } from 'react-redux';
 import { style } from './style.css';
+import { GET_CONFERENCE_BY_ID_QUERY } from '../index';
 import normalizePhone from '../normalizePhone';
 
 const validate = values => {
@@ -19,12 +20,6 @@ const validate = values => {
       errors[field] = 'Required';
     }
   });
-  if (
-    values.organizerEmail &&
-    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.organizerEmail)
-  ) {
-    errors.organizerEmail = 'Invalid email addrecss';
-  }
   return errors;
 };
 
@@ -39,6 +34,45 @@ class Info extends Component {
   constructor() {
     super();
     this.save = this.save.bind(this);
+    this.add = this.add.bind(this);
+  }
+
+  handleOnClick = () => {
+    if (this.props.isAdd === true) {
+      this.add();
+    } else this.save();
+  };
+  add() {
+    const {
+      INSERT_COORGANIZER,
+      coOrganizerId,
+      coOrganizerName,
+      coOrganizerEmail,
+      coOrganizerWebsite,
+      coOrganizerPhone,
+    } = this.props;
+    INSERT_COORGANIZER({
+      variables: {
+        conference_id: this.props.conferenceId,
+        // set conference_id dua tren props cua coOrganizerList truyen qua
+        address: '',
+        id: coOrganizerId,
+        name: coOrganizerName,
+        email: coOrganizerEmail,
+        website: coOrganizerWebsite,
+        phone: coOrganizerPhone,
+      },
+      update: (store, { data: { insertCoOrganizerDetail } }) => {
+        const data = store.readQuery({
+          query: GET_CONFERENCE_BY_ID_QUERY, //
+          variables: {
+            id: this.props.conferenceId,
+          },
+        });
+        data.getConferenceByID.coOrganizerDetails.push(insertCoOrganizerDetail);
+        store.writeQuery({ query: GET_CONFERENCE_BY_ID_QUERY, data });
+      },
+    });
   }
 
   save() {
@@ -110,7 +144,7 @@ class Info extends Component {
           <RaisedButton
             label="Save"
             primary={true}
-            onClick={this.save}
+            onClick={this.handleOnClick}
             disabled={pristine || submitting}
             type="submit"
           />
@@ -172,6 +206,35 @@ const UPDATE_COORGANIZER_MUTATION = gql`
   }
 `;
 
+const INSERT_COORGANIZER = gql`
+  mutation insertCoOrganizerDetail(
+    $conference_id: ID!
+    $name: String!
+    $email: String!
+    $website: String!
+    $phone: String!
+    $address: String!
+  ) {
+    insertCoOrganizerDetail(
+      conference_id: $conference_id
+      name: $name
+      email: $email
+      website: $website
+      phone: $phone
+      address: $address
+    ) {
+      id
+      name
+      email
+      website
+      phone
+      conference {
+        id
+      }
+    }
+  }
+`;
+
 Info = reduxForm({
   form: 'coOrganizerInfo',
 
@@ -183,5 +246,7 @@ export default compose(
   graphql(UPDATE_COORGANIZER_MUTATION, {
     name: 'UPDATE_COORGANIZER_MUTATION',
   }),
+  graphql(INSERT_COORGANIZER, {
+    name: 'INSERT_COORGANIZER',
+  }),
 )(Info);
-// export default connect(mapStateToProps, undefined)(Info);

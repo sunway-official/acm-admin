@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { gql, graphql } from 'react-apollo';
-import { style } from '../style.css';
+import { GET_CONFERENCE_BY_ID_QUERY } from '../index';
+import { style } from './style.css';
 import {
   Table,
   TableBody,
@@ -16,27 +17,71 @@ import { NavigationClose } from 'material-ui/svg-icons';
 import CoOrganizerInfo from './coOrganizerInfo';
 
 class CoOrganizerList extends Component {
+  constructor() {
+    super();
+    this.delete = this.delete.bind(this);
+  }
+
   state = {
     openEdit: false,
     openDelete: false,
+    openAdd: false,
     coOrganizer: {},
   };
 
-  handleOpenDelete = () => {
+  handleOpenDelete = coOrganizerId => {
     this.setState({ openDelete: true });
+    this.setState({
+      coOrganizerId: coOrganizerId,
+    });
   };
-  handleOpenEdit = coOrganizer => {
-    this.setState({ openEdit: true });
+  handleOpen = (coOrganizer, isAdd) => {
+    if (isAdd) {
+      this.setState({ openAdd: true });
+    } else {
+      this.setState({ openEdit: true });
+    }
     this.setState({
       coOrganizer: coOrganizer,
     });
   };
 
   handleClose = () => {
-    this.setState({ openDelete: false, openEdit: false });
+    this.setState({ openDelete: false, openEdit: false, openAdd: false });
   };
+  delete() {
+    this.setState({ openDelete: false });
+    // console.log(this.props.coOrganizerDetails[2].id);
+    const { DELETE_COORGANIZER } = this.props;
+    DELETE_COORGANIZER({
+      variables: {
+        id: this.state.coOrganizerId,
+      },
+      update: (store, { data: { deleteCoOrganizerDetail } }) => {
+        const data = store.readQuery({
+          query: GET_CONFERENCE_BY_ID_QUERY,
+        });
+        data.getConferenceByID.coOrganizerDetails = this.state.coOrganizer.filter(
+          item => item !== this.state.coOrganizer,
+        );
+        store.writeQuery({ query: GET_CONFERENCE_BY_ID_QUERY, data });
+      },
+    });
+  }
   render() {
     const coOrganizerDetails = this.props.coOrganizerDetails;
+    const conferenceId = coOrganizerDetails[0].conference.id;
+    //khai bao conference_id dua ben index (coOrganizerDetails)
+    // [0] la de khai bao mac dinh la o conference dau tien
+    const actionsDelete = [
+      <RaisedButton
+        label="Submit"
+        primary={true}
+        onClick={this.delete}
+        type="submit"
+      />,
+      <RaisedButton label="Cancel" onClick={this.handleClose} />,
+    ];
     const actions = [
       <IconButton
         tooltip="Close"
@@ -70,9 +115,13 @@ class CoOrganizerList extends Component {
                     <TableRowColumn>{coOrganizer.phone}</TableRowColumn>
                     <TableRowColumn>
                       <RaisedButton
-                        label="edit"
+                        label="Edit"
                         primary={true}
-                        onClick={() => this.handleOpenEdit(coOrganizer)}
+                        onClick={() => this.handleOpen(coOrganizer)}
+                      />
+                      <RaisedButton
+                        label="Delete"
+                        onClick={() => this.handleOpenDelete(coOrganizer.id)}
                       />
                     </TableRowColumn>
                   </TableRow>
@@ -81,43 +130,57 @@ class CoOrganizerList extends Component {
             </TableBody>
           </Table>
           <Dialog
+            title="Do you want to delete this Co-Organizer?"
+            modal={true}
+            onRequestClose={this.handleClose}
+            open={this.state.openDelete}
+            actions={actionsDelete}
+          />
+
+          <Dialog
             title="Edit Information"
             actions={actions}
             modal={true}
-            open={this.state.openEdit}
+            open={this.state.openEdit || this.state.openAdd}
             onRequestClose={this.handleClose}
           >
             <CoOrganizerInfo
               coOrganizerDetails={this.state.coOrganizer}
               onSubmit={this.handleClose}
+              isAdd={this.state.openAdd}
+              isEdit={this.state.openEdit}
+              conferenceId={conferenceId}
+              //truyen conference_id qua ben conference info de cho xu ly conference dang dung dua tren id
             />
           </Dialog>
+          <div className="d-flex btn-group">
+            <RaisedButton
+              label="Add Co-Organizer"
+              primary={true}
+              onClick={() =>
+                this.handleOpen(this.props.coOrganizerDetails, true)}
+            />
+          </div>
         </div>
       </div>
     );
   }
 }
 
-const insertCoOrganizerDetail = gql`
-  mutation insertCoOrganizerDetail(
-    $name: String!
-    $email: String!
-    $website: String!
-    $phone: String!
-  ) {
-    insertCoOrganizerDetail(
-      name: $name
-      email: $email
-      website: $website
-      phone: $phone
-    ) {
+const DELETE_COORGANIZER = gql`
+  mutation deleteCoOrganizerDetail($id: ID!) {
+    deleteCoOrganizerDetail(id: $id) {
       id
       name
       email
       website
       phone
+      conference {
+        id
+      }
     }
   }
 `;
-
-export default graphql(insertCoOrganizerDetail)(CoOrganizerList);
+export default graphql(DELETE_COORGANIZER, {
+  name: 'DELETE_COORGANIZER',
+})(CoOrganizerList);

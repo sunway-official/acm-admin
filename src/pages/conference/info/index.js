@@ -13,7 +13,9 @@ class Index extends PureComponent {
     if (loading) return <div>loading...</div>;
 
     const conference = this.props.data.getConferenceByID;
+    // khai bao conference dua tren query getConferenceByID
     const coOrganizerDetails = conference.coOrganizerDetails;
+    // khai bao coOrganizerDetails dua tren query coOrganizerDetails bang getConferenceByID
 
     return (
       <div className="conference">
@@ -34,6 +36,7 @@ class Index extends PureComponent {
           <Tabs style={{ width: '100%' }}>
             <Tab label="Basic Information">
               <ConferenceInfo conference={conference} onSubmit={() => {}} />
+              {/* truyen conference qua conferenceInfo  */}
             </Tab>
             <Tab label="Co-Organizer">
               <CoOrganizerList coOrganizerDetails={coOrganizerDetails} />
@@ -45,8 +48,8 @@ class Index extends PureComponent {
   }
 }
 
-const GET_CONFERENCE_BY_ID_QUERY = gql`
-  query getConference($id: ID!) {
+export const GET_CONFERENCE_BY_ID_QUERY = gql`
+  query getConferenceByID($id: ID!) {
     getConferenceByID(id: $id) {
       id
       title
@@ -66,6 +69,9 @@ const GET_CONFERENCE_BY_ID_QUERY = gql`
         email
         website
         phone
+        conference {
+          id
+        }
       }
     }
   }
