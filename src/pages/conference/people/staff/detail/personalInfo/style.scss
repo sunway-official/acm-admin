@@ -1,25 +1,27 @@
 .first-column {
   display: flex;
+  padding-top: 4px;
+  height: 52px !important;
 }
 .second-column {
   font-family: Roboto, sans-serif !important;
   font-size: 16px;
   font-weight: inherit;
+  height: 52px !important;
 }
 .btn {
   &.save-change {
     width: 150px !important;
-    box-shadow: none !important;
-    margin-top: 30px;
-    border-radius: 3px !important;
   }
   &.cancel {
     width: 150px !important;
-    box-shadow: none !important;
-    margin: 30px 0px 0px 30px;
-    border-radius: 3px !important;
+    margin: 0px 0px 0px 30px;
+  }
+  &.socialNetwork{
+    margin-right: 12px !important;
   }
 }
+
 .dropdown-gender {
   height: 45px !important;
 }
@@ -32,4 +34,11 @@
       width: 60% !important;
     }
   }
+}
+.editField{
+  font-size: 14px !important;
+  height: 44px !important;
+}
+.fa{
+  color: rgb(117, 117, 117);
 }
