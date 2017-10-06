@@ -9,17 +9,20 @@ import { RaisedButton } from 'material-ui';
 import { DatePicker, TextField, ListItem } from 'material-ui';
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import ActionInfoOutline from 'material-ui/svg-icons/action/info-outline';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, formValueSelector } from 'redux-form';
 import { regex } from '../../../../../../utils';
-
+import { compose, gql, graphql } from 'react-apollo';
+import { connect } from 'react-redux';
 const validate = values => {
   const errors = {};
   const requiredFields = [
     'email',
     'firstname',
-    'facebook',
-    'twitter',
-    'linkedin',
+    'lastname',
+    'facebook_id',
+    'twitter_id',
+    'linkedin_id',
+    'bio',
   ];
   requiredFields.forEach(field => {
     if (!values[field]) {
@@ -36,7 +39,6 @@ const renderField = ({
   input,
   className,
   label,
-  value,
   type,
   meta: { touched, error },
   ...custom
@@ -45,7 +47,6 @@ const renderField = ({
     errorText={touched && error}
     type={type}
     floatingLabelText={label}
-    value={input.value}
     {...input}
     {...custom}
     className={className}
@@ -80,6 +81,36 @@ class EditablePersonalInfo extends Component {
   constructor(props) {
     super(props);
     this.state = { value: '1' };
+    this.saveInfomation = this.saveInfomation.bind(this);
+  }
+  saveInfomation() {
+    const {
+      UPDATE_ME_MUTATION,
+      firstname,
+      lastname,
+      email,
+      gender,
+      //dob,
+      bio,
+      linkedin_id,
+      facebook_id,
+      twitter_id,
+    } = this.props;
+    //console.log(this.props);
+    UPDATE_ME_MUTATION({
+      variables: {
+        firstname: firstname,
+        lastname: lastname,
+        email: email,
+        gender: gender,
+        //dob: dob,
+        bio: bio,
+        linkedin_id: linkedin_id,
+        facebook_id: facebook_id,
+        twitter_id: twitter_id,
+      },
+    });
+    window.alert('Update successful!');
   }
   handleChange = (event, index, value) => this.setState({ value });
   render() {
@@ -107,11 +138,19 @@ class EditablePersonalInfo extends Component {
                 <TableRowColumn className="second-column">
                   <Field
                     id="text-field-default"
+                    name="lastname"
+                    type="text"
+                    hintText="Last name"
+                    component={renderField}
+                    className="editField subname"
+                  />
+                  <Field
+                    id="text-field-default"
                     name="firstname"
                     type="text"
                     hintText="First name"
                     component={renderField}
-                    className="editField"
+                    className="editField subname"
                   />
                 </TableRowColumn>
                 <TableRowColumn />
@@ -173,7 +212,7 @@ class EditablePersonalInfo extends Component {
                 </TableRowColumn>
                 <TableRowColumn className="second-column">
                   <Field
-                    name="birthday"
+                    name="dob"
                     component={renderDatePicker}
                     format={null}
                     hintText="Birthday"
@@ -201,7 +240,7 @@ class EditablePersonalInfo extends Component {
                 <TableRowColumn className="second-column">
                   <Field
                     id="text-field-default"
-                    name="facebook"
+                    name="facebook_id"
                     type="text"
                     hintText="Facebook link"
                     component={renderField}
@@ -227,7 +266,7 @@ class EditablePersonalInfo extends Component {
                 <TableRowColumn className="second-column">
                   <Field
                     id="text-field-default"
-                    name="twitter"
+                    name="twitter_id"
                     type="text"
                     hintText="Twitter link"
                     component={renderField}
@@ -253,7 +292,7 @@ class EditablePersonalInfo extends Component {
                 <TableRowColumn className="second-column">
                   <Field
                     id="text-field-default"
-                    name="linkedin"
+                    name="linkedin_id"
                     type="text"
                     hintText="LinkedIn link"
                     component={renderField}
@@ -294,6 +333,7 @@ class EditablePersonalInfo extends Component {
               label="Save Change"
               primary={true}
               disabled={pristine || submitting || invalid}
+              onClick={this.saveInfomation}
             />
             <RaisedButton
               className="btn cancel"
@@ -307,7 +347,86 @@ class EditablePersonalInfo extends Component {
   }
 }
 
-export default reduxForm({
+const mapStateToProps = (state, ownProps) => {
+  const me = ownProps.me;
+  //console.log(me);
+  return {
+    initialValues: {
+      firstname: me.firstname,
+      lastname: me.lastname,
+      email: me.email,
+      gender: 'male',
+      //dob: new Date(me.dob),
+      bio: me.bio,
+      linkedin_id: me.linkedin_id,
+      facebook_id: me.facebook_id,
+      twitter_id: me.twitter_id,
+    },
+  };
+};
+
+const selector = formValueSelector('EditablePersonalInfo');
+EditablePersonalInfo = connect(state => {
+  const firstname = selector(state, 'firstname');
+  const lastname = selector(state, 'lastname');
+  const email = selector(state, 'email');
+  const gender = selector(state, 'gender');
+  //const dob = selector(state, 'dob');
+  const bio = selector(state, 'bio');
+  const linkedin_id = selector(state, 'linkedin_id');
+  const facebook_id = selector(state, 'facebook_id');
+  const twitter_id = selector(state, 'twitter_id');
+  return {
+    firstname,
+    lastname,
+    email,
+    gender,
+    //dob,
+    bio,
+    linkedin_id,
+    facebook_id,
+    twitter_id,
+  };
+})(EditablePersonalInfo);
+
+const UPDATE_ME_MUTATION = gql`
+  mutation UpdateMe(
+    $firstname: String!
+    $lastname: String!
+    $gender: Gender!
+    $bio: String
+    $linkedin_id: String
+    $facebook_id: String
+    $twitter_id: String
+  ) {
+    updateMe(
+      firstname: $firstname
+      lastname: $lastname
+      gender: $gender
+      bio: $bio
+      linkedin_id: $linkedin_id
+      facebook_id: $facebook_id
+      twitter_id: $twitter_id
+    ) {
+      firstname
+      lastname
+      gender
+      bio
+      linkedin_id
+      facebook_id
+      twitter_id
+    }
+  }
+`;
+
+EditablePersonalInfo = reduxForm({
   form: 'EditablePersonalInfo', // a unique identifier for this form
   validate,
 })(EditablePersonalInfo);
+
+export default compose(
+  connect(mapStateToProps, undefined),
+  graphql(UPDATE_ME_MUTATION, {
+    name: 'UPDATE_ME_MUTATION',
+  }),
+)(EditablePersonalInfo);

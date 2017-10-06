@@ -1,13 +1,13 @@
 import React from 'react';
 import './style.css';
-import { connect } from 'react-redux';
 export default class GeneralInfo extends React.Component {
   render() {
-    const me = this.props.me;
-    console.log(me);
+    //const me = this.props.me;
+    //console.log(me);
+    const fullname = this.props.me.lastname + ' ' + this.props.me.firstname;
     return (
       <div>
-        <div className="profile-usertitle-name"> Le Quoc Manh </div>
+        <div className="profile-usertitle-name">{fullname}</div>
         <div className="profile-usertitle-job"> Developer </div>
       </div>
     );

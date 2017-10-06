@@ -34,6 +34,7 @@ export default class InfoTabs extends React.Component {
   };
 
   render() {
+    const me = this.props.me;
     return (
       <div>
         <Tabs onChange={this.handleChange} value={this.state.slideIndex}>
@@ -45,7 +46,7 @@ export default class InfoTabs extends React.Component {
           onChangeIndex={this.handleChange}
         >
           <div>
-            <EditablePersonalInfo />
+            <EditablePersonalInfo me={me}/>
           </div>
           <div style={styles.slide}>
             <ChangePassword />

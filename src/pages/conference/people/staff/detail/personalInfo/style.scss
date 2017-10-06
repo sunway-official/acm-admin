@@ -12,10 +12,11 @@
 .btn {
   &.save-change {
     width: 150px !important;
+    margin-top: 20px;
   }
   &.cancel {
     width: 150px !important;
-    margin: 0px 0px 0px 30px;
+    margin: 20px 0px 0px 30px;
   }
   &.socialNetwork{
     margin-right: 12px !important;
@@ -38,6 +39,10 @@
 .editField{
   font-size: 14px !important;
   height: 44px !important;
+  &.subname{
+    width: 120px !important;
+    margin-right: 10px;
+  }
 }
 .fa{
   color: rgb(117, 117, 117);

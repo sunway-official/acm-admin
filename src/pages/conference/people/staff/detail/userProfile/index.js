@@ -9,8 +9,8 @@ import { graphql, gql, compose } from 'react-apollo';
 
 class Index extends Component {
   render() {
-    const {loading} = this.props.data;
-    if (loading)  return <div>Loading...</div>
+    const { loading } = this.props.data;
+    if (loading) return <div>Loading...</div>;
     const me = this.props.data.me;
     // console.log(this.props.data.me);
     return (
@@ -42,7 +42,7 @@ class Index extends Component {
               <div className="right-div">
                 <div className="card" id="right-form-container">
                   <div className="card-content">
-                    <InfoTabs />
+                    <InfoTabs me={me}/>
                   </div>
                 </div>
               </div>
@@ -59,6 +59,12 @@ const QUERY_ME = gql`
     me {
       firstname
       lastname
+      gender
+      email
+      bio
+      linkedin_id
+      facebook_id
+      twitter_id
     }
   }
 `;
