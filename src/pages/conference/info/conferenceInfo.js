@@ -112,8 +112,7 @@ class Info extends Component {
   }
 
   render() {
-    const { handleSubmit, submitting, pristine } = this.props;
-
+    const { handleSubmit, submitting, pristine, invalid } = this.props;
     return (
       <form className="form conference-info" onSubmit={handleSubmit}>
         <div>
@@ -128,7 +127,7 @@ class Info extends Component {
                     name="title"
                     component={renderTextField}
                     fullWidth={true}
-                    hintText="asd"
+                    hintText="Conference Title"
                   />
                 </div>
                 <div className="d-flex form-group">
@@ -214,8 +213,8 @@ class Info extends Component {
                 label="Save"
                 primary={true}
                 type="submit"
-                disabled={pristine || submitting}
-                onClick={this.saveForm}
+                disabled={pristine || submitting || invalid}
+                onClick={() => this.saveForm()}
               />
             </div>
           </div>
@@ -225,12 +224,11 @@ class Info extends Component {
   }
 }
 const minDate = new Date();
-const maxDate = new Date();
-maxDate.setFullYear(
-  maxDate.getFullYear(),
-  maxDate.getMonth(),
-  maxDate.getDate() + 1,
-);
+// const maxDate = minDate.setFullYear(
+//   minDate.getFullYear(),
+//   minDate.getMonth(),
+//   minDate.getDate() + 1,
+// );
 Info = reduxForm({
   form: 'conferenceInfo',
   validate,

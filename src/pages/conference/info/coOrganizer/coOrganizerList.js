@@ -61,8 +61,8 @@ class CoOrganizerList extends Component {
         const data = store.readQuery({
           query: GET_CONFERENCE_BY_ID_QUERY,
         });
-        data.getConferenceByID.coOrganizerDetails = this.state.coOrganizer.filter(
-          item => item !== this.state.coOrganizer,
+        data.getConferenceByID.coOrganizerDetails = this.props.coOrganizerDetails.filter(
+          item => item.id !== this.state.coOrganizerId,
         );
         store.writeQuery({ query: GET_CONFERENCE_BY_ID_QUERY, data });
       },
@@ -73,7 +73,7 @@ class CoOrganizerList extends Component {
     const conferenceId = coOrganizerDetails[0].conference.id;
     //khai bao conference_id dua ben index (coOrganizerDetails)
     // [0] la de khai bao mac dinh la o conference dau tien
-    const actionsDelete = [
+    const actionDelete = [
       <RaisedButton
         label="Submit"
         primary={true}
@@ -134,7 +134,7 @@ class CoOrganizerList extends Component {
             modal={true}
             onRequestClose={this.handleClose}
             open={this.state.openDelete}
-            actions={actionsDelete}
+            actions={actionDelete}
           />
 
           <Dialog

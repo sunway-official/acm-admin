@@ -26,7 +26,7 @@ export default () => (
           <AuthRoute needAuth exact path="/" component={Dashboard} />
           <AuthRoute path="/conference/:id/info" component={ConferenceInfo} />
           <AuthRoute
-            path="/conference/people/staff"
+            path="/conference/:conference_id/people/staff"
             component={ConferenceStaffList}
           />
           <AuthRoute exact path="/userProfile" component={UserProfile} />

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { reduxForm, Field, formValueSelector } from 'redux-form';
 import { RaisedButton, TextField } from 'material-ui';
 import { gql, graphql, compose } from 'react-apollo';
@@ -30,18 +30,18 @@ const renderTextField = ({
   ...custom
 }) => <TextField errorText={touched && error} {...input} {...custom} />;
 
-class Info extends Component {
+class Info extends PureComponent {
   constructor() {
     super();
     this.save = this.save.bind(this);
     this.add = this.add.bind(this);
+    this.handleOnClick = this.handleOnClick.bind(this);
   }
-
-  handleOnClick = () => {
+  handleOnClick() {
     if (this.props.isAdd === true) {
       this.add();
     } else this.save();
-  };
+  }
   add() {
     const {
       INSERT_COORGANIZER,
@@ -95,7 +95,7 @@ class Info extends Component {
     });
   }
   render() {
-    const { handleSubmit, submitting, pristine } = this.props;
+    const { handleSubmit, submitting, pristine, invalid } = this.props;
     return (
       <form className="form conference-info" onSubmit={handleSubmit}>
         <style dangerouslySetInnerHTML={{ __html: style }} />
@@ -145,7 +145,7 @@ class Info extends Component {
             label="Save"
             primary={true}
             onClick={this.handleOnClick}
-            disabled={pristine || submitting}
+            disabled={pristine || submitting || invalid}
             type="submit"
           />
         </div>
