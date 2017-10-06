@@ -12,8 +12,6 @@ import {
   RaisedButton,
   Dialog,
 } from 'material-ui';
-import Status from './status';
-import Action from './action';
 import { style } from './style.css';
 // import Add from './add';
 

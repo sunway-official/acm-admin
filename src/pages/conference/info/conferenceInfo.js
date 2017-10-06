@@ -46,7 +46,7 @@ const renderDatePicker = ({
   ...custom
 }) => (
   <DatePicker
-    minDate={minDate}
+    minDate={currentDate}
     errorText={touched && error}
     onChange={(e, val) => {
       return input.onChange(val);
@@ -223,12 +223,8 @@ class Info extends Component {
     );
   }
 }
-const minDate = new Date();
-// const maxDate = minDate.setFullYear(
-//   minDate.getFullYear(),
-//   minDate.getMonth(),
-//   minDate.getDate() + 1,
-// );
+const currentDate = new Date();
+
 Info = reduxForm({
   form: 'conferenceInfo',
   validate,

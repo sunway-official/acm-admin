@@ -20,6 +20,9 @@ class CoOrganizerList extends Component {
   constructor() {
     super();
     this.delete = this.delete.bind(this);
+    this.handleOpenDelete = this.handleOpenDelete.bind(this);
+    this.handleOpen = this.handleOpen.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
 
   state = {
@@ -27,28 +30,30 @@ class CoOrganizerList extends Component {
     openDelete: false,
     openAdd: false,
     coOrganizer: {},
+    title: '',
   };
 
-  handleOpenDelete = coOrganizerId => {
-    this.setState({ openDelete: true });
+  handleOpenDelete(coOrganizerId, coOrganizerName) {
     this.setState({
+      openDelete: true,
       coOrganizerId: coOrganizerId,
+      coOrganizerName: coOrganizerName,
     });
-  };
-  handleOpen = (coOrganizer, isAdd) => {
+  }
+  handleOpen(coOrganizer, isAdd) {
     if (isAdd) {
-      this.setState({ openAdd: true });
+      this.setState({ openAdd: true, title: 'Add new Co-Organizer' });
     } else {
-      this.setState({ openEdit: true });
+      this.setState({ openEdit: true, title: 'Edit Information' });
     }
     this.setState({
       coOrganizer: coOrganizer,
     });
-  };
+  }
 
-  handleClose = () => {
+  handleClose() {
     this.setState({ openDelete: false, openEdit: false, openAdd: false });
-  };
+  }
   delete() {
     this.setState({ openDelete: false });
     // console.log(this.props.coOrganizerDetails[2].id);
@@ -121,7 +126,11 @@ class CoOrganizerList extends Component {
                       />
                       <RaisedButton
                         label="Delete"
-                        onClick={() => this.handleOpenDelete(coOrganizer.id)}
+                        onClick={() =>
+                          this.handleOpenDelete(
+                            coOrganizer.id,
+                            coOrganizer.name,
+                          )}
                       />
                     </TableRowColumn>
                   </TableRow>
@@ -130,7 +139,7 @@ class CoOrganizerList extends Component {
             </TableBody>
           </Table>
           <Dialog
-            title="Do you want to delete this Co-Organizer?"
+            title={<p>Do you want to delete {this.state.coOrganizerName} ?</p>}
             modal={true}
             onRequestClose={this.handleClose}
             open={this.state.openDelete}
@@ -138,7 +147,7 @@ class CoOrganizerList extends Component {
           />
 
           <Dialog
-            title="Edit Information"
+            title={this.state.title}
             actions={actions}
             modal={true}
             open={this.state.openEdit || this.state.openAdd}

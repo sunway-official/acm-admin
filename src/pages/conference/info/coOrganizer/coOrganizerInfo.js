@@ -20,6 +20,12 @@ const validate = values => {
       errors[field] = 'Required';
     }
   });
+  if (
+    values.coOrganizerEmail &&
+    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.coOrganizerEmail)
+  ) {
+    errors.coOrganizerEmail = 'Invalid email address';
+  }
   return errors;
 };
 
@@ -237,7 +243,6 @@ const INSERT_COORGANIZER = gql`
 
 Info = reduxForm({
   form: 'coOrganizerInfo',
-
   validate,
 })(Info);
 
