@@ -37,7 +37,9 @@ export default class AppBarExampleIcon extends React.Component {
             <ActionReorder
               style={{ color: 'grey' }}
               className="menu-icon"
-              onClick={this.handleToggle}
+              onClick={() => {
+                this.handleToggle();
+              }}
             />
           }
         >
