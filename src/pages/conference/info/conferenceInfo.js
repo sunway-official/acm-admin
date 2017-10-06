@@ -29,6 +29,9 @@ const validate = values => {
   ) {
     errors.organizerEmail = 'Invalid email address';
   }
+  if (values.endDate < values.startDate) {
+    values.endDate = values.startDate;
+  }
   return errors;
 };
 
@@ -46,7 +49,6 @@ const renderDatePicker = ({
   ...custom
 }) => (
   <DatePicker
-    minDate={currentDate}
     errorText={touched && error}
     onChange={(e, val) => {
       return input.onChange(val);
@@ -63,12 +65,13 @@ class Info extends Component {
     this.saveOrganizer = this.saveOrganizer.bind(this);
     this.saveForm = this.saveForm.bind(this);
   }
-
+  state = {
+    currentDate: new Date(),
+  };
   saveForm() {
     this.saveConference();
     this.saveOrganizer();
   }
-
   saveConference() {
     const {
       UPDATE_CONFERENCE_MUTATION,
@@ -144,6 +147,7 @@ class Info extends Component {
                   <div className="d-flex form-group">
                     <label className="start">Conference Start From :</label>
                     <Field
+                      minDate={this.state.currentDate}
                       name="startDate"
                       component={renderDatePicker}
                       format={null}
@@ -155,6 +159,7 @@ class Info extends Component {
                     <label className="end">To :</label>
                     <Field
                       name="endDate"
+                      minDate={this.props.startDate}
                       component={renderDatePicker}
                       format={null}
                       textFieldStyle={{ width: '100%' }}
@@ -223,8 +228,6 @@ class Info extends Component {
     );
   }
 }
-const currentDate = new Date();
-
 Info = reduxForm({
   form: 'conferenceInfo',
   validate,
@@ -240,8 +243,8 @@ const mapStateToProps = (state, ownProps) => {
     initialValues: {
       title: conference.title,
       description: conference.description,
-      startDate: new Date(conference.start_date),
-      endDate: new Date(conference.end_date),
+      // startDate: new Date(conference.start_date),
+      // endDate: new Date(conference.end_date),
 
       organizerName: organizerDetail.name,
       organizerEmail: organizerDetail.email,
