@@ -14,6 +14,7 @@ import { muiTheme } from '../theme';
 import Wrapper from './wrapper';
 import UserInfo from '../pages/conference/people/staff/detail/userInfo';
 import UserProfile from '../pages/conference/people/staff/detail/userProfile';
+import Schedule from '../pages/schedule';
 
 export default () => (
   <MuiThemeProvider muiTheme={muiTheme}>
@@ -30,6 +31,11 @@ export default () => (
             component={ConferenceStaffList}
           />
           <AuthRoute exact path="/userProfile" component={UserProfile} />
+          <AuthRoute
+            exact
+            path="/conference/:id/schedules"
+            component={Schedule}
+          />
           <AuthRoute exact path="/userInfo" component={UserInfo} />
           <AuthRoute path="/withThunk" component={WithThunk} />
           <AuthRoute component={NoMatch} />
