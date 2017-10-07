@@ -243,8 +243,8 @@ const mapStateToProps = (state, ownProps) => {
     initialValues: {
       title: conference.title,
       description: conference.description,
-      // startDate: new Date(conference.start_date),
-      // endDate: new Date(conference.end_date),
+      startDate: new Date(conference.start_date),
+      endDate: new Date(conference.end_date),
 
       organizerName: organizerDetail.name,
       organizerEmail: organizerDetail.email,
