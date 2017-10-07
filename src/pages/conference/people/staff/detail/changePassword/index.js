@@ -4,6 +4,7 @@ import { RaisedButton, TextField } from 'material-ui';
 import React from 'react';
 import { Col, Grid, Row } from 'react-flexbox-grid';
 import { Field, reduxForm } from 'redux-form';
+import { regex } from '../../../../../../utils';
 
 const validate = values => {
   const errors = {};
@@ -11,6 +12,10 @@ const validate = values => {
   requiredFields.forEach(field => {
     if (!values[field]) {
       errors[field] = 'This field is required';
+    }
+    if (values[field] && !regex.passwordRegex.test(values[field])) {
+      errors[field] =
+        'Password must contains at least 6 character include number and special character';
     }
   });
   if (
@@ -47,7 +52,7 @@ const ChangePassword = props => {
     <div>
       <Grid fluid>
         <Row around="xs">
-          <Col xs={2}>
+          <Col xs={3}>
             <Row className="firstColunm old"> Old Password </Row>
             <Row className="firstColunm"> New Password </Row>
             <Row className="firstColunm"> Retype Password </Row>
@@ -91,7 +96,7 @@ const ChangePassword = props => {
           <RaisedButton
             className="btn changePass"
             label="Cancel"
-            secondary={true}
+            default={true}
           />
         </div>
       </Grid>

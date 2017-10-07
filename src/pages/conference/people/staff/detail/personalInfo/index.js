@@ -5,7 +5,6 @@ import NotificationWC from 'material-ui/svg-icons/notification/wc';
 import CommunicationMailOutline from 'material-ui/svg-icons/communication/mail-outline';
 import SocialCake from 'material-ui/svg-icons/social/cake';
 import './style.css';
-import RaisedButton from 'material-ui/RaisedButton';
 import { TextField, ListItem } from 'material-ui';
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 

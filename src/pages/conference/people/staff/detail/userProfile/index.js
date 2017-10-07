@@ -5,9 +5,14 @@ import { Subheader, IconButton } from 'material-ui';
 import { Link } from 'react-router-dom';
 import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import EditUserAvatar from '../changeAvatar/editUserAvatar';
+import { graphql, gql, compose } from 'react-apollo';
 
-export default class Index extends Component {
+class Index extends Component {
   render() {
+    const { loading } = this.props.data;
+    if (loading) return <div>Loading...</div>;
+    const me = this.props.data.me;
+    // console.log(this.props.data.me);
     return (
       <div className="conference">
         <Subheader className="subheader"> User Profile</Subheader>
@@ -30,14 +35,14 @@ export default class Index extends Component {
                 <div className="card" id="left-form-container">
                   <div className="card-content">
                     <EditUserAvatar />
-                    <GeneralInfo />
+                    <GeneralInfo me={me} />
                   </div>
                 </div>
               </div>
               <div className="right-div">
                 <div className="card" id="right-form-container">
                   <div className="card-content">
-                    <InfoTabs />
+                    <InfoTabs me={me}/>
                   </div>
                 </div>
               </div>
@@ -48,3 +53,20 @@ export default class Index extends Component {
     );
   }
 }
+
+const QUERY_ME = gql`
+  query Me {
+    me {
+      firstname
+      lastname
+      gender
+      email
+      bio
+      linkedin_id
+      facebook_id
+      twitter_id
+    }
+  }
+`;
+
+export default compose(graphql(QUERY_ME))(Index);
