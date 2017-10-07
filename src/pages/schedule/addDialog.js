@@ -109,6 +109,11 @@ class AddDialog extends React.Component {
                 disabled={pristine || submitting || invalid}
                 onClick={this.handleClose}
               />
+              <RaisedButton
+                label="Cancel"
+                primary={true}
+                onClick={this.handleClose}
+              />,
             </div>
           </form>
         </Dialog>

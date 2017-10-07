@@ -138,7 +138,9 @@ const GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY = gql`
 `;
 
 const MyCalendarData = graphql(GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY, {
-  options: ownProps => ({ variables: { conference_id: 1 } }),
+  options: ownProps => ({
+    variables: { conference_id: ownProps.match.params.id },
+  }),
 })(MyCalendar);
 
 export default DragDropContext(HTML5Backend)(MyCalendarData);

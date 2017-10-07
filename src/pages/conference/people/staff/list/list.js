@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { graphql, gql } from 'react-apollo';
+import { GET_ALL_STAFF_IN_CONFERENCE } from './index';
+
 import {
   Table,
   TableBody,
@@ -6,52 +9,61 @@ import {
   TableHeaderColumn,
   TableRow,
   TableRowColumn,
+  RaisedButton,
+  Dialog,
 } from 'material-ui';
-import Status from './status';
-import Action from './action';
 import { style } from './style.css';
 // import Add from './add';
 
-const tableData = [
-  {
-    name: 'Pham Van Tri',
-  },
-  {
-    name: 'Le Thi Thuy Dung',
-  },
-  {
-    name: 'Le Quoc Manh',
-  },
-  {
-    name: 'Le Dinh Nhat Khanh',
-  },
-  {
-    name: 'Ly Bao Khanh',
-  },
-  {
-    name: 'Thai Thi Hong Minh',
-  },
-  {
-    name: 'Lu Thanh Vinh',
-  },
-  {
-    name: 'Tran Van Thuc',
-  },
-  {
-    name: 'Ly Bao Khanh',
-  },
-  {
-    name: 'Thai Thi Hong Minh',
-  },
-  {
-    name: 'Lu Thanh Vinh',
-  },
-  {
-    name: 'Tran Van Thuc',
-  },
-];
 class Index extends Component {
+  constructor() {
+    super();
+    this.delete = this.delete.bind(this);
+  }
+  state = {
+    openDelete: false,
+    staff: {},
+  };
+  handleOpenDelete = UserId => {
+    this.setState({ openDelete: true });
+    this.setState({
+      UserId: UserId,
+    });
+  };
+  handleClose = () => {
+    this.setState({ openDelete: false });
+  };
+  delete() {
+    this.setState({ openDelete: false });
+    const { DELETE_USER } = this.props;
+    DELETE_USER({
+      variables: {
+        id: this.state.UserId,
+      },
+      update: (store, { data: { deleteUser } }) => {
+        const data = store.readQuery({
+          query: GET_ALL_STAFF_IN_CONFERENCE,
+        });
+        data.getAllStaffInConference = this.state.staff.filter(
+          item => item !== this.state.staff,
+        );
+        store.writeQuery({ query: GET_ALL_STAFF_IN_CONFERENCE, data });
+      },
+    });
+  }
   render() {
+    const allStaff = this.props.allStaff;
+    const staffRole = this.props.staffRole;
+    console.log(staffRole);
+    const actionDelete = [
+      <RaisedButton
+        label="Submit"
+        primary={true}
+        onClick={this.handleClose}
+        type="submit"
+      />,
+      <RaisedButton label="Cancel" onClick={this.handleClose} />,
+    ];
     return (
       <div className="d-flex">
         <style dangerouslySetInnerHTML={{ __html: style }} />
@@ -59,34 +71,49 @@ class Index extends Component {
           <Table fixedHeader={true}>
             <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
               <TableRow>
-                <TableHeaderColumn>ID</TableHeaderColumn>
+                <TableHeaderColumn>No.</TableHeaderColumn>
                 <TableHeaderColumn>Name</TableHeaderColumn>
                 <TableHeaderColumn>Status</TableHeaderColumn>
                 <TableHeaderColumn>Action</TableHeaderColumn>
               </TableRow>
             </TableHeader>
             <TableBody displayRowCheckbox={false}>
-              {tableData.map((row, index) => (
-                <TableRow key={index}>
-                  <TableRowColumn>{index}</TableRowColumn>
-                  <TableRowColumn>{row.name}</TableRowColumn>
+              {allStaff.map((staff, index) => (
+                <TableRow key={staff.id}>
+                  <TableRowColumn>{index + 1}</TableRowColumn>
                   <TableRowColumn>
-                    <Status />
+                    {staff.firstname} {staff.lastname}
                   </TableRowColumn>
+                  <TableRowColumn>{staff.email}</TableRowColumn>
                   <TableRowColumn>
-                    <Action />
+                    <RaisedButton
+                      label="delete"
+                      onClick={() => this.handleOpenDelete(staff.id)}
+                    />
                   </TableRowColumn>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
+          <Dialog
+            title="Do you want to delete this staff?"
+            modal={true}
+            onRequestClose={this.handleClose}
+            open={this.state.openDelete}
+            actions={actionDelete}
+          />
         </div>
       </div>
     );
   }
 }
-
-export default Index;
-//<div className="button new mobile">
-//   <Add />
-// </div>
+const DELETE_USER = gql`
+  mutation deleteUser($id: ID!) {
+    deleteUser(id: $id) {
+      id
+    }
+  }
+`;
+export default graphql(DELETE_USER, {
+  name: 'DELETE_USER',
+})(Index);

@@ -2,6 +2,7 @@ import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { TextField, RaisedButton, AppBar } from 'material-ui';
 import './style.css';
+import { regex } from '../../../utils';
 
 const validate = values => {
   const errors = {};
@@ -17,10 +18,7 @@ const validate = values => {
       errors[field] = 'This field is required';
     }
   });
-  if (
-    values.email &&
-    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
-  ) {
+  if (values.email && !regex.EMAIL_REGEX.test(values.email)) {
     errors.email = 'Invalid email address';
   }
   return errors;
@@ -44,7 +42,7 @@ const renderField = ({
   />
 );
 const Forgot = props => {
-  const { handleSubmit, submitting } = props;
+  const { handleSubmit, submitting, invalid } = props;
   return (
     <div className="forgot-body">
       <div className="forgot-card" id="forgot-form-container">
@@ -60,12 +58,17 @@ const Forgot = props => {
               how to reset your password
             </div>
             <div className="forgot-field">
-              <Field name="email" component={renderField} label="Email" />
+              <Field
+                name="email"
+                component={renderField}
+                label="Email"
+                className="reduxField"
+              />
             </div>
             <div>
               <RaisedButton
                 className="btn forgot"
-                disabled={submitting}
+                disabled={submitting || invalid }
                 type="submit"
                 label="Submit"
                 labelPosition="before"

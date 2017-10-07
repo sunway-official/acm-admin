@@ -48,7 +48,7 @@ class ListExampleSimple extends React.Component {
           </Link>
           <ListItem
             className="item"
-            primaryText={<a href="/dashboard">Schedule</a>}
+            primaryText={<a href="/conference/1/schedules">Schedule</a>}
             leftIcon={<NotificationEventAvailable />}
           />
           <ListItem
@@ -67,7 +67,7 @@ class ListExampleSimple extends React.Component {
               onRequestClose={this.handleRequestClose}
             >
               <Menu style={{ color: 'black' }} className="menu people-menu">
-                <Link to="/conference/people/staff">
+                <Link to="/conference/1/people/staff">
                   <MenuItem
                     className="item"
                     primaryText={'Staff'}

@@ -31,10 +31,18 @@
     transition: opacity 0.25s;
     z-index: 1;
     background-color: rgba(46,204,113,0.4);
-    background: linear-gradient(65deg, rgba(201, 89, 38, 0.4), rgba(243, 108, 18, 0.4));
+    background: linear-gradient(65deg, rgba(214, 61, 61, 0.4), rgba(233, 121, 52, 0.4));
     color: #fafafa;
     font-size: 24px;
   }
   .img_overlay:hover {
     opacity: 1;
   }
+.avatarButton{
+  padding: 0px !important;
+  .avatarIcon{
+    color: #FFFFFF !important;
+    width: 32px !important;
+    height: 32px !important;
+  }
+}

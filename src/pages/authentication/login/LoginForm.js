@@ -3,11 +3,7 @@ import { Field, reduxForm } from 'redux-form';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import './formStyle.css';
-
-const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-const passwordRegex = new RegExp(
-  '^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{6,})',
-);
+import { regex } from '../../../utils';
 
 const validate = values => {
   const errors = {};
@@ -17,10 +13,10 @@ const validate = values => {
       errors[field] = 'This field is required';
     }
   });
-  if (values.email && !EMAIL_REGEX.test(values.email)) {
+  if (values.email && !regex.EMAIL_REGEX.test(values.email)) {
     errors.email = 'Invalid email address';
   }
-  if (values.password && !passwordRegex.test(values.password)) {
+  if (values.password && !regex.passwordRegex.test(values.password)) {
     errors.password =
       'Password must contains at least 6 character include number and special character ';
   }
@@ -56,7 +52,13 @@ const LoginForm = ({
   <form onSubmit={handleSubmit(onSubmit)}>
     {/* TODO: Form helper here please! */}
     <div className="field">
-      <Field name="email" type="text" component={renderField} label="Email" />
+      <Field
+        name="email"
+        type="text"
+        component={renderField}
+        label="Email"
+        className="reduxField"
+      />
     </div>
     <div className="field">
       <Field
@@ -64,6 +66,7 @@ const LoginForm = ({
         type="password"
         component={renderField}
         label="Password"
+        className="reduxField"
       />
     </div>
     <div>

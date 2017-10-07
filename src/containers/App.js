@@ -27,11 +27,15 @@ export default () => (
           <AuthRoute needAuth exact path="/" component={Dashboard} />
           <AuthRoute path="/conference/:id/info" component={ConferenceInfo} />
           <AuthRoute
-            path="/conference/people/staff"
+            path="/conference/:conference_id/people/staff"
             component={ConferenceStaffList}
           />
           <AuthRoute exact path="/userProfile" component={UserProfile} />
-          <AuthRoute exact path="/schedule" component={Schedule} />
+          <AuthRoute
+            exact
+            path="/conference/:id/schedules"
+            component={Schedule}
+          />
           <AuthRoute exact path="/userInfo" component={UserInfo} />
           <AuthRoute path="/withThunk" component={WithThunk} />
           <AuthRoute component={NoMatch} />
