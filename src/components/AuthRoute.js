@@ -56,6 +56,12 @@ const ME_QUERY = gql`
       id
       firstname
       lastname
+      gender
+      email
+      bio
+      linkedin_id
+      facebook_id
+      twitter_id
     }
   }
 `;

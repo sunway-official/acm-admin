@@ -7,8 +7,8 @@ import './style.css';
 const EditUserAvatar = () => (
   <div className="img">
     <div className="img_overlay">
-      <IconButton tooltip="Choose your avatar">
-        <ActionCameraEnhance />
+      <IconButton tooltip="Choose your avatar" className="avatarButton">
+        <ActionCameraEnhance className="avatarIcon" />
       </IconButton>
     </div>
     <img src={images.defaultAvatar} alt="avatar" id="avatar" />

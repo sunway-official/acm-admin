@@ -5,7 +5,6 @@ import NotificationWC from 'material-ui/svg-icons/notification/wc';
 import CommunicationMailOutline from 'material-ui/svg-icons/communication/mail-outline';
 import SocialCake from 'material-ui/svg-icons/social/cake';
 import './style.css';
-import RaisedButton from 'material-ui/RaisedButton';
 import { TextField, ListItem } from 'material-ui';
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 
@@ -40,6 +39,7 @@ export default class PersonalInfo extends Component {
                   disabled={true}
                   id="text-field-default"
                   defaultValue="Le Quoc Manh"
+                  underlineShow={false}
                 />
               </TableRowColumn>
               <TableRowColumn />
@@ -78,6 +78,7 @@ export default class PersonalInfo extends Component {
                   disabled={true}
                   id="text-field-default"
                   defaultValue="lequocmanh@gmail.com"
+                  underlineShow={false}
                 />
               </TableRowColumn>
               <TableRowColumn />
@@ -96,24 +97,13 @@ export default class PersonalInfo extends Component {
                   disabled={true}
                   id="text-field-default"
                   defaultValue="13-03-1996"
+                  underlineShow={false}
                 />
               </TableRowColumn>
               <TableRowColumn />
             </TableRow>
           </TableBody>
         </Table>
-        <div>
-          <RaisedButton
-            className="btn save-change"
-            label="Save Change"
-            primary={true}
-          />
-          <RaisedButton
-            className="btn cancel"
-            label="Cancel"
-            secondary={true}
-          />
-        </div>
       </div>
     );
   }
