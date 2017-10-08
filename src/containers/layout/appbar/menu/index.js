@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Badge,
+  //Badge,
   IconButton,
   Avatar,
   Menu,
@@ -8,9 +8,9 @@ import {
   Popover,
 } from 'material-ui';
 import {
-  SocialNotificationsNone,
-  CommunicationMailOutline,
-  ActionDateRange,
+  // SocialNotificationsNone,
+  // CommunicationMailOutline,
+  // ActionDateRange,
   HardwareKeyboardArrowDown,
 } from 'material-ui/svg-icons';
 import { images } from '../../../../theme';
@@ -85,7 +85,8 @@ class BadgeExampleSimple extends Component {
             __html: style,
           }}
         />
-        <Badge
+        {/*
+           <Badge
           className="badge"
           badgeContent={10}
           primary={true}
@@ -153,6 +154,7 @@ class BadgeExampleSimple extends Component {
             </Menu>
           </Popover>
         </Badge>
+
         <Badge
           className="badge"
           badgeContent={4}
@@ -187,6 +189,7 @@ class BadgeExampleSimple extends Component {
             </Menu>
           </Popover>
         </Badge>
+        */}
         <div className="badge user" onClick={this.handleTouchTapUser}>
           <Avatar className="avatar" src={images.defaultAvatar} />
           <span className="user-name"> Manh </span>
@@ -207,9 +210,6 @@ class BadgeExampleSimple extends Component {
             onRequestClose={this.handleRequestClose}
           >
             <Menu>
-              <MenuItem primaryText="A" />
-              <MenuItem primaryText="Help &amp; feedback" />
-              <MenuItem primaryText="Settings" />
               <Link to="/userProfile">
                 <MenuItem primaryText="User Profile" />
               </Link>
