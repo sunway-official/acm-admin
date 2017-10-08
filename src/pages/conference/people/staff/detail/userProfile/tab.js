@@ -5,6 +5,7 @@ import SwipeableViews from 'react-swipeable-views';
 import EditablePersonalInfo from '../personalInfo/editablePersonalInfo';
 //import CardExampleWithAvatar from './changeAvatar/index';
 import ChangePassword from '../changePassword';
+import ContactInformation from '../contactInformation';
 import '../style.css';
 //import FeaturesSetting from './featuresSetting';
 
@@ -39,7 +40,8 @@ export default class InfoTabs extends React.Component {
       <div>
         <Tabs onChange={this.handleChange} value={this.state.slideIndex}>
           <Tab label="Personal Info" value={0} />
-          <Tab label="Change Password" value={1} />
+          <Tab label="Contact Information" value={1} />
+          <Tab label="Change Password" value={2} />
         </Tabs>
         <SwipeableViews
           index={this.state.slideIndex}
@@ -47,6 +49,9 @@ export default class InfoTabs extends React.Component {
         >
           <div>
             <EditablePersonalInfo me={me}/>
+          </div>
+          <div>
+            <ContactInformation me={me}/>
           </div>
           <div style={styles.slide}>
             <ChangePassword />

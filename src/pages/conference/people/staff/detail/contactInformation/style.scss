@@ -1,0 +1,24 @@
+.btn {
+  &.contactInformation {
+    width: 150px !important;
+    margin: 20px 0px 0px 30px;
+  }
+}
+.secondColunm {
+  height: 52px !important;
+  text-align: left !important;
+  &.firstRow {
+    margin-top: 10px;
+  }
+}
+.firstColunm {
+  height: 52px !important;
+  align-items: center;
+  &.firstRow {
+    margin-top: 10px;
+  }
+}
+.fa{
+  color: rgb(117, 117, 117);
+  padding-top: 4px !important;
+}
