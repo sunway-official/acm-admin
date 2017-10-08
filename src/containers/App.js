@@ -29,7 +29,7 @@ export default () => (
             path="/conference/:conference_id/people/staff"
             component={ConferenceStaffList}
           />
-          <AuthRoute exact path="/userProfile" component={UserProfile} />
+          <AuthRoute exact path="/user_profile" component={UserProfile} />
           <AuthRoute exact path="/userInfo" component={UserInfo} />
           <AuthRoute path="/withThunk" component={WithThunk} />
           <AuthRoute component={NoMatch} />

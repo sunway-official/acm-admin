@@ -7,7 +7,6 @@ import SocialCake from 'material-ui/svg-icons/social/cake';
 import './style.css';
 import { RaisedButton } from 'material-ui';
 import { DatePicker, TextField, ListItem } from 'material-ui';
-import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import ActionInfoOutline from 'material-ui/svg-icons/action/info-outline';
 import { Field, reduxForm, formValueSelector } from 'redux-form';
 import { regex } from '../../../../../../utils';
@@ -22,7 +21,9 @@ const validate = values => {
     'facebook_id',
     'twitter_id',
     'linkedin_id',
+    'gender',
     'bio',
+    'dob',
   ];
   requiredFields.forEach(field => {
     if (!values[field]) {
@@ -55,7 +56,7 @@ const renderField = ({
 
 const maxDate = new Date();
 maxDate.setFullYear(
-  maxDate.getFullYear(),
+  maxDate.getFullYear() - 10,
   maxDate.getMonth(),
   maxDate.getDate() + 1,
 );
@@ -80,8 +81,11 @@ const renderDatePicker = ({
 class EditablePersonalInfo extends Component {
   constructor(props) {
     super(props);
-    this.state = { value: '1' };
     this.saveInfomation = this.saveInfomation.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
+  }
+  handleCancel (){
+    window.alert('This function has not implement yet');
   }
   saveInfomation() {
     const {
@@ -89,21 +93,20 @@ class EditablePersonalInfo extends Component {
       firstname,
       lastname,
       email,
+      dob,
       gender,
-      //dob,
       bio,
       linkedin_id,
       facebook_id,
       twitter_id,
     } = this.props;
-    //console.log(this.props);
     UPDATE_ME_MUTATION({
       variables: {
         firstname: firstname,
         lastname: lastname,
         email: email,
         gender: gender,
-        //dob: dob,
+        dob: dob,
         bio: bio,
         linkedin_id: linkedin_id,
         facebook_id: facebook_id,
@@ -112,9 +115,8 @@ class EditablePersonalInfo extends Component {
     });
     window.alert('Update successful!');
   }
-  handleChange = (event, index, value) => this.setState({ value });
+
   render() {
-    //console.log(this.props.data);
     const { handleSubmit, submitting, pristine, invalid } = this.props;
     return (
       <div>
@@ -165,18 +167,11 @@ class EditablePersonalInfo extends Component {
                   />
                 </TableRowColumn>
                 <TableRowColumn className="second-column">
-                  <RadioButtonGroup
-                    name="shipSpeed"
-                    defaultSelected="male"
-                    className="radio gender"
-                  >
-                    <RadioButton value="male" label="Male" className="male" />
-                    <RadioButton
-                      value="female"
-                      label="Female"
-                      className="female"
-                    />
-                  </RadioButtonGroup>
+                  <Field name="gender" component="select">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="unknown">Unknown</option>
+                  </Field>
                 </TableRowColumn>
                 <TableRowColumn />
               </TableRow>
@@ -197,6 +192,8 @@ class EditablePersonalInfo extends Component {
                     component={renderField}
                     hintText="Email"
                     className="editField"
+                    disabled={true}
+                    underlineShow={false}
                   />
                 </TableRowColumn>
                 <TableRowColumn />
@@ -216,7 +213,6 @@ class EditablePersonalInfo extends Component {
                     component={renderDatePicker}
                     format={null}
                     hintText="Birthday"
-                    autoOk={true}
                     openToYearSelection={true}
                     className="editField"
                   />
@@ -305,7 +301,7 @@ class EditablePersonalInfo extends Component {
                 <TableRowColumn className="first-column">
                   <ListItem
                     className="list-item"
-                    primaryText="More Info"
+                    primaryText="Description"
                     leftIcon={<ActionInfoOutline />}
                     disabled={true}
                   />
@@ -315,7 +311,7 @@ class EditablePersonalInfo extends Component {
                     id="text-field-default"
                     name="bio"
                     type="text"
-                    hintText="Short description"
+                    hintText="Description"
                     component={renderField}
                     className="editField"
                     multiLine
@@ -339,6 +335,7 @@ class EditablePersonalInfo extends Component {
               className="btn cancel"
               label="Cancel"
               default={true}
+              onClick={this.handleCancel}
             />
           </div>
         </form>
@@ -349,14 +346,13 @@ class EditablePersonalInfo extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   const me = ownProps.me;
-  //console.log(me);
   return {
     initialValues: {
       firstname: me.firstname,
       lastname: me.lastname,
       email: me.email,
-      gender: 'male',
-      //dob: new Date(me.dob),
+      gender: me.gender,
+      dob: new Date(me.dob),
       bio: me.bio,
       linkedin_id: me.linkedin_id,
       facebook_id: me.facebook_id,
@@ -371,7 +367,8 @@ EditablePersonalInfo = connect(state => {
   const lastname = selector(state, 'lastname');
   const email = selector(state, 'email');
   const gender = selector(state, 'gender');
-  //const dob = selector(state, 'dob');
+  const dob = new Date(selector(state, 'dob'));
+  dob.setHours(dob.getHours() + 7);
   const bio = selector(state, 'bio');
   const linkedin_id = selector(state, 'linkedin_id');
   const facebook_id = selector(state, 'facebook_id');
@@ -381,7 +378,7 @@ EditablePersonalInfo = connect(state => {
     lastname,
     email,
     gender,
-    //dob,
+    dob,
     bio,
     linkedin_id,
     facebook_id,
@@ -393,6 +390,7 @@ const UPDATE_ME_MUTATION = gql`
   mutation UpdateMe(
     $firstname: String!
     $lastname: String!
+    $dob: Date
     $gender: Gender!
     $bio: String
     $linkedin_id: String
@@ -402,6 +400,7 @@ const UPDATE_ME_MUTATION = gql`
     updateMe(
       firstname: $firstname
       lastname: $lastname
+      dob: $dob
       gender: $gender
       bio: $bio
       linkedin_id: $linkedin_id
@@ -410,6 +409,7 @@ const UPDATE_ME_MUTATION = gql`
     ) {
       firstname
       lastname
+      dob
       gender
       bio
       linkedin_id

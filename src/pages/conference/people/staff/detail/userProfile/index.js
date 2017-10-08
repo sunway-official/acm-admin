@@ -5,14 +5,14 @@ import { Subheader, IconButton } from 'material-ui';
 import { Link } from 'react-router-dom';
 import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import EditUserAvatar from '../changeAvatar/editUserAvatar';
-import { graphql, gql, compose } from 'react-apollo';
+import { graphql, gql } from 'react-apollo';
 
 class Index extends Component {
   render() {
     const { loading } = this.props.data;
     if (loading) return <div>Loading...</div>;
     const me = this.props.data.me;
-    // console.log(this.props.data.me);
+    //console.log(this.props.data.me);
     return (
       <div className="conference">
         <Subheader className="subheader"> User Profile</Subheader>
@@ -62,6 +62,7 @@ const QUERY_ME = gql`
       gender
       email
       bio
+      dob
       linkedin_id
       facebook_id
       twitter_id
@@ -69,4 +70,4 @@ const QUERY_ME = gql`
   }
 `;
 
-export default compose(graphql(QUERY_ME))(Index);
+export default graphql(QUERY_ME)(Index);
