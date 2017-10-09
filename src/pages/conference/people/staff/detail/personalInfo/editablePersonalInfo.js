@@ -1,40 +1,16 @@
 import React, { Component } from 'react';
-import { Table, TableBody, TableRow, TableRowColumn } from 'material-ui/Table';
 import ActionPermIdentity from 'material-ui/svg-icons/action/perm-identity';
 import NotificationWC from 'material-ui/svg-icons/notification/wc';
-import CommunicationMailOutline from 'material-ui/svg-icons/communication/mail-outline';
 import SocialCake from 'material-ui/svg-icons/social/cake';
 import './style.css';
 import { RaisedButton } from 'material-ui';
 import { DatePicker, TextField, ListItem } from 'material-ui';
 import ActionInfoOutline from 'material-ui/svg-icons/action/info-outline';
 import { Field, reduxForm, formValueSelector } from 'redux-form';
-import { regex } from '../../../../../../utils';
 import { compose, gql, graphql } from 'react-apollo';
 import { connect } from 'react-redux';
-const validate = values => {
-  const errors = {};
-  const requiredFields = [
-    'email',
-    'firstname',
-    'lastname',
-    'facebook_id',
-    'twitter_id',
-    'linkedin_id',
-    'gender',
-    'bio',
-    'dob',
-  ];
-  requiredFields.forEach(field => {
-    if (!values[field]) {
-      errors[field] = 'This field is required';
-    }
-  });
-  if (values.email && !regex.EMAIL_REGEX.test(values.email)) {
-    errors.email = 'Invalid email address';
-  }
-  return errors;
-};
+import { Col, Grid, Row } from 'react-flexbox-grid';
+import validate from './validate';
 
 const renderField = ({
   input,
@@ -92,25 +68,17 @@ class EditablePersonalInfo extends Component {
       UPDATE_ME_MUTATION,
       firstname,
       lastname,
-      email,
       dob,
       gender,
       bio,
-      linkedin_id,
-      facebook_id,
-      twitter_id,
     } = this.props;
     UPDATE_ME_MUTATION({
       variables: {
         firstname: firstname,
         lastname: lastname,
-        email: email,
         gender: gender,
         dob: dob,
         bio: bio,
-        linkedin_id: linkedin_id,
-        facebook_id: facebook_id,
-        twitter_id: twitter_id,
       },
     });
     window.alert('Update successful!');
@@ -120,209 +88,101 @@ class EditablePersonalInfo extends Component {
     const { handleSubmit, submitting, pristine, invalid } = this.props;
     return (
       <div>
-        <form onSubmit={handleSubmit}>
-          <Table selectable={false}>
-            <TableBody
-              displayRowCheckbox={false}
-              deselectOnClickaway={false}
-              showRowHover={true}
-              stripedRows={false}
-            >
-              <TableRow>
-                <TableRowColumn className="first-column">
-                  <ListItem
-                    className="list-item"
-                    primaryText="Name"
-                    leftIcon={<ActionPermIdentity />}
-                    disabled={true}
-                  />
-                </TableRowColumn>
-                <TableRowColumn className="second-column">
-                  <Field
-                    id="text-field-default"
-                    name="lastname"
-                    type="text"
-                    hintText="Last name"
-                    component={renderField}
-                    className="editField subname"
-                  />
-                  <Field
-                    id="text-field-default"
-                    name="firstname"
-                    type="text"
-                    hintText="First name"
-                    component={renderField}
-                    className="editField subname"
-                  />
-                </TableRowColumn>
-                <TableRowColumn />
-              </TableRow>
-              <TableRow>
-                <TableRowColumn className="first-column">
-                  <ListItem
-                    className="list-item"
-                    primaryText="Gender"
-                    leftIcon={<NotificationWC />}
-                    disabled={true}
-                  />
-                </TableRowColumn>
-                <TableRowColumn className="second-column">
-                  <Field name="gender" component="select">
+        <Grid fluid>
+          <Row>
+            <Col xs={3}>
+              <Row className="firstColunm firstRow">
+                <ListItem
+                  className="list-item"
+                  primaryText="Name"
+                  leftIcon={<ActionPermIdentity />}
+                  disabled={true}
+                />
+              </Row>
+              <Row className="firstColunm">
+                <ListItem
+                  className="list-item"
+                  primaryText="Gender"
+                  leftIcon={<NotificationWC />}
+                  disabled={true}
+                />
+              </Row>
+              <Row className="firstColunm">
+                <ListItem
+                  className="list-item"
+                  primaryText="Birthday"
+                  leftIcon={<SocialCake />}
+                  disabled={true}
+                />
+              </Row>
+              <Row className="firstColunm">
+                <ListItem
+                  className="list-item"
+                  primaryText="Description"
+                  leftIcon={<ActionInfoOutline />}
+                  disabled={true}
+                />
+              </Row>
+            </Col>
+            <Col xs={8}>
+              <form onSubmit={handleSubmit}>
+                <Row className="secondColunm firstRow">
+                  <Col xs>
+                    <Field
+                      id="text-field-default"
+                      name="lastname"
+                      type="text"
+                      hintText="Last name"
+                      component={renderField}
+                      className="editField subname"
+                      fullWidth={true}
+                    />
+                  </Col>
+                  <Col xs>
+                    <Field
+                      id="text-field-default"
+                      name="firstname"
+                      type="text"
+                      hintText="First name"
+                      component={renderField}
+                      className="editField subname"
+                      fullWidth={true}
+                    />
+                  </Col>
+                </Row>
+                <Row className="secondColunm">
+                  <Field name="gender" component="select" className="gender">
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                     <option value="unknown">Unknown</option>
                   </Field>
-                </TableRowColumn>
-                <TableRowColumn />
-              </TableRow>
-              <TableRow>
-                <TableRowColumn className="first-column">
-                  <ListItem
-                    className="list-item"
-                    primaryText="Email"
-                    leftIcon={<CommunicationMailOutline />}
-                    disabled={true}
-                  />
-                </TableRowColumn>
-                <TableRowColumn className="second-column">
-                  <Field
-                    id="text-field-default"
-                    name="email"
-                    type="text"
-                    component={renderField}
-                    hintText="Email"
-                    className="editField"
-                    disabled={true}
-                    underlineShow={false}
-                  />
-                </TableRowColumn>
-                <TableRowColumn />
-              </TableRow>
-              <TableRow>
-                <TableRowColumn className="first-column">
-                  <ListItem
-                    className="list-item"
-                    primaryText="Birthday"
-                    leftIcon={<SocialCake />}
-                    disabled={true}
-                  />
-                </TableRowColumn>
-                <TableRowColumn className="second-column">
+                </Row>
+                <Row className="secondColunm">
                   <Field
                     name="dob"
                     component={renderDatePicker}
                     format={null}
                     hintText="Birthday"
                     openToYearSelection={true}
-                    className="editField"
+                    className="birthday"
                   />
-                </TableRowColumn>
-                <TableRowColumn />
-              </TableRow>
-              <TableRow>
-                <TableRowColumn className="first-column">
-                  <ListItem
-                    className="list-item"
-                    primaryText="Facebook"
-                    leftIcon={
-                      <i
-                        className="fa fa-facebook-square fa-lg"
-                        aria-hidden="true"
-                      />
-                    }
-                    disabled={true}
-                  />
-                </TableRowColumn>
-                <TableRowColumn className="second-column">
-                  <Field
-                    id="text-field-default"
-                    name="facebook_id"
-                    type="text"
-                    hintText="Facebook link"
-                    component={renderField}
-                    className="editField"
-                  />
-                </TableRowColumn>
-                <TableRowColumn />
-              </TableRow>
-              <TableRow>
-                <TableRowColumn className="first-column">
-                  <ListItem
-                    className="list-item"
-                    primaryText="Twitter"
-                    leftIcon={
-                      <i
-                        className="fa fa-twitter-square fa-lg"
-                        aria-hidden="true"
-                      />
-                    }
-                    disabled={true}
-                  />
-                </TableRowColumn>
-                <TableRowColumn className="second-column">
-                  <Field
-                    id="text-field-default"
-                    name="twitter_id"
-                    type="text"
-                    hintText="Twitter link"
-                    component={renderField}
-                    className="editField"
-                  />
-                </TableRowColumn>
-                <TableRowColumn />
-              </TableRow>
-              <TableRow>
-                <TableRowColumn className="first-column">
-                  <ListItem
-                    className="list-item"
-                    primaryText="LinkedIn"
-                    leftIcon={
-                      <i
-                        className="fa fa-linkedin-square fa-lg"
-                        aria-hidden="true"
-                      />
-                    }
-                    disabled={true}
-                  />
-                </TableRowColumn>
-                <TableRowColumn className="second-column">
-                  <Field
-                    id="text-field-default"
-                    name="linkedin_id"
-                    type="text"
-                    hintText="LinkedIn link"
-                    component={renderField}
-                    className="editField"
-                  />
-                </TableRowColumn>
-                <TableRowColumn />
-              </TableRow>
-              <TableRow>
-                <TableRowColumn className="first-column">
-                  <ListItem
-                    className="list-item"
-                    primaryText="Description"
-                    leftIcon={<ActionInfoOutline />}
-                    disabled={true}
-                  />
-                </TableRowColumn>
-                <TableRowColumn className="second-column">
+                </Row>
+                <Row className="secondColunm">
                   <Field
                     id="text-field-default"
                     name="bio"
                     type="text"
                     hintText="Description"
                     component={renderField}
-                    className="editField"
                     multiLine
                     rows={1}
                     rowsMax={1}
+                    fullWidth={true}
                   />
-                </TableRowColumn>
-                <TableRowColumn />
-              </TableRow>
-            </TableBody>
-          </Table>
+                </Row>
+              </form>
+            </Col>
+          </Row>
           <div>
             <RaisedButton
               className="btn save-change"
@@ -338,7 +198,7 @@ class EditablePersonalInfo extends Component {
               onClick={this.handleCancel}
             />
           </div>
-        </form>
+        </Grid>
       </div>
     );
   }
@@ -350,13 +210,9 @@ const mapStateToProps = (state, ownProps) => {
     initialValues: {
       firstname: me.firstname,
       lastname: me.lastname,
-      email: me.email,
       gender: me.gender,
       dob: new Date(me.dob),
       bio: me.bio,
-      linkedin_id: me.linkedin_id,
-      facebook_id: me.facebook_id,
-      twitter_id: me.twitter_id,
     },
   };
 };
@@ -365,24 +221,16 @@ const selector = formValueSelector('EditablePersonalInfo');
 EditablePersonalInfo = connect(state => {
   const firstname = selector(state, 'firstname');
   const lastname = selector(state, 'lastname');
-  const email = selector(state, 'email');
   const gender = selector(state, 'gender');
   const dob = new Date(selector(state, 'dob'));
   dob.setHours(dob.getHours() + 7);
   const bio = selector(state, 'bio');
-  const linkedin_id = selector(state, 'linkedin_id');
-  const facebook_id = selector(state, 'facebook_id');
-  const twitter_id = selector(state, 'twitter_id');
   return {
     firstname,
     lastname,
-    email,
     gender,
     dob,
     bio,
-    linkedin_id,
-    facebook_id,
-    twitter_id,
   };
 })(EditablePersonalInfo);
 
@@ -393,9 +241,6 @@ const UPDATE_ME_MUTATION = gql`
     $dob: Date
     $gender: Gender!
     $bio: String
-    $linkedin_id: String
-    $facebook_id: String
-    $twitter_id: String
   ) {
     updateMe(
       firstname: $firstname
@@ -403,18 +248,12 @@ const UPDATE_ME_MUTATION = gql`
       dob: $dob
       gender: $gender
       bio: $bio
-      linkedin_id: $linkedin_id
-      facebook_id: $facebook_id
-      twitter_id: $twitter_id
     ) {
       firstname
       lastname
       dob
       gender
       bio
-      linkedin_id
-      facebook_id
-      twitter_id
     }
   }
 `;

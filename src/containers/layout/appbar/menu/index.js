@@ -17,7 +17,8 @@ import { images } from '../../../../theme';
 import style from './style.css';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
-import { withApollo, compose} from 'react-apollo';
+import { withApollo, compose } from 'react-apollo';
+//import { graphql, gql } from 'react-apollo';
 
 class BadgeExampleSimple extends Component {
   constructor(props) {

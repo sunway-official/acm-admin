@@ -31,9 +31,9 @@ const ChangePassword = props => {
       <Grid fluid>
         <Row around="xs">
           <Col xs={3}>
-            <Row className="firstColunm old"> Old Password </Row>
-            <Row className="firstColunm"> New Password </Row>
-            <Row className="firstColunm"> Retype Password </Row>
+            <Row className="colunm old"> Old Password </Row>
+            <Row className="colunm"> New Password </Row>
+            <Row className="colunm"> Retype Password </Row>
           </Col>
           <Col xs={8}>
             <form onSubmit={handleSubmit}>
