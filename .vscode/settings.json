@@ -1,7 +1,7 @@
 {
-  "javascript.validate.enable": false,
-  "javascript.format.enable": false,
-  //"editor.formatOnSave": true,
+  "javascript.validate.enable": true,
+  "javascript.format.enable": true,
+  "editor.formatOnSave": true,
   "prettier.singleQuote": true,
   "prettier.trailingComma": "all",
   "prettier.eslintIntegration": true,
