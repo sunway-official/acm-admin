@@ -1,13 +1,18 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
-import RaisedButton from 'material-ui/RaisedButton';
-import CustomInput from 'components/CustomInput';
-import './formStyle.css';
+import { RaisedButton } from 'material-ui';
 import { regex } from '../../../utils';
+import CustomInput from 'components/CustomInput';
 
 const validate = values => {
   const errors = {};
-  const requiredFields = ['email', 'password'];
+  const requiredFields = [
+    'firstName',
+    'lastName',
+    'email',
+    'password',
+    'confirm-password',
+  ];
   requiredFields.forEach(field => {
     if (!values[field]) {
       errors[field] = 'This field is required';
@@ -16,14 +21,10 @@ const validate = values => {
   if (values.email && !regex.EMAIL_REGEX.test(values.email)) {
     errors.email = 'Invalid email address';
   }
-  if (values.password && !regex.passwordRegex.test(values.password)) {
-    errors.password =
-      'Password must contains at least 6 character include number and special character ';
-  }
   return errors;
 };
 
-const LoginForm = ({
+const ForgotPasswordForm = ({
   error,
   handleSubmit,
   submitting,
@@ -32,31 +33,24 @@ const LoginForm = ({
   pristine,
 }) => (
   <form onSubmit={handleSubmit(onSubmit)}>
-    {/* TODO: Form helper here please! */}
-    <div className="field">
+    <div className="note">
+      Please enter your email address and we'll sent you instructions on how to
+      reset your password
+    </div>
+    <div className="forgot-field">
       <Field
         name="email"
-        type="text"
         component={CustomInput}
         label="Email"
         className="reduxField"
       />
     </div>
-    <div className="field">
-      <Field
-        name="password"
-        type="password"
-        component={CustomInput}
-        label="Password"
-        className="reduxField"
-      />
-    </div>
     <div>
       <RaisedButton
-        className="btn login"
-        disabled={submitting || invalid || pristine}
+        className="btn forgot"
+        disabled={pristine || submitting || invalid}
         type="submit"
-        label="Sign In"
+        label="Submit"
         labelPosition="before"
         primary={true}
       />
@@ -65,6 +59,6 @@ const LoginForm = ({
 );
 
 export default reduxForm({
-  form: 'LoginForm', // a unique identifier for this form
+  form: 'ForgotPasswordForm',
   validate,
-})(LoginForm);
+})(ForgotPasswordForm);
