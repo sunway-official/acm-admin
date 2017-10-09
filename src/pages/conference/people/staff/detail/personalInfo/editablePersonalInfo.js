@@ -4,31 +4,14 @@ import NotificationWC from 'material-ui/svg-icons/notification/wc';
 import SocialCake from 'material-ui/svg-icons/social/cake';
 import './style.css';
 import { RaisedButton } from 'material-ui';
-import { DatePicker, TextField, ListItem } from 'material-ui';
+import { DatePicker, ListItem } from 'material-ui';
 import ActionInfoOutline from 'material-ui/svg-icons/action/info-outline';
 import { Field, reduxForm, formValueSelector } from 'redux-form';
 import { compose, gql, graphql } from 'react-apollo';
 import { connect } from 'react-redux';
 import { Col, Grid, Row } from 'react-flexbox-grid';
 import validate from './validate';
-
-const renderField = ({
-  input,
-  className,
-  label,
-  type,
-  meta: { touched, error },
-  ...custom
-}) => (
-  <TextField
-    errorText={touched && error}
-    type={type}
-    floatingLabelText={label}
-    {...input}
-    {...custom}
-    className={className}
-  />
-);
+import { renderField } from '../../../../../../utils';
 
 const maxDate = new Date();
 maxDate.setFullYear(

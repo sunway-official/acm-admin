@@ -1,29 +1,12 @@
 import './style.css';
 
-import { RaisedButton, TextField } from 'material-ui';
+import { RaisedButton } from 'material-ui';
 import React from 'react';
 import { Col, Grid, Row } from 'react-flexbox-grid';
 import { Field, reduxForm } from 'redux-form';
 import validate from './validate';
+import { renderField } from '../../../../../../utils';
 
-const renderField = ({
-  input,
-  label,
-  type,
-  className,
-  meta: { touched, error },
-  ...custom
-}) => (
-  <TextField
-    floatingLabelText={label}
-    errorText={touched && error}
-    type={type}
-    {...input}
-    {...custom}
-    className={className}
-    fullWidth={true}
-  />
-);
 const ChangePassword = props => {
   const { handleSubmit, submitting, invalid, pristine } = props;
   return (
@@ -43,6 +26,7 @@ const ChangePassword = props => {
                   type="password"
                   component={renderField}
                   label="Old Password"
+                  fullWidth={true}
                 />
               </Row>
               <Row className="changePass">
@@ -51,6 +35,7 @@ const ChangePassword = props => {
                   type="password"
                   component={renderField}
                   label="New Password"
+                  fullWidth={true}
                 />
               </Row>
               <Row className="changePass">
@@ -59,6 +44,7 @@ const ChangePassword = props => {
                   type="password"
                   component={renderField}
                   label="Retype Password"
+                  fullWidth={true}
                 />
               </Row>
             </form>

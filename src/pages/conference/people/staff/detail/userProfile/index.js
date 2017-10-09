@@ -42,7 +42,7 @@ class Index extends Component {
               <div className="right-div">
                 <div className="card" id="right-form-container">
                   <div className="card-content">
-                    <InfoTabs me={me}/>
+                    <InfoTabs me={me} />
                   </div>
                 </div>
               </div>

@@ -1,30 +1,13 @@
 import './style.css';
-import { RaisedButton, TextField, ListItem } from 'material-ui';
+import { RaisedButton, ListItem } from 'material-ui';
 import React, { Component } from 'react';
 import { Col, Grid, Row } from 'react-flexbox-grid';
 import { Field, reduxForm, formValueSelector } from 'redux-form';
 import { compose, gql, graphql } from 'react-apollo';
 import { connect } from 'react-redux';
 import validate from './validate';
+import { renderField } from '../../../../../../utils';
 
-const renderField = ({
-  input,
-  label,
-  type,
-  className,
-  meta: { touched, error },
-  ...custom
-}) => (
-  <TextField
-    floatingLabelText={label}
-    errorText={touched && error}
-    type={type}
-    {...input}
-    {...custom}
-    className={className}
-    fullWidth={true}
-  />
-);
 class ContactInformation extends Component {
   constructor(props) {
     super(props);

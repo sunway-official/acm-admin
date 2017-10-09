@@ -1,46 +1,10 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
-import { TextField, RaisedButton, AppBar } from 'material-ui';
+import { RaisedButton, AppBar } from 'material-ui';
 import './style.css';
-import { regex } from '../../../utils';
+import { renderField } from '../../../utils';
+import validate from './validate';
 
-const validate = values => {
-  const errors = {};
-  const requiredFields = [
-    'firstName',
-    'lastName',
-    'email',
-    'password',
-    'confirm-password',
-  ];
-  requiredFields.forEach(field => {
-    if (!values[field]) {
-      errors[field] = 'This field is required';
-    }
-  });
-  if (values.email && !regex.EMAIL_REGEX.test(values.email)) {
-    errors.email = 'Invalid email address';
-  }
-  return errors;
-};
-
-const renderField = ({
-  input,
-  label,
-  type,
-  className,
-  meta: { touched, error },
-  ...custom
-}) => (
-  <TextField
-    floatingLabelText={label}
-    errorText={touched && error}
-    type={type}
-    {...input}
-    {...custom}
-    className={className}
-  />
-);
 const Forgot = props => {
   const { handleSubmit, submitting, invalid } = props;
   return (
