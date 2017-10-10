@@ -46,11 +46,13 @@ class ListExampleSimple extends React.Component {
               leftIcon={<ActionInfoOutline />}
             />
           </Link>
-          <ListItem
-            className="item"
-            primaryText={<a href="/conference/1/schedules">Schedule</a>}
-            leftIcon={<NotificationEventAvailable />}
-          />
+          <Link to="/conference/1/schedules">
+            <ListItem
+              className="item"
+              primaryText={'Schedule'}
+              leftIcon={<NotificationEventAvailable />}
+            />
+          </Link>
           <ListItem
             className="item"
             primaryText="People"

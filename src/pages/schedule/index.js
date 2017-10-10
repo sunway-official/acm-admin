@@ -6,30 +6,29 @@ import events from './events';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
-import AddDialog from './addDialog';
-import { gql, graphql, compose } from 'react-apollo';
-import { connect } from 'react-redux';
+// import AddDialog from './addDialog';
+import AddDialog from './add';
+import { gql, graphql } from 'react-apollo';
 
 import 'react-big-calendar/lib/less/styles.less';
 import './styles.less';
 import './prism.less';
-
 const DragAndDropCalendar = withDragAndDrop(BigCalendar);
 
 const style = {
   margin: '200px',
 };
-const createDateAsUTC = date => {
-  return new Date(
-    Date.UTC(
-      date.getFullYear(),
-      date.getMonth(),
-      date.getDate(),
-      date.getHours(),
-      date.getMinutes(),
-    ),
-  );
-};
+// const createDateAsUTC = date => {
+//   return new Date(
+//     Date.UTC(
+//       date.getFullYear(),
+//       date.getMonth(),
+//       date.getDate(),
+//       date.getHours(),
+//       date.getMinutes(),
+//     ),
+//   );
+// };
 
 const getEvents = array => {
   let myEvents = [];
@@ -108,7 +107,7 @@ class MyCalendar extends React.Component {
           onEventDrop={this.moveEvent}
           defaultView="week"
           defaultDate={new Date()}
-          onSelectEvent={event => alert(event.title)}
+          onSelectEvent={event => console.log(event)}
           onSelectSlot={slotInfo =>
             alert(
               `selected slot: \n\nstart ${slotInfo.start.toLocaleString()} ` +
