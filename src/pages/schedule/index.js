@@ -3,32 +3,11 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 import events from './events';
-import HTML5Backend from 'react-dnd-html5-backend';
-import { DragDropContext } from 'react-dnd';
-import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
 import AddDialog from './addDialog';
-import { gql, graphql, compose } from 'react-apollo';
-import { connect } from 'react-redux';
-
-import 'react-big-calendar/lib/less/styles.less';
-import './styles.less';
-import './prism.less';
-
-const DragAndDropCalendar = withDragAndDrop(BigCalendar);
+import { gql, graphql } from 'react-apollo';
 
 const style = {
   margin: '200px',
-};
-const createDateAsUTC = date => {
-  return new Date(
-    Date.UTC(
-      date.getFullYear(),
-      date.getMonth(),
-      date.getDate(),
-      date.getHours(),
-      date.getMinutes(),
-    ),
-  );
 };
 
 const getEvents = array => {
@@ -37,12 +16,10 @@ const getEvents = array => {
     item.schedules.map(schedule => {
       const start = new Date(schedule.start);
       const setStart = new Date(start.setHours(start.getHours() - 7));
-      console.log(setStart);
 
       const end = new Date(schedule.end);
       const setEnd = new Date(end.setHours(end.getHours() - 7));
 
-      console.log(setEnd);
       const event = {
         title: item.title,
         start: setStart,
@@ -65,31 +42,6 @@ class MyCalendar extends React.Component {
     this.state = {
       events: events,
     };
-
-    this.moveEvent = this.moveEvent.bind(this);
-    this.setEvents = this.setEvents.bind(this);
-  }
-
-  setEvents(events) {
-    this.setState({
-      events: events,
-    });
-  }
-
-  moveEvent({ event, start, end }) {
-    const { events } = this.state;
-
-    const idx = events.indexOf(event);
-    const updatedEvent = { ...event, start, end };
-
-    const nextEvents = [...events];
-    nextEvents.splice(idx, 1, updatedEvent);
-
-    this.setState({
-      events: nextEvents,
-    });
-
-    alert(`${event.title} was dropped onto ${event.start}`);
   }
 
   render() {
@@ -101,26 +53,23 @@ class MyCalendar extends React.Component {
 
     return (
       <div style={style}>
-        <AddDialog onSubmit={() => {}} />
-        <DragAndDropCalendar
-          selectable
+        <AddDialog
+          conferenceId={this.props.match.params.id}
+          onSubmit={() => {}}
+        />
+        <BigCalendar
+          popup
           events={events.concat(myEvents)}
-          onEventDrop={this.moveEvent}
           defaultView="week"
           defaultDate={new Date()}
-          onSelectEvent={event => alert(event.title)}
-          onSelectSlot={slotInfo =>
-            alert(
-              `selected slot: \n\nstart ${slotInfo.start.toLocaleString()} ` +
-                `\nend: ${slotInfo.end.toLocaleString()}`,
-            )}
+          onSelectEvent={event => console.log(event)}
         />
       </div>
     );
   }
 }
 
-const GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY = gql`
+export const GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY = gql`
   query getActivitiesByConferenceID($conference_id: ID!) {
     getActivitiesByConferenceID(conference_id: $conference_id) {
       id
@@ -143,4 +92,4 @@ const MyCalendarData = graphql(GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY, {
   }),
 })(MyCalendar);
 
-export default DragDropContext(HTML5Backend)(MyCalendarData);
+export default MyCalendarData;

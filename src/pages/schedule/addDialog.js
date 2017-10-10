@@ -3,10 +3,12 @@ import Dialog from 'material-ui/Dialog';
 import { RaisedButton, DatePicker, TimePicker } from 'material-ui';
 import { reduxForm, Field, formValueSelector } from 'redux-form';
 import { connect } from 'react-redux';
+import { gql, graphql, compose } from 'react-apollo';
+import { GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY } from './index';
 
 const validate = values => {
   const errors = {};
-  const requiredFields = ['startDate', 'startTime', 'endTime'];
+  const requiredFields = ['date', 'startTime', 'endTime'];
   requiredFields.forEach(field => {
     if (!values[field]) {
       errors[field] = 'Required';
@@ -15,6 +17,21 @@ const validate = values => {
   return errors;
 };
 const minDate = new Date();
+
+const getDateTime = (date, time) => {
+  const getFullYear = date.getFullYear();
+  const getMonth = date.getMonth();
+  const getDate = date.getDate();
+
+  const getHours = time.getHours();
+  const getMinutes = time.getMinutes();
+
+  const dateTime = new Date(
+    Date.UTC(getFullYear, getMonth, getDate, getHours, getMinutes),
+  );
+
+  return dateTime;
+};
 
 const renderDatePicker = ({
   input,
@@ -39,7 +56,6 @@ const renderTimePicker = ({
   ...custom
 }) => (
   <TimePicker
-    minDate={minDate}
     errorText={touched && error}
     onChange={(e, val) => {
       return input.onChange(val);
@@ -50,17 +66,63 @@ const renderTimePicker = ({
 );
 
 class AddDialog extends React.Component {
-  state = {
-    open: false,
-  };
+  constructor() {
+    super();
+    this.state = {
+      open: false,
+    };
+    this.handleOpen = this.handleOpen.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+    this.handleInsert = this.handleInsert.bind(this);
+  }
 
-  handleOpen = () => {
+  handleOpen() {
     this.setState({ open: true });
-  };
+  }
 
-  handleClose = () => {
+  handleClose() {
     this.setState({ open: false });
-  };
+  }
+
+  handleInsert() {
+    const {
+      INSERT_ACTIVITY_MUTATION,
+      INSERT_SCHEDULE_MUTATION,
+      newStarTime,
+      newEndTime,
+      conferenceId,
+    } = this.props;
+
+    const title = 'My new Title 5 to test function';
+
+    INSERT_ACTIVITY_MUTATION({
+      variables: {
+        conference_id: conferenceId,
+        title: title,
+      },
+    })
+      .then(({ data }) => {
+        INSERT_SCHEDULE_MUTATION({
+          variables: {
+            activity_id: data.insertActivity.id,
+            room_id: 1,
+            start: newStarTime,
+            end: newEndTime,
+          },
+          refetchQueries: [
+            {
+              query: GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY,
+              variables: { conference_id: conferenceId },
+            },
+          ],
+        });
+      })
+      .catch(error => {
+        console.log('there was an error sending the query', error);
+      });
+
+    this.handleClose();
+  }
 
   render() {
     const { handleSubmit, submitting, pristine, invalid } = this.props;
@@ -74,7 +136,7 @@ class AddDialog extends React.Component {
             <div className="d-flex date">
               <div className="d-flex form-group">
                 <Field
-                  name="startDate"
+                  name="date"
                   component={renderDatePicker}
                   format={null}
                   textFieldStyle={{ width: '100%' }}
@@ -107,7 +169,7 @@ class AddDialog extends React.Component {
                 primary={true}
                 type="submit"
                 disabled={pristine || submitting || invalid}
-                onClick={this.handleClose}
+                onClick={this.handleInsert}
               />
               <RaisedButton
                 label="Cancel"
@@ -130,49 +192,62 @@ AddDialog = reduxForm({
 const selector = formValueSelector('addDialog'); // <-- same as form name
 AddDialog = connect(state => {
   // can select values individually
-
-  const startDate = selector(state, 'startDate');
+  const date = selector(state, 'date');
   const startTime = selector(state, 'startTime');
   const endTime = selector(state, 'endTime');
-  // console.log(startDate);
-  // startDate.
-  // console.log(startTime);
-  if (startTime && startTime && endTime) {
-    const getFullYear = startDate.getFullYear();
-    const getMonth = startDate.getMonth();
-    const getDate = startDate.getDate();
-
-    const getHoursStart = startTime.getHours();
-    const getMinutesStart = startTime.getMinutes();
-
-    const getHoursEnd = endTime.getHours();
-    const getMinutesEnd = endTime.getMinutes();
-    // console.log(getHours);
-    // console.log(getMinutes);
-    const newStarTime = new Date(
-      getFullYear,
-      getMonth,
-      getDate,
-      getHoursStart,
-      getMinutesStart,
-    ).toISOString();
-    const newEndTime = new Date(
-      getFullYear,
-      getMonth,
-      getDate,
-      getHoursEnd,
-      getMinutesEnd,
-    ).toISOString();
-
-    console.log(newStarTime);
-    console.log(newEndTime);
+  let newStarTime;
+  let newEndTime;
+  if (date && startTime && endTime) {
+    newStarTime = getDateTime(date, startTime);
+    newEndTime = getDateTime(date, endTime);
   }
 
   return {
-    startDate,
-    startTime,
-    endTime,
+    newStarTime,
+    newEndTime,
   };
 })(AddDialog);
 
-export default AddDialog;
+const INSERT_SCHEDULE_MUTATION = gql`
+  mutation insertSchedule(
+    $activity_id: ID!
+    $room_id: ID!
+    $start: Date!
+    $end: Date!
+  ) {
+    insertSchedule(
+      activity_id: $activity_id
+      room_id: $room_id
+      start: $start
+      end: $end
+    ) {
+      id
+    }
+  }
+`;
+
+const INSERT_ACTIVITY_MUTATION = gql`
+  mutation insertActivity($conference_id: ID!, $title: String!) {
+    insertActivity(conference_id: $conference_id, title: $title) {
+      id
+      title
+      schedules {
+        start
+        end
+        room {
+          id
+          name
+        }
+      }
+    }
+  }
+`;
+
+export default compose(
+  graphql(INSERT_ACTIVITY_MUTATION, {
+    name: 'INSERT_ACTIVITY_MUTATION',
+  }),
+  graphql(INSERT_SCHEDULE_MUTATION, {
+    name: 'INSERT_SCHEDULE_MUTATION',
+  }),
+)(AddDialog);
