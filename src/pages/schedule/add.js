@@ -108,9 +108,6 @@ const rooms = [
   },
 ];
 class AddDialog extends React.PureComponent {
-  submit = values => {
-    console.log('Test Values', values);
-  };
   state = {
     openAdd: false,
     dialogTitle: '',
@@ -138,10 +135,7 @@ class AddDialog extends React.PureComponent {
           autoScrollBodyContent={true}
           open={this.state.openAdd}
         >
-          <form
-            className="form conference-info"
-            onSubmit={handleSubmit(this.submit)}
-          >
+          <form className="form conference-info" onSubmit={handleSubmit}>
             <div className="d-flex form-group">
               <label>Title :</label>
               <Field

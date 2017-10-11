@@ -6,13 +6,15 @@ import CommunicationMailOutline from 'material-ui/svg-icons/communication/mail-o
 import SocialCake from 'material-ui/svg-icons/social/cake';
 import './style.css';
 import { RaisedButton } from 'material-ui';
-import { DatePicker, TextField, ListItem } from 'material-ui';
+import { DatePicker, ListItem } from 'material-ui';
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import ActionInfoOutline from 'material-ui/svg-icons/action/info-outline';
 import { Field, reduxForm, formValueSelector } from 'redux-form';
 import { regex } from '../../../../../../utils';
+import CustomInput from 'components/CustomInput';
 import { compose, gql, graphql } from 'react-apollo';
 import { connect } from 'react-redux';
+
 const validate = values => {
   const errors = {};
   const requiredFields = [
@@ -34,24 +36,6 @@ const validate = values => {
   }
   return errors;
 };
-
-const renderField = ({
-  input,
-  className,
-  label,
-  type,
-  meta: { touched, error },
-  ...custom
-}) => (
-  <TextField
-    errorText={touched && error}
-    type={type}
-    floatingLabelText={label}
-    {...input}
-    {...custom}
-    className={className}
-  />
-);
 
 const maxDate = new Date();
 maxDate.setFullYear(
@@ -141,7 +125,7 @@ class EditablePersonalInfo extends Component {
                     name="lastname"
                     type="text"
                     hintText="Last name"
-                    component={renderField}
+                    component={CustomInput}
                     className="editField subname"
                   />
                   <Field
@@ -149,7 +133,7 @@ class EditablePersonalInfo extends Component {
                     name="firstname"
                     type="text"
                     hintText="First name"
-                    component={renderField}
+                    component={CustomInput}
                     className="editField subname"
                   />
                 </TableRowColumn>
@@ -194,7 +178,7 @@ class EditablePersonalInfo extends Component {
                     id="text-field-default"
                     name="email"
                     type="text"
-                    component={renderField}
+                    component={CustomInput}
                     hintText="Email"
                     className="editField"
                   />
@@ -243,7 +227,7 @@ class EditablePersonalInfo extends Component {
                     name="facebook_id"
                     type="text"
                     hintText="Facebook link"
-                    component={renderField}
+                    component={CustomInput}
                     className="editField"
                   />
                 </TableRowColumn>
@@ -269,7 +253,7 @@ class EditablePersonalInfo extends Component {
                     name="twitter_id"
                     type="text"
                     hintText="Twitter link"
-                    component={renderField}
+                    component={CustomInput}
                     className="editField"
                   />
                 </TableRowColumn>
@@ -295,7 +279,7 @@ class EditablePersonalInfo extends Component {
                     name="linkedin_id"
                     type="text"
                     hintText="LinkedIn link"
-                    component={renderField}
+                    component={CustomInput}
                     className="editField"
                   />
                 </TableRowColumn>
@@ -316,7 +300,7 @@ class EditablePersonalInfo extends Component {
                     name="bio"
                     type="text"
                     hintText="Short description"
-                    component={renderField}
+                    component={CustomInput}
                     className="editField"
                     multiLine
                     rows={1}

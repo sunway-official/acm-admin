@@ -8,6 +8,7 @@ import { DragDropContext } from 'react-dnd';
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
 // import AddDialog from './addDialog';
 import AddDialog from './add';
+
 import { gql, graphql } from 'react-apollo';
 
 import 'react-big-calendar/lib/less/styles.less';
@@ -32,16 +33,14 @@ const style = {
 
 const getEvents = array => {
   let myEvents = [];
-  array.map(item => {
+  array.map(item =>
     item.schedules.map(schedule => {
       const start = new Date(schedule.start);
       const setStart = new Date(start.setHours(start.getHours() - 7));
-      console.log(setStart);
 
       const end = new Date(schedule.end);
       const setEnd = new Date(end.setHours(end.getHours() - 7));
 
-      console.log(setEnd);
       const event = {
         title: item.title,
         start: setStart,
@@ -49,8 +48,9 @@ const getEvents = array => {
         desc: schedule.room.name,
       };
       myEvents.push(event);
-    });
-  });
+      return myEvents;
+    }),
+  );
 
   return myEvents;
 };
@@ -67,12 +67,16 @@ class MyCalendar extends React.Component {
 
     this.moveEvent = this.moveEvent.bind(this);
     this.setEvents = this.setEvents.bind(this);
+    this.addActivity = this.addActivity.bind(this);
   }
 
   setEvents(events) {
     this.setState({
       events: events,
     });
+  }
+  addActivity(values) {
+    console.log(values);
   }
 
   moveEvent({ event, start, end }) {
@@ -100,7 +104,7 @@ class MyCalendar extends React.Component {
 
     return (
       <div style={style}>
-        <AddDialog onSubmit={() => {}} />
+        <AddDialog onSubmit={this.addActivity} />
         <DragAndDropCalendar
           selectable
           events={events.concat(myEvents)}

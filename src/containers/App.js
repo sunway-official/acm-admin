@@ -7,7 +7,8 @@ import NoMatch from '../pages/NoMatch';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Login from '../pages/authentication/login';
 import Register from '../pages/authentication/register';
-import Forgot from '../pages/authentication/forgotPassword';
+import ForgotPassword from '../pages/authentication/forgotPassword';
+import ResetPassword from '../pages/authentication/resetPassword';
 import WithThunk from '../pages/withThunk';
 import AuthRoute from '../components/AuthRoute';
 import { muiTheme } from '../theme';
@@ -21,7 +22,8 @@ export default () => (
     <Switch>
       <AuthRoute needGuest path="/login" component={Login} />
       <AuthRoute needGuest path="/register" component={Register} />
-      <AuthRoute needGuest path="/forgot" component={Forgot} />
+      <AuthRoute needGuest path="/forgot" component={ForgotPassword} />
+      <AuthRoute needGuest path="/resetPassword" component={ResetPassword} />
       <Wrapper>
         <Switch>
           <AuthRoute needAuth exact path="/" component={Dashboard} />
