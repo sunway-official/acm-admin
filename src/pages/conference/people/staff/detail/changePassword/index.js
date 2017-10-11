@@ -1,9 +1,10 @@
 import './style.css';
 
-import { RaisedButton, TextField } from 'material-ui';
+import { RaisedButton } from 'material-ui';
 import React from 'react';
 import { Col, Grid, Row } from 'react-flexbox-grid';
 import { Field, reduxForm } from 'redux-form';
+import CustomInput from 'components/CustomInput';
 import { regex } from '../../../../../../utils';
 
 const validate = values => {
@@ -28,24 +29,6 @@ const validate = values => {
   return errors;
 };
 
-const renderField = ({
-  input,
-  label,
-  type,
-  className,
-  meta: { touched, error },
-  ...custom
-}) => (
-  <TextField
-    floatingLabelText={label}
-    errorText={touched && error}
-    type={type}
-    {...input}
-    {...custom}
-    className={className}
-    fullWidth={true}
-  />
-);
 const ChangePassword = props => {
   const { handleSubmit, submitting, invalid, pristine } = props;
   return (
@@ -63,7 +46,7 @@ const ChangePassword = props => {
                 <Field
                   name="oldPassword"
                   type="password"
-                  component={renderField}
+                  component={CustomInput}
                   label="Old Password"
                 />
               </Row>
@@ -71,7 +54,7 @@ const ChangePassword = props => {
                 <Field
                   name="newPassword"
                   type="password"
-                  component={renderField}
+                  component={CustomInput}
                   label="New Password"
                 />
               </Row>
@@ -79,7 +62,7 @@ const ChangePassword = props => {
                 <Field
                   name="retypePassword"
                   type="password"
-                  component={renderField}
+                  component={CustomInput}
                   label="Retype Password"
                 />
               </Row>

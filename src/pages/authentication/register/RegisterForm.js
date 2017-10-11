@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
-import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import CustomInput from 'components/CustomInput';
 import { regex } from '../../../utils';
 import './RegisterForm.css';
 
@@ -36,24 +36,6 @@ const validate = values => {
   return errors;
 };
 
-const renderField = ({
-  input,
-  label,
-  type,
-  className,
-  meta: { touched, error },
-  ...custom
-}) => (
-  <TextField
-    floatingLabelText={label}
-    errorText={touched && error}
-    type={type}
-    {...input}
-    {...custom}
-    className={className}
-  />
-);
-
 const RegisterForm = ({
   error,
   handleSubmit,
@@ -67,20 +49,20 @@ const RegisterForm = ({
       <Field
         className="subname reduxField"
         name="firstName"
-        component={renderField}
+        component={CustomInput}
         label="First Name"
       />
       <Field
         className="subname reduxField"
         name="lastName"
-        component={renderField}
+        component={CustomInput}
         label="Last Name"
       />
     </div>
     <div className="register-field">
       <Field
         name="email"
-        component={renderField}
+        component={CustomInput}
         label="Email"
         className="reduxField"
       />
@@ -89,7 +71,7 @@ const RegisterForm = ({
       <Field
         name="password"
         type="password"
-        component={renderField}
+        component={CustomInput}
         label="Password"
         className="reduxField"
       />
@@ -98,7 +80,7 @@ const RegisterForm = ({
       <Field
         name="confirmPassword"
         type="password"
-        component={renderField}
+        component={CustomInput}
         label="Confirm Password"
         className="reduxField"
       />

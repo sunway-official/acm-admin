@@ -6,13 +6,19 @@ import events from './events';
 import AddDialog from './addDialog';
 import { gql, graphql } from 'react-apollo';
 
+import 'react-big-calendar/lib/less/styles.less';
+import './styles.less';
+import './prism.less';
+
+// const DragAndDropCalendar = withDragAndDrop(BigCalendar);
+
 const style = {
   margin: '200px',
 };
 
 const getEvents = array => {
   let myEvents = [];
-  array.map(item => {
+  array.map(item =>
     item.schedules.map(schedule => {
       const start = new Date(schedule.start);
       const setStart = new Date(start.setHours(start.getHours() - 7));
@@ -27,8 +33,9 @@ const getEvents = array => {
         desc: schedule.room.name,
       };
       myEvents.push(event);
-    });
-  });
+      return myEvents;
+    }),
+  );
 
   return myEvents;
 };
