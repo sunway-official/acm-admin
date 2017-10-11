@@ -1,7 +1,8 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { RaisedButton } from 'material-ui';
-import { regex } from '../../../utils';
+
+import { regex } from 'utils/';
 import CustomInput from 'components/CustomInput';
 
 const validate = values => {
