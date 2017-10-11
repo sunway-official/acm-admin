@@ -2,9 +2,10 @@ import React, { PureComponent } from 'react';
 import { gql, graphql, compose } from 'react-apollo';
 import { SubmissionError } from 'redux-form';
 import { withRouter } from 'react-router';
+import { AppBar } from 'material-ui';
+
 import LoginForm from './LoginForm';
 import './style.css';
-import { AppBar } from 'material-ui';
 
 class Login extends PureComponent {
   constructor(props) {

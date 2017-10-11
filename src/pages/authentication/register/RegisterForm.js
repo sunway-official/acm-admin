@@ -2,7 +2,8 @@ import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import RaisedButton from 'material-ui/RaisedButton';
 import CustomInput from 'components/CustomInput';
-import { regex } from '../../../utils';
+
+import { regex } from 'utils/';
 import './RegisterForm.css';
 
 const validate = values => {
