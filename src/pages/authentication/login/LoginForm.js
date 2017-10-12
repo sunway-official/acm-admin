@@ -1,9 +1,11 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import RaisedButton from 'material-ui/RaisedButton';
+
 import CustomInput from 'components/CustomInput';
+import { regex } from 'utils/';
+
 import './formStyle.css';
-import { regex } from '../../../utils';
 
 const validate = values => {
   const errors = {};
