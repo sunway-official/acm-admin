@@ -5,8 +5,9 @@ import React, { Component } from 'react';
 import { Col, Grid, Row } from 'react-flexbox-grid';
 import { Field, reduxForm, formValueSelector } from 'redux-form';
 import validate from './validate';
-import { renderField } from '../../../../../../utils';
+import { renderField } from '../../../../../utils';
 import { connect } from 'react-redux';
+import { graphql, gql } from 'react-apollo';
 
 class ChangePassword extends Component {
   constructor(props) {

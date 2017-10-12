@@ -1,0 +1,17 @@
+.btn {
+  &.changePass {
+    width: 150px !important;
+    margin: 20px 0px 0px 30px;
+  }
+}
+.changePass {
+  text-align: left !important;
+}
+.colunm {
+  height: 72px !important;
+  align-items: center;
+  &.old {
+    padding-top: 15px;
+    margin-top: 10px;
+  }
+}

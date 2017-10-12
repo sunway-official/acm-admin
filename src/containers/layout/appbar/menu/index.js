@@ -212,7 +212,7 @@ class BadgeExampleSimple extends Component {
             <Menu>
               <MenuItem primaryText="Help &amp; feedback" />
               <MenuItem primaryText="Settings" />
-              <Link to="/user_profile">
+              <Link to="/user-profile">
                 <MenuItem primaryText="User Profile" />
               </Link>
               <MenuItem primaryText="Sign out" onClick={this.handleSignOut} />
@@ -232,6 +232,4 @@ class BadgeExampleSimple extends Component {
 //   }
 // `;
 
-export default compose( withRouter, withApollo)(
-  BadgeExampleSimple,
-);
+export default compose(withRouter, withApollo)(BadgeExampleSimple);

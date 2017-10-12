@@ -6,7 +6,7 @@ import { Field, reduxForm, formValueSelector } from 'redux-form';
 import { compose, gql, graphql } from 'react-apollo';
 import { connect } from 'react-redux';
 import validate from './validate';
-import { renderField } from '../../../../../../utils';
+import { renderField } from '../../../../../utils';
 
 class ContactInformation extends Component {
   constructor(props) {
