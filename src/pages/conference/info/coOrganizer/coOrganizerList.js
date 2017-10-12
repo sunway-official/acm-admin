@@ -62,15 +62,14 @@ class CoOrganizerList extends Component {
       variables: {
         id: this.state.coOrganizerId,
       },
-      update: (store, { data: { deleteCoOrganizerDetail } }) => {
-        const data = store.readQuery({
+      refetchQueries: [
+        {
           query: GET_CONFERENCE_BY_ID_QUERY,
-        });
-        data.getConferenceByID.coOrganizerDetails = this.props.coOrganizerDetails.filter(
-          item => item.id !== this.state.coOrganizerId,
-        );
-        store.writeQuery({ query: GET_CONFERENCE_BY_ID_QUERY, data });
-      },
+          variables: {
+            id: this.props.conferenceId,
+          },
+        },
+      ],
     });
   }
   render() {
