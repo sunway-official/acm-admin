@@ -10,7 +10,6 @@
     "**/.svn": true,
     "**/.hg": true,
     "**/CVS": true,
-    "**/.DS_Store": true,
-    "**/*.css": true
+    "**/.DS_Store": true
   }
 }

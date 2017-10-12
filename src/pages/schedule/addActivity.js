@@ -1,6 +1,5 @@
 import React from 'react';
-import Dialog from 'material-ui/Dialog';
-import { RaisedButton, IconButton, MenuItem } from 'material-ui';
+import { RaisedButton, IconButton, MenuItem, Dialog } from 'material-ui';
 import { reduxForm, Field, FieldArray, reset } from 'redux-form';
 import { NavigationClose } from 'material-ui/svg-icons';
 import validate, {

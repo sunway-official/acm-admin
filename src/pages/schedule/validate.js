@@ -4,7 +4,7 @@ const currentDate = new Date();
 const validate = values => {
   const errors = {};
   const ArrayErrors = [];
-  const requiredFields = ['title'];
+  const requiredFields = ['title', 'date', 'room', 'endTime', 'startTime'];
   requiredFields.forEach(field => {
     if (!values[field]) {
       errors[field] = 'Required';
