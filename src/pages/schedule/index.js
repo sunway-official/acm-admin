@@ -3,11 +3,8 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 import events from './events';
-import AddDialog from './addDialog';
+import AddActivity from './addActivity';
 
-import 'react-big-calendar/lib/less/styles.less';
-import './styles.less';
-import './prism.less';
 import {
   getEvents,
   GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY,
@@ -16,8 +13,6 @@ import {
   INSERT_ACTIVITY_MUTATION,
 } from './graphql';
 import { graphql, compose } from 'react-apollo';
-
-// const DragAndDropCalendar = withDragAndDrop(BigCalendar);
 
 const style = {
   margin: '200px',
@@ -37,33 +32,35 @@ class MyCalendar extends React.Component {
 
   submit(values) {
     const { INSERT_ACTIVITY_MUTATION, INSERT_SCHEDULE_MUTATION } = this.props;
-    const newStarTime = getDateTime(values.date, values.startTime);
-    const newEndTime = getDateTime(values.date, values.endTime);
-    console.log(newStarTime);
-    console.log(newEndTime);
-    const title = 'My new Title 5 to test function';
+
     const conferenceId = this.props.match.params.id;
+    console.log(values);
 
     INSERT_ACTIVITY_MUTATION({
       variables: {
         conference_id: conferenceId,
-        title: title,
+        title: values.title,
       },
     })
       .then(({ data }) => {
-        INSERT_SCHEDULE_MUTATION({
-          variables: {
-            activity_id: data.insertActivity.id,
-            room_id: 1,
-            start: newStarTime,
-            end: newEndTime,
-          },
-          refetchQueries: [
-            {
-              query: GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY,
-              variables: { conference_id: conferenceId },
+        // eslint-disable-next-line array-callback-return
+        values.schedules.map(schedule => {
+          const newStarTime = getDateTime(schedule.date, schedule.startTime);
+          const newEndTime = getDateTime(schedule.date, schedule.endTime);
+          INSERT_SCHEDULE_MUTATION({
+            variables: {
+              activity_id: data.insertActivity.id,
+              room_id: schedule.room,
+              start: newStarTime,
+              end: newEndTime,
             },
-          ],
+            refetchQueries: [
+              {
+                query: GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY,
+                variables: { conference_id: conferenceId },
+              },
+            ],
+          });
         });
       })
       .catch(error => {
@@ -80,7 +77,7 @@ class MyCalendar extends React.Component {
 
     return (
       <div style={style}>
-        <AddDialog onSubmit={this.submit} />
+        <AddActivity onSubmit={this.submit} />
         <BigCalendar
           popup
           events={events.concat(myEvents)}

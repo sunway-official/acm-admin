@@ -4,9 +4,9 @@ import { List, ListItem, Menu, MenuItem, Popover } from 'material-ui';
 import {
   ActionInfoOutline,
   ActionSupervisorAccount,
-  ActionChromeReaderMode,
-  AvLibraryBooks,
-  EditorShowChart,
+  // ActionChromeReaderMode,
+  // AvLibraryBooks,
+  // EditorShowChart,
   NotificationEventAvailable,
   HardwareKeyboardArrowRight,
 } from 'material-ui/svg-icons';
@@ -46,11 +46,13 @@ class ListExampleSimple extends React.Component {
               leftIcon={<ActionInfoOutline />}
             />
           </Link>
-          <ListItem
-            className="item"
-            primaryText={<a href="/conference/1/schedules">Schedule</a>}
-            leftIcon={<NotificationEventAvailable />}
-          />
+          <Link to="/conference/1/schedules">
+            <ListItem
+              className="item"
+              primaryText={'Schedule'}
+              leftIcon={<NotificationEventAvailable />}
+            />
+          </Link>
           <ListItem
             className="item"
             primaryText="People"
@@ -74,13 +76,16 @@ class ListExampleSimple extends React.Component {
                     onClick={this.handleRequestClose}
                   />
                 </Link>
-                <MenuItem primaryText={<a href="/dashboard">Speaker</a>} />
+                {/*
+               <MenuItem primaryText={<a href="/dashboard">Speaker</a>} />
                 <MenuItem primaryText={<a href="/dashboard">Author</a>} />
                 <MenuItem primaryText={<a href="/dashboard">Reviewer</a>} />
                 <MenuItem primaryText={<a href="/dashboard">Participant</a>} />
+              */}
               </Menu>
             </Popover>
           </ListItem>
+          {/*
           <ListItem
             className="item"
             primaryText={<a href="/dashboard">Paper</a>}
@@ -96,6 +101,7 @@ class ListExampleSimple extends React.Component {
             primaryText={<a href="/dashboard">Statistic</a>}
             leftIcon={<EditorShowChart />}
           />
+          */}
         </List>
       </div>
     );
