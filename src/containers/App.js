@@ -6,7 +6,6 @@ import AuthRoute from '../components/AuthRoute';
 import Login from '../pages/authentication/login';
 import Register from '../pages/authentication/register';
 import ConferenceInfo from '../pages/conference/info';
-import UserInfo from '../pages/conference/people/staff/detail/userInfo';
 import UserProfile from '../pages/conference/people/userProfile/userProfile';
 import ConferenceStaffList from '../pages/conference/people/staff/list';
 import Dashboard from '../pages/dashboard';
@@ -39,7 +38,6 @@ export default () => (
             path="/conference/:id/schedules"
             component={Schedule}
           />
-          <AuthRoute exact path="/userInfo" component={UserInfo} />
           <AuthRoute path="/withThunk" component={WithThunk} />
           <AuthRoute component={NoMatch} />
         </Switch>

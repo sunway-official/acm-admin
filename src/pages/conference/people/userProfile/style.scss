@@ -6,10 +6,10 @@
   display: flex;
 }
 .left-div {
-  width: 300px;
+  width: 30%;
 }
 .right-div {
-  width: 100%;
+  width: 70%;
 }
 .card {
   box-shadow: none !important;
@@ -23,7 +23,7 @@
   padding-top: 10px;
 }
 #left-form-container {
-  width: inherit;
+  width: 100%;
   justify-content: left;
   align-items: center;
   background-color: #ffffff;
@@ -48,7 +48,7 @@
   text-align: left !important;
 }
 #right-form-container {
-  width: inherit;
+  width: 100%;
   justify-content: right;
   align-items: center;
   background-color: white !important;
