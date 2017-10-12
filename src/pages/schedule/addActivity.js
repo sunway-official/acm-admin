@@ -1,14 +1,7 @@
 import React from 'react';
 import Dialog from 'material-ui/Dialog';
 import { RaisedButton, IconButton, MenuItem } from 'material-ui';
-import {
-  reduxForm,
-  Field,
-  formValueSelector,
-  FieldArray,
-  reset,
-} from 'redux-form';
-import { connect } from 'react-redux';
+import { reduxForm, Field, FieldArray, reset } from 'redux-form';
 import { NavigationClose } from 'material-ui/svg-icons';
 import validate, {
   renderTextField,
@@ -16,6 +9,7 @@ import validate, {
   renderTimePicker,
   renderSelectField,
 } from './validate';
+
 const renderSchedules = ({ fields, meta: { error, submitFailed } }) => (
   <div>
     {fields.map((schedule, index) => (
@@ -172,44 +166,6 @@ AddDialog = reduxForm({
   form: 'addDialog',
   onSubmitSuccess: afterSubmit,
   validate,
-})(AddDialog);
-
-const selector = formValueSelector('addDialog'); // <-- same as form name
-AddDialog = connect(state => {
-  const date = selector(state, 'date');
-  const startTime = selector(state, 'startTime');
-  const endTime = selector(state, 'endTime');
-  if (date && startTime && endTime) {
-    const getFullYear = date.getFullYear();
-    const getMonth = date.getMonth();
-    const getDate = date.getDate();
-
-    const getHoursStart = startTime.getHours();
-    const getMinutesStart = startTime.getMinutes();
-
-    const getHoursEnd = endTime.getHours();
-    const getMinutesEnd = endTime.getMinutes();
-    const newStarTime = new Date(
-      getFullYear,
-      getMonth,
-      getDate,
-      getHoursStart,
-      getMinutesStart,
-    ).toISOString();
-    const newEndTime = new Date(
-      getFullYear,
-      getMonth,
-      getDate,
-      getHoursEnd,
-      getMinutesEnd,
-    ).toISOString();
-  }
-
-  return {
-    date,
-    startTime,
-    endTime,
-  };
 })(AddDialog);
 
 export default AddDialog;
