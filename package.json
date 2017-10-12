@@ -18,8 +18,6 @@
     "react": "^16.0.0",
     "react-apollo": "^1.4.15",
     "react-big-calendar": "^0.16.1",
-    "react-dnd": "^2.5.4",
-    "react-dnd-html5-backend": "^2.5.4",
     "react-dom": "^16.0.0",
     "react-flexbox-grid": "^1.1.5",
     "react-helmet": "^5.2.0",
