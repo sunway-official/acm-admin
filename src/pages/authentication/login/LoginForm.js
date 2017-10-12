@@ -1,29 +1,9 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import RaisedButton from 'material-ui/RaisedButton';
-
 import CustomInput from 'components/CustomInput';
-import { regex } from 'utils/';
-
 import './formStyle.css';
-
-const validate = values => {
-  const errors = {};
-  const requiredFields = ['email', 'password'];
-  requiredFields.forEach(field => {
-    if (!values[field]) {
-      errors[field] = 'This field is required';
-    }
-  });
-  if (values.email && !regex.EMAIL_REGEX.test(values.email)) {
-    errors.email = 'Invalid email address';
-  }
-  if (values.password && !regex.passwordRegex.test(values.password)) {
-    errors.password =
-      'Password must contains at least 6 character include number and special character ';
-  }
-  return errors;
-};
+import validate from './validate';
 
 const LoginForm = ({
   error,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { images } from '../../../../../../theme';
+import { images } from '../../../../../theme';
 import './style.css';
 
 const UserAvatar = () => (

@@ -59,6 +59,7 @@ const ME_QUERY = gql`
       gender
       email
       bio
+      dob
       linkedin_id
       facebook_id
       twitter_id

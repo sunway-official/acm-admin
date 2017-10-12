@@ -18,6 +18,7 @@ import style from './style.css';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import { withApollo, compose } from 'react-apollo';
+//import { graphql, gql } from 'react-apollo';
 
 class BadgeExampleSimple extends Component {
   constructor(props) {
@@ -78,6 +79,8 @@ class BadgeExampleSimple extends Component {
     this.props.history.replace('/login');
   }
   render() {
+    // const { loading } = this.props.data;
+    // if (loading) return <div>Loading...</div>;
     return (
       <div className="menu">
         <style
@@ -210,7 +213,7 @@ class BadgeExampleSimple extends Component {
             onRequestClose={this.handleRequestClose}
           >
             <Menu>
-              <Link to="/userProfile">
+              <Link to="/user-profile">
                 <MenuItem primaryText="User Profile" />
               </Link>
               <MenuItem primaryText="Sign out" onClick={this.handleSignOut} />
@@ -221,5 +224,13 @@ class BadgeExampleSimple extends Component {
     );
   }
 }
+
+// const QUERY_ME = gql`
+//   query Me {
+//     me {
+//       firstname
+//     }
+//   }
+// `;
 
 export default compose(withRouter, withApollo)(BadgeExampleSimple);

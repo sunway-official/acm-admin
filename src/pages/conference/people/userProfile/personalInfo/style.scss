@@ -18,32 +18,21 @@
     width: 150px !important;
     margin: 20px 0px 0px 30px;
   }
-  &.socialNetwork{
-    margin-right: 12px !important;
-  }
-}
-
-.dropdown-gender {
-  height: 45px !important;
-}
-.radio {
-  &.gender {
-    display: inline-flex;
-    padding: 0px !important;
-    margin: 0px !important;
-    .male {
-      width: 60% !important;
-    }
-  }
 }
 .editField{
   font-size: 14px !important;
   height: 44px !important;
   &.subname{
-    width: 120px !important;
     margin-right: 10px;
   }
 }
-.fa{
-  color: rgb(117, 117, 117);
+.birthday{
+  width: 100% !important;
+}
+.gender{
+  border: none;
+  border-bottom: solid 1px !important;
+  width: 100%;
+  height: 24px;
+  margin-top: 12px;
 }
