@@ -8,6 +8,8 @@ import validate from './validate';
 import { renderField } from '../../../../../utils';
 import { connect } from 'react-redux';
 import { graphql, gql } from 'react-apollo';
+import { withRouter } from 'react-router';
+import { compose } from 'react-apollo';
 
 class ChangePassword extends Component {
   constructor(props) {
@@ -16,7 +18,7 @@ class ChangePassword extends Component {
     this.handleCancel = this.handleCancel.bind(this);
   }
   handleCancel() {
-    window.alert('This function has not implement yet');
+    this.props.history.replace('/');
   }
   savePassword() {
     const { UPDATE_PASSWORD_MUTATION, oldPassword, newPassword } = this.props;
@@ -115,6 +117,9 @@ ChangePassword = connect(state => {
   };
 })(ChangePassword);
 
-export default graphql(UPDATE_PASSWORD_MUTATION, {
-  name: 'UPDATE_PASSWORD_MUTATION',
-})(ChangePassword);
+export default compose(
+  withRouter,
+  graphql(UPDATE_PASSWORD_MUTATION, {
+    name: 'UPDATE_PASSWORD_MUTATION',
+  }),
+)(ChangePassword);

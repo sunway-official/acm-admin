@@ -1,52 +1,54 @@
-import React from 'react';
-import { Field, reduxForm } from 'redux-form';
-import { RaisedButton, AppBar } from 'material-ui';
-import './style.css';
-import { renderField } from '../../../utils';
-import validate from './validate';
+import React, { PureComponent } from 'react';
+import { AppBar } from 'material-ui';
+import { gql, graphql } from 'react-apollo';
 
-const Forgot = props => {
-  const { handleSubmit, submitting, invalid } = props;
-  return (
-    <div className="forgot-body">
-      <div className="forgot-card" id="forgot-form-container">
-        <div className="card-content">
-          <AppBar
-            className="forgot-title"
-            title="FORGOT PASSWORD"
-            showMenuIconButton={false}
-          />
-          <form onSubmit={handleSubmit}>
-            <div className="note">
-              Please enter your email address and we'll sent you instructions on
-              how to reset your password
-            </div>
-            <div className="forgot-field">
-              <Field
-                name="email"
-                component={renderField}
-                label="Email"
-                className="reduxField"
-              />
-            </div>
-            <div>
-              <RaisedButton
-                className="btn forgot"
-                disabled={submitting || invalid }
-                type="submit"
-                label="Submit"
-                labelPosition="before"
-                primary={true}
-              />
-            </div>
-          </form>
+import ForgotPasswordForm from './forgotForm';
+
+import './style.css';
+
+class ForgotPassword extends PureComponent {
+  constructor(props) {
+    super(props);
+
+    this.handleSendForgotPasswordEmail = this.handleSendForgotPasswordEmail.bind(
+      this,
+    );
+  }
+  async handleSendForgotPasswordEmail({ email }) {
+    await this.props.sendForgotPasswordEmail({
+      variables: {
+        email,
+      },
+    });
+    // TODO: Display message for this
+    alert('Completed, create message for this!');
+  }
+  render() {
+    return (
+      <div className="forgot-body">
+        <div className="forgot-card" id="forgot-form-container">
+          <div className="card-content">
+            <AppBar
+              className="forgot-title"
+              title="FORGOT PASSWORD"
+              showMenuIconButton={false}
+            />
+            <ForgotPasswordForm onSubmit={this.handleSendForgotPasswordEmail} />
+          </div>
         </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
-export default reduxForm({
-  form: 'MaterialUiForm', // a unique identifier for this form
-  validate,
-})(Forgot);
+const SEND_FORGOT_PASSWORD_EMAIL = gql`
+  mutation SendForgotPasswordEmail($email: String!) {
+    sendForgotPasswordEmail(email: $email) {
+      success
+    }
+  }
+`;
+
+export default graphql(SEND_FORGOT_PASSWORD_EMAIL, {
+  name: 'sendForgotPasswordEmail',
+})(ForgotPassword);

@@ -1,0 +1,49 @@
+.forgot-body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f9f9f9;
+  background-image: linear-gradient(
+      rgba(241, 240, 240, 0.4),
+      rgba(241, 240, 240, 0.4)
+    ),
+    url('../../../images/background/backgroundimage.jpg');
+}
+.forgot-card {
+  box-shadow: none !important;
+  text-align: center;
+  border-radius: 5px;
+  .btn {
+    &.forgot {
+      width: 250px !important;
+      box-shadow: none !important;
+      margin-top: 20px;
+    }
+  }
+}
+.forgot-field {
+  width: 250px;
+  display: inline-flex;
+  justify-content: space-between;
+  text-align: left !important;
+}
+.note {
+  margin-top: 30px;
+  font-family: 'Roboto', sans-serif;
+}
+#forgot-form-container {
+  width: 350px;
+  height: 300px;
+  justify-content: center;
+  align-items: center;
+  background-color: white !important;
+  border: 1px solid #d8dee2;
+  box-shadow: 0px 0px 8px #b8b3b3 !important;
+}
+#forgot-title {
+  text-align: center;
+  color: #9c2c0a !important;
+  padding-top: 20px !important;
+  margin-bottom: 0px !important;
+}

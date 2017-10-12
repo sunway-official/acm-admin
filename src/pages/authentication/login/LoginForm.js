@@ -1,8 +1,8 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import RaisedButton from 'material-ui/RaisedButton';
+import CustomInput from 'components/CustomInput';
 import './formStyle.css';
-import { renderField } from '../../../utils';
 import validate from './validate';
 
 const LoginForm = ({
@@ -19,7 +19,7 @@ const LoginForm = ({
       <Field
         name="email"
         type="text"
-        component={renderField}
+        component={CustomInput}
         label="Email"
         className="reduxField"
       />
@@ -28,7 +28,7 @@ const LoginForm = ({
       <Field
         name="password"
         type="password"
-        component={renderField}
+        component={CustomInput}
         label="Password"
         className="reduxField"
       />

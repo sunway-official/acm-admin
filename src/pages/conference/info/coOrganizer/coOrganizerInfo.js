@@ -68,16 +68,14 @@ class Info extends PureComponent {
         website: coOrganizerWebsite,
         phone: coOrganizerPhone,
       },
-      update: (store, { data: { insertCoOrganizerDetail } }) => {
-        const data = store.readQuery({
-          query: GET_CONFERENCE_BY_ID_QUERY, //
+      refetchQueries: [
+        {
+          query: GET_CONFERENCE_BY_ID_QUERY,
           variables: {
             id: this.props.conferenceId,
           },
-        });
-        data.getConferenceByID.coOrganizerDetails.push(insertCoOrganizerDetail);
-        store.writeQuery({ query: GET_CONFERENCE_BY_ID_QUERY, data });
-      },
+        },
+      ],
     });
   }
 

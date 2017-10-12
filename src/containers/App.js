@@ -3,7 +3,6 @@ import React from 'react';
 import { Switch } from 'react-router-dom';
 
 import AuthRoute from '../components/AuthRoute';
-import Forgot from '../pages/authentication/forgotPassword';
 import Login from '../pages/authentication/login';
 import Register from '../pages/authentication/register';
 import ConferenceInfo from '../pages/conference/info';
@@ -13,6 +12,8 @@ import ConferenceStaffList from '../pages/conference/people/staff/list';
 import Dashboard from '../pages/dashboard';
 import NoMatch from '../pages/NoMatch';
 import Schedule from '../pages/schedule';
+import ForgotPassword from '../pages/authentication/forgotPassword';
+import ResetPassword from '../pages/authentication/resetPassword';
 import WithThunk from '../pages/withThunk';
 import { muiTheme } from '../theme';
 import Wrapper from './wrapper';
@@ -22,7 +23,8 @@ export default () => (
     <Switch>
       <AuthRoute needGuest path="/login" component={Login} />
       <AuthRoute needGuest path="/register" component={Register} />
-      <AuthRoute needGuest path="/forgot" component={Forgot} />
+      <AuthRoute needGuest path="/forgot" component={ForgotPassword} />
+      <AuthRoute needGuest path="/resetPassword" component={ResetPassword} />
       <Wrapper>
         <Switch>
           <AuthRoute needAuth exact path="/" component={Dashboard} />

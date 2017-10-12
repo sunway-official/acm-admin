@@ -39,7 +39,10 @@ class Index extends PureComponent {
               {/* truyen conference qua conferenceInfo  */}
             </Tab>
             <Tab label="Co-Organizer">
-              <CoOrganizerList coOrganizerDetails={coOrganizerDetails} />
+              <CoOrganizerList
+                conferenceId={this.props.match.params.id}
+                coOrganizerDetails={coOrganizerDetails}
+              />
             </Tab>
           </Tabs>
         </div>

@@ -7,6 +7,7 @@ import { compose, gql, graphql } from 'react-apollo';
 import { connect } from 'react-redux';
 import validate from './validate';
 import { renderField } from '../../../../../utils';
+import { withRouter } from 'react-router';
 
 class ContactInformation extends Component {
   constructor(props) {
@@ -15,7 +16,7 @@ class ContactInformation extends Component {
     this.handleCancel = this.handleCancel.bind(this);
   }
   handleCancel() {
-    window.alert('This function has not implement yet');
+    this.props.history.replace('/');
   }
   saveContactInfomation() {
     console.log(this.props.me);
@@ -239,6 +240,7 @@ const UPDATE_ME_MUTATION = gql`
 `;
 
 export default compose(
+  withRouter,
   connect(mapStateToProps, undefined),
   graphql(UPDATE_ME_MUTATION, {
     name: 'UPDATE_ME_MUTATION',

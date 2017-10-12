@@ -1,9 +1,9 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import RaisedButton from 'material-ui/RaisedButton';
-import './RegisterForm.css';
 import validate from './validate';
-import { renderField } from '../../../utils';
+import CustomInput from 'components/CustomInput';
+import './RegisterForm.css';
 
 const RegisterForm = ({
   error,
@@ -18,20 +18,20 @@ const RegisterForm = ({
       <Field
         className="subname reduxField"
         name="firstName"
-        component={renderField}
+        component={CustomInput}
         label="First Name"
       />
       <Field
         className="subname reduxField"
         name="lastName"
-        component={renderField}
+        component={CustomInput}
         label="Last Name"
       />
     </div>
     <div className="register-field">
       <Field
         name="email"
-        component={renderField}
+        component={CustomInput}
         label="Email"
         className="reduxField"
       />
@@ -40,7 +40,7 @@ const RegisterForm = ({
       <Field
         name="password"
         type="password"
-        component={renderField}
+        component={CustomInput}
         label="Password"
         className="reduxField"
       />
@@ -49,7 +49,7 @@ const RegisterForm = ({
       <Field
         name="confirmPassword"
         type="password"
-        component={renderField}
+        component={CustomInput}
         label="Confirm Password"
         className="reduxField"
       />

@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 import { Col, Grid, Row } from 'react-flexbox-grid';
 import validate from './validate';
 import { renderField } from '../../../../../utils';
+import { withRouter } from 'react-router';
 
 const maxDate = new Date();
 maxDate.setFullYear(
@@ -44,7 +45,7 @@ class EditablePersonalInfo extends Component {
     this.handleCancel = this.handleCancel.bind(this);
   }
   handleCancel() {
-    window.alert('This function has not implement yet');
+    this.props.history.replace('/');
   }
   saveInfomation() {
     const {
@@ -247,6 +248,7 @@ EditablePersonalInfo = reduxForm({
 })(EditablePersonalInfo);
 
 export default compose(
+  withRouter,
   connect(mapStateToProps, undefined),
   graphql(UPDATE_ME_MUTATION, {
     name: 'UPDATE_ME_MUTATION',
