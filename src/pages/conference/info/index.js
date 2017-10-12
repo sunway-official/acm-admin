@@ -3,8 +3,10 @@ import { Subheader, IconButton, Tabs, Tab } from 'material-ui';
 import { Link } from 'react-router-dom';
 import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import ConferenceInfo from './conferenceInfo';
-import { graphql, gql } from 'react-apollo';
+import { graphql } from 'react-apollo';
 import CoOrganizerList from './coOrganizer/coOrganizerList';
+import GET_CONFERENCE_BY_ID_QUERY from './helpers/getConferenceByIdQuery';
+
 class Index extends PureComponent {
   render() {
     // console.log(this.props);
@@ -50,35 +52,6 @@ class Index extends PureComponent {
     );
   }
 }
-
-export const GET_CONFERENCE_BY_ID_QUERY = gql`
-  query getConferenceByID($id: ID!) {
-    getConferenceByID(id: $id) {
-      id
-      title
-      description
-      start_date
-      end_date
-      organizerDetail {
-        id
-        name
-        email
-        website
-        phone
-      }
-      coOrganizerDetails {
-        id
-        name
-        email
-        website
-        phone
-        conference {
-          id
-        }
-      }
-    }
-  }
-`;
 
 export default graphql(GET_CONFERENCE_BY_ID_QUERY, {
   options: ownProps => ({ variables: { id: ownProps.match.params.id } }),
