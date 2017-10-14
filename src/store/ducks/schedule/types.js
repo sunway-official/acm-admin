@@ -1,0 +1,13 @@
+const TOGGLE_EDIT_ACTIVITY_FORM_MODAL =
+  'cem-admin/schedule/TOGGLE_EDIT_ACTIVITY_FORM_MODAL';
+
+const SET_EVENT_REQUESTED = 'cem-admin/conference/SET_EVENT_REQUESTED';
+const SET_EVENT_SUCCESS = 'cem-admin/conference/SET_EVENT_SUCCESS';
+const SET_EVENT_FAILURE = 'cem-admin/conference/SET_EVENT_FAILURE';
+
+export default {
+  TOGGLE_EDIT_ACTIVITY_FORM_MODAL,
+  SET_EVENT_REQUESTED,
+  SET_EVENT_SUCCESS,
+  SET_EVENT_FAILURE,
+};

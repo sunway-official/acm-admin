@@ -2,6 +2,7 @@ import React from 'react';
 import { RaisedButton, MenuItem } from 'material-ui';
 import { reduxForm, Field, reset } from 'redux-form';
 import { connect } from 'react-redux';
+import { scheduleActions } from 'store/ducks/schedule';
 
 import validate, {
   renderTextField,
@@ -10,30 +11,31 @@ import validate, {
   renderSelectField,
 } from './validate';
 
-const rooms = [
-  {
-    value: '1',
-    text: 'Room 1',
-  },
-  {
-    value: '2',
-    text: 'Room 2',
-  },
-  {
-    value: '3',
-    text: 'Room 3',
-  },
-];
-
 class EditActivity extends React.PureComponent {
+  handleClose = () => {
+    this.props.toggleEdit();
+  };
   render() {
-    console.log(this.props.events);
-    const { handleSubmit, submitting, pristine, invalid } = this.props;
+    const { handleSubmit, submitting, pristine, invalid, rooms } = this.props;
     return (
       <div>
         <form className="form conference-info" onSubmit={handleSubmit}>
           <div className="d-flex form-group">
             <label>Title :</label>
+            <Field
+              name="id"
+              component={() => {
+                return null;
+              }}
+              type="hidden"
+            />
+            <Field
+              name="scheduleId"
+              component={() => {
+                return null;
+              }}
+              type="hidden"
+            />
             <Field
               name="title"
               component={renderTextField}
@@ -57,9 +59,9 @@ class EditActivity extends React.PureComponent {
                 {rooms.map(room => {
                   return (
                     <MenuItem
-                      key={room.value}
-                      value={room.value}
-                      primaryText={room.text}
+                      key={room.id}
+                      value={room.id}
+                      primaryText={room.name}
                     />
                   );
                 })}
@@ -104,21 +106,31 @@ class EditActivity extends React.PureComponent {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const events = ownProps.events;
+  const event = state.schedule.event;
   return {
     initialValues: {
-      title: events.title,
-      endTime: events.end,
-      startTime: events.start,
+      id: event.id,
+      title: event.title,
+      endTime: event.end,
+      startTime: event.start,
+      date: new Date(event.start),
+      room: event.room.id,
+      scheduleId: event.scheduleId,
     },
   };
 };
 
-const afterSubmit = (result, dispatch) => dispatch(reset('addDialog'));
+const mapDispatchToProps = dispatch => {
+  return {
+    toggleEdit: () => dispatch(scheduleActions.toggleEditActivityFormModal()),
+  };
+};
+
+const afterSubmit = (result, dispatch) => dispatch(reset('editDialog'));
 EditActivity = reduxForm({
-  form: 'addDialog',
+  form: 'editDialog',
   onSubmitSuccess: afterSubmit,
   validate,
 })(EditActivity);
 
-export default connect(mapStateToProps, undefined)(EditActivity);
+export default connect(mapStateToProps, mapDispatchToProps)(EditActivity);
