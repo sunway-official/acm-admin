@@ -12,7 +12,7 @@ class Index extends Component {
     const { loading } = this.props.data;
     if (loading) return <div>Loading...</div>;
     const me = this.props.data.me;
-    //console.log(this.props.data.me);
+    console.log(this.props.data.me);
     return (
       <div className="conference">
         <Subheader className="subheader"> User Profile</Subheader>
@@ -66,6 +66,8 @@ const QUERY_ME = gql`
       linkedin_id
       facebook_id
       twitter_id
+      position
+      organization
     }
   }
 `;

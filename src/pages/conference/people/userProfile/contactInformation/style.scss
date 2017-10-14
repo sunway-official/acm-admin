@@ -21,4 +21,13 @@
 .fa{
   color: rgb(117, 117, 117);
   padding-top: 4px !important;
+  &.fa-facebook-square{
+    color: #4267b2;
+  }
+  &.fa-twitter-square{
+    color: #1da1f2;
+  }
+  &.fa-linkedin-square{
+    color: #008498;
+  }
 }

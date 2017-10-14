@@ -6,6 +6,8 @@ import './style.css';
 import { RaisedButton } from 'material-ui';
 import { DatePicker, ListItem } from 'material-ui';
 import ActionInfoOutline from 'material-ui/svg-icons/action/info-outline';
+import SocialLocationCity from 'material-ui/svg-icons/social/location-city';
+import ActionWork from 'material-ui/svg-icons/action/work';
 import { Field, reduxForm, formValueSelector } from 'redux-form';
 import { compose, gql, graphql } from 'react-apollo';
 import { connect } from 'react-redux';
@@ -73,6 +75,8 @@ class EditablePersonalInfo extends Component {
       dob,
       gender,
       bio,
+      position,
+      organization,
     } = this.props;
     UPDATE_ME_MUTATION({
       variables: {
@@ -81,6 +85,8 @@ class EditablePersonalInfo extends Component {
         gender: gender,
         dob: dob,
         bio: bio,
+        position: position,
+        organization: organization,
       },
     });
     window.alert('Update successful!');
@@ -114,6 +120,22 @@ class EditablePersonalInfo extends Component {
                   className="list-item"
                   primaryText="Birthday"
                   leftIcon={<SocialCake />}
+                  disabled={true}
+                />
+              </Row>
+              <Row className="firstColunm">
+                <ListItem
+                  className="list-item"
+                  primaryText="Position"
+                  leftIcon={<ActionWork />}
+                  disabled={true}
+                />
+              </Row>
+              <Row className="firstColunm">
+                <ListItem
+                  className="list-item"
+                  primaryText="Organization"
+                  leftIcon={<SocialLocationCity />}
                   disabled={true}
                 />
               </Row>
@@ -176,6 +198,26 @@ class EditablePersonalInfo extends Component {
                 <Row className="secondColunm">
                   <Field
                     id="text-field-default"
+                    name="position"
+                    type="text"
+                    hintText="Position"
+                    component={renderField}
+                    fullWidth={true}
+                  />
+                </Row>
+                <Row className="secondColunm">
+                  <Field
+                    id="text-field-default"
+                    name="organization"
+                    type="text"
+                    hintText="Organization"
+                    component={renderField}
+                    fullWidth={true}
+                  />
+                </Row>
+                <Row className="secondColunm">
+                  <Field
+                    id="text-field-default"
                     name="bio"
                     type="text"
                     hintText="Description"
@@ -219,6 +261,8 @@ const mapStateToProps = (state, ownProps) => {
       gender: me.gender,
       dob: new Date(me.dob),
       bio: me.bio,
+      position: me.position,
+      organization: me.organization,
     },
   };
 };
@@ -231,12 +275,16 @@ EditablePersonalInfo = connect(state => {
   const dob = new Date(selector(state, 'dob'));
   dob.setHours(dob.getHours() + 7);
   const bio = selector(state, 'bio');
+  const position = selector(state, 'position');
+  const organization = selector(state, 'organization');
   return {
     firstname,
     lastname,
     gender,
     dob,
     bio,
+    position,
+    organization,
   };
 })(EditablePersonalInfo);
 
@@ -247,6 +295,8 @@ const UPDATE_ME_MUTATION = gql`
     $dob: Date
     $gender: Gender!
     $bio: String
+    $organization: String
+    $position: String
   ) {
     updateMe(
       firstname: $firstname
@@ -254,12 +304,16 @@ const UPDATE_ME_MUTATION = gql`
       dob: $dob
       gender: $gender
       bio: $bio
+      position: $position
+      organization: $organization
     ) {
       firstname
       lastname
       dob
       gender
       bio
+      position
+      organization
     }
   }
 `;
