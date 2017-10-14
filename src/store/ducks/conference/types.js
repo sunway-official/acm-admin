@@ -3,7 +3,7 @@ const GET_CONFERENCE_REQUESTED =
 const GET_CONFERENCE_SUCCESS = 'cem-admin/conference/GET_CONFERENCE_SUCCESS';
 const GET_CONFERENCE_FAILURE = 'cem-admin/conference/GET_CONFERENCE_FAILURE';
 
-const GET_ID_REQUESTED = 'cem-admin/ID/GET_ID_REQUESTED';
+const GET_ID_REQUESTED = 'cem-admin/conference/GET_ID_REQUESTED';
 const GET_ID_SUCCESS = 'cem-admin/conference/GET_ID_SUCCESS';
 const GET_ID_FAILURE = 'cem-admin/conference/GET_ID_FAILURE';
 

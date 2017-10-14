@@ -7,12 +7,12 @@ import { bindActionCreators } from 'redux';
 import { authActions } from '../store/ducks/auth';
 
 class AuthRoute extends PureComponent {
-  componentDidMount() {
-    if (this.props.data.error) {
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.data.error) {
       localStorage.clear();
     }
-    if (this.props.data.me) {
-      this.props.setCurrentUser(this.props.data.me);
+    if (nextProps.data.me) {
+      this.props.setCurrentUser(nextProps.data.me);
     }
   }
   render() {
@@ -78,7 +78,6 @@ export default compose(
     options: {
       notifyOnNetworkStatusChange: true,
     },
-    name: 'data',
   }),
   connect(null, mapDispatchToProps),
 )(AuthRoute);
