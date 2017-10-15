@@ -7,7 +7,12 @@ import {
   FloatingActionButton,
 } from 'material-ui';
 import { reduxForm, Field, FieldArray, reset } from 'redux-form';
-import { NavigationClose, ContentAdd } from 'material-ui/svg-icons';
+import {
+  NavigationClose,
+  ContentAdd,
+  ActionAlarmAdd,
+  ActionDeleteForever,
+} from 'material-ui/svg-icons';
 import validate, {
   renderTextField,
   renderDatePicker,
@@ -17,18 +22,29 @@ import validate, {
 const style = {
   right: '50px',
   margin: '20px',
+  smallIcon: {
+    width: 36,
+    height: 36,
+  },
+  small: {
+    width: 72,
+    height: 72,
+    padding: 16,
+  },
 };
 const renderSchedules = ({ fields, meta: { error, submitFailed } }) => (
   <div>
     {fields.map((schedule, index) => (
       <div key={index}>
         <div className="d-flex align-items-center justify-content-space-around">
-          <h4>Time #{index + 1}</h4>
+          <h4>Schedule #{index + 1}</h4>
           <div>
             <RaisedButton
               type="button"
-              label="Remove"
+              primary={true}
+              icon={<ActionDeleteForever />}
               onClick={() => fields.remove(index)}
+              style={{ minWidth: '50px' }}
             />
           </div>
         </div>
@@ -84,12 +100,13 @@ const renderSchedules = ({ fields, meta: { error, submitFailed } }) => (
       </div>
     ))}
     <div className="d-flex save-btn btn-group">
-      <RaisedButton
-        label="Add "
-        type="button"
-        primary={true}
+      <IconButton
         onClick={() => fields.push({})}
-      />
+        iconStyle={style.smallIcon}
+        style={style.small}
+      >
+        <ActionAlarmAdd />
+      </IconButton>
       {submitFailed && error && <span>{error}</span>}
     </div>
   </div>
