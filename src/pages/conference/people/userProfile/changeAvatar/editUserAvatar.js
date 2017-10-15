@@ -1,7 +1,7 @@
 import React from 'react';
 import { IconButton } from 'material-ui';
 import ActionCameraEnhance from 'material-ui/svg-icons/action/camera-enhance';
-import { images } from '../../../../../../theme';
+import { images } from '../../../../../theme';
 import './style.css';
 
 const EditUserAvatar = () => (

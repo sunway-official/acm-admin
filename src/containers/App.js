@@ -1,21 +1,21 @@
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import React from 'react';
 import { Switch } from 'react-router-dom';
+
+import AuthRoute from '../components/AuthRoute';
+import Login from '../pages/authentication/login';
+import Register from '../pages/authentication/register';
 import ConferenceInfo from '../pages/conference/info';
+import UserProfile from '../pages/conference/people/userProfile/userProfile';
 import ConferenceStaffList from '../pages/conference/people/staff/list';
 import Dashboard from '../pages/dashboard';
 import NoMatch from '../pages/NoMatch';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import Login from '../pages/authentication/login';
-import Register from '../pages/authentication/register';
+import Schedule from '../pages/schedule';
 import ForgotPassword from '../pages/authentication/forgotPassword';
 import ResetPassword from '../pages/authentication/resetPassword';
 import WithThunk from '../pages/withThunk';
-import AuthRoute from '../components/AuthRoute';
 import { muiTheme } from '../theme';
 import Wrapper from './wrapper';
-import UserInfo from '../pages/conference/people/staff/detail/userInfo';
-import UserProfile from '../pages/conference/people/staff/detail/userProfile';
-import Schedule from '../pages/schedule';
 
 export default () => (
   <MuiThemeProvider muiTheme={muiTheme}>
@@ -32,13 +32,17 @@ export default () => (
             path="/conference/:conference_id/people/staff"
             component={ConferenceStaffList}
           />
-          <AuthRoute exact path="/userProfile" component={UserProfile} />
+          <AuthRoute
+            needAuth
+            exact
+            path="/user-profile"
+            component={UserProfile}
+          />
           <AuthRoute
             exact
             path="/conference/:id/schedules"
             component={Schedule}
           />
-          <AuthRoute exact path="/userInfo" component={UserInfo} />
           <AuthRoute path="/withThunk" component={WithThunk} />
           <AuthRoute component={NoMatch} />
         </Switch>

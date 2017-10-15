@@ -2,23 +2,13 @@ import React from 'react';
 import {
   RaisedButton,
   IconButton,
-  MenuItem,
   Dialog,
   FloatingActionButton,
 } from 'material-ui';
 import { reduxForm, Field, FieldArray, reset } from 'redux-form';
-import {
-  NavigationClose,
-  ContentAdd,
-  ActionAlarmAdd,
-  ActionDeleteForever,
-} from 'material-ui/svg-icons';
-import validate, {
-  renderTextField,
-  renderDatePicker,
-  renderTimePicker,
-  renderSelectField,
-} from './validate';
+import { NavigationClose, ContentAdd } from 'material-ui/svg-icons';
+import validate, { renderTextField, renderSchedules } from './validate';
+
 const style = {
   right: '50px',
   margin: '20px',
@@ -32,100 +22,6 @@ const style = {
     padding: 16,
   },
 };
-const renderSchedules = ({ fields, meta: { error, submitFailed } }) => (
-  <div>
-    {fields.map((schedule, index) => (
-      <div key={index}>
-        <div className="d-flex align-items-center justify-content-space-around">
-          <h4>Schedule #{index + 1}</h4>
-          <div>
-            <RaisedButton
-              type="button"
-              primary={true}
-              icon={<ActionDeleteForever />}
-              onClick={() => fields.remove(index)}
-              style={{ minWidth: '50px' }}
-            />
-          </div>
-        </div>
-
-        <div className="d-flex">
-          <div className="d-flex form-group">
-            <label>Date:</label>
-            <Field
-              name={`${schedule}.date`}
-              component={renderDatePicker}
-              format={null}
-              textFieldStyle={{ width: '100%' }}
-              hintText="Activity Date"
-            />
-          </div>
-          <div className="d-flex form-group" style={{ width: '300px' }}>
-            <label className="text-align-center">Room :</label>
-            <Field name={`${schedule}.room`} component={renderSelectField}>
-              {rooms.map(room => {
-                return (
-                  <MenuItem
-                    key={room.value}
-                    value={room.value}
-                    primaryText={room.text}
-                  />
-                );
-              })}
-            </Field>
-          </div>
-        </div>
-        <div className="d-flex">
-          <div className="d-flex form-group">
-            <label>Start From :</label>
-            <Field
-              name={`${schedule}.startTime`}
-              component={renderTimePicker}
-              format={null}
-              hintText="Begin Schedule"
-              textFieldStyle={{ width: '100%' }}
-            />
-          </div>
-          <div className="d-flex form-group">
-            <label className="text-align-center">To :</label>
-            <Field
-              name={`${schedule}.endTime`}
-              component={renderTimePicker}
-              format={null}
-              hintText="End Schedule"
-              textFieldStyle={{ width: '100%' }}
-            />
-          </div>
-        </div>
-      </div>
-    ))}
-    <div className="d-flex save-btn btn-group">
-      <IconButton
-        onClick={() => fields.push({})}
-        iconStyle={style.smallIcon}
-        style={style.small}
-      >
-        <ActionAlarmAdd />
-      </IconButton>
-      {submitFailed && error && <span>{error}</span>}
-    </div>
-  </div>
-);
-
-const rooms = [
-  {
-    value: '1',
-    text: 'Room 1',
-  },
-  {
-    value: '2',
-    text: 'Room 2',
-  },
-  {
-    value: '3',
-    text: 'Room 3',
-  },
-];
 class AddDialog extends React.PureComponent {
   state = {
     openAdd: false,
@@ -143,8 +39,7 @@ class AddDialog extends React.PureComponent {
   };
 
   render() {
-    const { handleSubmit, submitting, pristine, invalid } = this.props;
-
+    const { handleSubmit, submitting, pristine, invalid, rooms } = this.props;
     return (
       <div>
         <FloatingActionButton
@@ -169,7 +64,11 @@ class AddDialog extends React.PureComponent {
                 hintText="Activity Title"
               />
             </div>
-            <FieldArray name="schedules" component={renderSchedules} />
+            <FieldArray
+              name="schedules"
+              component={renderSchedules}
+              rooms={rooms}
+            />
             <div className="d-flex justify-content-flex-end">
               <RaisedButton
                 label="Save"
