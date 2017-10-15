@@ -1,14 +1,23 @@
 import React from 'react';
-import { RaisedButton, IconButton, MenuItem, Dialog } from 'material-ui';
+import {
+  RaisedButton,
+  IconButton,
+  MenuItem,
+  Dialog,
+  FloatingActionButton,
+} from 'material-ui';
 import { reduxForm, Field, FieldArray, reset } from 'redux-form';
-import { NavigationClose } from 'material-ui/svg-icons';
+import { NavigationClose, ContentAdd } from 'material-ui/svg-icons';
 import validate, {
   renderTextField,
   renderDatePicker,
   renderTimePicker,
   renderSelectField,
 } from './validate';
-
+const style = {
+  right: '50px',
+  margin: '20px',
+};
 const renderSchedules = ({ fields, meta: { error, submitFailed } }) => (
   <div>
     {fields.map((schedule, index) => (
@@ -121,7 +130,13 @@ class AddDialog extends React.PureComponent {
 
     return (
       <div>
-        <RaisedButton label="Add Activity" onClick={this.handleOpen} />
+        <FloatingActionButton
+          style={style}
+          className="position-fixed"
+          onClick={this.handleOpen}
+        >
+          <ContentAdd />
+        </FloatingActionButton>
         <Dialog
           title={this.state.dialogTitle}
           modal={true}
