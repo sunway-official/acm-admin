@@ -6,9 +6,22 @@ import {
   SelectField,
   MenuItem,
   RaisedButton,
+  IconButton,
 } from 'material-ui';
 import { Field } from 'redux-form';
+import { ActionAlarmAdd, ActionDeleteForever } from 'material-ui/svg-icons';
+const styles = {
+  smallIcon: {
+    width: 36,
+    height: 36,
+  },
 
+  small: {
+    width: 72,
+    height: 72,
+    padding: 16,
+  },
+};
 const currentDate = new Date();
 const validate = values => {
   const errors = {};
@@ -121,9 +134,10 @@ export const renderSchedules = ({
           <h4>Time #{index + 1}</h4>
           <div>
             <RaisedButton
-              type="button"
-              label="Remove"
+              style={{ minWidth: '50px' }}
               onClick={() => fields.remove(index)}
+              icon={<ActionDeleteForever />}
+              primary={true}
             />
           </div>
         </div>
@@ -179,12 +193,14 @@ export const renderSchedules = ({
       </div>
     ))}
     <div className="d-flex save-btn btn-group">
-      <RaisedButton
-        label="Add "
-        type="button"
-        primary={true}
+      <IconButton
+        iconStyle={styles.smallIcon}
+        style={styles.small}
         onClick={() => fields.push({})}
-      />
+        tooltip="Add Schedule"
+      >
+        <ActionAlarmAdd />
+      </IconButton>
       {submitFailed && error && <span>{error}</span>}
     </div>
   </div>
