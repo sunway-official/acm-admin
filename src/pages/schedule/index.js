@@ -4,19 +4,26 @@ import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 import AddActivity from './addActivity';
 import EditActivity from './editActivity';
-import { Dialog, IconButton } from 'material-ui';
-import { NavigationClose } from 'material-ui/svg-icons';
+import { Dialog, IconButton, Subheader } from 'material-ui';
+import { Link } from 'react-router-dom';
 import { scheduleActions, scheduleOperations } from 'store/ducks/schedule';
 import { connect } from 'react-redux';
+
+import {
+  NavigationClose,
+  HardwareKeyboardArrowRight,
+  ActionHome,
+} from 'material-ui/svg-icons';
 
 import { functions, queries, mutations } from './helpers';
 import { graphql, compose } from 'react-apollo';
 
-const style = {
-  margin: '200px',
-};
-
 BigCalendar.momentLocalizer(moment);
+
+const style = {
+  width: '94%',
+  padding: '20px',
+};
 
 class MyCalendar extends React.PureComponent {
   constructor(props) {
@@ -124,9 +131,37 @@ class MyCalendar extends React.PureComponent {
     const rooms = this.props.GET_ALL_ROOM_QUERY.getAllRooms;
 
     return (
-      <div style={style}>
-        <AddActivity onSubmit={this.addActivity} rooms={rooms} />
-        <Dialog open={this.props.openEdit}>
+      <div className="conference">
+        <Subheader className="subheader">Activity Schedule</Subheader>
+        <div className="page-breadcrumb d-flex">
+          <Link className="d-flex" to="/">
+            <IconButton>
+              <ActionHome />
+            </IconButton>
+            <span>Home</span>
+          </Link>
+          <IconButton>
+            <HardwareKeyboardArrowRight />
+          </IconButton>
+          <span>Activity Schedule</span>
+        </div>
+        <div className="dashboard content d-flex">
+          <BigCalendar
+            style={style}
+            popup
+            events={events}
+            defaultView="week"
+            defaultDate={new Date()}
+            onSelectEvent={events => {
+              this.handleEdit(events);
+            }}
+          />
+          <AddActivity onSubmit={this.addActivity} rooms={rooms} />
+        </div>
+        <Dialog
+          open={this.props.openEdit}
+          title="Edit Activity Schedule Information"
+        >
           <EditActivity onSubmit={this.editActivity} rooms={rooms} />
           <IconButton
             tooltip="Close"
@@ -136,15 +171,6 @@ class MyCalendar extends React.PureComponent {
             <NavigationClose />
           </IconButton>
         </Dialog>
-        <BigCalendar
-          popup
-          events={events}
-          defaultView="week"
-          defaultDate={new Date()}
-          onSelectEvent={event => {
-            this.handleEdit(event);
-          }}
-        />
       </div>
     );
   }
