@@ -7,34 +7,8 @@ import Subheader from 'material-ui/Subheader';
 
 import CustomInput from 'components/CustomInput';
 import CustomDatePicker from 'components/CustomDatePicker';
-import { regex } from 'utils/';
 import normalizePhone from 'utils/normalizePhone';
-
-const validate = values => {
-  const errors = {};
-  const requiredFields = [
-    'title',
-    'description',
-    'startDate',
-    'endDate',
-    'organizerName',
-    'organizerEmail',
-    'organizerWebsite',
-    'organizerPhoneNumber',
-  ];
-  requiredFields.forEach(field => {
-    if (!values[field]) {
-      errors[field] = 'Required';
-    }
-  });
-  if (values.organizerEmail && !regex.EMAIL_REGEX.test(values.organizerEmail)) {
-    errors.organizerEmail = 'Invalid email address';
-  }
-  if (values.endDate < values.startDate) {
-    errors.endDate = 'End date should not be smaller than start date';
-  }
-  return errors;
-};
+import validate from '../validate';
 
 const InfoForm = ({
   onSubmit,

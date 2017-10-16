@@ -9,7 +9,6 @@ import GET_CONFERENCE_BY_ID_QUERY from './helpers/getConferenceByIdQuery';
 
 class Index extends PureComponent {
   render() {
-    // console.log(this.props);
     const { loading } = this.props.data;
 
     if (loading) return <div>loading...</div>;

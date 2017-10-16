@@ -1,13 +1,11 @@
 import React, { PureComponent } from 'react';
-
 import { SubmissionError } from 'redux-form';
-
+import UPDATE_CONFERENCE_MUTATION from '../helpers/updateConferenceMutation';
+import UPDATE_ORGANIZER_DETAIL_MUTATION from '../helpers/updateOrganizerDetailMutation';
 import { connect } from 'react-redux';
-import { gql, graphql, compose } from 'react-apollo';
+import { graphql, compose } from 'react-apollo';
 import InfoForm from './InfoForm';
-
 import './style.css';
-
 class ConferenceInfo extends PureComponent {
   constructor(props) {
     super(props);
@@ -79,54 +77,6 @@ const mapStateToProps = (state, ownProps) => {
     },
   };
 };
-
-const UPDATE_CONFERENCE_MUTATION = gql`
-  mutation UpdateConference(
-    $id: ID!
-    $title: String
-    $description: String
-    $start_date: Date
-    $end_date: Date
-  ) {
-    updateConference(
-      id: $id
-      title: $title
-      description: $description
-      start_date: $start_date
-      end_date: $end_date
-    ) {
-      id
-      title
-      description
-      start_date
-      end_date
-    }
-  }
-`;
-
-const UPDATE_ORGANIZER_DETAIL_MUTATION = gql`
-  mutation updateOrganizerDetail(
-    $id: ID!
-    $name: String
-    $email: String
-    $website: String
-    $phone: String
-  ) {
-    updateOrganizerDetail(
-      id: $id
-      name: $name
-      email: $email
-      website: $website
-      phone: $phone
-    ) {
-      id
-      name
-      email
-      website
-      phone
-    }
-  }
-`;
 
 export default compose(
   connect(mapStateToProps, undefined),

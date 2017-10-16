@@ -32,8 +32,10 @@
     "subscriptions-transport-ws": "0.8.3"
   },
   "scripts": {
-    "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
-    "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
+    "build-css":
+      "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
+    "watch-css":
+      "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
     "start-js": "react-scripts start",
     "dev": "npm-run-all -p watch-css start-js",
     "build": "npm run build-css && react-scripts build",
@@ -41,7 +43,8 @@
     "lint-staged": "lint-staged",
     "precommit": "npm-run-all lint-staged",
     "start": "serve -s build",
-    "prestart": "npm install -g serve"
+    "prestart": "npm install -g serve",
+    "postinstall": "cp -r lib/* node_modules/"
   },
   "devDependencies": {
     "eslint-config-prettier": "^2.6.0",

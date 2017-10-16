@@ -1,9 +1,27 @@
 import React from 'react';
-import { RaisedButton, IconButton, Dialog } from 'material-ui';
+import {
+  RaisedButton,
+  IconButton,
+  Dialog,
+  FloatingActionButton,
+} from 'material-ui';
 import { reduxForm, Field, FieldArray, reset } from 'redux-form';
-import { NavigationClose } from 'material-ui/svg-icons';
+import { NavigationClose, ContentAdd } from 'material-ui/svg-icons';
 import validate, { renderTextField, renderSchedules } from './validate';
 
+const style = {
+  right: '50px',
+  margin: '20px',
+  smallIcon: {
+    width: 36,
+    height: 36,
+  },
+  small: {
+    width: 72,
+    height: 72,
+    padding: 16,
+  },
+};
 class AddDialog extends React.PureComponent {
   state = {
     openAdd: false,
@@ -24,7 +42,13 @@ class AddDialog extends React.PureComponent {
     const { handleSubmit, submitting, pristine, invalid, rooms } = this.props;
     return (
       <div>
-        <RaisedButton label="Add Activity" onClick={this.handleOpen} />
+        <FloatingActionButton
+          style={style}
+          className="position-fixed"
+          onClick={this.handleOpen}
+        >
+          <ContentAdd />
+        </FloatingActionButton>
         <Dialog
           title={this.state.dialogTitle}
           modal={true}

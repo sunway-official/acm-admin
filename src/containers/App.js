@@ -32,7 +32,12 @@ export default () => (
             path="/conference/:conference_id/people/staff"
             component={ConferenceStaffList}
           />
-          <AuthRoute exact path="/user-profile" component={UserProfile} />
+          <AuthRoute
+            needAuth
+            exact
+            path="/user-profile"
+            component={UserProfile}
+          />
           <AuthRoute
             exact
             path="/conference/:id/schedules"
