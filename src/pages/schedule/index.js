@@ -141,8 +141,15 @@ class MyCalendar extends React.PureComponent {
           events={events}
           defaultView="week"
           defaultDate={new Date()}
+          scrollToTime={new Date(new Date().setHours(7))}
           onSelectEvent={event => {
             this.handleEdit(event);
+          }}
+          components={{
+            event: functions.Event,
+            agenda: {
+              event: functions.EventAgenda,
+            },
           }}
         />
       </div>
