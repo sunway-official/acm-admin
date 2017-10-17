@@ -42,7 +42,8 @@
     "lint-staged": "lint-staged",
     "precommit": "npm-run-all lint-staged",
     "start": "serve -s build",
-    "prestart": "npm install -g serve"
+    "prestart": "npm install -g serve",
+    "postinstall": "cp -r lib/* node_modules/"
   },
   "devDependencies": {
     "eslint-config-prettier": "^2.6.0",

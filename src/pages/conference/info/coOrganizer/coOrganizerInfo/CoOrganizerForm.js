@@ -1,34 +1,9 @@
 import React from 'react';
-
 import RaisedButton from 'material-ui/RaisedButton';
 import { Field, reduxForm } from 'redux-form';
-
 import CustomInput from 'components/CustomInput';
 import normalizePhone from 'utils/normalizePhone';
-import { regex } from 'utils/';
-
-const validate = values => {
-  const errors = {};
-  const requiredFields = [
-    'coOrganizerName',
-    'coOrganizerEmail',
-    'coOrganizerWebsite',
-    'coOrganizerPhone',
-  ];
-  requiredFields.forEach(field => {
-    if (!values[field]) {
-      errors[field] = 'Required';
-    }
-  });
-  if (
-    values.coOrganizerEmail &&
-    !regex.EMAIL_REGEX.test(values.coOrganizerEmail)
-  ) {
-    errors.coOrganizerEmail = 'Invalid email address';
-  }
-  return errors;
-};
-
+import validate from '../../validate';
 const CoOrganizerForm = ({
   onSubmit,
   handleSubmit,
