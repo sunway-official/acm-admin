@@ -1,7 +1,7 @@
 import { regex } from '../../../../../utils';
 const validate = values => {
   const errors = {};
-  const requiredFields = ['oldPassword', 'newPassword', 'retypePassword'];
+  const requiredFields = ['oldPassword', 'newPassword', 'confirmPassword'];
   requiredFields.forEach(field => {
     if (!values[field]) {
       errors[field] = 'This field is required';
@@ -13,10 +13,10 @@ const validate = values => {
   });
   if (
     values.newPassword &&
-    values.retypePassword &&
-    values.newPassword !== values.retypePassword
+    values.confirmPassword &&
+    values.newPassword !== values.confirmPassword
   ) {
-    errors.retypePassword = 'Password does not match!';
+    errors.confirmPassword = 'Password does not match!';
   }
   return errors;
 };

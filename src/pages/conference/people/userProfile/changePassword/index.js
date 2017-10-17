@@ -39,7 +39,7 @@ class ChangePassword extends Component {
             <Col xs={3}>
               <Row className="colunm old"> Old Password </Row>
               <Row className="colunm"> New Password </Row>
-              <Row className="colunm"> Retype Password </Row>
+              <Row className="colunm"> Confirm Password </Row>
             </Col>
             <Col xs={8}>
               <form onSubmit={handleSubmit}>
@@ -63,10 +63,10 @@ class ChangePassword extends Component {
                 </Row>
                 <Row className="changePass">
                   <Field
-                    name="retypePassword"
+                    name="confirmPassword"
                     type="password"
                     component={renderField}
-                    label="Retype Password"
+                    label="Confirm Password"
                     fullWidth={true}
                   />
                 </Row>

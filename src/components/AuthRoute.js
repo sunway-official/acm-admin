@@ -63,6 +63,8 @@ const ME_QUERY = gql`
       linkedin_id
       facebook_id
       twitter_id
+      position
+      organization
     }
   }
 `;
