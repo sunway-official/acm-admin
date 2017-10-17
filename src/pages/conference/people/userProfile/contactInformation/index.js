@@ -48,7 +48,7 @@ class ContactInformation extends Component {
     return (
       <div>
         <Grid fluid>
-          <Row>
+          <Row around="xs">
             <Col xs={3}>
               <Row className="firstColunm firstRow">
                 <ListItem

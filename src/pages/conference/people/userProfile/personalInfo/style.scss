@@ -19,12 +19,12 @@
     margin: 20px 0px 0px 30px;
   }
 }
+.subname{
+  padding-left: 0px !important;
+}
 .editField{
-  font-size: 14px !important;
   height: 44px !important;
-  &.subname{
-    margin-right: 10px;
-  }
+  padding-left: 0px !important;
 }
 .gender{
   border: none;

@@ -97,8 +97,8 @@ class EditablePersonalInfo extends Component {
     return (
       <div>
         <Grid fluid>
-          <Row>
-            <Col xs={3}>
+          <Row around="xs">
+            <Col xs={4}>
               <Row className="firstColunm firstRow">
                 <ListItem
                   className="list-item"
@@ -151,14 +151,14 @@ class EditablePersonalInfo extends Component {
             <Col xs={8}>
               <form onSubmit={handleSubmit}>
                 <Row className="secondColunm firstRow">
-                  <Col xs>
+                  <Col xs className="subname">
                     <Field
                       id="text-field-default"
                       name="lastname"
                       type="text"
                       hintText="Last name"
                       component={renderField}
-                      className="editField subname"
+                      className="editField"
                       fullWidth={true}
                     />
                   </Col>
@@ -169,7 +169,7 @@ class EditablePersonalInfo extends Component {
                       type="text"
                       hintText="First name"
                       component={renderField}
-                      className="editField subname"
+                      className="editField"
                       fullWidth={true}
                     />
                   </Col>
