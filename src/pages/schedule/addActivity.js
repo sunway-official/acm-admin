@@ -7,7 +7,8 @@ import {
 } from 'material-ui';
 import { reduxForm, Field, FieldArray, reset } from 'redux-form';
 import { NavigationClose, ContentAdd } from 'material-ui/svg-icons';
-import validate, { renderTextField, renderSchedules } from './validate';
+import validate, { renderTextField } from './validate';
+import renderSchedules from './renderSchedules';
 
 const style = {
   right: '50px',

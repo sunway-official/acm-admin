@@ -1,4 +1,5 @@
 import * as moment from 'moment';
+import React from 'react';
 
 export const getEvents = array => {
   let events = [];
@@ -36,7 +37,38 @@ export const getDateTime = (date, time) => {
   return dateTime;
 };
 
+export const Event = ({ event }) => {
+  return (
+    <div
+      title={
+        moment(event.start).format('LT') +
+        ' - ' +
+        moment(event.end).format('LT') +
+        ': ' +
+        event.title +
+        '. Room - ' +
+        event.room.name
+      }
+    >
+      <span>
+        {event.title} <br />
+        Room - {event.room.name}
+      </span>
+    </div>
+  );
+};
+
+export const EventAgenda = ({ event }) => {
+  return (
+    <span>
+      <em style={{ color: 'magenta' }}>{event.title}</em>
+    </span>
+  );
+};
+
 export default {
+  EventAgenda,
+  Event,
   getEvents,
   getDateTime,
 };

@@ -155,6 +155,12 @@ class MyCalendar extends React.PureComponent {
             onSelectEvent={events => {
               this.handleEdit(events);
             }}
+            components={{
+              event: functions.Event,
+              agenda: {
+                event: functions.EventAgenda,
+              },
+            }}
           />
           <AddActivity onSubmit={this.addActivity} rooms={rooms} />
         </div>
