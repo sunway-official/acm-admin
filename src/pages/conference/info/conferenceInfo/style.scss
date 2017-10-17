@@ -20,6 +20,9 @@
       .add-btn {
         margin-top: 40px;
       }
+      &.add-schedule-icon {
+        margin-top: 20px;
+      }
     }
 
     .form-group {
@@ -28,8 +31,17 @@
       label {
         font-size: 18px;
         width: 200px !important;
+        &.room {
+          width: 280px !important;
+        }
         &.end {
           width: 38px !important;
+        }
+        &.schedule-date {
+          width: 180px !important;
+        }
+        &.schedule-time-from {
+          width: 190px !important;
         }
       }
     }
