@@ -1,5 +1,5 @@
 import React from 'react';
-import { RaisedButton, MenuItem } from 'material-ui';
+import { RaisedButton, MenuItem, Dialog } from 'material-ui';
 import { reduxForm, Field, reset } from 'redux-form';
 import { connect } from 'react-redux';
 import { scheduleActions } from 'store/ducks/schedule';
@@ -12,9 +12,24 @@ import validate, {
 } from './validate';
 
 class EditActivity extends React.PureComponent {
-  handleClose = () => {
-    this.props.toggleEdit();
+  constructor() {
+    super();
+    this.handleClose = this.handleClose.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+    this.handleCloseDelete = this.handleCloseDelete.bind(this);
+  }
+  state = {
+    openDelete: false,
   };
+  handleDelete() {
+    this.setState({ openDelete: true });
+  }
+  handleCloseDelete() {
+    this.setState({ openDelete: false });
+  }
+  handleClose() {
+    this.props.toggleEdit();
+  }
   render() {
     const { handleSubmit, submitting, pristine, invalid, rooms } = this.props;
     return (
@@ -42,9 +57,31 @@ class EditActivity extends React.PureComponent {
               hintText="Activity Title"
             />
           </div>
+          <div className="d-flex form-group">
+            <label>Description :</label>
+            <Field
+              name="id"
+              component={() => {
+                return null;
+              }}
+              type="hidden"
+            />
+            <Field
+              name="scheduleId"
+              component={() => {
+                return null;
+              }}
+              type="hidden"
+            />
+            <Field
+              name="description"
+              component={renderTextField}
+              hintText="Activity Description"
+            />
+          </div>
           <div className="d-flex">
-            <div className="d-flex form-group">
-              <label>Date:</label>
+            <div className="d-flex form-group ">
+              <label className="schedule-date">Date:</label>
               <Field
                 name="date"
                 component={renderDatePicker}
@@ -54,7 +91,7 @@ class EditActivity extends React.PureComponent {
               />
             </div>
             <div className="d-flex form-group" style={{ width: '300px' }}>
-              <label className="text-align-center">Room :</label>
+              <label className="text-align-center room">Room :</label>
               <Field name="room" component={renderSelectField}>
                 {rooms.map(room => {
                   return (
@@ -69,8 +106,8 @@ class EditActivity extends React.PureComponent {
             </div>
           </div>
           <div className="d-flex">
-            <div className="d-flex form-group">
-              <label>Start From :</label>
+            <div className="d-flex form-group ">
+              <label className="schedule-time-from">Start From :</label>
               <Field
                 name="startTime"
                 component={renderTimePicker}
@@ -98,6 +135,23 @@ class EditActivity extends React.PureComponent {
               disabled={pristine || submitting || invalid}
               onClick={this.handleClose}
             />
+            <RaisedButton label="Delete" onClick={this.handleDelete} />
+            <Dialog title="Delete" open={this.state.openDelete}>
+              <div className="d-flex justify-content-flex-end">
+                <RaisedButton
+                  label="Submit"
+                  primary={true}
+                  type="submit"
+                  disabled={submitting}
+                  onClick={this.handleClose}
+                />
+                <RaisedButton
+                  label="Cancel"
+                  type="submit"
+                  onClick={this.handleCloseDelete}
+                />
+              </div>
+            </Dialog>
           </div>
         </form>
       </div>

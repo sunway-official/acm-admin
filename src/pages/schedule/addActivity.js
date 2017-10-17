@@ -11,8 +11,7 @@ import validate, { renderTextField } from './validate';
 import renderSchedules from './renderSchedules';
 
 const style = {
-  right: '50px',
-  margin: '20px',
+  marginTop: '20px',
   smallIcon: {
     width: 36,
     height: 36,
@@ -47,6 +46,7 @@ class AddDialog extends React.PureComponent {
           style={style}
           className="position-fixed"
           onClick={this.handleOpen}
+          mini={true}
         >
           <ContentAdd />
         </FloatingActionButton>
@@ -65,11 +65,22 @@ class AddDialog extends React.PureComponent {
                 hintText="Activity Title"
               />
             </div>
-            <FieldArray
-              name="schedules"
-              component={renderSchedules}
-              rooms={rooms}
-            />
+            <div className="d-flex form-group">
+              <label>Description :</label>
+              <Field
+                name="description"
+                component={renderTextField}
+                hintText="Activity Description"
+              />
+            </div>
+            <div className="d-flex form-group">
+              <FieldArray
+                name="schedules"
+                component={renderSchedules}
+                rooms={rooms}
+              />
+            </div>
+
             <div className="d-flex justify-content-flex-end">
               <RaisedButton
                 label="Save"

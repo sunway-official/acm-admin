@@ -5,7 +5,14 @@ const currentDate = new Date();
 const validate = values => {
   const errors = {};
   const ArrayErrors = [];
-  const requiredFields = ['title', 'date', 'room', 'endTime', 'startTime'];
+  const requiredFields = [
+    'title',
+    'description',
+    'date',
+    'room',
+    'endTime',
+    'startTime',
+  ];
   requiredFields.forEach(field => {
     if (!values[field]) {
       errors[field] = 'Required';
@@ -48,6 +55,8 @@ export const renderTextField = ({
   <TextField
     errorText={touched && error}
     fullWidth={true}
+    multiLine={true}
+    rows={1}
     {...input}
     {...custom}
   />
