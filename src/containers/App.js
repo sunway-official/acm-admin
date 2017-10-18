@@ -16,10 +16,12 @@ import Schedule from '../pages/schedule';
 import WithThunk from '../pages/withThunk';
 import { muiTheme } from '../theme';
 import Wrapper from './wrapper';
+import LandingPage from '../landingPage';
 
 export default () => (
   <MuiThemeProvider muiTheme={muiTheme}>
     <Switch>
+      <AuthRoute needGuest path="/landingpage" component={LandingPage} />
       <AuthRoute needGuest path="/login" component={Login} />
       <AuthRoute needGuest path="/register" component={Register} />
       <AuthRoute needGuest path="/forgot" component={ForgotPassword} />
