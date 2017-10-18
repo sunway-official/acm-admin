@@ -3,6 +3,8 @@ import { RaisedButton, MenuItem, Dialog } from 'material-ui';
 import { reduxForm, Field, reset } from 'redux-form';
 import { connect } from 'react-redux';
 import { scheduleActions } from 'store/ducks/schedule';
+import { mutations, queries } from './helpers';
+import { compose, graphql } from 'react-apollo';
 
 import validate, {
   renderTextField,
@@ -14,20 +16,32 @@ import validate, {
 class EditActivity extends React.PureComponent {
   constructor() {
     super();
-    this.handleClose = this.handleClose.bind(this);
+
+    this.state = {
+      openDelete: false,
+    };
+    this.toggleDelete = this.toggleDelete.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
-    this.handleCloseDelete = this.handleCloseDelete.bind(this);
   }
-  state = {
-    openDelete: false,
-  };
+
+  toggleDelete() {
+    this.setState({ openDelete: !this.state.openDelete });
+  }
+
   handleDelete() {
-    this.setState({ openDelete: true });
-  }
-  handleCloseDelete() {
-    this.setState({ openDelete: false });
-  }
-  handleClose() {
+    const { DELETE_SCHEDULE_MUTATION, event } = this.props;
+    DELETE_SCHEDULE_MUTATION({
+      variables: {
+        id: event.scheduleId,
+      },
+      refetchQueries: [
+        {
+          query: queries.GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY,
+          variables: { conference_id: this.props.conferenceId },
+        },
+      ],
+    });
+    this.toggleDelete();
     this.props.toggleEdit();
   }
   render() {
@@ -133,22 +147,25 @@ class EditActivity extends React.PureComponent {
               primary={true}
               type="submit"
               disabled={pristine || submitting || invalid}
-              onClick={this.handleClose}
+              onClick={this.props.toggleEdit}
             />
-            <RaisedButton label="Delete" onClick={this.handleDelete} />
-            <Dialog title="Delete" open={this.state.openDelete}>
+            <RaisedButton label="Delete" onClick={this.toggleDelete} />
+            <Dialog
+              title="Do you want to delete this schedule ?"
+              open={this.state.openDelete}
+            >
               <div className="d-flex justify-content-flex-end">
                 <RaisedButton
                   label="Submit"
                   primary={true}
                   type="submit"
                   disabled={submitting}
-                  onClick={this.handleClose}
+                  onClick={this.handleDelete}
                 />
                 <RaisedButton
                   label="Cancel"
                   type="submit"
-                  onClick={this.handleCloseDelete}
+                  onClick={this.toggleDelete}
                 />
               </div>
             </Dialog>
@@ -170,7 +187,9 @@ const mapStateToProps = (state, ownProps) => {
       date: new Date(event.start),
       room: event.room.id,
       scheduleId: event.scheduleId,
+      description: event.description,
     },
+    event: event,
   };
 };
 
@@ -187,4 +206,9 @@ EditActivity = reduxForm({
   validate,
 })(EditActivity);
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditActivity);
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  graphql(mutations.DELETE_SCHEDULE_MUTATION, {
+    name: 'DELETE_SCHEDULE_MUTATION',
+  }),
+)(EditActivity);
