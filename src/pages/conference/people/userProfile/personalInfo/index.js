@@ -90,6 +90,7 @@ class EditablePersonalInfo extends Component {
       },
     });
     window.alert('Update successful!');
+    console.log(this.props.me);
   }
 
   render() {
@@ -317,7 +318,6 @@ const UPDATE_ME_MUTATION = gql`
     }
   }
 `;
-
 EditablePersonalInfo = reduxForm({
   form: 'EditablePersonalInfo', // a unique identifier for this form
   validate,
