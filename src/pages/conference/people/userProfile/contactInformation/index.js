@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import validate from './validate';
 import { renderField } from '../../../../../utils';
 import { withRouter } from 'react-router';
+import { queries } from '../helpers';
 
 class ContactInformation extends Component {
   constructor(props) {
@@ -19,7 +20,6 @@ class ContactInformation extends Component {
     this.props.history.replace('/');
   }
   saveContactInfomation() {
-    console.log(this.props.me);
     const {
       UPDATE_ME_MUTATION,
       firstname,
@@ -40,6 +40,18 @@ class ContactInformation extends Component {
         facebook_id: facebook_id,
         twitter_id: twitter_id,
       },
+      refetchQueries: [
+        {
+          query: queries.ME_QUERY,
+          variables: {
+            email,
+            dob,
+            linkedin_id,
+            facebook_id,
+            twitter_id,
+          },
+        },
+      ],
     });
     window.alert('Update successful!');
   }
@@ -244,5 +256,8 @@ export default compose(
   connect(mapStateToProps, undefined),
   graphql(UPDATE_ME_MUTATION, {
     name: 'UPDATE_ME_MUTATION',
+  }),
+  graphql(queries.ME_QUERY, {
+    name: 'ME_QUERY',
   }),
 )(ContactInformation);

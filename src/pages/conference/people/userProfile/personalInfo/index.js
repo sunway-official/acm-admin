@@ -17,6 +17,7 @@ import { renderField } from '../../../../../utils';
 import { withRouter } from 'react-router';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+import { queries } from '../helpers';
 
 const maxDate = new Date();
 maxDate.setFullYear(
@@ -88,9 +89,22 @@ class EditablePersonalInfo extends Component {
         position: position,
         organization: organization,
       },
+      refetchQueries: [
+        {
+          query: queries.ME_QUERY,
+          variables: {
+            firstname,
+            lastname,
+            gender,
+            bio,
+            dob,
+            position,
+            organization,
+          },
+        },
+      ],
     });
     window.alert('Update successful!');
-    console.log(this.props.me);
   }
 
   render() {
@@ -322,11 +336,13 @@ EditablePersonalInfo = reduxForm({
   form: 'EditablePersonalInfo', // a unique identifier for this form
   validate,
 })(EditablePersonalInfo);
-
 export default compose(
   withRouter,
   connect(mapStateToProps, undefined),
   graphql(UPDATE_ME_MUTATION, {
     name: 'UPDATE_ME_MUTATION',
+  }),
+  graphql(queries.ME_QUERY, {
+    name: 'ME_QUERY',
   }),
 )(EditablePersonalInfo);
