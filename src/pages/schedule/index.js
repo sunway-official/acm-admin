@@ -51,6 +51,7 @@ class MyCalendar extends React.PureComponent {
       variables: {
         conference_id: conferenceId,
         title: values.title,
+        description: values.description,
       },
     })
       .then(({ data }) => {
@@ -68,6 +69,7 @@ class MyCalendar extends React.PureComponent {
             variables: {
               activity_id: data.insertActivity.id,
               room_id: schedule.room,
+              conference_id: conferenceId,
               start: newStarTime,
               end: newEndTime,
             },
@@ -93,9 +95,10 @@ class MyCalendar extends React.PureComponent {
       variables: {
         id: values.id,
         title: values.title,
+        description: values.description,
       },
     })
-      .then(({ data }) => {
+      .then(() => {
         const newStarTime = functions.getDateTime(
           values.date,
           values.startTime,
@@ -129,6 +132,7 @@ class MyCalendar extends React.PureComponent {
 
     const events = functions.getEvents(getActivitiesByConferenceID);
     const rooms = this.props.GET_ALL_ROOM_QUERY.getAllRooms;
+    const conferenceId = this.props.match.params.id;
 
     return (
       <div className="conference">
@@ -168,7 +172,11 @@ class MyCalendar extends React.PureComponent {
           open={this.props.openEdit}
           title="Edit Activity Schedule Information"
         >
-          <EditActivity onSubmit={this.editActivity} rooms={rooms} />
+          <EditActivity
+            onSubmit={this.editActivity}
+            rooms={rooms}
+            conferenceId={conferenceId}
+          />
           <IconButton
             tooltip="Close"
             className="cancel-btn dialog"
