@@ -1,8 +1,10 @@
 import React from 'react';
 import { Component } from 'react';
 //import Script from 'react-load-script';
-import './component.css';
-import './default.css';
+import './css/component.css';
+import './css/default.css';
+import { images } from '../theme';
+import Register from './section/register';
 
 class LandingPage extends Component {
   handleScriptCreate() {
@@ -30,39 +32,16 @@ class LandingPage extends Component {
                 <a href="">Speaker</a>
                 <a href="">Paper</a>
                 <a href="">Contact Us</a>
+                <button className="btn get-ticket">Get Ticket</button>
               </nav>
             </div>
           </div>
           <div className="main">
+            <div>
+              <img src={images.conference1} className="conference1" alt="" />
+            </div>
             <section>
-              <div>
-                <p>
-                  Dreamcatcher american apparel typewriter polaroid, Pinterest
-                  hoodie tousled vegan pickled gastropub iPhone VHS sartorial.
-                  Fanny pack vinyl fingerstache whatever, raw denim Carles
-                  literally next level fashion axe photo booth pour-over Echo
-                  Park.
-                </p>
-              </div>
-            </section>
-            <section>
-              <div>
-                <p>
-                  Raw denim selvage typewriter, thundercats viral craft beer
-                  beard keffiyeh meh. 3 wolf moon american apparel mlkshk street
-                  art single-origin coffee. Semiotics art party tote bag,
-                  wayfarers banh mi messenger bag Odd Future seitan photo booth.
-                  Twee vinyl fingerstache, freegan narwhal semiotics irony
-                  sustainable vegan 3 wolf moon ethnic selfies fixie kale chips.
-                  Odd Future chillwave twee Tonx kale chips, quinoa disrupt
-                  selfies art party Williamsburg Vice. Asymmetrical narwhal
-                  Godard, artisan single-origin coffee Bushwick hashtag
-                  semiotics literally disrupt pork belly trust fund fashion axe
-                  typewriter +1. Master cleanse raw denim trust fund bitters,
-                  gluten-free farm-to-table tousled plaid biodiesel actually
-                  pork belly roof party polaroid.
-                </p>
-              </div>
+              <Register />
             </section>
             <section>
               <div>

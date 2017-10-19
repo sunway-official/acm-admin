@@ -130,3 +130,24 @@
 		line-height: 1;
 	}
 }
+
+.conference1{
+  width: 100%;
+  height: auto;
+  background:#000;
+  opacity:.85;
+}
+.btn{
+  &.get-ticket{
+    color: #ff5722;
+    margin-left: 20px;
+    border: 1.5px solid #ff5722;
+    border-radius: 5px !important;
+    background: #FFFFFF;
+    font-size: 1em;
+    cursor: pointer;
+    font-weight: 500;
+    text-align: center;
+    padding: .5em 1.2em .4em 1.2em;
+  }
+}
