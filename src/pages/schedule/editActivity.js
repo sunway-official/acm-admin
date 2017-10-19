@@ -10,13 +10,16 @@ import validate, {
   renderTimePicker,
   renderSelectField,
 } from './validate';
-
+const styles = {
+  marginRight: 12,
+};
 class EditActivity extends React.PureComponent {
   constructor() {
     super();
     this.handleClose = this.handleClose.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.handleCloseDelete = this.handleCloseDelete.bind(this);
+    this.handleSetTime = this.handleClose.bind(this);
   }
   state = {
     openDelete: false,
@@ -132,6 +135,7 @@ class EditActivity extends React.PureComponent {
               label="Save"
               primary={true}
               type="submit"
+              style={styles}
               disabled={pristine || submitting || invalid}
               onClick={this.handleClose}
             />
@@ -143,6 +147,7 @@ class EditActivity extends React.PureComponent {
                   primary={true}
                   type="submit"
                   disabled={submitting}
+                  style={styles}
                   onClick={this.handleClose}
                 />
                 <RaisedButton

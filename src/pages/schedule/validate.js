@@ -18,6 +18,9 @@ const validate = values => {
       errors[field] = 'Required';
     }
   });
+  if (values.endTime <= values.startTime) {
+    alert('Wrong');
+  }
   if (!values.schedules || !values.schedules.length) {
     errors.schedules = { _error: '.' };
   } else {
@@ -37,6 +40,10 @@ const validate = values => {
       if (!schedule || !schedule.endTime) {
         errors.endTime = 'Required';
         ArrayErrors[memberIndex] = errors;
+      }
+      if (schedule.endTime <= schedule.startTime) {
+        alert('Wrong');
+        // schedule.startTime = schedule.endTime;
       }
     });
     if (ArrayErrors.length) {
@@ -107,7 +114,7 @@ export const renderTimePicker = ({
     }}
     value={input.value}
     {...custom}
+    autoOk={true}
   />
 );
-
 export default validate;

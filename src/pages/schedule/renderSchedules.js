@@ -26,9 +26,17 @@ const styles = {
 };
 
 class renderSchedules extends React.Component {
+  constructor() {
+    super();
+    this.handleSetTime = this.handleSetTime.bind(this);
+  }
   componentDidMount() {
     this.props.fields.removeAll();
     this.props.fields.push({});
+  }
+
+  handleSetTime() {
+    console.log(this.props);
   }
   render() {
     const { rooms, fields, meta: { error, submitFailed } } = this.props;
@@ -42,7 +50,6 @@ class renderSchedules extends React.Component {
             ) : (
               <div>
                 <Divider style={styles.divider} />
-
                 <div className="d-flex align-items-center justify-content-space-around">
                   <h4>Schedule #{index + 1}</h4>
                   <RaisedButton
@@ -97,6 +104,7 @@ class renderSchedules extends React.Component {
                   name={`${schedule}.endTime`}
                   component={renderTimePicker}
                   format={null}
+                  onClick={() => this.handleSetTime()}
                   hintText="End Schedule"
                   textFieldStyle={{ width: '100%' }}
                 />

@@ -37,7 +37,6 @@ class AddDialog extends React.PureComponent {
   handleClose = () => {
     this.setState({ openAdd: false });
   };
-
   render() {
     const { handleSubmit, submitting, pristine, invalid, rooms } = this.props;
     return (
