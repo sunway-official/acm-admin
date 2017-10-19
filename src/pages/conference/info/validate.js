@@ -31,7 +31,7 @@ const validate = values => {
     errors.coOrganizerEmail = 'Invalid email address';
   }
   if (values.endDate < values.startDate) {
-    values.endDate === values.startDate;
+    alert('Wrong');
   }
   return errors;
 };

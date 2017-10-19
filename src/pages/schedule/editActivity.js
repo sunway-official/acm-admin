@@ -33,6 +33,7 @@ class EditActivity extends React.PureComponent {
   handleClose() {
     this.props.toggleEdit();
   }
+
   render() {
     const { handleSubmit, submitting, pristine, invalid, rooms } = this.props;
     return (

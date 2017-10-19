@@ -42,7 +42,8 @@ const validate = values => {
         ArrayErrors[memberIndex] = errors;
       }
       if (schedule.endTime <= schedule.startTime) {
-        alert('Wrong');
+        errors.endTime = 'Required';
+        ArrayErrors[memberIndex] = errors;
         // schedule.startTime = schedule.endTime;
       }
     });

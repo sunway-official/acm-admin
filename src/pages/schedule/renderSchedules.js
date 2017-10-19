@@ -29,6 +29,7 @@ class renderSchedules extends React.Component {
   constructor() {
     super();
     this.handleSetTime = this.handleSetTime.bind(this);
+    this.onFocus = this.onFocus.bind(this);
   }
   componentDidMount() {
     this.props.fields.removeAll();
@@ -36,6 +37,10 @@ class renderSchedules extends React.Component {
   }
 
   handleSetTime() {
+    console.log(this.props);
+  }
+
+  onFocus() {
     console.log(this.props);
   }
   render() {
