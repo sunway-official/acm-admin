@@ -8,7 +8,7 @@ export default class GeneralInfo extends React.Component {
     return (
       <div>
         <div className="profile-usertitle-name">{fullname}</div>
-        <div className="profile-usertitle-job"> Developer </div>
+        <div className="profile-usertitle-job"> {this.props.me.position} </div>
       </div>
     );
   }
