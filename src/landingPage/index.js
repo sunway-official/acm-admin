@@ -20,7 +20,7 @@ class LandingPage extends Component {
   }
   render() {
     return (
-      <div className="body">
+      <div className="landingpage-body">
         <div className="container">
           <div className="cbp-af-header">
             <div className="cbp-af-inner">
