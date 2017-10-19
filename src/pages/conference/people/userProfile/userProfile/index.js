@@ -30,7 +30,7 @@ const UserProfile = ({ me }) => (
             <div className="card" id="left-form-container">
               <div className="card-content">
                 <EditUserAvatar />
-                <GeneralInfo me={me} />
+                <GeneralInfo me={me} onSubmit="" />
               </div>
             </div>
           </div>

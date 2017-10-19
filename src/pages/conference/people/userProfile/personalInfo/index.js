@@ -92,15 +92,6 @@ class EditablePersonalInfo extends Component {
       refetchQueries: [
         {
           query: queries.ME_QUERY,
-          variables: {
-            firstname,
-            lastname,
-            gender,
-            bio,
-            dob,
-            position,
-            organization,
-          },
         },
       ],
     });
@@ -108,7 +99,8 @@ class EditablePersonalInfo extends Component {
   }
 
   render() {
-    const { handleSubmit, submitting, pristine, invalid } = this.props;
+    console.log(this.props);
+    const { handleSubmit, submitting, pristine, invalid, me } = this.props;
     return (
       <div>
         <Grid fluid>
@@ -282,26 +274,26 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-const selector = formValueSelector('EditablePersonalInfo');
-EditablePersonalInfo = connect(state => {
-  const firstname = selector(state, 'firstname');
-  const lastname = selector(state, 'lastname');
-  const gender = selector(state, 'gender');
-  const dob = new Date(selector(state, 'dob'));
-  dob.setHours(dob.getHours() + 7);
-  const bio = selector(state, 'bio');
-  const position = selector(state, 'position');
-  const organization = selector(state, 'organization');
-  return {
-    firstname,
-    lastname,
-    gender,
-    dob,
-    bio,
-    position,
-    organization,
-  };
-})(EditablePersonalInfo);
+// const selector = formValueSelector('EditablePersonalInfo');
+// EditablePersonalInfo = connect(state => {
+//   const firstname = selector(state, 'firstname');
+//   const lastname = selector(state, 'lastname');
+//   const gender = selector(state, 'gender');
+//   const dob = new Date(selector(state, 'dob'));
+//   dob.setHours(dob.getHours() + 7);
+//   const bio = selector(state, 'bio');
+//   const position = selector(state, 'position');
+//   const organization = selector(state, 'organization');
+//   return {
+//     firstname,
+//     lastname,
+//     gender,
+//     dob,
+//     bio,
+//     position,
+//     organization,
+//   };
+// })(EditablePersonalInfo);
 
 const UPDATE_ME_MUTATION = gql`
   mutation UpdateMe(
