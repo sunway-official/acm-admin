@@ -202,22 +202,20 @@ class EditablePersonalInfo extends Component {
                     fullWidth={true}
                   />
                 </Row>
-                <div>
-                  <div>
-                    <RaisedButton
-                      className="btn save-change"
-                      label="Save Change"
-                      primary={true}
-                      disabled={pristine || submitting || invalid}
-                      type="submit"
-                    />
-                    <RaisedButton
-                      className="btn cancel"
-                      label="Cancel"
-                      default={true}
-                      onClick={this.handleCancel}
-                    />
-                  </div>
+                <div className="personal-info-button">
+                  <RaisedButton
+                    className="btn save-change"
+                    label="Save Change"
+                    primary={true}
+                    disabled={pristine || submitting || invalid}
+                    type="submit"
+                  />
+                  <RaisedButton
+                    className="btn cancel"
+                    label="Cancel"
+                    default={true}
+                    onClick={this.handleCancel}
+                  />
                 </div>
               </form>
             </Col>

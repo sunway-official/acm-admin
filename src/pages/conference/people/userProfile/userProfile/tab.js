@@ -6,8 +6,8 @@ import EditablePersonalInfo from '../personalInfo';
 import ChangePassword from '../changePassword';
 import ContactInformation from '../contactInformation';
 import '../style.css';
-import { queries } from '../helpers';
-import { compose, gql, graphql } from 'react-apollo';
+import { queries, mutations } from '../helpers';
+import { compose, graphql } from 'react-apollo';
 
 const styles = {
   headline: {
@@ -27,14 +27,15 @@ class InfoTabs extends React.Component {
     this.state = {
       slideIndex: 0,
     };
-    this.saveInfomation = this.saveInfomation.bind(this);
+    this.saveInformation = this.saveInformation.bind(this);
+    this.savePassword = this.savePassword.bind(this);
   }
   handleChange = value => {
     this.setState({
       slideIndex: value,
     });
   };
-  saveInfomation(values) {
+  saveInformation(values) {
     const { UPDATE_ME_MUTATION } = this.props;
     UPDATE_ME_MUTATION({
       variables: {
@@ -45,12 +46,25 @@ class InfoTabs extends React.Component {
         bio: values.bio,
         position: values.position,
         organization: values.organization,
+        linkedin_id: values.linkedin_id,
+        facebook_id: values.facebook_id,
+        twitter_id: values.twitter_id,
       },
       refetchQueries: [
         {
           query: queries.ME_QUERY,
         },
       ],
+    });
+    window.alert('Update successful!');
+  }
+  savePassword(values) {
+    const { UPDATE_PASSWORD_MUTATION } = this.props;
+    UPDATE_PASSWORD_MUTATION({
+      variables: {
+        oldPassword: values.oldPassword,
+        newPassword: values.newPassword,
+      },
     });
     window.alert('Update successful!');
   }
@@ -68,13 +82,13 @@ class InfoTabs extends React.Component {
           onChangeIndex={this.handleChange}
         >
           <div>
-            <EditablePersonalInfo me={me} onSubmit={this.saveInfomation} />
+            <EditablePersonalInfo me={me} onSubmit={this.saveInformation} />
           </div>
           <div>
-            <ContactInformation me={me} />
+            <ContactInformation me={me} onSubmit={this.saveInformation} />
           </div>
           <div style={styles.slide}>
-            <ChangePassword />
+            <ChangePassword onSubmit={this.savePassword} />
           </div>
         </SwipeableViews>
       </div>
@@ -82,40 +96,14 @@ class InfoTabs extends React.Component {
   }
 }
 
-const UPDATE_ME_MUTATION = gql`
-  mutation UpdateMe(
-    $firstname: String!
-    $lastname: String!
-    $dob: Date
-    $gender: Gender!
-    $bio: String
-    $organization: String
-    $position: String
-  ) {
-    updateMe(
-      firstname: $firstname
-      lastname: $lastname
-      dob: $dob
-      gender: $gender
-      bio: $bio
-      position: $position
-      organization: $organization
-    ) {
-      firstname
-      lastname
-      dob
-      gender
-      bio
-      position
-      organization
-    }
-  }
-`;
 export default compose(
-  graphql(UPDATE_ME_MUTATION, {
+  graphql(mutations.UPDATE_ME_MUTATION, {
     name: 'UPDATE_ME_MUTATION',
   }),
   graphql(queries.ME_QUERY, {
     name: 'ME_QUERY',
+  }),
+  graphql(mutations.UPDATE_PASSWORD_MUTATION, {
+    name: 'UPDATE_PASSWORD_MUTATION',
   }),
 )(InfoTabs);

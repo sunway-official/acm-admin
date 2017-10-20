@@ -15,6 +15,7 @@ const LoginForm = ({
 }) => (
   <form onSubmit={handleSubmit(onSubmit)}>
     {/* TODO: Form helper here please! */}
+    {error && <div className="error">{error}</div>}
     <div className="field">
       <Field
         name="email"
