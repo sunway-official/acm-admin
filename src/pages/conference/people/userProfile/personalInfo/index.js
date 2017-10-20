@@ -6,8 +6,10 @@ import './style.css';
 import { RaisedButton } from 'material-ui';
 import { DatePicker, ListItem } from 'material-ui';
 import ActionInfoOutline from 'material-ui/svg-icons/action/info-outline';
-import { Field, reduxForm, formValueSelector } from 'redux-form';
-import { compose, gql, graphql } from 'react-apollo';
+import SocialLocationCity from 'material-ui/svg-icons/social/location-city';
+import ActionWork from 'material-ui/svg-icons/action/work';
+import { Field, reduxForm } from 'redux-form';
+import { compose } from 'react-apollo';
 import { connect } from 'react-redux';
 import { Col, Grid, Row } from 'react-flexbox-grid';
 import validate from './validate';
@@ -59,40 +61,18 @@ const renderSelectField = ({
 class EditablePersonalInfo extends Component {
   constructor(props) {
     super(props);
-    this.saveInfomation = this.saveInfomation.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
   }
   handleCancel() {
     this.props.history.replace('/');
   }
-  saveInfomation() {
-    const {
-      UPDATE_ME_MUTATION,
-      firstname,
-      lastname,
-      dob,
-      gender,
-      bio,
-    } = this.props;
-    UPDATE_ME_MUTATION({
-      variables: {
-        firstname: firstname,
-        lastname: lastname,
-        gender: gender,
-        dob: dob,
-        bio: bio,
-      },
-    });
-    window.alert('Update successful!');
-  }
-
   render() {
     const { handleSubmit, submitting, pristine, invalid } = this.props;
     return (
       <div>
         <Grid fluid>
-          <Row>
-            <Col xs={3}>
+          <Row around="xs">
+            <Col xs={4}>
               <Row className="firstColunm firstRow">
                 <ListItem
                   className="list-item"
@@ -120,6 +100,22 @@ class EditablePersonalInfo extends Component {
               <Row className="firstColunm">
                 <ListItem
                   className="list-item"
+                  primaryText="Position"
+                  leftIcon={<ActionWork />}
+                  disabled={true}
+                />
+              </Row>
+              <Row className="firstColunm">
+                <ListItem
+                  className="list-item"
+                  primaryText="Organization"
+                  leftIcon={<SocialLocationCity />}
+                  disabled={true}
+                />
+              </Row>
+              <Row className="firstColunm">
+                <ListItem
+                  className="list-item"
                   primaryText="Description"
                   leftIcon={<ActionInfoOutline />}
                   disabled={true}
@@ -129,14 +125,14 @@ class EditablePersonalInfo extends Component {
             <Col xs={8}>
               <form onSubmit={handleSubmit}>
                 <Row className="secondColunm firstRow">
-                  <Col xs>
+                  <Col xs className="subname">
                     <Field
                       id="text-field-default"
                       name="lastname"
                       type="text"
                       hintText="Last name"
                       component={renderField}
-                      className="editField subname"
+                      className="editField"
                       fullWidth={true}
                     />
                   </Col>
@@ -147,7 +143,7 @@ class EditablePersonalInfo extends Component {
                       type="text"
                       hintText="First name"
                       component={renderField}
-                      className="editField subname"
+                      className="editField"
                       fullWidth={true}
                     />
                   </Col>
@@ -176,6 +172,26 @@ class EditablePersonalInfo extends Component {
                 <Row className="secondColunm">
                   <Field
                     id="text-field-default"
+                    name="position"
+                    type="text"
+                    hintText="Position"
+                    component={renderField}
+                    fullWidth={true}
+                  />
+                </Row>
+                <Row className="secondColunm">
+                  <Field
+                    id="text-field-default"
+                    name="organization"
+                    type="text"
+                    hintText="Organization"
+                    component={renderField}
+                    fullWidth={true}
+                  />
+                </Row>
+                <Row className="secondColunm">
+                  <Field
+                    id="text-field-default"
                     name="bio"
                     type="text"
                     hintText="Description"
@@ -186,24 +202,24 @@ class EditablePersonalInfo extends Component {
                     fullWidth={true}
                   />
                 </Row>
+                <div className="personal-info-button">
+                  <RaisedButton
+                    className="btn save-change"
+                    label="Save Change"
+                    primary={true}
+                    disabled={pristine || submitting || invalid}
+                    type="submit"
+                  />
+                  <RaisedButton
+                    className="btn cancel"
+                    label="Cancel"
+                    default={true}
+                    onClick={this.handleCancel}
+                  />
+                </div>
               </form>
             </Col>
           </Row>
-          <div>
-            <RaisedButton
-              className="btn save-change"
-              label="Save Change"
-              primary={true}
-              disabled={pristine || submitting || invalid}
-              onClick={this.saveInfomation}
-            />
-            <RaisedButton
-              className="btn cancel"
-              label="Cancel"
-              default={true}
-              onClick={this.handleCancel}
-            />
-          </div>
         </Grid>
       </div>
     );
@@ -219,60 +235,16 @@ const mapStateToProps = (state, ownProps) => {
       gender: me.gender,
       dob: new Date(me.dob),
       bio: me.bio,
+      position: me.position,
+      organization: me.organization,
     },
   };
 };
-
-const selector = formValueSelector('EditablePersonalInfo');
-EditablePersonalInfo = connect(state => {
-  const firstname = selector(state, 'firstname');
-  const lastname = selector(state, 'lastname');
-  const gender = selector(state, 'gender');
-  const dob = new Date(selector(state, 'dob'));
-  dob.setHours(dob.getHours() + 7);
-  const bio = selector(state, 'bio');
-  return {
-    firstname,
-    lastname,
-    gender,
-    dob,
-    bio,
-  };
-})(EditablePersonalInfo);
-
-const UPDATE_ME_MUTATION = gql`
-  mutation UpdateMe(
-    $firstname: String!
-    $lastname: String!
-    $dob: Date
-    $gender: Gender!
-    $bio: String
-  ) {
-    updateMe(
-      firstname: $firstname
-      lastname: $lastname
-      dob: $dob
-      gender: $gender
-      bio: $bio
-    ) {
-      firstname
-      lastname
-      dob
-      gender
-      bio
-    }
-  }
-`;
 
 EditablePersonalInfo = reduxForm({
   form: 'EditablePersonalInfo', // a unique identifier for this form
   validate,
 })(EditablePersonalInfo);
-
-export default compose(
-  withRouter,
-  connect(mapStateToProps, undefined),
-  graphql(UPDATE_ME_MUTATION, {
-    name: 'UPDATE_ME_MUTATION',
-  }),
-)(EditablePersonalInfo);
+export default compose(withRouter, connect(mapStateToProps, undefined))(
+  EditablePersonalInfo,
+);

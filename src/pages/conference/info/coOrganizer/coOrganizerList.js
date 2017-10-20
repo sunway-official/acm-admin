@@ -19,8 +19,6 @@ import { conferenceCoOranizerActions } from 'store/ducks/conference/info/coOrgan
 import CoOrganizerInfo from './coOrganizerInfo';
 import GET_CONFERENCE_BY_ID_QUERY from '../helpers/getConferenceByIdQuery';
 
-// import './style.css';
-
 class CoOrganizerList extends PureComponent {
   constructor() {
     super();

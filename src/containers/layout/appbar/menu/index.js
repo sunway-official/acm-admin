@@ -1,23 +1,15 @@
-import React, { Component } from 'react';
-import {
-  //Badge,
-  IconButton,
-  Avatar,
-  Menu,
-  MenuItem,
-  Popover,
-} from 'material-ui';
-import {
-  // SocialNotificationsNone,
-  // CommunicationMailOutline,
-  // ActionDateRange,
-  HardwareKeyboardArrowDown,
-} from 'material-ui/svg-icons';
+import { Avatar, IconButton, Menu, MenuItem, Popover } from 'material-ui';
+import { HardwareKeyboardArrowDown } from 'material-ui/svg-icons';
+import { Component } from 'react';
+import React from 'react';
+import { compose, withApollo } from 'react-apollo';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
+import { Link } from 'react-router-dom';
+
 import { images } from '../../../../theme';
 import style from './style.css';
-import { Link } from 'react-router-dom';
-import { withRouter } from 'react-router';
-import { withApollo, compose } from 'react-apollo';
+
 //import { graphql, gql } from 'react-apollo';
 
 class BadgeExampleSimple extends Component {
@@ -81,6 +73,11 @@ class BadgeExampleSimple extends Component {
   render() {
     // const { loading } = this.props.data;
     // if (loading) return <div>Loading...</div>;
+    var first = '';
+    if (this.props.me !== undefined) {
+      //console.log(this.props.me.firstname);
+      first = this.props.me.firstname;
+    }
     return (
       <div className="menu">
         <style
@@ -195,7 +192,7 @@ class BadgeExampleSimple extends Component {
         */}
         <div className="badge user" onClick={this.handleTouchTapUser}>
           <Avatar className="avatar" src={images.defaultAvatar} />
-          <span className="user-name"> Manh </span>
+          <span className="user-name"> {first} </span>
           <IconButton tooltip="User">
             <HardwareKeyboardArrowDown />
           </IconButton>
@@ -232,5 +229,10 @@ class BadgeExampleSimple extends Component {
 //     }
 //   }
 // `;
+const mapStateToProps = state => ({
+  me: state.auth.currentUser,
+});
 
-export default compose(withRouter, withApollo)(BadgeExampleSimple);
+export default compose(withRouter, withApollo, connect(mapStateToProps))(
+  BadgeExampleSimple,
+);
