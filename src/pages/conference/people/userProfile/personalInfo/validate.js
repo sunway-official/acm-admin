@@ -10,6 +10,8 @@ const validate = values => {
     'gender',
     'bio',
     'dob',
+    'position',
+    'organization',
   ];
   requiredFields.forEach(field => {
     if (!values[field]) {

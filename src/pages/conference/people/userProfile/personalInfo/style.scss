@@ -9,25 +9,26 @@
   font-weight: inherit;
   height: 52px !important;
 }
-.btn {
-  &.save-change {
-    width: 150px !important;
-    margin-top: 20px;
+.personal-info-button{
+  display: flex;
+  .btn {
+    &.save-change {
+      width: 150px !important;
+      margin-top: 20px;
+    }
+    &.cancel {
+      width: 150px !important;
+      margin: 20px 0px 0px 30px;
+    }
   }
-  &.cancel {
-    width: 150px !important;
-    margin: 20px 0px 0px 30px;
-  }
+}
+
+.subname{
+  padding-left: 0px !important;
 }
 .editField{
-  font-size: 14px !important;
   height: 44px !important;
-  &.subname{
-    margin-right: 10px;
-  }
-}
-.birthday{
-  width: 100% !important;
+  padding-left: 0px !important;
 }
 .gender{
   border: none;

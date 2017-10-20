@@ -1,12 +1,11 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { Subheader, IconButton } from 'material-ui';
+import { IconButton, Subheader } from 'material-ui';
 import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
+import React from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-import GeneralInfo from '../generalInfo';
 import EditUserAvatar from '../changeAvatar/editUserAvatar';
-
+import GeneralInfo from '../generalInfo';
 import InfoTabs from './tab';
 
 const UserProfile = ({ me }) => (
@@ -31,7 +30,7 @@ const UserProfile = ({ me }) => (
             <div className="card" id="left-form-container">
               <div className="card-content">
                 <EditUserAvatar />
-                <GeneralInfo me={me} />
+                <GeneralInfo me={me} onSubmit="" />
               </div>
             </div>
           </div>
