@@ -38,11 +38,8 @@ class MyCalendar extends React.PureComponent {
     this.props.setEvent(event);
   }
 
-  handleClose = () => {
-    this.props.toggleEdit();
-  };
-
   addActivity(values) {
+    this.props.toggleAdd();
     const { INSERT_ACTIVITY_MUTATION, INSERT_SCHEDULE_MUTATION } = this.props;
 
     const conferenceId = this.props.match.params.id;
@@ -65,6 +62,7 @@ class MyCalendar extends React.PureComponent {
             schedule.date,
             schedule.endTime,
           );
+
           INSERT_SCHEDULE_MUTATION({
             variables: {
               activity_id: data.insertActivity.id,
@@ -90,7 +88,7 @@ class MyCalendar extends React.PureComponent {
   editActivity(values) {
     const { UPDATE_ACTIVITY_MUTATION, UPDATE_SCHEDULE_MUTATION } = this.props;
     const conferenceId = this.props.match.params.id;
-
+    this.props.toggleEdit();
     UPDATE_ACTIVITY_MUTATION({
       variables: {
         id: values.id,
@@ -103,6 +101,7 @@ class MyCalendar extends React.PureComponent {
           values.date,
           values.startTime,
         );
+
         const newEndTime = functions.getDateTime(values.date, values.endTime);
         // eslint-disable-next-line array-callback-return
         UPDATE_SCHEDULE_MUTATION({
@@ -174,7 +173,7 @@ class MyCalendar extends React.PureComponent {
           <IconButton
             tooltip="Close"
             className="cancel-btn dialog"
-            onClick={this.handleClose}
+            onClick={() => this.props.toggleEdit()}
           >
             <NavigationClose />
           </IconButton>
@@ -192,6 +191,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    toggleAdd: () => dispatch(scheduleActions.toggleAddActivityFormModal()),
     toggleEdit: () => dispatch(scheduleActions.toggleEditActivityFormModal()),
     setEvent: event => dispatch(scheduleOperations.setEventOperation(event)),
   };

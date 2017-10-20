@@ -57,7 +57,7 @@ const CoOrganizerForm = ({
       <RaisedButton
         label="Save"
         primary={true}
-        disabled={pristine || submitting || invalid}
+        disabled={pristine || submitting}
         type="submit"
       />
     </div>
