@@ -12,7 +12,9 @@ import validate, {
   renderTimePicker,
   renderSelectField,
 } from './validate';
-
+const styles = {
+  marginRight: 12,
+};
 class EditActivity extends React.PureComponent {
   constructor() {
     super();
@@ -44,8 +46,9 @@ class EditActivity extends React.PureComponent {
     this.toggleDelete();
     this.props.toggleEdit();
   }
+
   render() {
-    const { handleSubmit, submitting, pristine, invalid, rooms } = this.props;
+    const { handleSubmit, submitting, pristine, rooms } = this.props;
     return (
       <div>
         <form className="form conference-info" onSubmit={handleSubmit}>
@@ -146,8 +149,9 @@ class EditActivity extends React.PureComponent {
               label="Save"
               primary={true}
               type="submit"
-              disabled={pristine || submitting || invalid}
-              onClick={this.props.toggleEdit}
+              style={styles}
+              disabled={pristine || submitting}
+              // onClick={this.props.toggleEdit}
             />
             <RaisedButton label="Delete" onClick={this.toggleDelete} />
             <Dialog
@@ -160,6 +164,7 @@ class EditActivity extends React.PureComponent {
                   primary={true}
                   type="submit"
                   disabled={submitting}
+                  style={styles}
                   onClick={this.handleDelete}
                 />
                 <RaisedButton

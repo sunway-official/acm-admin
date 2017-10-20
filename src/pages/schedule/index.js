@@ -65,6 +65,7 @@ class MyCalendar extends React.PureComponent {
             schedule.date,
             schedule.endTime,
           );
+
           INSERT_SCHEDULE_MUTATION({
             variables: {
               activity_id: data.insertActivity.id,
@@ -103,6 +104,8 @@ class MyCalendar extends React.PureComponent {
           values.date,
           values.startTime,
         );
+        this.handleClose();
+
         const newEndTime = functions.getDateTime(values.date, values.endTime);
         // eslint-disable-next-line array-callback-return
         UPDATE_SCHEDULE_MUTATION({

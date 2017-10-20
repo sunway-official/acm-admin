@@ -9,34 +9,44 @@ const validate = values => {
     'title',
     'description',
     'date',
-    'room',
-    'endTime',
     'startTime',
+    'endTime',
+    'room',
   ];
   requiredFields.forEach(field => {
     if (!values[field]) {
       errors[field] = 'Required';
     }
   });
+  if (values.endTime <= values.startTime) {
+    errors.endTime = 'End time of schedule must be greater than start time!!!';
+  }
   if (!values.schedules || !values.schedules.length) {
     errors.schedules = { _error: '.' };
   } else {
-    values.schedules.forEach((schedule, memberIndex) => {
+    values.schedules.forEach((schedule, scheduleIndex) => {
+      const scheduleErrors = {};
       if (!schedule || !schedule.date) {
-        errors.date = 'Required';
-        ArrayErrors[memberIndex] = errors;
+        scheduleErrors.date = 'Required';
+        ArrayErrors[scheduleIndex] = scheduleErrors;
       }
+
       if (!schedule || !schedule.room) {
-        errors.room = 'Required';
-        ArrayErrors[memberIndex] = errors;
+        scheduleErrors.room = 'Required';
+        ArrayErrors[scheduleIndex] = scheduleErrors;
       }
       if (!schedule || !schedule.startTime) {
-        errors.startTime = 'Required';
-        ArrayErrors[memberIndex] = errors;
+        scheduleErrors.startTime = 'Required';
+        ArrayErrors[scheduleIndex] = scheduleErrors;
       }
       if (!schedule || !schedule.endTime) {
-        errors.endTime = 'Required';
-        ArrayErrors[memberIndex] = errors;
+        scheduleErrors.endTime = 'Required';
+        ArrayErrors[scheduleIndex] = scheduleErrors;
+      }
+      if (schedule.startTime >= schedule.endTime) {
+        scheduleErrors.endTime =
+          'End time of schedule must be greater than start time!!!';
+        ArrayErrors[scheduleIndex] = scheduleErrors;
       }
     });
     if (ArrayErrors.length) {
@@ -107,7 +117,7 @@ export const renderTimePicker = ({
     }}
     value={input.value}
     {...custom}
+    autoOk={true}
   />
 );
-
 export default validate;

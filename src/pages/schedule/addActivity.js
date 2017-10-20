@@ -28,24 +28,20 @@ class AddDialog extends React.PureComponent {
     dialogTitle: '',
   };
 
-  handleOpen = isAdd => {
-    if (isAdd) {
-      this.setState({ openAdd: true, dialogTitle: 'Add New Activity' });
-    }
+  toggleDialog = () => {
+    this.setState({
+      openAdd: !this.state.openAdd,
+      dialogTitle: 'Add New Activity',
+    });
   };
-
-  handleClose = () => {
-    this.setState({ openAdd: false });
-  };
-
   render() {
-    const { handleSubmit, submitting, pristine, invalid, rooms } = this.props;
+    const { handleSubmit, submitting, pristine, rooms } = this.props;
     return (
       <div>
         <FloatingActionButton
           style={style}
           className="position-fixed"
-          onClick={this.handleOpen}
+          onClick={this.toggleDialog}
           mini={true}
         >
           <ContentAdd />
@@ -80,19 +76,21 @@ class AddDialog extends React.PureComponent {
                 rooms={rooms}
               />
             </div>
-
+            <div className="d-flex form-group">
+              <Field name="error" component="label" />
+            </div>
             <div className="d-flex justify-content-flex-end">
               <RaisedButton
                 label="Save"
                 primary={true}
                 type="submit"
-                disabled={pristine || submitting || invalid}
-                onClick={this.handleClose}
+                disabled={pristine || submitting}
+                // onClick={this.toggleDialog}
               />
               <IconButton
                 tooltip="Close"
                 className="cancel-btn dialog"
-                onClick={this.handleClose}
+                onClick={this.toggleDialog}
               >
                 <NavigationClose />
               </IconButton>
