@@ -9,6 +9,8 @@ import { reduxForm, Field, FieldArray, reset } from 'redux-form';
 import { NavigationClose, ContentAdd } from 'material-ui/svg-icons';
 import validate, { renderTextField } from './validate';
 import renderSchedules from './renderSchedules';
+import { connect } from 'react-redux';
+import { scheduleActions } from 'store/ducks/schedule';
 
 const style = {
   marginTop: '20px',
@@ -24,16 +26,9 @@ const style = {
 };
 class AddDialog extends React.PureComponent {
   state = {
-    openAdd: false,
-    dialogTitle: '',
+    dialogTitle: 'Add New Activity',
   };
 
-  toggleDialog = () => {
-    this.setState({
-      openAdd: !this.state.openAdd,
-      dialogTitle: 'Add New Activity',
-    });
-  };
   render() {
     const { handleSubmit, submitting, pristine, rooms } = this.props;
     return (
@@ -41,7 +36,7 @@ class AddDialog extends React.PureComponent {
         <FloatingActionButton
           style={style}
           className="position-fixed"
-          onClick={this.toggleDialog}
+          onClick={this.props.toggleAdd}
           mini={true}
         >
           <ContentAdd />
@@ -50,7 +45,7 @@ class AddDialog extends React.PureComponent {
           title={this.state.dialogTitle}
           modal={true}
           autoScrollBodyContent={true}
-          open={this.state.openAdd}
+          open={this.props.openAdd}
         >
           <form className="form conference-info" onSubmit={handleSubmit}>
             <div className="d-flex form-group">
@@ -85,12 +80,14 @@ class AddDialog extends React.PureComponent {
                 primary={true}
                 type="submit"
                 disabled={pristine || submitting}
-                // onClick={this.toggleDialog}
               />
               <IconButton
                 tooltip="Close"
                 className="cancel-btn dialog"
-                onClick={this.toggleDialog}
+                onClick={() => {
+                  this.props.toggleAdd();
+                  this.props.reset();
+                }}
               >
                 <NavigationClose />
               </IconButton>
@@ -108,4 +105,16 @@ AddDialog = reduxForm({
   validate,
 })(AddDialog);
 
-export default AddDialog;
+const mapStateToProps = state => {
+  return {
+    openAdd: state.schedule.openAddFormModal,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    toggleAdd: () => dispatch(scheduleActions.toggleAddActivityFormModal()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddDialog);
