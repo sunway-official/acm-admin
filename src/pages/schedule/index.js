@@ -88,7 +88,7 @@ class MyCalendar extends React.PureComponent {
   editActivity(values) {
     const { UPDATE_ACTIVITY_MUTATION, UPDATE_SCHEDULE_MUTATION } = this.props;
     const conferenceId = this.props.match.params.id;
-
+    this.props.toggleEdit();
     UPDATE_ACTIVITY_MUTATION({
       variables: {
         id: values.id,
@@ -97,7 +97,6 @@ class MyCalendar extends React.PureComponent {
       },
     })
       .then(() => {
-        this.props.toggleEdit();
         const newStarTime = functions.getDateTime(
           values.date,
           values.startTime,
