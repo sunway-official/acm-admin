@@ -31,7 +31,7 @@ const validate = values => {
     errors.coOrganizerEmail = 'Invalid email address';
   }
   if (values.endDate < values.startDate) {
-    alert('Wrong');
+    errors.endDate = 'End date of conference must be greater than start date';
   }
   return errors;
 };

@@ -4,6 +4,7 @@ export const GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY = gql`
     getActivitiesByConferenceID(conference_id: $conference_id) {
       id
       title
+      description
       schedules {
         id
         start

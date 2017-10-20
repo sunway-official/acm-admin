@@ -12,10 +12,12 @@ export const getEvents = array => {
       const event = {
         id: item.id,
         title: item.title,
+        description: item.description,
         date: date,
         start: start,
         end: end,
         scheduleId: schedule.id,
+
         room: {
           id: schedule.room.id,
           name: schedule.room.name,
@@ -46,7 +48,7 @@ export const Event = ({ event }) => {
         moment(event.end).format('LT') +
         ': ' +
         event.title +
-        '. Room - ' +
+        ' Room - ' +
         event.room.name
       }
     >

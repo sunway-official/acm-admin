@@ -117,7 +117,7 @@ const InfoForm = ({
             label="Save"
             primary={true}
             type="submit"
-            disabled={pristine || submitting || invalid}
+            disabled={pristine || submitting}
           />
         </div>
       </div>

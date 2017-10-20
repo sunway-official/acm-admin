@@ -28,16 +28,11 @@ const styles = {
 class renderSchedules extends React.Component {
   constructor() {
     super();
-    this.handleSetTime = this.handleSetTime.bind(this);
     this.onFocus = this.onFocus.bind(this);
   }
   componentDidMount() {
     this.props.fields.removeAll();
     this.props.fields.push({});
-  }
-
-  handleSetTime() {
-    console.log(this.props);
   }
 
   onFocus() {
@@ -109,7 +104,6 @@ class renderSchedules extends React.Component {
                   name={`${schedule}.endTime`}
                   component={renderTimePicker}
                   format={null}
-                  onClick={() => this.handleSetTime()}
                   hintText="End Schedule"
                   textFieldStyle={{ width: '100%' }}
                 />
