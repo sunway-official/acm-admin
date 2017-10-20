@@ -1,8 +1,10 @@
 import React from 'react';
-import { RaisedButton, MenuItem } from 'material-ui';
+import { RaisedButton, MenuItem, Dialog } from 'material-ui';
 import { reduxForm, Field, reset } from 'redux-form';
 import { connect } from 'react-redux';
 import { scheduleActions } from 'store/ducks/schedule';
+import { mutations, queries } from './helpers';
+import { compose, graphql } from 'react-apollo';
 
 import validate, {
   renderTextField,
@@ -12,9 +14,36 @@ import validate, {
 } from './validate';
 
 class EditActivity extends React.PureComponent {
-  handleClose = () => {
+  constructor() {
+    super();
+
+    this.state = {
+      openDelete: false,
+    };
+    this.toggleDelete = this.toggleDelete.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+  }
+
+  toggleDelete() {
+    this.setState({ openDelete: !this.state.openDelete });
+  }
+
+  handleDelete() {
+    const { DELETE_SCHEDULE_MUTATION, event } = this.props;
+    DELETE_SCHEDULE_MUTATION({
+      variables: {
+        id: event.scheduleId,
+      },
+      refetchQueries: [
+        {
+          query: queries.GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY,
+          variables: { conference_id: this.props.conferenceId },
+        },
+      ],
+    });
+    this.toggleDelete();
     this.props.toggleEdit();
-  };
+  }
   render() {
     const { handleSubmit, submitting, pristine, invalid, rooms } = this.props;
     return (
@@ -42,9 +71,31 @@ class EditActivity extends React.PureComponent {
               hintText="Activity Title"
             />
           </div>
+          <div className="d-flex form-group">
+            <label>Description :</label>
+            <Field
+              name="id"
+              component={() => {
+                return null;
+              }}
+              type="hidden"
+            />
+            <Field
+              name="scheduleId"
+              component={() => {
+                return null;
+              }}
+              type="hidden"
+            />
+            <Field
+              name="description"
+              component={renderTextField}
+              hintText="Activity Description"
+            />
+          </div>
           <div className="d-flex">
-            <div className="d-flex form-group">
-              <label>Date:</label>
+            <div className="d-flex form-group ">
+              <label className="schedule-date">Date:</label>
               <Field
                 name="date"
                 component={renderDatePicker}
@@ -54,7 +105,7 @@ class EditActivity extends React.PureComponent {
               />
             </div>
             <div className="d-flex form-group" style={{ width: '300px' }}>
-              <label className="text-align-center">Room :</label>
+              <label className="text-align-center room">Room :</label>
               <Field name="room" component={renderSelectField}>
                 {rooms.map(room => {
                   return (
@@ -69,8 +120,8 @@ class EditActivity extends React.PureComponent {
             </div>
           </div>
           <div className="d-flex">
-            <div className="d-flex form-group">
-              <label>Start From :</label>
+            <div className="d-flex form-group ">
+              <label className="schedule-time-from">Start From :</label>
               <Field
                 name="startTime"
                 component={renderTimePicker}
@@ -96,8 +147,28 @@ class EditActivity extends React.PureComponent {
               primary={true}
               type="submit"
               disabled={pristine || submitting || invalid}
-              onClick={this.handleClose}
+              onClick={this.props.toggleEdit}
             />
+            <RaisedButton label="Delete" onClick={this.toggleDelete} />
+            <Dialog
+              title="Do you want to delete this schedule ?"
+              open={this.state.openDelete}
+            >
+              <div className="d-flex justify-content-flex-end">
+                <RaisedButton
+                  label="Submit"
+                  primary={true}
+                  type="submit"
+                  disabled={submitting}
+                  onClick={this.handleDelete}
+                />
+                <RaisedButton
+                  label="Cancel"
+                  type="submit"
+                  onClick={this.toggleDelete}
+                />
+              </div>
+            </Dialog>
           </div>
         </form>
       </div>
@@ -116,7 +187,9 @@ const mapStateToProps = (state, ownProps) => {
       date: new Date(event.start),
       room: event.room.id,
       scheduleId: event.scheduleId,
+      description: event.description,
     },
+    event: event,
   };
 };
 
@@ -133,4 +206,9 @@ EditActivity = reduxForm({
   validate,
 })(EditActivity);
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditActivity);
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  graphql(mutations.DELETE_SCHEDULE_MUTATION, {
+    name: 'DELETE_SCHEDULE_MUTATION',
+  }),
+)(EditActivity);
