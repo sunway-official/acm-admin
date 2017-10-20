@@ -1,15 +1,21 @@
 import types from './types';
 
-const initalState = { openEditFormModal: false };
+const initalState = { openEditFormModal: false, openAddFormModal: false };
 
 const reducer = (state = initalState, action) => {
   switch (action.type) {
+    case types.TOGGLE_ADD_ACTIVITY_FORM_MODAL:
+      const add = {
+        ...state,
+        openAddFormModal: !state.openAddFormModal,
+      };
+      return add;
     case types.TOGGLE_EDIT_ACTIVITY_FORM_MODAL:
-      const newState = {
+      const edit = {
         ...state,
         openEditFormModal: !state.openEditFormModal,
       };
-      return newState;
+      return edit;
     case types.SET_EVENT_SUCCESS: {
       const newState = Object.assign({}, state, {
         event: action.payload.event,
