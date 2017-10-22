@@ -231,9 +231,9 @@ button.rbc-input::-moz-focus-inner {
   flex-direction: row;
 }
 
-.rbc-row:nth-of-type(2) {
+/* .rbc-row:nth-of-type(2) {
   display: none;
-}
+} */
 
 .rbc-row-segment {
   padding: 0 1px 1px 1px;
@@ -426,11 +426,12 @@ button.rbc-input::-moz-focus-inner {
   flex: 1;
 }
 
-.rbc-timeslot-group {
+/* .rbc-timeslot-group {
   display: none;
-}
+  :nth-of-type(n + 8)
+} */
 
-.rbc-timeslot-group:nth-of-type(n + 8) {
+.rbc-timeslot-group {
   border-bottom: 1px solid #ddd;
   min-height: 40px;
   display: -webkit-flex;

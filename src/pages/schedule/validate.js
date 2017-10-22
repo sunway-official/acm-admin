@@ -117,7 +117,6 @@ export const renderTimePicker = ({
     }}
     value={input.value}
     {...custom}
-    autoOk={true}
   />
 );
 export default validate;
