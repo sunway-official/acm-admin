@@ -21,7 +21,7 @@ class ForgotPassword extends PureComponent {
       },
     });
     // TODO: Display message for this
-    alert('Completed, create message for this!');
+    alert('Server is down!');
   }
   render() {
     return (

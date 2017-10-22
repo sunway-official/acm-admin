@@ -160,7 +160,7 @@ class EditActivity extends React.PureComponent {
             >
               <div className="d-flex justify-content-flex-end">
                 <RaisedButton
-                  label="Submit"
+                  label="Yes"
                   primary={true}
                   type="submit"
                   disabled={submitting}
@@ -168,7 +168,7 @@ class EditActivity extends React.PureComponent {
                   onClick={this.handleDelete}
                 />
                 <RaisedButton
-                  label="Cancel"
+                  label="No"
                   type="submit"
                   onClick={this.toggleDelete}
                 />
