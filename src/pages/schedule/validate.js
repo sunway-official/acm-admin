@@ -15,7 +15,7 @@ const validate = values => {
   ];
   requiredFields.forEach(field => {
     if (!values[field]) {
-      errors[field] = 'Required';
+      errors[field] = 'This field is required';
     }
   });
   if (values.endTime <= values.startTime) {
@@ -27,20 +27,20 @@ const validate = values => {
     values.schedules.forEach((schedule, scheduleIndex) => {
       const scheduleErrors = {};
       if (!schedule || !schedule.date) {
-        scheduleErrors.date = 'Required';
+        scheduleErrors.date = 'This field is required';
         ArrayErrors[scheduleIndex] = scheduleErrors;
       }
 
       if (!schedule || !schedule.room) {
-        scheduleErrors.room = 'Required';
+        scheduleErrors.room = 'This field is required';
         ArrayErrors[scheduleIndex] = scheduleErrors;
       }
       if (!schedule || !schedule.startTime) {
-        scheduleErrors.startTime = 'Required';
+        scheduleErrors.startTime = 'This field is required';
         ArrayErrors[scheduleIndex] = scheduleErrors;
       }
       if (!schedule || !schedule.endTime) {
-        scheduleErrors.endTime = 'Required';
+        scheduleErrors.endTime = 'This field is required';
         ArrayErrors[scheduleIndex] = scheduleErrors;
       }
       if (schedule.startTime >= schedule.endTime) {
