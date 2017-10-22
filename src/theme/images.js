@@ -7,4 +7,5 @@ export default {
   conferencePlaceAvatar: require('../images/conferenceInfomation/184nvl.jpg'),
   conference1: require('../images/landingPage/conference1.jpg'),
   conference2: require('../images/landingPage/conference2.jpg'),
+  conference5: require('../images/landingPage/conference5.jpg'),
 };

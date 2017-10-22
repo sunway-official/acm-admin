@@ -131,11 +131,13 @@
 	}
 }
 
-.conference1{
-  width: 100%;
-  height: auto;
-  background:#000;
-  opacity:.85;
+.img{
+  &.conference1 {
+    width: 100%;
+    height: auto;
+    background: #000;
+    opacity: .85;
+  }
 }
 .btn{
   &.get-ticket{
