@@ -20,7 +20,7 @@ class Register extends PureComponent {
         variables: { firstname, lastname, email, password },
       });
 
-      this.props.history.goBack();
+      this.props.history.replace('/login');
     } catch (e) {
       console.error(e);
       throw new SubmissionError({
