@@ -10,7 +10,7 @@ class Description extends Component {
       <div className="description-section">
         <Grid fluid id="description-grid">
           <Row>
-            <Col xs={6}>
+            <Col xs={6} className="section-col">
               <Row around="xs">
                 <Col xs={10}>
                   <h1 className="landingpage-title description">
@@ -29,7 +29,7 @@ class Description extends Component {
                 </Col>
               </Row>
             </Col>
-            <Col xs={6}>
+            <Col xs={6} className="section-col">
               <img
                 src={images.conference5}
                 className="img conference2"

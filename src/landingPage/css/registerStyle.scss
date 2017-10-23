@@ -1,3 +1,7 @@
+.register-section{
+  background: #dd6b2c;
+  color: #FFFFFF;
+}
 .btn{
   &.register-button{
     color: #ff5722;
@@ -11,9 +15,11 @@
     border-width: 0px;
   }
 }
-.register-title{
-  font-size: 2em;
-}
 .register-final-row{
-  font-size: 1.2em;
+  font-size: 1.5vw;
+  padding-bottom: 3vw;
+  padding-top: 1vw;
+}
+.register-description{
+  font-size: 1.5vw;
 }

@@ -6,6 +6,7 @@ import './css/default.css';
 import { images } from '../theme';
 import Register from './section/register';
 import Description from './section/description';
+import Paper from './section/paper';
 
 class LandingPage extends Component {
   handleScriptCreate() {
@@ -45,10 +46,9 @@ class LandingPage extends Component {
                 alt=""
               />
             </div>
-            <section>
-              <Register />
-            </section>
+            <Register />
             <Description />
+            <Paper />
           </div>
         </div>
         {/*<Script
