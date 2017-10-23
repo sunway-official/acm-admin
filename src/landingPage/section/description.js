@@ -7,24 +7,26 @@ import { images } from '../../theme';
 class Description extends Component {
   render() {
     return (
-      <div>
-        <Grid fluid>
+      <div className="description-section">
+        <Grid fluid id="description-grid">
           <Row>
             <Col xs={6}>
-              <Row>
-                <h1 className="landingpage-title">
-                  Academic Conference Management
-                </h1>
-              </Row>
-              <Row>
-                <p>
-                  Prepare to abandon your comfort zone, discover some of the
-                  world’s most technologically advanced minds and explore the
-                  digital construction trends of tomorrow. Prepare to abandon
-                  your comfort zone, discover some of the world’s most
-                  technologically advanced minds and explore the digital
-                  construction trends of tomorrow.
-                </p>
+              <Row around="xs">
+                <Col xs={10}>
+                  <h1 className="landingpage-title description">
+                    Academic Conference Management
+                  </h1>
+                  <p className="section-text">
+                    Over the course of two intensive (but fun) days, we’ll
+                    gather for a series of keynotes, panel, and interactive
+                    seminar sessions from BIM and digital construction experts
+                    from across the globe. We’ll be addressing everything new in
+                    the world of digital construction and advanced technologies;
+                    from artificial intelligence to predictive data. Plus,
+                    you’ll also get exclusive access to never before seen
+                    technological developments.
+                  </p>
+                </Col>
               </Row>
             </Col>
             <Col xs={6}>
