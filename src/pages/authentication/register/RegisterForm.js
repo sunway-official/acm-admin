@@ -14,16 +14,17 @@ const RegisterForm = ({
   pristine,
 }) => (
   <form onSubmit={handleSubmit(onSubmit)}>
+    {error && <div className="error">{error}</div>}
     <div className="register-field">
       <Field
         className="subname reduxField"
-        name="firstName"
+        name="firstname"
         component={CustomInput}
         label="First Name"
       />
       <Field
         className="subname reduxField"
-        name="lastName"
+        name="lastname"
         component={CustomInput}
         label="Last Name"
       />
