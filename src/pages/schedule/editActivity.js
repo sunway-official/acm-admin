@@ -1,20 +1,14 @@
 import React from 'react';
-import { RaisedButton, MenuItem, Dialog } from 'material-ui';
-import { reduxForm, Field, reset } from 'redux-form';
+import { RaisedButton, Dialog, IconButton } from 'material-ui';
+import { NavigationClose } from 'material-ui/svg-icons';
+import { reduxForm, Field, FieldArray, reset } from 'redux-form';
 import { connect } from 'react-redux';
 import { scheduleActions } from 'store/ducks/schedule';
 import { mutations, queries } from './helpers';
 import { compose, graphql } from 'react-apollo';
+import renderSchedulesEdit from './renderSchedulesEdit';
 
-import validate, {
-  renderTextField,
-  renderDatePicker,
-  renderTimePicker,
-  renderSelectField,
-} from './validate';
-const styles = {
-  marginRight: 12,
-};
+import validate, { renderTextField } from './validate';
 class EditActivity extends React.PureComponent {
   constructor() {
     super();
@@ -48,26 +42,24 @@ class EditActivity extends React.PureComponent {
   }
 
   render() {
-    const { handleSubmit, submitting, pristine, rooms } = this.props;
+    const actions = (
+      <div>
+        <RaisedButton
+          label="yes"
+          primary={true}
+          onClick={() => this.handleDelete()}
+        />
+        <RaisedButton label="no" onClick={() => this.toggleDelete()} />
+      </div>
+    );
+    const { handleSubmit, submitting, pristine, rooms, error } = this.props;
+
     return (
       <div>
+        {error && <div className="error">{error}</div>}
         <form className="form conference-info" onSubmit={handleSubmit}>
           <div className="d-flex form-group">
             <label>Title :</label>
-            <Field
-              name="id"
-              component={() => {
-                return null;
-              }}
-              type="hidden"
-            />
-            <Field
-              name="scheduleId"
-              component={() => {
-                return null;
-              }}
-              type="hidden"
-            />
             <Field
               name="title"
               component={renderTextField}
@@ -77,103 +69,44 @@ class EditActivity extends React.PureComponent {
           <div className="d-flex form-group">
             <label>Description :</label>
             <Field
-              name="id"
-              component={() => {
-                return null;
-              }}
-              type="hidden"
-            />
-            <Field
-              name="scheduleId"
-              component={() => {
-                return null;
-              }}
-              type="hidden"
-            />
-            <Field
               name="description"
               component={renderTextField}
               hintText="Activity Description"
             />
           </div>
-          <div className="d-flex">
-            <div className="d-flex form-group ">
-              <label className="schedule-date">Date:</label>
-              <Field
-                name="date"
-                component={renderDatePicker}
-                format={null}
-                textFieldStyle={{ width: '100%' }}
-                hintText="Activity Date"
-              />
-            </div>
-            <div className="d-flex form-group" style={{ width: '300px' }}>
-              <label className="text-align-center room">Room :</label>
-              <Field name="room" component={renderSelectField}>
-                {rooms.map(room => {
-                  return (
-                    <MenuItem
-                      key={room.id}
-                      value={room.id}
-                      primaryText={room.name}
-                    />
-                  );
-                })}
-              </Field>
-            </div>
+          <div className="d-flex form-group">
+            <FieldArray
+              name="schedules"
+              component={renderSchedulesEdit}
+              rooms={rooms}
+            />
           </div>
-          <div className="d-flex">
-            <div className="d-flex form-group ">
-              <label className="schedule-time-from">Start From :</label>
-              <Field
-                name="startTime"
-                component={renderTimePicker}
-                format={null}
-                hintText="Begin Schedule"
-                textFieldStyle={{ width: '100%' }}
-              />
-            </div>
-            <div className="d-flex form-group">
-              <label className="text-align-center">To :</label>
-              <Field
-                name="endTime"
-                component={renderTimePicker}
-                format={null}
-                hintText="End Schedule"
-                textFieldStyle={{ width: '100%' }}
-              />
-            </div>
+          <div className="d-flex form-group">
+            <Field name="error" component="label" />
           </div>
-          <div className="d-flex save-btn btn-group">
+          <div className="d-flex justify-content-flex-end">
             <RaisedButton
               label="Save"
               primary={true}
               type="submit"
-              style={styles}
               disabled={pristine || submitting}
-              // onClick={this.props.toggleEdit}
             />
-            <RaisedButton label="Delete" onClick={this.toggleDelete} />
+            <RaisedButton label="Remove" onClick={this.toggleDelete} />
             <Dialog
               title="Do you want to delete this schedule ?"
               open={this.state.openDelete}
+              actions={actions}
+            />
+            <IconButton
+              tooltip="Close"
+              className="cancel-btn dialog"
+              onClick={() => {
+                this.props.toggleAdd();
+                this.props.reset();
+              }}
             >
-              <div className="d-flex justify-content-flex-end">
-                <RaisedButton
-                  label="Yes"
-                  primary={true}
-                  type="submit"
-                  disabled={submitting}
-                  style={styles}
-                  onClick={this.handleDelete}
-                />
-                <RaisedButton
-                  label="No"
-                  type="submit"
-                  onClick={this.toggleDelete}
-                />
-              </div>
-            </Dialog>
+              <NavigationClose />
+            </IconButton>
           </div>
         </form>
       </div>
@@ -217,3 +150,132 @@ export default compose(
     name: 'DELETE_SCHEDULE_MUTATION',
   }),
 )(EditActivity);
+// return (
+//   <div>
+//     <form className="form conference-info" onSubmit={handleSubmit}>
+//       <div className="d-flex form-group">
+//         <label>Title :</label>
+//         <Field
+//           name="id"
+//           component={() => {
+//             return null;
+//           }}
+//           type="hidden"
+//         />
+//         <Field
+//           name="scheduleId"
+//           component={() => {
+//             return null;
+//           }}
+//           type="hidden"
+//         />
+//         <Field
+//           name="title"
+//           component={renderTextField}
+//           hintText="Activity Title"
+//         />
+//       </div>
+//       <div className="d-flex form-group">
+//         <label>Description :</label>
+//         <Field
+//           name="id"
+//           component={() => {
+//             return null;
+//           }}
+//           type="hidden"
+//         />
+//         <Field
+//           name="scheduleId"
+//           component={() => {
+//             return null;
+//           }}
+//           type="hidden"
+//         />
+//         <Field
+//           name="description"
+//           component={renderTextField}
+//           hintText="Activity Description"
+//         />
+//       </div>
+//       <div className="d-flex">
+//         <div className="d-flex form-group ">
+//           <label className="schedule-date">Date:</label>
+//           <Field
+//             name="date"
+//             component={renderDatePicker}
+//             format={null}
+//             textFieldStyle={{ width: '100%' }}
+//             hintText="Activity Date"
+//           />
+//         </div>
+//         <div className="d-flex form-group" style={{ width: '300px' }}>
+//           <label className="text-align-center room">Room :</label>
+//           <Field name="room" component={renderSelectField}>
+//             {rooms.map(room => {
+//               return (
+//                 <MenuItem
+//                   key={room.id}
+//                   value={room.id}
+//                   primaryText={room.name}
+//                 />
+//               );
+//             })}
+//           </Field>
+//         </div>
+//       </div>
+//       <div className="d-flex">
+//         <div className="d-flex form-group ">
+//           <label className="schedule-time-from">Start From :</label>
+//           <Field
+//             name="startTime"
+//             component={renderTimePicker}
+//             format={null}
+//             hintText="Begin Schedule"
+//             textFieldStyle={{ width: '100%' }}
+//           />
+//         </div>
+//         <div className="d-flex form-group">
+//           <label className="text-align-center">To :</label>
+//           <Field
+//             name="endTime"
+//             component={renderTimePicker}
+//             format={null}
+//             hintText="End Schedule"
+//             textFieldStyle={{ width: '100%' }}
+//           />
+//         </div>
+//       </div>
+//       <div className="d-flex save-btn btn-group">
+//         <RaisedButton
+//           label="Save"
+//           primary={true}
+//           type="submit"
+//           style={styles}
+//           disabled={pristine || submitting}
+//           // onClick={this.props.toggleEdit}
+//         />
+//         <RaisedButton label="Delete" onClick={this.toggleDelete} />
+//         <Dialog
+//           title="Do you want to delete this schedule ?"
+//           open={this.state.openDelete}
+//         >
+//           <div className="d-flex justify-content-flex-end">
+//             <RaisedButton
+//               label="Yes"
+//               primary={true}
+//               type="submit"
+//               disabled={submitting}
+//               style={styles}
+//               onClick={this.handleDelete}
+//             />
+//             <RaisedButton
+//               label="No"
+//               type="submit"
+//               onClick={this.toggleDelete}
+//             />
+//           </div>
+//         </Dialog>
+//       </div>
+//     </form>
+//   </div>
+// );
