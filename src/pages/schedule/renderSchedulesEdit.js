@@ -25,7 +25,7 @@ const styles = {
   },
 };
 
-class renderSchedulesEdit extends React.Component {
+class renderSchedules extends React.Component {
   constructor() {
     super();
     this.onFocus = this.onFocus.bind(this);
@@ -116,4 +116,4 @@ class renderSchedulesEdit extends React.Component {
   }
 }
 
-export default renderSchedulesEdit;
+export default renderSchedules;
