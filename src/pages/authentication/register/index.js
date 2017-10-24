@@ -24,7 +24,7 @@ class Register extends PureComponent {
     } catch (e) {
       console.error(e);
       throw new SubmissionError({
-        _error: 'Failed to register, please try again later',
+        _error: 'Email existed!',
       });
     }
   }

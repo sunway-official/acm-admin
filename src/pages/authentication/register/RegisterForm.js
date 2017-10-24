@@ -14,6 +14,7 @@ const RegisterForm = ({
   pristine,
 }) => (
   <form onSubmit={handleSubmit(onSubmit)}>
+    {error && <div className="error">{error}</div>}
     <div className="register-field">
       <Field
         className="subname reduxField"
