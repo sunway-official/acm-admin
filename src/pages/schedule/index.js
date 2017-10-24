@@ -4,7 +4,7 @@ import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 import AddActivity from './addActivity';
 import EditActivity from './editActivity';
-import { Dialog, IconButton, Subheader, FlatButton, Toggle } from 'material-ui';
+import { Dialog, IconButton, Subheader, Toggle } from 'material-ui';
 import { Link } from 'react-router-dom';
 import { scheduleActions, scheduleOperations } from 'store/ducks/schedule';
 import { connect } from 'react-redux';
@@ -192,6 +192,7 @@ class MyCalendar extends React.PureComponent {
         <Dialog
           open={this.props.openEdit}
           title="Edit Activity Schedule Information"
+          autoScrollBodyContent={true}
         >
           <EditActivity
             onSubmit={this.editActivity}
