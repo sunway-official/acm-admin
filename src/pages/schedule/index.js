@@ -4,7 +4,7 @@ import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 import AddActivity from './addActivity';
 import EditActivity from './editActivity';
-import { Dialog, IconButton, Subheader } from 'material-ui';
+import { Dialog, IconButton, Subheader, FlatButton, Toggle } from 'material-ui';
 import { Link } from 'react-router-dom';
 import { scheduleActions, scheduleOperations } from 'store/ducks/schedule';
 import { connect } from 'react-redux';
@@ -32,10 +32,24 @@ class MyCalendar extends React.PureComponent {
     this.handleEdit = this.handleEdit.bind(this);
     this.addActivity = this.addActivity.bind(this);
     this.editActivity = this.editActivity.bind(this);
+    this.handleTimeFormat = this.handleTimeFormat.bind(this);
+    this.state = {
+      timeFormat: 7,
+    };
   }
   handleEdit(event) {
     this.props.toggleEdit();
     this.props.setEvent(event);
+  }
+
+  handleTimeFormat() {
+    this.state.timeFormat === 7
+      ? this.setState({
+          timeFormat: 0,
+        })
+      : this.setState({
+          timeFormat: 7,
+        });
   }
 
   addActivity(values) {
@@ -133,6 +147,8 @@ class MyCalendar extends React.PureComponent {
     const rooms = this.props.GET_ALL_ROOM_QUERY.getAllRooms;
     const conferenceId = this.props.match.params.id;
 
+    const today = new Date();
+
     return (
       <div className="conference">
         <Subheader className="subheader">Activity Schedule</Subheader>
@@ -158,9 +174,21 @@ class MyCalendar extends React.PureComponent {
             onSelectEvent={events => {
               this.handleEdit(events);
             }}
+            min={
+              new Date(
+                today.getFullYear(),
+                today.getMonth(),
+                today.getDate(),
+                this.state.timeFormat,
+              )
+            }
           />
           <AddActivity onSubmit={this.addActivity} rooms={rooms} />
+          <div>
+            <Toggle label="Format 24h" onToggle={this.handleTimeFormat} />
+          </div>
         </div>
+
         <Dialog
           open={this.props.openEdit}
           title="Edit Activity Schedule Information"

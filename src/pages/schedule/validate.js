@@ -1,5 +1,6 @@
 import React from 'react';
 import { DatePicker, TimePicker, TextField, SelectField } from 'material-ui';
+import { functions } from './helpers';
 
 const currentDate = new Date();
 const validate = values => {
@@ -45,8 +46,21 @@ const validate = values => {
       }
       if (schedule.startTime >= schedule.endTime) {
         scheduleErrors.endTime =
-          'End time of schedule must be greater than start time!!!';
+          'End time of schedule must be greater than start time and in the same day!!!';
         ArrayErrors[scheduleIndex] = scheduleErrors;
+      }
+      console.log(scheduleIndex);
+      console.log(values.schedules.length);
+      if (scheduleIndex === values.schedules.length - 1) {
+        const check = functions.checkSchedules(values.schedules, schedule);
+        if (check) {
+          scheduleErrors.date = 'Please select at least one different value';
+          scheduleErrors.room = 'Please select at least one different value';
+          scheduleErrors.startTime =
+            'Please select at least one different value';
+          scheduleErrors.endTime = 'Please select at least one different value';
+          ArrayErrors[scheduleIndex] = scheduleErrors;
+        }
       }
     });
     if (ArrayErrors.length) {
