@@ -1,9 +1,4 @@
-.btn {
-  &.contactInformation {
-    width: 150px !important;
-    margin: 20px 0px 0px 30px;
-  }
-}
+
 .secondColunm {
   height: 52px !important;
   text-align: left !important;
@@ -29,5 +24,14 @@
   }
   &.fa-linkedin-square{
     color: #008498;
+  }
+}
+.contact-information-button{
+  display: flex;
+  .btn {
+    &.contactInformation {
+      width: 150px !important;
+      margin: 20px 30px 0px 0px;
+    }
   }
 }

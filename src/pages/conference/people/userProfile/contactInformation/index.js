@@ -2,66 +2,29 @@ import './style.css';
 import { RaisedButton, ListItem } from 'material-ui';
 import React, { Component } from 'react';
 import { Col, Grid, Row } from 'react-flexbox-grid';
-import { Field, reduxForm, formValueSelector } from 'redux-form';
-import { compose, gql, graphql } from 'react-apollo';
+import { Field, reduxForm } from 'redux-form';
+import { compose } from 'react-apollo';
 import { connect } from 'react-redux';
 import validate from './validate';
 import { renderField } from '../../../../../utils';
 import { withRouter } from 'react-router';
-import { queries } from '../helpers';
 
 class ContactInformation extends Component {
   constructor(props) {
     super(props);
-    this.saveContactInfomation = this.saveContactInfomation.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
   }
   handleCancel() {
     this.props.history.replace('/');
   }
-  saveContactInfomation() {
-    const {
-      UPDATE_ME_MUTATION,
-      firstname,
-      lastname,
-      email,
-      dob,
-      linkedin_id,
-      facebook_id,
-      twitter_id,
-    } = this.props;
-    UPDATE_ME_MUTATION({
-      variables: {
-        firstname: firstname,
-        lastname: lastname,
-        email: email,
-        dob: dob,
-        linkedin_id: linkedin_id,
-        facebook_id: facebook_id,
-        twitter_id: twitter_id,
-      },
-      refetchQueries: [
-        {
-          query: queries.ME_QUERY,
-          variables: {
-            email,
-            dob,
-            linkedin_id,
-            facebook_id,
-            twitter_id,
-          },
-        },
-      ],
-    });
-    window.alert('Update successful!');
-  }
+
   render() {
     const { handleSubmit, submitting, pristine, invalid } = this.props;
     return (
       <div>
         <Grid fluid>
           <Row around="xs">
-            <Col xs={3}>
+            <Col xs={4}>
               <Row className="firstColunm firstRow">
                 <ListItem
                   className="list-item"
@@ -121,7 +84,6 @@ class ContactInformation extends Component {
                     type="text"
                     component={renderField}
                     hintText="Email"
-                    //className="editField"
                     disabled={true}
                     underlineShow={false}
                   />
@@ -134,7 +96,6 @@ class ContactInformation extends Component {
                     hintText="Facebook link"
                     component={renderField}
                     fullWidth={true}
-                    //className="editField"
                   />
                 </Row>
                 <Row className="secondColunm">
@@ -159,24 +120,24 @@ class ContactInformation extends Component {
                     //className="editField"
                   />
                 </Row>
+                <div className="contact-information-button">
+                  <RaisedButton
+                    className="btn contactInformation"
+                    label="Save Change"
+                    disabled={submitting || invalid || pristine}
+                    primary={true}
+                    type="submit"
+                  />
+                  <RaisedButton
+                    className="btn contactInformation"
+                    label="Cancel"
+                    default={true}
+                    onClick={this.handleCancel}
+                  />
+                </div>
               </form>
             </Col>
           </Row>
-          <div>
-            <RaisedButton
-              className="btn contactInformation"
-              label="Save"
-              disabled={submitting || invalid || pristine}
-              primary={true}
-              onClick={this.saveContactInfomation}
-            />
-            <RaisedButton
-              className="btn contactInformation"
-              label="Cancel"
-              default={true}
-              onClick={this.handleCancel}
-            />
-          </div>
         </Grid>
       </div>
     );
@@ -192,10 +153,7 @@ const mapStateToProps = (state, ownProps) => {
   const me = ownProps.me;
   return {
     initialValues: {
-      firstname: me.firstname,
-      lastname: me.lastname,
       email: me.email,
-      dob: new Date(me.dob),
       linkedin_id: me.linkedin_id,
       facebook_id: me.facebook_id,
       twitter_id: me.twitter_id,
@@ -203,61 +161,6 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-const selector = formValueSelector('ContactInformation');
-ContactInformation = connect(state => {
-  const firstname = selector(state, 'firstname');
-  const lastname = selector(state, 'lastname');
-  const email = selector(state, 'email');
-  const dob = new Date(selector(state, 'dob'));
-  dob.setHours(dob.getHours() + 7);
-  const linkedin_id = selector(state, 'linkedin_id');
-  const facebook_id = selector(state, 'facebook_id');
-  const twitter_id = selector(state, 'twitter_id');
-  return {
-    firstname,
-    lastname,
-    email,
-    dob,
-    linkedin_id,
-    facebook_id,
-    twitter_id,
-  };
-})(ContactInformation);
-
-const UPDATE_ME_MUTATION = gql`
-  mutation UpdateMe(
-    $firstname: String!
-    $lastname: String!
-    $dob: Date
-    $linkedin_id: String
-    $facebook_id: String
-    $twitter_id: String
-  ) {
-    updateMe(
-      firstname: $firstname
-      lastname: $lastname
-      dob: $dob
-      linkedin_id: $linkedin_id
-      facebook_id: $facebook_id
-      twitter_id: $twitter_id
-    ) {
-      firstname
-      lastname
-      dob
-      linkedin_id
-      facebook_id
-      twitter_id
-    }
-  }
-`;
-
-export default compose(
-  withRouter,
-  connect(mapStateToProps, undefined),
-  graphql(UPDATE_ME_MUTATION, {
-    name: 'UPDATE_ME_MUTATION',
-  }),
-  graphql(queries.ME_QUERY, {
-    name: 'ME_QUERY',
-  }),
-)(ContactInformation);
+export default compose(withRouter, connect(mapStateToProps, undefined))(
+  ContactInformation,
+);

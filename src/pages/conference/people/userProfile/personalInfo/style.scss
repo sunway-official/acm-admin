@@ -9,16 +9,20 @@
   font-weight: inherit;
   height: 52px !important;
 }
-.btn {
-  &.save-change {
-    width: 150px !important;
-    margin-top: 20px;
-  }
-  &.cancel {
-    width: 150px !important;
-    margin: 20px 0px 0px 30px;
+.personal-info-button{
+  display: flex;
+  .btn {
+    &.save-change {
+      width: 150px !important;
+      margin-top: 20px;
+    }
+    &.cancel {
+      width: 150px !important;
+      margin: 20px 0px 0px 30px;
+    }
   }
 }
+
 .subname{
   padding-left: 0px !important;
 }

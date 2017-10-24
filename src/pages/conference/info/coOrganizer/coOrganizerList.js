@@ -19,8 +19,6 @@ import { conferenceCoOranizerActions } from 'store/ducks/conference/info/coOrgan
 import CoOrganizerInfo from './coOrganizerInfo';
 import GET_CONFERENCE_BY_ID_QUERY from '../helpers/getConferenceByIdQuery';
 
-//import './style.css';
-
 class CoOrganizerList extends PureComponent {
   constructor() {
     super();
@@ -96,7 +94,7 @@ class CoOrganizerList extends PureComponent {
     // [0] la de khai bao mac dinh la o conference dau tien
     const actionDelete = [
       <RaisedButton
-        label="Submit"
+        label="Yes"
         primary={true}
         onClick={this.handleDelete}
         type="submit"
@@ -105,7 +103,7 @@ class CoOrganizerList extends PureComponent {
     ];
     const actions = [
       <IconButton
-        tooltip="Close"
+        tooltip="No"
         className="cancel-btn dialog"
         onClick={this.handleClose}
       >

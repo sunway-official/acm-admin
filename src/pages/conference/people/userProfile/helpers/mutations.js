@@ -1,76 +1,53 @@
 import { gql } from 'react-apollo';
 
-export const UPDATE_ACTIVITY_MUTATION = gql`
-  mutation updateActivity($id: ID!, $title: String!) {
-    updateActivity(id: $id, title: $title) {
-      id
-      title
-      schedules {
-        id
-        start
-        end
-        room {
-          id
-          name
-        }
-      }
-    }
-  }
-`;
-
-export const UPDATE_SCHEDULE_MUTATION = gql`
-  mutation updateSchedule($id: ID!, $start: Date!, $end: Date!, $room_id: ID!) {
-    updateSchedule(id: $id, start: $start, end: $end, room_id: $room_id) {
-      id
-      start
-      end
-      room {
-        id
-        name
-      }
-    }
-  }
-`;
-
-export const INSERT_SCHEDULE_MUTATION = gql`
-  mutation insertSchedule(
-    $activity_id: ID!
-    $room_id: ID!
-    $start: Date!
-    $end: Date!
+const UPDATE_ME_MUTATION = gql`
+  mutation UpdateMe(
+    $firstname: String
+    $lastname: String
+    $dob: Date
+    $gender: Gender
+    $bio: String
+    $organization: String
+    $position: String
+    $linkedin_id: String
+    $facebook_id: String
+    $twitter_id: String
   ) {
-    insertSchedule(
-      activity_id: $activity_id
-      room_id: $room_id
-      start: $start
-      end: $end
+    updateMe(
+      firstname: $firstname
+      lastname: $lastname
+      dob: $dob
+      gender: $gender
+      bio: $bio
+      position: $position
+      organization: $organization
+      linkedin_id: $linkedin_id
+      facebook_id: $facebook_id
+      twitter_id: $twitter_id
     ) {
-      id
+      firstname
+      lastname
+      dob
+      gender
+      bio
+      position
+      organization
+      linkedin_id
+      facebook_id
+      twitter_id
     }
   }
 `;
 
-export const INSERT_ACTIVITY_MUTATION = gql`
-  mutation insertActivity($conference_id: ID!, $title: String!) {
-    insertActivity(conference_id: $conference_id, title: $title) {
+const UPDATE_PASSWORD_MUTATION = gql`
+  mutation UpdatePassword($oldPassword: String, $newPassword: String!) {
+    updatePassword(oldPassword: $oldPassword, newPassword: $newPassword) {
       id
-      title
-      schedules {
-        id
-        start
-        end
-        room {
-          id
-          name
-        }
-      }
     }
   }
 `;
 
 export default {
-  UPDATE_ACTIVITY_MUTATION,
-  UPDATE_SCHEDULE_MUTATION,
-  INSERT_SCHEDULE_MUTATION,
-  INSERT_ACTIVITY_MUTATION,
+  UPDATE_ME_MUTATION,
+  UPDATE_PASSWORD_MUTATION,
 };

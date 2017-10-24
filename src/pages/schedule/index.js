@@ -38,11 +38,8 @@ class MyCalendar extends React.PureComponent {
     this.props.setEvent(event);
   }
 
-  handleClose = () => {
-    this.props.toggleEdit();
-  };
-
   addActivity(values) {
+    this.props.toggleAdd();
     const { INSERT_ACTIVITY_MUTATION, INSERT_SCHEDULE_MUTATION } = this.props;
 
     const conferenceId = this.props.match.params.id;
@@ -51,6 +48,7 @@ class MyCalendar extends React.PureComponent {
       variables: {
         conference_id: conferenceId,
         title: values.title,
+        description: values.description,
       },
     })
       .then(({ data }) => {
@@ -64,10 +62,12 @@ class MyCalendar extends React.PureComponent {
             schedule.date,
             schedule.endTime,
           );
+
           INSERT_SCHEDULE_MUTATION({
             variables: {
               activity_id: data.insertActivity.id,
               room_id: schedule.room,
+              conference_id: conferenceId,
               start: newStarTime,
               end: newEndTime,
             },
@@ -88,18 +88,20 @@ class MyCalendar extends React.PureComponent {
   editActivity(values) {
     const { UPDATE_ACTIVITY_MUTATION, UPDATE_SCHEDULE_MUTATION } = this.props;
     const conferenceId = this.props.match.params.id;
-
+    this.props.toggleEdit();
     UPDATE_ACTIVITY_MUTATION({
       variables: {
         id: values.id,
         title: values.title,
+        description: values.description,
       },
     })
-      .then(({ data }) => {
+      .then(() => {
         const newStarTime = functions.getDateTime(
           values.date,
           values.startTime,
         );
+
         const newEndTime = functions.getDateTime(values.date, values.endTime);
         // eslint-disable-next-line array-callback-return
         UPDATE_SCHEDULE_MUTATION({
@@ -129,6 +131,7 @@ class MyCalendar extends React.PureComponent {
 
     const events = functions.getEvents(getActivitiesByConferenceID);
     const rooms = this.props.GET_ALL_ROOM_QUERY.getAllRooms;
+    const conferenceId = this.props.match.params.id;
 
     return (
       <div className="conference">
@@ -155,12 +158,6 @@ class MyCalendar extends React.PureComponent {
             onSelectEvent={events => {
               this.handleEdit(events);
             }}
-            components={{
-              event: functions.Event,
-              agenda: {
-                event: functions.EventAgenda,
-              },
-            }}
           />
           <AddActivity onSubmit={this.addActivity} rooms={rooms} />
         </div>
@@ -168,11 +165,15 @@ class MyCalendar extends React.PureComponent {
           open={this.props.openEdit}
           title="Edit Activity Schedule Information"
         >
-          <EditActivity onSubmit={this.editActivity} rooms={rooms} />
+          <EditActivity
+            onSubmit={this.editActivity}
+            rooms={rooms}
+            conferenceId={conferenceId}
+          />
           <IconButton
             tooltip="Close"
             className="cancel-btn dialog"
-            onClick={this.handleClose}
+            onClick={() => this.props.toggleEdit()}
           >
             <NavigationClose />
           </IconButton>
@@ -190,6 +191,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    toggleAdd: () => dispatch(scheduleActions.toggleAddActivityFormModal()),
     toggleEdit: () => dispatch(scheduleActions.toggleEditActivityFormModal()),
     setEvent: event => dispatch(scheduleOperations.setEventOperation(event)),
   };

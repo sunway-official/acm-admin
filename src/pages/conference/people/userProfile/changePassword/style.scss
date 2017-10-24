@@ -1,7 +1,10 @@
-.btn {
-  &.changePass {
-    width: 150px !important;
-    margin: 20px 0px 0px 30px;
+.change-password-button{
+  display: flex;
+  .btn {
+    &.changePass {
+      width: 150px !important;
+      margin: 20px 30px 0px 0px;
+    }
   }
 }
 .changePass {

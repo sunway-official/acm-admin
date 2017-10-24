@@ -1,5 +1,9 @@
 import types from './types';
 
+const toggleAddActivityFormModal = () => ({
+  type: types.TOGGLE_ADD_ACTIVITY_FORM_MODAL,
+});
+
 const toggleEditActivityFormModal = () => ({
   type: types.TOGGLE_EDIT_ACTIVITY_FORM_MODAL,
 });
@@ -20,6 +24,7 @@ const setEventFailure = () => ({
 });
 
 export default {
+  toggleAddActivityFormModal,
   toggleEditActivityFormModal,
   setEventRequested,
   setEventSuccess,

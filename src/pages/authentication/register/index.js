@@ -13,17 +13,18 @@ class Register extends PureComponent {
 
     this.onRegister = this.onRegister.bind(this);
   }
-  async onRegister({ firstname, lastname, email, password }) {
+  async onRegister(values) {
+    const { firstname, lastname, email, password } = values;
     try {
       await this.props.registerMutation({
         variables: { firstname, lastname, email, password },
       });
 
-      this.props.history.go('/login');
+      this.props.history.replace('/login');
     } catch (e) {
       console.error(e);
       throw new SubmissionError({
-        _error: 'Failed to register, please try again later',
+        _error: 'Email existed!',
       });
     }
   }

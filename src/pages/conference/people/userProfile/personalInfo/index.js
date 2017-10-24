@@ -8,8 +8,8 @@ import { DatePicker, ListItem } from 'material-ui';
 import ActionInfoOutline from 'material-ui/svg-icons/action/info-outline';
 import SocialLocationCity from 'material-ui/svg-icons/social/location-city';
 import ActionWork from 'material-ui/svg-icons/action/work';
-import { Field, reduxForm, formValueSelector } from 'redux-form';
-import { compose, gql, graphql } from 'react-apollo';
+import { Field, reduxForm } from 'redux-form';
+import { compose } from 'react-apollo';
 import { connect } from 'react-redux';
 import { Col, Grid, Row } from 'react-flexbox-grid';
 import validate from './validate';
@@ -17,7 +17,6 @@ import { renderField } from '../../../../../utils';
 import { withRouter } from 'react-router';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
-import { queries } from '../helpers';
 
 const maxDate = new Date();
 maxDate.setFullYear(
@@ -62,51 +61,11 @@ const renderSelectField = ({
 class EditablePersonalInfo extends Component {
   constructor(props) {
     super(props);
-    this.saveInfomation = this.saveInfomation.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
   }
   handleCancel() {
     this.props.history.replace('/');
   }
-  saveInfomation() {
-    const {
-      UPDATE_ME_MUTATION,
-      firstname,
-      lastname,
-      dob,
-      gender,
-      bio,
-      position,
-      organization,
-    } = this.props;
-    UPDATE_ME_MUTATION({
-      variables: {
-        firstname: firstname,
-        lastname: lastname,
-        gender: gender,
-        dob: dob,
-        bio: bio,
-        position: position,
-        organization: organization,
-      },
-      refetchQueries: [
-        {
-          query: queries.ME_QUERY,
-          variables: {
-            firstname,
-            lastname,
-            gender,
-            bio,
-            dob,
-            position,
-            organization,
-          },
-        },
-      ],
-    });
-    window.alert('Update successful!');
-  }
-
   render() {
     const { handleSubmit, submitting, pristine, invalid } = this.props;
     return (
@@ -243,24 +202,24 @@ class EditablePersonalInfo extends Component {
                     fullWidth={true}
                   />
                 </Row>
+                <div className="personal-info-button">
+                  <RaisedButton
+                    className="btn save-change"
+                    label="Save Change"
+                    primary={true}
+                    disabled={pristine || submitting || invalid}
+                    type="submit"
+                  />
+                  <RaisedButton
+                    className="btn cancel"
+                    label="Cancel"
+                    default={true}
+                    onClick={this.handleCancel}
+                  />
+                </div>
               </form>
             </Col>
           </Row>
-          <div>
-            <RaisedButton
-              className="btn save-change"
-              label="Save Change"
-              primary={true}
-              disabled={pristine || submitting || invalid}
-              onClick={this.saveInfomation}
-            />
-            <RaisedButton
-              className="btn cancel"
-              label="Cancel"
-              default={true}
-              onClick={this.handleCancel}
-            />
-          </div>
         </Grid>
       </div>
     );
@@ -282,67 +241,10 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-const selector = formValueSelector('EditablePersonalInfo');
-EditablePersonalInfo = connect(state => {
-  const firstname = selector(state, 'firstname');
-  const lastname = selector(state, 'lastname');
-  const gender = selector(state, 'gender');
-  const dob = new Date(selector(state, 'dob'));
-  dob.setHours(dob.getHours() + 7);
-  const bio = selector(state, 'bio');
-  const position = selector(state, 'position');
-  const organization = selector(state, 'organization');
-  return {
-    firstname,
-    lastname,
-    gender,
-    dob,
-    bio,
-    position,
-    organization,
-  };
-})(EditablePersonalInfo);
-
-const UPDATE_ME_MUTATION = gql`
-  mutation UpdateMe(
-    $firstname: String!
-    $lastname: String!
-    $dob: Date
-    $gender: Gender!
-    $bio: String
-    $organization: String
-    $position: String
-  ) {
-    updateMe(
-      firstname: $firstname
-      lastname: $lastname
-      dob: $dob
-      gender: $gender
-      bio: $bio
-      position: $position
-      organization: $organization
-    ) {
-      firstname
-      lastname
-      dob
-      gender
-      bio
-      position
-      organization
-    }
-  }
-`;
 EditablePersonalInfo = reduxForm({
   form: 'EditablePersonalInfo', // a unique identifier for this form
   validate,
 })(EditablePersonalInfo);
-export default compose(
-  withRouter,
-  connect(mapStateToProps, undefined),
-  graphql(UPDATE_ME_MUTATION, {
-    name: 'UPDATE_ME_MUTATION',
-  }),
-  graphql(queries.ME_QUERY, {
-    name: 'ME_QUERY',
-  }),
-)(EditablePersonalInfo);
+export default compose(withRouter, connect(mapStateToProps, undefined))(
+  EditablePersonalInfo,
+);
