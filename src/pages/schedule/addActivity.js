@@ -30,9 +30,10 @@ class AddDialog extends React.PureComponent {
   };
 
   render() {
-    const { handleSubmit, submitting, pristine, rooms } = this.props;
+    const { handleSubmit, submitting, pristine, rooms, error } = this.props;
     return (
       <div>
+        {error && <div className="error">{error}</div>}
         <FloatingActionButton
           style={style}
           className="position-fixed"
