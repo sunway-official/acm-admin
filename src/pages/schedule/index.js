@@ -98,11 +98,16 @@ class MyCalendar extends React.PureComponent {
         console.log('there was an error sending the query', error);
       });
   }
-
+  // deleteIds
   editActivity(values) {
     console.log(values);
     const schedules = values.schedules;
-    const { UPDATE_ACTIVITY_MUTATION, UPDATE_SCHEDULE_MUTATION } = this.props;
+    const {
+      UPDATE_ACTIVITY_MUTATION,
+      UPDATE_SCHEDULE_MUTATION,
+      DELETE_SCHEDULE_MUTATION,
+      INSERT_SCHEDULE_MUTATION,
+    } = this.props;
     const conferenceId = this.props.match.params.id;
     this.props.toggleEdit();
     UPDATE_ACTIVITY_MUTATION({
@@ -113,6 +118,19 @@ class MyCalendar extends React.PureComponent {
       },
     })
       .then(() => {
+        const deleteIds = this.props.deleteIds;
+        // xoa schedule
+        if (deleteIds) {
+          deleteIds.map(id => {
+            DELETE_SCHEDULE_MUTATION({
+              variables: {
+                id: id,
+              },
+            });
+          });
+        }
+
+        // lap va update schedule
         schedules.map((schedule, index) => {
           const newStarTime = functions.getDateTime(
             schedule.date,
@@ -124,22 +142,40 @@ class MyCalendar extends React.PureComponent {
             schedule.endTime,
           );
           // eslint-disable-next-line array-callback-return
-          if (index < schedules.length - 1) {
-            UPDATE_SCHEDULE_MUTATION({
-              variables: {
-                id: schedule.id,
-                start: newStarTime,
-                end: newEndTime,
-                room_id: schedule.room,
-              },
-            });
+          if (schedule.id) {
+            if (index < schedules.length - 1) {
+              UPDATE_SCHEDULE_MUTATION({
+                variables: {
+                  id: schedule.id,
+                  start: newStarTime,
+                  end: newEndTime,
+                  room_id: schedule.room,
+                },
+              });
+            } else {
+              UPDATE_SCHEDULE_MUTATION({
+                variables: {
+                  id: schedule.id,
+                  start: newStarTime,
+                  end: newEndTime,
+                  room_id: schedule.room,
+                },
+                refetchQueries: [
+                  {
+                    query: queries.GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY,
+                    variables: { conference_id: conferenceId },
+                  },
+                ],
+              });
+            }
           } else {
-            UPDATE_SCHEDULE_MUTATION({
+            INSERT_SCHEDULE_MUTATION({
               variables: {
-                id: schedule.id,
+                activity_id: values.id,
+                room_id: schedule.room,
+                conference_id: conferenceId,
                 start: newStarTime,
                 end: newEndTime,
-                room_id: schedule.room,
               },
               refetchQueries: [
                 {
@@ -233,6 +269,7 @@ class MyCalendar extends React.PureComponent {
 const mapStateToProps = state => {
   return {
     openEdit: state.schedule.openEditFormModal,
+    deleteIds: state.schedule.deleteIds,
   };
 };
 
@@ -253,6 +290,9 @@ export default compose(
   }),
   graphql(queries.GET_ALL_ROOM_QUERY, {
     name: 'GET_ALL_ROOM_QUERY',
+  }),
+  graphql(mutations.DELETE_SCHEDULE_MUTATION, {
+    name: 'DELETE_SCHEDULE_MUTATION',
   }),
   graphql(mutations.INSERT_ACTIVITY_MUTATION, {
     name: 'INSERT_ACTIVITY_MUTATION',

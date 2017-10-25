@@ -2,7 +2,8 @@ import React from 'react';
 import { Field } from 'redux-form';
 import { ActionAlarmAdd, ActionDeleteForever } from 'material-ui/svg-icons';
 import { MenuItem, RaisedButton, IconButton, Divider } from 'material-ui';
-import moment from 'moment';
+import { connect } from 'react-redux';
+import { scheduleOperations } from 'store/ducks/schedule';
 import {
   renderDatePicker,
   renderSelectField,
@@ -30,7 +31,7 @@ class renderSchedules extends React.Component {
   constructor() {
     super();
     this.state = {
-      delete: [],
+      deleteIds: [],
     };
     this.handleDelete = this.handleDelete.bind(this);
   }
@@ -55,15 +56,17 @@ class renderSchedules extends React.Component {
   handleDelete(index) {
     const event = this.props.event;
     const schedules = event.schedules;
-    console.log(schedules);
-    if (schedules[index] && !this.state.delete.includes(schedules[index].id)) {
-      this.state.delete.push(schedules[index].id);
+    if (
+      schedules[index] &&
+      !this.state.deleteIds.includes(schedules[index].id)
+    ) {
+      this.state.deleteIds.push(schedules[index].id);
+      this.props.deleteSchedules(this.state.deleteIds);
     }
   }
 
   render() {
     const { rooms, fields, meta: { error, submitFailed } } = this.props;
-    console.log(this.state.delete);
     if (!fields) return <div />;
     return (
       <div>
@@ -161,5 +164,15 @@ class renderSchedules extends React.Component {
     );
   }
 }
+const mapStateToProps = state => {
+  return {};
+};
 
-export default renderSchedules;
+const mapDispatchToProps = dispatch => {
+  return {
+    deleteSchedules: ids =>
+      dispatch(scheduleOperations.deleteScheduleIdsOperation(ids)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(renderSchedules);

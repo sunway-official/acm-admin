@@ -26,6 +26,16 @@ const reducer = (state = initalState, action) => {
       // Maybe show the error message here?
       return state;
     }
+    case types.DELETE_SCHEDULE_IDS_SUCCESS: {
+      const newState = Object.assign({}, state, {
+        deleteIds: action.payload.deleteIds,
+      });
+      return newState;
+    }
+    case types.DELETE_SCHEDULE_IDS_FAILURE: {
+      // Maybe show the error message here?
+      return state;
+    }
     default:
       return state;
   }

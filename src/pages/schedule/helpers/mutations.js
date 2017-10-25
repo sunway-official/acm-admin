@@ -59,6 +59,13 @@ export const DELETE_SCHEDULE_MUTATION = gql`
     }
   }
 `;
+export const DELETE_ACTIVITY_MUTATION = gql`
+  mutation deleteActivity($id: ID!) {
+    deleteActivity(id: $id) {
+      id
+    }
+  }
+`;
 
 export default {
   UPDATE_ACTIVITY_MUTATION,
@@ -66,4 +73,5 @@ export default {
   INSERT_SCHEDULE_MUTATION,
   INSERT_ACTIVITY_MUTATION,
   DELETE_SCHEDULE_MUTATION,
+  DELETE_ACTIVITY_MUTATION,
 };

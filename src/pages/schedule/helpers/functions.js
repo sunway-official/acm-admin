@@ -86,7 +86,6 @@ export const checkSchedules = (schedules, schedule) => {
   let countDate = 0;
   let countStartTime = 0;
   let countEndTime = 0;
-  console.log(schedule);
   for (let i = 0; i < schedules.length - 1; i = i + 1) {
     let item = schedules[i];
     let checkRoom = schedule.room && item.room && item.room === schedule.room;
@@ -122,10 +121,6 @@ export const checkSchedules = (schedules, schedule) => {
     if (checkEndTime) {
       countEndTime = countEndTime + 1;
     }
-    // console.log(countRoom);
-    // console.log(countDate);
-    // console.log(countStartTime);
-    // console.log(countEndTime);
     if (
       countDate > 0 &&
       countRoom > 0 &&

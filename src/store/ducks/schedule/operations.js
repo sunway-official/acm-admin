@@ -10,6 +10,17 @@ const setEventOperation = event => async dispatch => {
   }
 };
 
+const deleteScheduleIdsOperation = deleteIds => async dispatch => {
+  dispatch(actions.deleteScheduleIdsRequested());
+  try {
+    return dispatch(actions.deleteScheduleIdsSuccess(deleteIds));
+  } catch (e) {
+    console.log(e);
+    return dispatch(actions.deleteScheduleIdsFailure());
+  }
+};
+
 export default {
   setEventOperation,
+  deleteScheduleIdsOperation,
 };
