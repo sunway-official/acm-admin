@@ -6,9 +6,9 @@ import '../css/registerStyle.css';
 class Register extends Component {
   render() {
     return (
-      <div className="register-section">
+      <div className="orange-section">
         <Grid fluid>
-          <Row around="xs">
+          <Row around="xs" className="section-row">
             <Col xs={10}>
               <Row>
                 <h1 className="landingpage-title register">

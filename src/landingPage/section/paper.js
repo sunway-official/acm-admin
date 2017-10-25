@@ -9,16 +9,16 @@ class Paper extends Component {
     return (
       <div className="description-section">
         <Grid fluid id="paper-grid">
-          <Row>
+          <Row className="section-row">
             <Col xs={6} className="section-col">
               <img
-                src={images.conference5}
+                src={images.conference2}
                 className="img conference2"
                 alt=""
               />
             </Col>
             <Col xs={6} className="section-col">
-              <Row around="xs">
+              <Row around="xs" className="section-row">
                 <Col xs={10}>
                   <h1 className="landingpage-title description">
                     Call for papers is now open!

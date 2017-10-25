@@ -9,9 +9,9 @@ class Description extends Component {
     return (
       <div className="description-section">
         <Grid fluid id="description-grid">
-          <Row>
+          <Row className="section-row">
             <Col xs={6} className="section-col">
-              <Row around="xs">
+              <Row around="xs" className="section-row">
                 <Col xs={10}>
                   <h1 className="landingpage-title description">
                     Academic Conference Management
