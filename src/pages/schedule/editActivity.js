@@ -52,7 +52,14 @@ class EditActivity extends React.PureComponent {
         <RaisedButton label="no" onClick={() => this.toggleDelete()} />
       </div>
     );
-    const { handleSubmit, submitting, pristine, rooms, error } = this.props;
+    const {
+      handleSubmit,
+      submitting,
+      pristine,
+      rooms,
+      error,
+      event,
+    } = this.props;
 
     return (
       <div>
@@ -78,6 +85,7 @@ class EditActivity extends React.PureComponent {
             <FieldArray
               name="schedules"
               component={renderSchedulesEdit}
+              event={event}
               rooms={rooms}
             />
           </div>
@@ -123,9 +131,8 @@ const mapStateToProps = (state, ownProps) => {
       endTime: event.end,
       startTime: event.start,
       date: new Date(event.start),
-      room: event.room.id,
-      scheduleId: event.scheduleId,
       description: event.description,
+      schedules: event.schedules,
     },
     event: event,
   };

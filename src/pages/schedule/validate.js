@@ -49,8 +49,6 @@ const validate = values => {
           'End time of schedule must be greater than start time and in the same day!!!';
         ArrayErrors[scheduleIndex] = scheduleErrors;
       }
-      console.log(scheduleIndex);
-      console.log(values.schedules.length);
       if (scheduleIndex === values.schedules.length - 1) {
         const check = functions.checkSchedules(values.schedules, schedule);
         if (check) {
