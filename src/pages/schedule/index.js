@@ -100,6 +100,8 @@ class MyCalendar extends React.PureComponent {
   }
 
   editActivity(values) {
+    console.log(values);
+    const schedules = values.schedules;
     const { UPDATE_ACTIVITY_MUTATION, UPDATE_SCHEDULE_MUTATION } = this.props;
     const conferenceId = this.props.match.params.id;
     this.props.toggleEdit();
@@ -111,26 +113,42 @@ class MyCalendar extends React.PureComponent {
       },
     })
       .then(() => {
-        const newStarTime = functions.getDateTime(
-          values.date,
-          values.startTime,
-        );
+        schedules.map((schedule, index) => {
+          const newStarTime = functions.getDateTime(
+            schedule.date,
+            schedule.startTime,
+          );
 
-        const newEndTime = functions.getDateTime(values.date, values.endTime);
-        // eslint-disable-next-line array-callback-return
-        UPDATE_SCHEDULE_MUTATION({
-          variables: {
-            id: values.scheduleId,
-            start: newStarTime,
-            end: newEndTime,
-            room_id: values.room,
-          },
-          refetchQueries: [
-            {
-              query: queries.GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY,
-              variables: { conference_id: conferenceId },
-            },
-          ],
+          const newEndTime = functions.getDateTime(
+            schedule.date,
+            schedule.endTime,
+          );
+          // eslint-disable-next-line array-callback-return
+          if (index < schedules.length - 1) {
+            UPDATE_SCHEDULE_MUTATION({
+              variables: {
+                id: schedule.id,
+                start: newStarTime,
+                end: newEndTime,
+                room_id: schedule.room,
+              },
+            });
+          } else {
+            UPDATE_SCHEDULE_MUTATION({
+              variables: {
+                id: schedule.id,
+                start: newStarTime,
+                end: newEndTime,
+                room_id: schedule.room,
+              },
+              refetchQueries: [
+                {
+                  query: queries.GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY,
+                  variables: { conference_id: conferenceId },
+                },
+              ],
+            });
+          }
         });
       })
       .catch(error => {

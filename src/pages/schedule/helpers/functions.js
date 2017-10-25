@@ -9,6 +9,7 @@ export const getSchedules = array => {
     const end = moment(item.end)._d;
 
     const schedule = {
+      id: item.id,
       date: date,
       start: start,
       end: end,
@@ -85,7 +86,8 @@ export const checkSchedules = (schedules, schedule) => {
   let countDate = 0;
   let countStartTime = 0;
   let countEndTime = 0;
-  for (let i = 0; i < schedules.length; i = i + 1) {
+  console.log(schedule);
+  for (let i = 0; i < schedules.length - 1; i = i + 1) {
     let item = schedules[i];
     let checkRoom = schedule.room && item.room && item.room === schedule.room;
     let checkDate =
@@ -120,13 +122,22 @@ export const checkSchedules = (schedules, schedule) => {
     if (checkEndTime) {
       countEndTime = countEndTime + 1;
     }
+    // console.log(countRoom);
+    // console.log(countDate);
+    // console.log(countStartTime);
+    // console.log(countEndTime);
     if (
-      countRoom > 1 &&
-      countDate > 1 &&
-      countStartTime > 1 &&
-      countEndTime > 1
+      countDate > 0 &&
+      countRoom > 0 &&
+      countStartTime > 0 &&
+      countEndTime > 0
     ) {
       return true;
+    } else {
+      countRoom = 0;
+      countDate = 0;
+      countStartTime = 0;
+      countEndTime = 0;
     }
   }
   return false;
