@@ -109,7 +109,7 @@ class EditActivity extends React.PureComponent {
               tooltip="Close"
               className="cancel-btn dialog"
               onClick={() => {
-                this.props.toggleAdd();
+                this.props.toggleEdit();
                 this.props.reset();
               }}
             >

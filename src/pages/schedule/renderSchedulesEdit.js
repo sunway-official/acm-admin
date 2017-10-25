@@ -27,6 +27,14 @@ const styles = {
 };
 
 class renderSchedules extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      delete: [],
+    };
+    this.handleDelete = this.handleDelete.bind(this);
+  }
+
   componentDidMount() {
     this.props.fields.removeAll();
     const event = this.props.event;
@@ -34,6 +42,7 @@ class renderSchedules extends React.Component {
     const length = schedules.length;
     for (let i = 0; i < length; i = i + 1) {
       const schedule = {
+        id: schedules[i].id,
         date: new Date(schedules[i].date),
         startTime: new Date(schedules[i].start),
         endTime: new Date(schedules[i].end),
@@ -43,8 +52,18 @@ class renderSchedules extends React.Component {
     }
   }
 
+  handleDelete(index) {
+    const event = this.props.event;
+    const schedules = event.schedules;
+    console.log(schedules);
+    if (schedules[index] && !this.state.delete.includes(schedules[index].id)) {
+      this.state.delete.push(schedules[index].id);
+    }
+  }
+
   render() {
     const { rooms, fields, meta: { error, submitFailed } } = this.props;
+    console.log(this.state.delete);
     if (!fields) return <div />;
     return (
       <div>
@@ -60,7 +79,10 @@ class renderSchedules extends React.Component {
                     <h4>Schedule #{index + 1}</h4>
                     <RaisedButton
                       style={{ minWidth: '50px' }}
-                      onClick={() => fields.remove(index)}
+                      onClick={() => {
+                        fields.remove(index);
+                        this.handleDelete(index);
+                      }}
                       icon={<ActionDeleteForever />}
                       primary={true}
                     />

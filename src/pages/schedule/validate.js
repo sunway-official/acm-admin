@@ -49,7 +49,10 @@ const validate = values => {
           'End time of schedule must be greater than start time and in the same day!!!';
         ArrayErrors[scheduleIndex] = scheduleErrors;
       }
-      if (scheduleIndex === values.schedules.length - 1) {
+      if (
+        scheduleIndex === values.schedules.length - 1 &&
+        values.schedules.length !== 1
+      ) {
         const check = functions.checkSchedules(values.schedules, schedule);
         if (check) {
           scheduleErrors.date = 'Please select at least one different value';
