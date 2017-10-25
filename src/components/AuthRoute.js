@@ -7,20 +7,55 @@ import { bindActionCreators } from 'redux';
 import { authActions } from '../store/ducks/auth';
 
 class AuthRoute extends PureComponent {
+  constructor(props) {
+    super(props);
+
+    this.subscribeToMe = this.subscribeToMe.bind(this);
+  }
+  subscribeToMe() {
+    this.props.queryMe.subscribeToMore({
+      document: gql`
+        subscription {
+          Me {
+            id
+            firstname
+            lastname
+            gender
+            email
+            bio
+            dob
+            linkedin_id
+            facebook_id
+            twitter_id
+            position
+            organization
+          }
+        }
+      `,
+      updateQuery: (previous, { subscriptionData }) => {
+        if (subscriptionData && subscriptionData.data.Me) {
+          this.props.setCurrentUser(subscriptionData.data.Me);
+        }
+      },
+    });
+  }
   componentWillReceiveProps(nextProps) {
-    if (nextProps.data.error) {
+    if (nextProps.queryMe.error) {
       localStorage.clear();
     }
-    if (nextProps.data.me) {
-      this.props.setCurrentUser(nextProps.data.me);
+    if (nextProps.queryMe.me) {
+      this.props.setCurrentUser(nextProps.queryMe.me);
     }
+  }
+  componentDidMount() {
+    this.subscribeToMe();
   }
   render() {
     const {
       component: Component,
       needAuth,
       needGuest,
-      data: { loading, error },
+      queryMe: { loading, error },
       ...rest
     } = this.props;
 
@@ -75,6 +110,7 @@ const mapDispatchToProps = dispatch => ({
 
 export default compose(
   graphql(ME_QUERY, {
+    name: 'queryMe',
     options: {
       notifyOnNetworkStatusChange: true,
     },
