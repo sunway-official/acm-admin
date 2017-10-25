@@ -1,11 +1,30 @@
 import * as moment from 'moment';
 import React from 'react';
 
+export const getSchedules = array => {
+  let schedules = [];
+  array.map(item => {
+    const date = moment(item.start, 'YYYY MM DD');
+    const start = moment(item.start)._d;
+    const end = moment(item.end)._d;
+
+    const schedule = {
+      date: date,
+      start: start,
+      end: end,
+      room: item.room,
+    };
+    schedules.push(schedule);
+  });
+  return schedules;
+};
+
 export const getEvents = array => {
   let events = [];
-  array.map(item =>
+  array.map(item => {
+    const schedules = getSchedules(item.schedules);
+
     item.schedules.map(schedule => {
-      const date = moment(schedule.start, 'YYYY MM DD');
       const start = moment(schedule.start)._d;
       const end = moment(schedule.end)._d;
 
@@ -13,20 +32,13 @@ export const getEvents = array => {
         id: item.id,
         title: item.title,
         description: item.description,
-        date: date,
         start: start,
         end: end,
-        scheduleId: schedule.id,
-
-        room: {
-          id: schedule.room.id,
-          name: schedule.room.name,
-        },
+        schedules: schedules,
       };
       events.push(event);
-      return events;
-    }),
-  );
+    });
+  });
 
   return events;
 };
@@ -108,11 +120,6 @@ export const checkSchedules = (schedules, schedule) => {
     if (checkEndTime) {
       countEndTime = countEndTime + 1;
     }
-    console.log('------------');
-    console.log('Date ' + countDate);
-    console.log('Room ' + countRoom);
-    console.log('Start ' + countStartTime);
-    console.log('End ' + countEndTime);
     if (
       countRoom > 1 &&
       countDate > 1 &&

@@ -171,8 +171,8 @@ class MyCalendar extends React.PureComponent {
             events={events}
             defaultView="week"
             defaultDate={new Date()}
-            onSelectEvent={events => {
-              this.handleEdit(events);
+            onSelectEvent={event => {
+              this.handleEdit(event);
             }}
             min={
               new Date(
