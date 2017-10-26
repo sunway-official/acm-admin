@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { graphql, gql } from 'react-apollo';
 import { GET_ALL_STAFF_IN_CONFERENCE } from './index';
+import DialogEdit from './dialogEdit';
 
 import {
   Table,
@@ -13,7 +14,6 @@ import {
   Dialog,
 } from 'material-ui';
 import { style } from './style.css';
-// import Add from './add';
 
 class Index extends Component {
   constructor() {
@@ -22,6 +22,7 @@ class Index extends Component {
   }
   state = {
     openDelete: false,
+    openDialog: false,
     staff: {},
   };
   handleOpenDelete = UserId => {
@@ -30,8 +31,11 @@ class Index extends Component {
       UserId: UserId,
     });
   };
+  handleOpenDialog() {
+    this.setState({ openDialog: true });
+  }
   handleClose = () => {
-    this.setState({ openDelete: false });
+    this.setState({ openDelete: false, openDialog: false });
   };
   delete() {
     this.setState({ openDelete: false });
@@ -53,8 +57,6 @@ class Index extends Component {
   }
   render() {
     const allStaff = this.props.allStaff;
-    const staffRole = this.props.staffRole;
-    console.log(staffRole);
     const actionDelete = [
       <RaisedButton
         label="Submit"
@@ -87,6 +89,11 @@ class Index extends Component {
                   <TableRowColumn>{staff.email}</TableRowColumn>
                   <TableRowColumn>
                     <RaisedButton
+                      primary={true}
+                      label="edit"
+                      onClick={() => this.handleOpenDialog()}
+                    />
+                    <RaisedButton
                       label="delete"
                       onClick={() => this.handleOpenDelete(staff.id)}
                     />
@@ -95,6 +102,10 @@ class Index extends Component {
               ))}
             </TableBody>
           </Table>
+          <DialogEdit
+            openDialog={this.state.openDialog}
+            handleClose={() => this.handleClose()}
+          />
           <Dialog
             title="Do you want to delete this staff?"
             modal={true}
