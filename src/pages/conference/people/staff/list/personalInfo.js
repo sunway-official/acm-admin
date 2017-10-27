@@ -7,12 +7,14 @@ import {
   CommunicationMailOutline,
   ActionWork,
 } from 'material-ui/svg-icons';
-const PersonalInfo = () => {
-  return (
-    <div
-      className="form conference-info view-form"
-      style={{ paddingTop: '30px' }}
-    >
+import { Field, reduxForm } from 'redux-form';
+import CustomInput from 'components/CustomInput';
+const PersonalInfo = ({ onSubmit, handleSubmit }) => (
+  <form
+    className="form conference-info view-form"
+    style={{ paddingTop: '30px' }}
+  >
+    <div>
       <div className="d-flex form-group">
         <ListItem
           className="title-group"
@@ -20,12 +22,14 @@ const PersonalInfo = () => {
           leftIcon={<ActionPermIdentity />}
           disabled={true}
         />
-        <TextField
+        <Field
+          name="firstname"
+          component={CustomInput}
           underlineShow={false}
-          hintText="Le Quoc Manh"
           disabled={true}
         />
       </div>
+      {/*Chua connect data cho position*/}
       <div className="d-flex form-group">
         <ListItem
           className="title-group"
@@ -33,7 +37,12 @@ const PersonalInfo = () => {
           leftIcon={<ActionWork />}
           disabled={true}
         />
-        <TextField underlineShow={false} hintText="Moderator" disabled={true} />
+        <TextField
+          name="position"
+          hintText="Moderator"
+          underlineShow={false}
+          disabled={true}
+        />
       </div>
       <div className="d-flex form-group">
         <ListItem
@@ -42,10 +51,11 @@ const PersonalInfo = () => {
           leftIcon={<CommunicationMailOutline />}
           disabled={true}
         />
-        <TextField
+        <Field
+          name="email"
           underlineShow={false}
-          hintText="lequocmanh2010@gmail.com"
           disabled={true}
+          component={CustomInput}
         />
       </div>
       <div className="d-flex form-group">
@@ -55,9 +65,10 @@ const PersonalInfo = () => {
           leftIcon={<SocialCake />}
           disabled={true}
         />
-        <TextField
+        <Field
+          name="dob"
+          component={CustomInput}
           underlineShow={false}
-          hintText="10-20-1996"
           disabled={true}
         />
       </div>
@@ -68,10 +79,16 @@ const PersonalInfo = () => {
           leftIcon={<NotificationWc />}
           disabled={true}
         />
-        <TextField underlineShow={false} hintText="Male" disabled={true} />
+        <Field
+          name="gender"
+          underlineShow={false}
+          component={CustomInput}
+          disabled={true}
+        />
       </div>
     </div>
-  );
-};
-
-export default PersonalInfo;
+  </form>
+);
+export default reduxForm({
+  form: 'PersonalInfo',
+})(PersonalInfo);

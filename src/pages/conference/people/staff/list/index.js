@@ -3,7 +3,7 @@ import { Subheader, IconButton } from 'material-ui';
 import { Link } from 'react-router-dom';
 import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import List from './list';
-import { graphql, gql } from 'react-apollo';
+import { graphql, gql, compose } from 'react-apollo';
 
 class Index extends Component {
   render() {
@@ -45,20 +45,26 @@ export const GET_ALL_STAFF_IN_CONFERENCE = gql`
       firstname
       lastname
       email
+      dob
+      gender
     }
   }
 `;
-// export const GET_ALL_ROLES_BY_USER_ID = gql`
-//   query getAllRolesByUserID($user_id: !ID) {
-//     getAllRolesByUserID(user_id: $user_id) {
-//       role {
-//         name
-//       }
-//     }
-//   }
-// `;
-export default graphql(GET_ALL_STAFF_IN_CONFERENCE, {
-  options: ownProps => ({
-    variables: { conference_id: ownProps.match.params.conference_id },
+
+export const GET_ALL_ROLES_BY_USER_ID = gql`
+  query getAllRolesByUserID($user_id: ID!) {
+    getAllRolesByUserID(user_id: $user_id) {
+      role {
+        name
+      }
+    }
+  }
+`;
+
+export default compose(
+  graphql(GET_ALL_STAFF_IN_CONFERENCE, {
+    options: ownProps => ({
+      variables: { conference_id: ownProps.match.params.conference_id },
+    }),
   }),
-})(Index);
+)(Index);

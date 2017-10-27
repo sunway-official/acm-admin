@@ -13,44 +13,42 @@ const CoOrganizerForm = ({
 }) => (
   <form className="form conference-info" onSubmit={handleSubmit(onSubmit)}>
     <div>
-      <div>
-        <div className="d-flex form-group">
-          <label>Name :</label>
-          <Field
-            name="coOrganizerName"
-            component={CustomInput}
-            hintText="Co-Organizer Name"
-            fullWidth={true}
-          />
-        </div>
-        <div className="d-flex form-group">
-          <label>Email :</label>
-          <Field
-            name="coOrganizerEmail"
-            component={CustomInput}
-            hintText="Co-Organizer Email"
-            fullWidth={true}
-          />
-        </div>
-        <div className="d-flex form-group">
-          <label>Website :</label>
-          <Field
-            name="coOrganizerWebsite"
-            component={CustomInput}
-            hintText="Co-Organizer Website"
-            fullWidth={true}
-          />
-        </div>
-        <div className="d-flex form-group">
-          <label>Phone Number :</label>
-          <Field
-            name="coOrganizerPhone"
-            component={CustomInput}
-            hintText="Co-Organizer Phone Number"
-            fullWidth={true}
-            normalize={normalizePhone}
-          />
-        </div>
+      <div className="d-flex form-group">
+        <label>Name :</label>
+        <Field
+          name="coOrganizerName"
+          component={CustomInput}
+          hintText="Co-Organizer Name"
+          fullWidth={true}
+        />
+      </div>
+      <div className="d-flex form-group">
+        <label>Email :</label>
+        <Field
+          name="coOrganizerEmail"
+          component={CustomInput}
+          hintText="Co-Organizer Email"
+          fullWidth={true}
+        />
+      </div>
+      <div className="d-flex form-group">
+        <label>Website :</label>
+        <Field
+          name="coOrganizerWebsite"
+          component={CustomInput}
+          hintText="Co-Organizer Website"
+          fullWidth={true}
+        />
+      </div>
+      <div className="d-flex form-group">
+        <label>Phone Number :</label>
+        <Field
+          name="coOrganizerPhone"
+          component={CustomInput}
+          hintText="Co-Organizer Phone Number"
+          fullWidth={true}
+          normalize={normalizePhone}
+        />
       </div>
     </div>
     <div className="d-flex save-btn btn-group">

@@ -31,8 +31,8 @@ class Index extends Component {
       UserId: UserId,
     });
   };
-  handleOpenDialog() {
-    this.setState({ openDialog: true });
+  handleOpenDialog(staff) {
+    this.setState({ openDialog: true, staff: staff });
   }
   handleClose = () => {
     this.setState({ openDelete: false, openDialog: false });
@@ -91,7 +91,7 @@ class Index extends Component {
                     <RaisedButton
                       primary={true}
                       label="edit"
-                      onClick={() => this.handleOpenDialog()}
+                      onClick={() => this.handleOpenDialog(staff)}
                     />
                     <RaisedButton
                       label="delete"
@@ -105,7 +105,9 @@ class Index extends Component {
           <DialogEdit
             openDialog={this.state.openDialog}
             handleClose={() => this.handleClose()}
+            allStaff={this.state.staff}
           />
+
           <Dialog
             title="Do you want to delete this staff?"
             modal={true}
