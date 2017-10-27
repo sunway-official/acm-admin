@@ -23,7 +23,7 @@ class Register extends Component {
                 </p>
               </Row>
               <Row className="register-final-row">
-                <Col xs={4}>
+                <Col xs={4} className="register-col">
                   <Row> Where </Row>
                   <Row> Duy Tan University </Row>
                   <Row> Da Nang, Viet Nam </Row>

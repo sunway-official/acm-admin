@@ -4,7 +4,11 @@
   }
 }
 .speaker-avatar{
-  width: 20%;
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: auto;
+  padding: auto;
 }
 figure {
 	width: 100%;
@@ -19,6 +23,10 @@ figure:hover+span {
 }
 
 /* Gray Scale */
+.hover08{
+  position: relative;
+  display: inline-block;
+}
 .hover08 figure img {
 	-webkit-filter: grayscale(100%);
 	filter: grayscale(100%);
@@ -32,4 +40,28 @@ figure:hover+span {
 }
 .list-image{
   display: flex;
+}
+.speaker-info-wrapper{
+  position: absolute;
+  height: 30%;
+  text-align: center;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  font-size: 1vw;
+  text-align: left;
+  margin-left: 1em;
+}
+h4 {
+  margin: 0px;
+  padding-bottom: 0.3em;
+  padding-top: 10em;
+  display: inline-block;
+  font-size: 1.5vw; /*or whatever you want*/
+  color: #ff5722;
+}
+.speaker-description{
+  font-size: 1.5vw;
+  padding-bottom: 3em;
 }

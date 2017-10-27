@@ -12,7 +12,7 @@ class Speaker extends Component {
           <Row around="xs" className="section-row">
             <Col xs={10} className="section-col">
               <h1 className="landingpage-title register"> The Speakers </h1>
-              <p className="register-description">
+              <p className="speaker-description">
                 We attract only the best speakers in the construction industry
                 for Academic Conference, bringing you talented individuals with
                 creative minds, future-thinkers and innovators.

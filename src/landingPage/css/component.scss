@@ -130,12 +130,15 @@
 		line-height: 1;
 	}
 }
-
 .img{
+  &.landing{
+    display: block;
+    opacity: 0.75;
+  }
   &.conference1 {
     width: 100%;
-    height: auto;
-    background: #000;
+    // height: auto;
+    // background: #000;
     opacity: .85;
   }
 }
@@ -155,4 +158,12 @@
 }
 .row{
   margin: 0px !important;
+}
+
+.landingpage-title{
+  font-size: 2.5vw;
+  padding-top: 1.5em;
+  &.description{
+    color: #ff5722;
+  }
 }

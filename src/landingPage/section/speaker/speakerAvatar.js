@@ -34,7 +34,7 @@ class SpeakerAvatar extends Component {
     const content = listImage.map(image => (
       <div key={image.id} className="hover08">
         <figure>
-          <img src={image.src} alt="" />
+          <img src={image.src} alt="" className="speaker-avatar" />
           <div className="speaker-info-wrapper">
             <h4> Speaker name </h4>
             <div>Speaker description</div>

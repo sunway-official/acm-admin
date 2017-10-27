@@ -8,6 +8,7 @@ import Register from './section/register';
 import Description from './section/description';
 import Paper from './section/paper';
 import Speaker from './section/speaker/index';
+import CountDownTimer from './section/countdownTimer';
 
 class LandingPage extends Component {
   handleScriptCreate() {
@@ -40,10 +41,10 @@ class LandingPage extends Component {
             </div>
           </div>
           <div className="main">
-            <div>
+            <div className="img-container">
               <img
                 src={images.conference1}
-                className="img conference1"
+                className="img landing conference1"
                 alt=""
               />
             </div>
@@ -51,20 +52,9 @@ class LandingPage extends Component {
             <Description />
             <Paper />
             <Speaker />
+            <CountDownTimer />
           </div>
         </div>
-        {/*<Script
-          url="./cbpAnimatedHeader.min.js"
-          onCreate={this.handleScriptCreate.bind(this)}
-          onError={this.handleScriptError.bind(this)}
-          onLoad={this.handleScriptLoad.bind(this)}
-        />
-        <Script
-          url="./classie.js"
-          onCreate={this.handleScriptCreate.bind(this)}
-          onError={this.handleScriptError.bind(this)}
-          onLoad={this.handleScriptLoad.bind(this)}
-        />*/}
       </div>
     );
   }

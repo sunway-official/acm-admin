@@ -13,7 +13,7 @@ class Paper extends Component {
             <Col xs={6} className="section-col">
               <img
                 src={images.conference2}
-                className="img conference2"
+                className="img landing conference2"
                 alt=""
               />
             </Col>
