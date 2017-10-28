@@ -1,14 +1,14 @@
 import React from 'react';
-import { RaisedButton, Dialog, IconButton } from 'material-ui';
-import { NavigationClose } from 'material-ui/svg-icons';
+import { RaisedButton, Dialog } from 'material-ui';
 import { reduxForm, Field, FieldArray, reset } from 'redux-form';
 import { connect } from 'react-redux';
 import { scheduleActions } from 'store/ducks/schedule';
 import { mutations, queries } from './helpers';
 import { compose, graphql } from 'react-apollo';
-import renderSchedulesEdit from './renderSchedulesEdit';
+import { renderSchedulesEdit, renderTextField } from './render';
+import { scheduleOperations } from 'store/ducks/schedule';
 
-import validate, { renderTextField } from './validate';
+import validate from './validate';
 class EditActivity extends React.PureComponent {
   constructor() {
     super();
@@ -113,7 +113,7 @@ class EditActivity extends React.PureComponent {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = state => {
   const event = state.schedule.event;
   return {
     initialValues: {
@@ -132,6 +132,9 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = dispatch => {
   return {
     toggleEdit: () => dispatch(scheduleActions.toggleEditActivityFormModal()),
+    checkError: error => {
+      dispatch(scheduleOperations.checkErrorOperation(error));
+    },
   };
 };
 

@@ -10,6 +10,7 @@ const setEventOperation = event => async dispatch => {
   }
 };
 
+// delete schedule with id when click buttuon delete in add, edit activity
 const deleteScheduleIdsOperation = deleteIds => async dispatch => {
   dispatch(actions.deleteScheduleIdsRequested());
   try {
@@ -20,7 +21,19 @@ const deleteScheduleIdsOperation = deleteIds => async dispatch => {
   }
 };
 
+// check error in add, edit activity
+const checkErrorOperation = error => async dispatch => {
+  dispatch(actions.checkErrorRequested());
+  try {
+    return dispatch(actions.checkErrorSuccess(error));
+  } catch (e) {
+    console.log(e);
+    return dispatch(actions.checkErrorFailure());
+  }
+};
+
 export default {
   setEventOperation,
   deleteScheduleIdsOperation,
+  checkErrorOperation,
 };

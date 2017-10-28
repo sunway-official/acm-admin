@@ -24,7 +24,6 @@ export const getEvents = array => {
   let events = [];
   array.map(item => {
     const schedules = getSchedules(item.schedules);
-
     item.schedules.map(schedule => {
       const start = moment(schedule.start)._d;
       const end = moment(schedule.end)._d;
@@ -33,6 +32,8 @@ export const getEvents = array => {
         id: item.id,
         title: item.title,
         description: item.description,
+        start_date: item.conference.start_date,
+        end_date: item.conference.end_date,
         start: start,
         end: end,
         schedules: schedules,
@@ -84,8 +85,6 @@ export const EventAgenda = ({ event }) => {
 export const checkSchedules = (schedules, schedule) => {
   let countRoom = 0;
   let countDate = 0;
-  let countStartTime = 0;
-  let countEndTime = 0;
   for (let i = 0; i < schedules.length - 1; i = i + 1) {
     let item = schedules[i];
     let checkRoom = schedule.room && item.room && item.room === schedule.room;
@@ -97,45 +96,26 @@ export const checkSchedules = (schedules, schedule) => {
       new Date(item.date).getFullYear() ===
         new Date(schedule.date).getFullYear();
 
-    let checkStartTime =
-      schedule.startTime &&
-      item.startTime &&
-      schedule.startTime.getHours() === item.startTime.getHours() &&
-      schedule.startTime.getMinutes() === item.startTime.getMinutes();
-
-    let checkEndTime =
-      schedule.endTime &&
-      item.endTime &&
-      schedule.endTime.getHours() === item.endTime.getHours() &&
-      schedule.endTime.getMinutes() === item.endTime.getMinutes();
-
     if (checkRoom) {
       countRoom = countRoom + 1;
     }
     if (checkDate) {
       countDate = countDate + 1;
     }
-    if (checkStartTime) {
-      countStartTime = countStartTime + 1;
-    }
-    if (checkEndTime) {
-      countEndTime = countEndTime + 1;
-    }
     if (
       countDate > 0 &&
       countRoom > 0 &&
-      countStartTime > 0 &&
-      countEndTime > 0
+      schedule.startTime &&
+      schedule.endTime
     ) {
-      return true;
-    } else {
-      countRoom = 0;
-      countDate = 0;
-      countStartTime = 0;
-      countEndTime = 0;
+      let checkDurationTime =
+        schedule.startTime > item.endTime || schedule.endTime < item.startTime;
+      if (!checkDurationTime) {
+        return false;
+      }
     }
   }
-  return false;
+  return true;
 };
 
 export default {

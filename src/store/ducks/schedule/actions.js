@@ -42,6 +42,22 @@ const deleteScheduleIdsFailure = () => ({
   type: types.DELETE_SCHEDULE_IDS_FAILURE,
 });
 
+// CHECK ERROR
+const checkErrorRequested = () => ({
+  type: types.CHECK_ERROR_REQUESTED,
+});
+
+const checkErrorSuccess = error => ({
+  type: types.CHECK_ERROR_SUCCESS,
+  payload: {
+    error,
+  },
+});
+
+const checkErrorFailure = () => ({
+  type: types.CHECK_ERROR_FAILURE,
+});
+
 export default {
   toggleAddActivityFormModal,
   toggleEditActivityFormModal,
@@ -51,4 +67,7 @@ export default {
   deleteScheduleIdsRequested,
   deleteScheduleIdsSuccess,
   deleteScheduleIdsFailure,
+  checkErrorRequested,
+  checkErrorSuccess,
+  checkErrorFailure,
 };

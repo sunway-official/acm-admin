@@ -8,7 +8,7 @@ import {
   renderDatePicker,
   renderSelectField,
   renderTimePicker,
-} from './validate';
+} from '../render';
 
 const styles = {
   divider: {
@@ -101,7 +101,6 @@ class renderSchedules extends React.Component {
                     format={null}
                     textFieldStyle={{ width: '100%' }}
                     hintText="Activity Date"
-                    value={new Date()}
                   />
                 </div>
                 <div className="d-flex form-group" style={{ width: '300px' }}>
@@ -127,7 +126,6 @@ class renderSchedules extends React.Component {
                   <label className="schedule-time-from">Start From :</label>
                   <Field
                     name={`${schedule}.startTime`}
-                    value={new Date()}
                     component={renderTimePicker}
                     format={null}
                     hintText="Begin Schedule"
@@ -138,7 +136,6 @@ class renderSchedules extends React.Component {
                   <label className="text-align-center">To :</label>
                   <Field
                     name={`${schedule}.endTime`}
-                    value={new Date()}
                     component={renderTimePicker}
                     format={null}
                     hintText="End Schedule"
@@ -155,6 +152,7 @@ class renderSchedules extends React.Component {
             style={styles.small}
             onClick={() => fields.push({})}
             tooltip="Add Schedule"
+            disabled={this.props.checkError}
           >
             <ActionAlarmAdd />
           </IconButton>
@@ -165,7 +163,9 @@ class renderSchedules extends React.Component {
   }
 }
 const mapStateToProps = state => {
-  return {};
+  return {
+    checkError: state.schedule.error,
+  };
 };
 
 const mapDispatchToProps = dispatch => {
