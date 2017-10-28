@@ -1,6 +1,9 @@
 import types from './types';
 
-const initalState = { openEditFormModal: false, openAddFormModal: false };
+const initalState = {
+  openEditFormModal: false,
+  openAddFormModal: false,
+};
 
 const reducer = (state = initalState, action) => {
   switch (action.type) {
@@ -33,6 +36,16 @@ const reducer = (state = initalState, action) => {
       return newState;
     }
     case types.DELETE_SCHEDULE_IDS_FAILURE: {
+      // Maybe show the error message here?
+      return state;
+    }
+    case types.CHECK_ERROR_SUCCESS: {
+      const newState = Object.assign({}, state, {
+        error: action.payload.error,
+      });
+      return newState;
+    }
+    case types.CHECK_ERROR_FAILURE: {
       // Maybe show the error message here?
       return state;
     }

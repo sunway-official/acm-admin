@@ -200,6 +200,8 @@ class MyCalendar extends React.PureComponent {
     const events = functions.getEvents(getActivitiesByConferenceID);
     const rooms = this.props.GET_ALL_ROOM_QUERY.getAllRooms;
     const conferenceId = this.props.match.params.id;
+    const start_date = events[0].start_date;
+    const end_date = events[0].end_date;
 
     const today = new Date();
 
@@ -237,7 +239,12 @@ class MyCalendar extends React.PureComponent {
               )
             }
           />
-          <AddActivity onSubmit={this.addActivity} rooms={rooms} />
+          <AddActivity
+            onSubmit={this.addActivity}
+            rooms={rooms}
+            start_date={start_date}
+            end_date={end_date}
+          />
           <div>
             <Toggle label="Format 24h" onToggle={this.handleTimeFormat} />
           </div>
@@ -252,6 +259,8 @@ class MyCalendar extends React.PureComponent {
             onSubmit={this.editActivity}
             rooms={rooms}
             conferenceId={conferenceId}
+            start_date={start_date}
+            end_date={end_date}
           />
           <IconButton
             tooltip="Close"

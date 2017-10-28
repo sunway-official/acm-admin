@@ -7,10 +7,10 @@ import {
 } from 'material-ui';
 import { reduxForm, Field, FieldArray, reset } from 'redux-form';
 import { NavigationClose, ContentAdd } from 'material-ui/svg-icons';
-import validate, { renderTextField } from './validate';
-import renderSchedules from './renderSchedules';
+import validate from './validate';
+import { renderSchedules, renderTextField } from './render';
 import { connect } from 'react-redux';
-import { scheduleActions } from 'store/ducks/schedule';
+import { scheduleActions, scheduleOperations } from 'store/ducks/schedule';
 
 const style = {
   marginTop: '20px',
@@ -33,7 +33,6 @@ class AddDialog extends React.PureComponent {
     const { handleSubmit, submitting, pristine, rooms, error } = this.props;
     return (
       <div>
-        {error && <div className="error">{error}</div>}
         <FloatingActionButton
           style={style}
           className="position-fixed"
@@ -49,6 +48,7 @@ class AddDialog extends React.PureComponent {
           open={this.props.openAdd}
         >
           <form className="form conference-info" onSubmit={handleSubmit}>
+            {error && <div className="error">{error}</div>}
             <div className="d-flex form-group">
               <label>Title :</label>
               <Field
@@ -115,6 +115,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     toggleAdd: () => dispatch(scheduleActions.toggleAddActivityFormModal()),
+    checkError: error => {
+      dispatch(scheduleOperations.checkErrorOperation(error));
+    },
   };
 };
 
