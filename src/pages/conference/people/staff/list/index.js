@@ -51,16 +51,6 @@ export const GET_ALL_STAFF_IN_CONFERENCE = gql`
   }
 `;
 
-export const GET_ALL_ROLES_BY_USER_ID = gql`
-  query getAllRolesByUserID($user_id: ID!) {
-    getAllRolesByUserID(user_id: $user_id) {
-      role {
-        name
-      }
-    }
-  }
-`;
-
 export default compose(
   graphql(GET_ALL_STAFF_IN_CONFERENCE, {
     options: ownProps => ({

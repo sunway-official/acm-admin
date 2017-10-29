@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { graphql, gql } from 'react-apollo';
-import { GET_ALL_STAFF_IN_CONFERENCE } from './index';
+import { graphql, gql, compose } from 'react-apollo';
 import DialogEdit from './dialogEdit';
-
+import GetRoles from './getRoles';
 import {
   Table,
   TableBody,
@@ -16,10 +15,6 @@ import {
 import { style } from './style.css';
 
 class Index extends Component {
-  constructor() {
-    super();
-    this.delete = this.delete.bind(this);
-  }
   state = {
     openDelete: false,
     openDialog: false,
@@ -37,25 +32,11 @@ class Index extends Component {
   handleClose = () => {
     this.setState({ openDelete: false, openDialog: false });
   };
-  delete() {
-    this.setState({ openDelete: false });
-    const { DELETE_USER } = this.props;
-    DELETE_USER({
-      variables: {
-        id: this.state.UserId,
-      },
-      update: (store, { data: { deleteUser } }) => {
-        const data = store.readQuery({
-          query: GET_ALL_STAFF_IN_CONFERENCE,
-        });
-        data.getAllStaffInConference = this.state.staff.filter(
-          item => item !== this.state.staff,
-        );
-        store.writeQuery({ query: GET_ALL_STAFF_IN_CONFERENCE, data });
-      },
-    });
-  }
+
   render() {
+    const { loading } = this.props.data;
+    if (loading) return <div>Loading...</div>;
+    // const roles = this.props.data.getAllRolesByUserID[0].role;
     const allStaff = this.props.allStaff;
     const actionDelete = [
       <RaisedButton
@@ -75,7 +56,8 @@ class Index extends Component {
               <TableRow>
                 <TableHeaderColumn>No.</TableHeaderColumn>
                 <TableHeaderColumn>Name</TableHeaderColumn>
-                <TableHeaderColumn>Status</TableHeaderColumn>
+                <TableHeaderColumn>Mail</TableHeaderColumn>
+                <TableHeaderColumn>Position</TableHeaderColumn>
                 <TableHeaderColumn>Action</TableHeaderColumn>
               </TableRow>
             </TableHeader>
@@ -87,6 +69,9 @@ class Index extends Component {
                     {staff.firstname} {staff.lastname}
                   </TableRowColumn>
                   <TableRowColumn>{staff.email}</TableRowColumn>
+                  <TableRowColumn>
+                    <GetRoles id={staff.id} />
+                  </TableRowColumn>
                   <TableRowColumn>
                     <RaisedButton
                       primary={true}
@@ -127,6 +112,23 @@ const DELETE_USER = gql`
     }
   }
 `;
-export default graphql(DELETE_USER, {
-  name: 'DELETE_USER',
-})(Index);
+const GET_ALL_ROLES_BY_USER_ID = gql`
+  query getAllRolesByUserID($user_id: ID!) {
+    getAllRolesByUserID(user_id: $user_id) {
+      role {
+        name
+      }
+    }
+  }
+`;
+export default compose(
+  graphql(DELETE_USER, {
+    name: 'DELETE_USER',
+  }),
+  graphql(GET_ALL_ROLES_BY_USER_ID, {
+    options: ownProps => ({
+      variables: { user_id: 1 },
+      name: 'GET_ALL_ROLES_BY_USER_ID',
+    }),
+  }),
+)(Index);
