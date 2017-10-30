@@ -1,0 +1,16 @@
+.demo {
+  margin-top: 100px;
+  display: flex;
+
+  img {
+    height: 100px;
+  }
+
+  .block {
+    flex: 1 0 50%;
+  }
+
+  input[type='file'] {
+    display: none;
+  }
+}

@@ -8,6 +8,8 @@
   },
   "dependencies": {
     "apisauce": "^0.14.1",
+    "aws-sdk": "^2.141.0",
+    "buffer": "^4.9.1",
     "enzyme": "^3.1.0",
     "font-awesome": "^4.7.0",
     "graphql": "0.10.5",
@@ -19,6 +21,7 @@
     "react-apollo": "^1.4.15",
     "react-big-calendar": "^0.16.1",
     "react-dom": "^16.0.0",
+    "react-dropzone": "^4.2.1",
     "react-flexbox-grid": "^1.1.5",
     "react-helmet": "^5.2.0",
     "react-load-script": "0.0.6",
