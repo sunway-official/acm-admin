@@ -8,11 +8,9 @@ import uuid from 'uuid/v1';
 //   S3_BUCKET_NAME,
 //   S3_BUCKET_REGION,
 // } = process.env;
-// console.log(S3_ACCESS_KEY, S3_SECRET_KEY, S3_BUCKET_NAME, S3_BUCKET_REGION);
-// console.log(process.env);
 
-const S3_ACCESS_KEY = 'AKIAII6UYZJWLWXDJQKQ';
-const S3_SECRET_KEY = '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';
+const S3_ACCESS_KEY = '';
+const S3_SECRET_KEY = '';
 const S3_BUCKET_NAME = 'sunway-acm-dev';
 const S3_BUCKET_REGION = 'ap-southeast-1';
 
