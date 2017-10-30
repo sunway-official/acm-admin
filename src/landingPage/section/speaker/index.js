@@ -1,7 +1,7 @@
 import React from 'react';
 import { Component } from 'react';
 import { Col, Grid, Row } from 'react-flexbox-grid';
-import '../../css/speakerStyle.css';
+import './style.css';
 import SpeakerAvatar from './speakerAvatar';
 
 class Speaker extends Component {

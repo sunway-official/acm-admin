@@ -63,6 +63,9 @@ figure:hover+span {
   text-align: left;
   margin-left: 1em;
 }
+.speaker-info-wrapper > div{
+  color: #ffffff;
+}
 h4 {
   margin: 0px;
   padding-bottom: 0.3em;
@@ -74,4 +77,5 @@ h4 {
 .speaker-description{
   font-size: 1.5vw;
   padding-bottom: 3em;
+  color: #2C303B;
 }

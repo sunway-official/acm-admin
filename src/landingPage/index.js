@@ -1,8 +1,6 @@
 import React from 'react';
 import { Component } from 'react';
-//import Script from 'react-load-script';
-import './css/component.css';
-import './css/default.css';
+import './style.css';
 import { images } from '../theme';
 import Register from './section/register';
 import Description from './section/description';

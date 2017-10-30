@@ -1,8 +1,8 @@
 import React from 'react';
 import { Component } from 'react';
 import { Col, Grid, Row } from 'react-flexbox-grid';
-import { images } from '../../theme';
-import '../css/paperStyle.css';
+import { images } from '../../../theme';
+import './style.css';
 
 class Paper extends Component {
   render() {
@@ -13,7 +13,7 @@ class Paper extends Component {
             <Col xs={6} className="section-col">
               <img
                 src={images.conference2}
-                className="img landing conference2"
+                className="img landing conference2 paper-image"
                 alt=""
               />
             </Col>

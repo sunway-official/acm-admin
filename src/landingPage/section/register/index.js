@@ -1,7 +1,7 @@
 import React from 'react';
 import { Component } from 'react';
 import { Col, Grid, Row } from 'react-flexbox-grid';
-import '../css/registerStyle.css';
+import './style.css';
 
 class Register extends Component {
   render() {

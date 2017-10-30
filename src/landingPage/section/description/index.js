@@ -1,8 +1,8 @@
 import React from 'react';
 import { Component } from 'react';
 import { Col, Grid, Row } from 'react-flexbox-grid';
-import '../css/descriptionStyle.css';
-import { images } from '../../theme';
+import './style.css';
+import { images } from '../../../theme';
 
 class Description extends Component {
   render() {
