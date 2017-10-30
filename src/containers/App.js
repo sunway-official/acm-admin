@@ -13,6 +13,7 @@ import UserProfile from '../pages/conference/people/userProfile/userProfile';
 import Dashboard from '../pages/dashboard';
 import NoMatch from '../pages/NoMatch';
 import Schedule from '../pages/schedule';
+import Demo from 'pages/demo';
 import WithThunk from '../pages/withThunk';
 import { muiTheme } from '../theme';
 import Wrapper from './wrapper';
@@ -43,6 +44,7 @@ export default () => (
             path="/conference/:id/schedules"
             component={Schedule}
           />
+          <AuthRoute path="/demo" component={Demo} />
           <AuthRoute path="/withThunk" component={WithThunk} />
           <AuthRoute component={NoMatch} />
         </Switch>
