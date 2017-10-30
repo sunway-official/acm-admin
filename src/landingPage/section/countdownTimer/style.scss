@@ -6,8 +6,10 @@
 .timer-background-image{
   width: 100%;
   height: auto;
-  opacity: 0.75;
   display: block;
+  background: #2c303b;
+  background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) );
+  opacity: 0.9;
 }
 .timer-grid{
   position:absolute; /* absolute position (so we can position it where we want)*/
@@ -17,17 +19,33 @@
   transform: translate(-50%, -50%);
   padding: 0px;
 }
+.timer-text{
+  color: #FFFFFF;
+}
+
 #timer {
   font-family: Arial, sans-serif;
-  font-size: 20px;
-  color: #999;
+  color: #FFFFFF;
   letter-spacing: -1px;
+  display: flex;
 }
 #timer span {
-  font-size: 60px;
-  color: #333;
-  margin: 0 3px 0 15px;
+  font-size: 5vw;
+  color: #FFFFFF;
 }
 #timer span:first-child {
   margin-left: 0;
+}
+.small-timer{
+  margin-right: 1vw;
+  padding: 1.5vw;
+  background: rgb(246, 60, 23);
+  border-radius: 5px;
+  width: 6vw;
+}
+.small-text{
+  font-size: 1.5vw;
+}
+.timer-title{
+  padding-top: 0px;
 }

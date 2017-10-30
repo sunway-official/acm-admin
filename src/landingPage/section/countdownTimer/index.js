@@ -62,8 +62,8 @@ class CountDownTimer extends Component {
         <Grid fluid className="timer-grid">
           <Row around="xs">
             <Col xs={10}>
-              <h1 className="landingpage-title"> Hurry Up! </h1>
-              <p className="section-text">
+              <h1 className="landingpage-title timer-title"> Hurry Up! </h1>
+              <p className="section-text timer-text">
                 It's very closed to our conference.
               </p>
             </Col>
@@ -71,11 +71,26 @@ class CountDownTimer extends Component {
           <Row around="xs">
             <Col>
               <div id="timer">
-                <span id="days">{this.state.weeks}</span>weeks
-                <span id="days">{this.state.days}</span>days
-                <span id="hours">{this.state.hours}</span>hours
-                <span id="minutes">{this.state.minutes}</span>minutes
-                <span id="seconds">{this.state.seconds}</span>seconds
+                <div className="small-timer">
+                  <span id="weeks">{this.state.weeks}</span>
+                  <div className="small-text">weeks</div>
+                </div>
+                <div className="small-timer">
+                  <span id="days">{this.state.days}</span>
+                  <div className="small-text">days</div>
+                </div>
+                <div className="small-timer">
+                  <span id="hours">{this.state.hours}</span>
+                  <div className="small-text">hours</div>
+                </div>
+                <div className="small-timer">
+                  <span id="minutes">{this.state.minutes}</span>
+                  <div className="small-text">minutes</div>
+                </div>
+                <div className="small-timer">
+                  <span id="seconds">{this.state.seconds}</span>
+                  <div className="small-text">seconds</div>
+                </div>
               </div>
             </Col>
           </Row>

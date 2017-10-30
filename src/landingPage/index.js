@@ -9,6 +9,8 @@ import Description from './section/description';
 import Paper from './section/paper';
 import Speaker from './section/speaker/index';
 import CountDownTimer from './section/countdownTimer';
+import Map from './section/map';
+import Footer from './section/footer';
 
 class LandingPage extends Component {
   handleScriptCreate() {
@@ -51,8 +53,10 @@ class LandingPage extends Component {
             <Register />
             <Description />
             <Paper />
-            <Speaker />
             <CountDownTimer />
+            <Speaker />
+            <Map />
+            <Footer />
           </div>
         </div>
       </div>

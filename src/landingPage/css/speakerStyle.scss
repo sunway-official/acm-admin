@@ -3,6 +3,16 @@
     text-align: center;
   }
 }
+#speaker-grid{
+  padding: 0px;
+  text-align: center;
+  background-color: #FFFFFF;
+}
+.landingpage-title{
+  &.speaker{
+    color: #ff5722;
+  }
+}
 .speaker-avatar{
   display: block;
   max-width: 100%;

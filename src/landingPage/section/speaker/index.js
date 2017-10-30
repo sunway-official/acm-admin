@@ -7,11 +7,11 @@ import SpeakerAvatar from './speakerAvatar';
 class Speaker extends Component {
   render() {
     return (
-      <div className="orange-section speaker">
-        <Grid fluid id="paper-grid">
+      <div className="speaker">
+        <Grid fluid id="speaker-grid">
           <Row around="xs" className="section-row">
             <Col xs={10} className="section-col">
-              <h1 className="landingpage-title register"> The Speakers </h1>
+              <h1 className="landingpage-title speaker"> The Speakers </h1>
               <p className="speaker-description">
                 We attract only the best speakers in the construction industry
                 for Academic Conference, bringing you talented individuals with
