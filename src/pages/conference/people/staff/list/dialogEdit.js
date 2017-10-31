@@ -3,9 +3,11 @@ import { Dialog, Tabs, Tab, IconButton } from 'material-ui';
 import { NavigationClose } from 'material-ui/svg-icons';
 import PersonalInfo from './personalInfo';
 import { connect } from 'react-redux';
+import { roleOperations } from 'store/ducks/roles';
 
 class DialogEdit extends React.Component {
   render() {
+    const roles = this.props.roles;
     const actions = (
       <div>
         <IconButton
@@ -21,7 +23,10 @@ class DialogEdit extends React.Component {
       <Dialog open={this.props.openDialog} actions={actions}>
         <Tabs style={{ marginTop: '20px' }}>
           <Tab label="Personal Information">
-            <PersonalInfo initialValues={this.props.initialValues} />
+            <PersonalInfo
+              initialValues={this.props.initialValues}
+              roles={roles}
+            />
           </Tab>
           <Tab label="Roles Information">
             <div>Role</div>
@@ -31,8 +36,10 @@ class DialogEdit extends React.Component {
     );
   }
 }
+
 const mapStateToProps = (state, ownProps) => {
   const staff = ownProps.allStaff;
+  const roles = ownProps.roles;
   return {
     initialValues: {
       id: staff.id,
@@ -41,6 +48,7 @@ const mapStateToProps = (state, ownProps) => {
       email: staff.email,
       dob: staff.dob,
       gender: staff.gender,
+      role: roles[0].role.name,
     },
   };
 };
