@@ -1,6 +1,7 @@
 import React from 'react';
 import { Component } from 'react';
 import './style.css';
+import Slider from 'react-slick';
 
 const listImage = [
   {
@@ -31,6 +32,14 @@ const listImage = [
 ];
 class SpeakerAvatar extends Component {
   render() {
+    const settings = {
+      dots: false,
+      infinite: true,
+      slidesToShow: 5,
+      slidesToScroll: 1,
+      autoplay: true,
+      autoplaySpeed: 2000,
+    };
     const content = listImage.map(image => (
       <div key={image.id} className="hover08">
         <figure>
@@ -42,7 +51,11 @@ class SpeakerAvatar extends Component {
         </figure>
       </div>
     ));
-    return <div className="list-image">{content}</div>;
+    return (
+      <Slider className="list-image" {...settings}>
+        {content}
+      </Slider>
+    );
   }
 }
 
