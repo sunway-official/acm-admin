@@ -1,6 +1,5 @@
 import * as moment from 'moment';
 import React from 'react';
-import queries from './queries';
 
 export const getSchedules = array => {
   let schedules = [];
