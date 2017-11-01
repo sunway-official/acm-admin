@@ -4,7 +4,7 @@ import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 import AddActivity from './addActivity';
 import EditActivity from './editActivity';
-import { Dialog, IconButton, Subheader } from 'material-ui';
+import { Dialog, IconButton, Subheader, Toggle } from 'material-ui';
 import { Link } from 'react-router-dom';
 import { scheduleActions, scheduleOperations } from 'store/ducks/schedule';
 import { connect } from 'react-redux';
@@ -32,10 +32,24 @@ class MyCalendar extends React.PureComponent {
     this.handleEdit = this.handleEdit.bind(this);
     this.addActivity = this.addActivity.bind(this);
     this.editActivity = this.editActivity.bind(this);
+    this.handleTimeFormat = this.handleTimeFormat.bind(this);
+    this.state = {
+      timeFormat: 7,
+    };
   }
   handleEdit(event) {
     this.props.toggleEdit();
     this.props.setEvent(event);
+  }
+
+  handleTimeFormat() {
+    this.state.timeFormat === 7
+      ? this.setState({
+          timeFormat: 0,
+        })
+      : this.setState({
+          timeFormat: 7,
+        });
   }
 
   addActivity(values) {
@@ -84,9 +98,16 @@ class MyCalendar extends React.PureComponent {
         console.log('there was an error sending the query', error);
       });
   }
-
+  // deleteIds
   editActivity(values) {
-    const { UPDATE_ACTIVITY_MUTATION, UPDATE_SCHEDULE_MUTATION } = this.props;
+    console.log(values);
+    const schedules = values.schedules;
+    const {
+      UPDATE_ACTIVITY_MUTATION,
+      UPDATE_SCHEDULE_MUTATION,
+      DELETE_SCHEDULE_MUTATION,
+      INSERT_SCHEDULE_MUTATION,
+    } = this.props;
     const conferenceId = this.props.match.params.id;
     this.props.toggleEdit();
     UPDATE_ACTIVITY_MUTATION({
@@ -97,26 +118,73 @@ class MyCalendar extends React.PureComponent {
       },
     })
       .then(() => {
-        const newStarTime = functions.getDateTime(
-          values.date,
-          values.startTime,
-        );
+        const deleteIds = this.props.deleteIds;
+        // xoa schedule
+        if (deleteIds) {
+          deleteIds.map(id => {
+            DELETE_SCHEDULE_MUTATION({
+              variables: {
+                id: id,
+              },
+            });
+          });
+        }
 
-        const newEndTime = functions.getDateTime(values.date, values.endTime);
-        // eslint-disable-next-line array-callback-return
-        UPDATE_SCHEDULE_MUTATION({
-          variables: {
-            id: values.scheduleId,
-            start: newStarTime,
-            end: newEndTime,
-            room_id: values.room,
-          },
-          refetchQueries: [
-            {
-              query: queries.GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY,
-              variables: { conference_id: conferenceId },
-            },
-          ],
+        // lap va update schedule
+        schedules.map((schedule, index) => {
+          const newStarTime = functions.getDateTime(
+            schedule.date,
+            schedule.startTime,
+          );
+
+          const newEndTime = functions.getDateTime(
+            schedule.date,
+            schedule.endTime,
+          );
+          // eslint-disable-next-line array-callback-return
+          if (schedule.id) {
+            if (index < schedules.length - 1) {
+              UPDATE_SCHEDULE_MUTATION({
+                variables: {
+                  id: schedule.id,
+                  start: newStarTime,
+                  end: newEndTime,
+                  room_id: schedule.room,
+                },
+              });
+            } else {
+              UPDATE_SCHEDULE_MUTATION({
+                variables: {
+                  id: schedule.id,
+                  start: newStarTime,
+                  end: newEndTime,
+                  room_id: schedule.room,
+                },
+                refetchQueries: [
+                  {
+                    query: queries.GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY,
+                    variables: { conference_id: conferenceId },
+                  },
+                ],
+              });
+            }
+          } else {
+            INSERT_SCHEDULE_MUTATION({
+              variables: {
+                activity_id: values.id,
+                room_id: schedule.room,
+                conference_id: conferenceId,
+                start: newStarTime,
+                end: newEndTime,
+              },
+              refetchQueries: [
+                {
+                  query: queries.GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY,
+                  variables: { conference_id: conferenceId },
+                },
+              ],
+            });
+          }
         });
       })
       .catch(error => {
@@ -132,6 +200,10 @@ class MyCalendar extends React.PureComponent {
     const events = functions.getEvents(getActivitiesByConferenceID);
     const rooms = this.props.GET_ALL_ROOM_QUERY.getAllRooms;
     const conferenceId = this.props.match.params.id;
+    const start_date = events[0].start_date;
+    const end_date = events[0].end_date;
+
+    const today = new Date();
 
     return (
       <div className="conference">
@@ -155,20 +227,40 @@ class MyCalendar extends React.PureComponent {
             events={events}
             defaultView="week"
             defaultDate={new Date()}
-            onSelectEvent={events => {
-              this.handleEdit(events);
+            onSelectEvent={event => {
+              this.handleEdit(event);
             }}
+            min={
+              new Date(
+                today.getFullYear(),
+                today.getMonth(),
+                today.getDate(),
+                this.state.timeFormat,
+              )
+            }
           />
-          <AddActivity onSubmit={this.addActivity} rooms={rooms} />
+          <AddActivity
+            onSubmit={this.addActivity}
+            rooms={rooms}
+            start_date={start_date}
+            end_date={end_date}
+          />
+          <div>
+            <Toggle label="Format 24h" onToggle={this.handleTimeFormat} />
+          </div>
         </div>
+
         <Dialog
           open={this.props.openEdit}
           title="Edit Activity Schedule Information"
+          autoScrollBodyContent={true}
         >
           <EditActivity
             onSubmit={this.editActivity}
             rooms={rooms}
             conferenceId={conferenceId}
+            start_date={start_date}
+            end_date={end_date}
           />
           <IconButton
             tooltip="Close"
@@ -186,6 +278,7 @@ class MyCalendar extends React.PureComponent {
 const mapStateToProps = state => {
   return {
     openEdit: state.schedule.openEditFormModal,
+    deleteIds: state.schedule.deleteIds,
   };
 };
 
@@ -206,6 +299,9 @@ export default compose(
   }),
   graphql(queries.GET_ALL_ROOM_QUERY, {
     name: 'GET_ALL_ROOM_QUERY',
+  }),
+  graphql(mutations.DELETE_SCHEDULE_MUTATION, {
+    name: 'DELETE_SCHEDULE_MUTATION',
   }),
   graphql(mutations.INSERT_ACTIVITY_MUTATION, {
     name: 'INSERT_ACTIVITY_MUTATION',

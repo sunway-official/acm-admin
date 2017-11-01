@@ -5,6 +5,10 @@ export const GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY = gql`
       id
       title
       description
+      conference {
+        start_date
+        end_date
+      }
       schedules {
         id
         start

@@ -1,8 +1,7 @@
-import React from 'react';
-import { DatePicker, TimePicker, TextField, SelectField } from 'material-ui';
+import { functions } from './helpers';
+import moment from 'moment';
 
-const currentDate = new Date();
-const validate = values => {
+const validate = (values, props) => {
   const errors = {};
   const ArrayErrors = [];
   const requiredFields = [
@@ -30,7 +29,6 @@ const validate = values => {
         scheduleErrors.date = 'Required';
         ArrayErrors[scheduleIndex] = scheduleErrors;
       }
-
       if (!schedule || !schedule.room) {
         scheduleErrors.room = 'Required';
         ArrayErrors[scheduleIndex] = scheduleErrors;
@@ -39,84 +37,62 @@ const validate = values => {
         scheduleErrors.startTime = 'Required';
         ArrayErrors[scheduleIndex] = scheduleErrors;
       }
+      let startTimeHours = 0;
+      let endTimeHours = 0;
+      let startTimeMinutes = 0;
+      let endTimeMinutes = 1;
       if (!schedule || !schedule.endTime) {
         scheduleErrors.endTime = 'Required';
         ArrayErrors[scheduleIndex] = scheduleErrors;
+      } else if (schedule.startTime && schedule.endTime) {
+        startTimeHours = moment(schedule.startTime).hours();
+        endTimeHours = moment(schedule.endTime).hours();
+        startTimeMinutes = moment(schedule.startTime).minutes();
+        endTimeMinutes = moment(schedule.endTime).minutes();
       }
-      if (schedule.startTime >= schedule.endTime) {
+
+      if (
+        startTimeHours > endTimeHours ||
+        (startTimeHours === endTimeHours && startTimeMinutes >= endTimeMinutes)
+      ) {
         scheduleErrors.endTime =
-          'End time of schedule must be greater than start time!!!';
+          'End time of schedule must be greater than start time and in the same day!!!';
         ArrayErrors[scheduleIndex] = scheduleErrors;
+      }
+
+      if (
+        schedule.date &&
+        (moment(schedule.date).isBefore(moment(props.start_date)) ||
+          moment(schedule.date).isAfter(moment(props.end_date)))
+      ) {
+        scheduleErrors.date =
+          'Please choose date from ' +
+          moment(props.start_date).format('DD/MM/YYYY') +
+          ' to ' +
+          moment(props.end_date).format('DD/MM/YYYY');
+        ArrayErrors[scheduleIndex] = scheduleErrors;
+      }
+
+      if (
+        scheduleIndex === values.schedules.length - 1 &&
+        values.schedules.length !== 1
+      ) {
+        const check = functions.checkSchedules(values.schedules, schedule);
+        if (!check) {
+          scheduleErrors.room = 'This room is choosing';
+          ArrayErrors[scheduleIndex] = scheduleErrors;
+        }
       }
     });
     if (ArrayErrors.length) {
       errors.schedules = ArrayErrors;
+      props.checkError(true);
+    } else {
+      props.checkError(false);
     }
   }
+
   return errors;
 };
 
-export const renderTextField = ({
-  input,
-  label,
-  meta: { touched, error },
-  ...custom
-}) => (
-  <TextField
-    errorText={touched && error}
-    fullWidth={true}
-    multiLine={true}
-    rows={1}
-    {...input}
-    {...custom}
-  />
-);
-export const renderSelectField = ({
-  input,
-  label,
-  meta: { touched, error },
-  children,
-  ...custom
-}) => (
-  <SelectField
-    floatingLabelText={label}
-    errorText={touched && error}
-    {...input}
-    onChange={(event, index, value) => input.onChange(value)}
-    children={children}
-    {...custom}
-  />
-);
-export const renderDatePicker = ({
-  input,
-  label,
-  meta: { touched, error },
-  ...custom
-}) => (
-  <DatePicker
-    minDate={currentDate}
-    errorText={touched && error}
-    onChange={(e, val) => {
-      return input.onChange(val);
-    }}
-    value={input.value}
-    {...custom}
-  />
-);
-export const renderTimePicker = ({
-  input,
-  label,
-  meta: { touched, error },
-  ...custom
-}) => (
-  <TimePicker
-    minutesStep={5}
-    errorText={touched && error}
-    onChange={(e, val) => {
-      return input.onChange(val);
-    }}
-    value={input.value}
-    {...custom}
-  />
-);
 export default validate;

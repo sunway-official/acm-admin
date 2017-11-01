@@ -6,7 +6,8 @@ import {
   renderDatePicker,
   renderSelectField,
   renderTimePicker,
-} from './validate';
+} from '../render';
+import { connect } from 'react-redux';
 
 const styles = {
   divider: {
@@ -26,18 +27,11 @@ const styles = {
 };
 
 class renderSchedules extends React.Component {
-  constructor() {
-    super();
-    this.onFocus = this.onFocus.bind(this);
-  }
   componentDidMount() {
     this.props.fields.removeAll();
     this.props.fields.push({});
   }
 
-  onFocus() {
-    console.log(this.props);
-  }
   render() {
     const { rooms, fields, meta: { error, submitFailed } } = this.props;
     if (!fields) return <div />;
@@ -117,6 +111,7 @@ class renderSchedules extends React.Component {
             style={styles.small}
             onClick={() => fields.push({})}
             tooltip="Add Schedule"
+            disabled={this.props.checkError}
           >
             <ActionAlarmAdd />
           </IconButton>
@@ -127,4 +122,10 @@ class renderSchedules extends React.Component {
   }
 }
 
-export default renderSchedules;
+const mapStateToProps = state => {
+  return {
+    checkError: state.schedule.error,
+  };
+};
+
+export default connect(mapStateToProps, undefined)(renderSchedules);

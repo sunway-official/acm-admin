@@ -1,20 +1,14 @@
 import React from 'react';
-import { RaisedButton, MenuItem, Dialog } from 'material-ui';
-import { reduxForm, Field, reset } from 'redux-form';
+import { RaisedButton, Dialog } from 'material-ui';
+import { reduxForm, Field, FieldArray, reset } from 'redux-form';
 import { connect } from 'react-redux';
 import { scheduleActions } from 'store/ducks/schedule';
 import { mutations, queries } from './helpers';
 import { compose, graphql } from 'react-apollo';
+import { renderSchedulesEdit, renderTextField } from './render';
+import { scheduleOperations } from 'store/ducks/schedule';
 
-import validate, {
-  renderTextField,
-  renderDatePicker,
-  renderTimePicker,
-  renderSelectField,
-} from './validate';
-const styles = {
-  marginRight: 12,
-};
+import validate from './validate';
 class EditActivity extends React.PureComponent {
   constructor() {
     super();
@@ -31,10 +25,11 @@ class EditActivity extends React.PureComponent {
   }
 
   handleDelete() {
-    const { DELETE_SCHEDULE_MUTATION, event } = this.props;
-    DELETE_SCHEDULE_MUTATION({
+    const { DELETE_ACTIVITY_MUTATION, event } = this.props;
+    console.log(event);
+    DELETE_ACTIVITY_MUTATION({
       variables: {
-        id: event.scheduleId,
+        id: event.id,
       },
       refetchQueries: [
         {
@@ -48,26 +43,31 @@ class EditActivity extends React.PureComponent {
   }
 
   render() {
-    const { handleSubmit, submitting, pristine, rooms } = this.props;
+    const actions = (
+      <div>
+        <RaisedButton
+          label="yes"
+          primary={true}
+          onClick={() => this.handleDelete()}
+        />
+        <RaisedButton label="no" onClick={() => this.toggleDelete()} />
+      </div>
+    );
+    const {
+      handleSubmit,
+      submitting,
+      pristine,
+      rooms,
+      error,
+      event,
+    } = this.props;
+
     return (
       <div>
+        {error && <div className="error">{error}</div>}
         <form className="form conference-info" onSubmit={handleSubmit}>
           <div className="d-flex form-group">
             <label>Title :</label>
-            <Field
-              name="id"
-              component={() => {
-                return null;
-              }}
-              type="hidden"
-            />
-            <Field
-              name="scheduleId"
-              component={() => {
-                return null;
-              }}
-              type="hidden"
-            />
             <Field
               name="title"
               component={renderTextField}
@@ -77,103 +77,35 @@ class EditActivity extends React.PureComponent {
           <div className="d-flex form-group">
             <label>Description :</label>
             <Field
-              name="id"
-              component={() => {
-                return null;
-              }}
-              type="hidden"
-            />
-            <Field
-              name="scheduleId"
-              component={() => {
-                return null;
-              }}
-              type="hidden"
-            />
-            <Field
               name="description"
               component={renderTextField}
               hintText="Activity Description"
             />
           </div>
-          <div className="d-flex">
-            <div className="d-flex form-group ">
-              <label className="schedule-date">Date:</label>
-              <Field
-                name="date"
-                component={renderDatePicker}
-                format={null}
-                textFieldStyle={{ width: '100%' }}
-                hintText="Activity Date"
-              />
-            </div>
-            <div className="d-flex form-group" style={{ width: '300px' }}>
-              <label className="text-align-center room">Room :</label>
-              <Field name="room" component={renderSelectField}>
-                {rooms.map(room => {
-                  return (
-                    <MenuItem
-                      key={room.id}
-                      value={room.id}
-                      primaryText={room.name}
-                    />
-                  );
-                })}
-              </Field>
-            </div>
+          <div className="d-flex form-group">
+            <FieldArray
+              name="schedules"
+              component={renderSchedulesEdit}
+              event={event}
+              rooms={rooms}
+            />
           </div>
-          <div className="d-flex">
-            <div className="d-flex form-group ">
-              <label className="schedule-time-from">Start From :</label>
-              <Field
-                name="startTime"
-                component={renderTimePicker}
-                format={null}
-                hintText="Begin Schedule"
-                textFieldStyle={{ width: '100%' }}
-              />
-            </div>
-            <div className="d-flex form-group">
-              <label className="text-align-center">To :</label>
-              <Field
-                name="endTime"
-                component={renderTimePicker}
-                format={null}
-                hintText="End Schedule"
-                textFieldStyle={{ width: '100%' }}
-              />
-            </div>
+          <div className="d-flex form-group">
+            <Field name="error" component="label" />
           </div>
-          <div className="d-flex save-btn btn-group">
+          <div className="d-flex justify-content-flex-end">
             <RaisedButton
               label="Save"
               primary={true}
               type="submit"
-              style={styles}
               disabled={pristine || submitting}
-              // onClick={this.props.toggleEdit}
             />
             <RaisedButton label="Delete" onClick={this.toggleDelete} />
             <Dialog
               title="Do you want to delete this schedule ?"
               open={this.state.openDelete}
-            >
-              <div className="d-flex justify-content-flex-end">
-                <RaisedButton
-                  label="Yes"
-                  primary={true}
-                  type="submit"
-                  disabled={submitting}
-                  style={styles}
-                  onClick={this.handleDelete}
-                />
-                <RaisedButton
-                  label="No"
-                  type="submit"
-                  onClick={this.toggleDelete}
-                />
-              </div>
-            </Dialog>
+              actions={actions}
+            />
           </div>
         </form>
       </div>
@@ -181,7 +113,7 @@ class EditActivity extends React.PureComponent {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = state => {
   const event = state.schedule.event;
   return {
     initialValues: {
@@ -190,9 +122,8 @@ const mapStateToProps = (state, ownProps) => {
       endTime: event.end,
       startTime: event.start,
       date: new Date(event.start),
-      room: event.room.id,
-      scheduleId: event.scheduleId,
       description: event.description,
+      schedules: event.schedules,
     },
     event: event,
   };
@@ -201,6 +132,9 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = dispatch => {
   return {
     toggleEdit: () => dispatch(scheduleActions.toggleEditActivityFormModal()),
+    checkError: error => {
+      dispatch(scheduleOperations.checkErrorOperation(error));
+    },
   };
 };
 
@@ -213,7 +147,7 @@ EditActivity = reduxForm({
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
-  graphql(mutations.DELETE_SCHEDULE_MUTATION, {
-    name: 'DELETE_SCHEDULE_MUTATION',
+  graphql(mutations.DELETE_ACTIVITY_MUTATION, {
+    name: 'DELETE_ACTIVITY_MUTATION',
   }),
 )(EditActivity);
