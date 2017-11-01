@@ -34,10 +34,7 @@ class CountDownTimer extends Component {
       minutes %= 60;
       seconds %= 60;
 
-      //this.setState(days, hours, minutes, seconds);
       this.setState({ weeks, days, hours, minutes, seconds });
-      console.log(this.state);
-      //console.log(days + ' ' + hours + ' ' + minutes + ' ' + seconds);
     }
   }
   componentWillMount() {

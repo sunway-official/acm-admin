@@ -2,7 +2,7 @@ import React from 'react';
 import { Component } from 'react';
 import { Col, Grid, Row } from 'react-flexbox-grid';
 import './style.css';
-
+import * as moment from 'moment';
 class Register extends Component {
   render() {
     return (
@@ -12,26 +12,29 @@ class Register extends Component {
             <Col xs={10}>
               <Row>
                 <h1 className="landingpage-title register">
-                  Academic Conference Management
+                  {this.props.landingPage.conference.title}
                 </h1>
               </Row>
               <Row>
                 <p className="register-description">
-                  Prepare to abandon your comfort zone, discover some of the
-                  world’s most technologically advanced minds and explore the
-                  digital construction trends of tomorrow.
+                  {this.props.landingPage.register_description}
                 </p>
               </Row>
               <Row className="register-final-row">
                 <Col xs={4} className="register-col">
                   <Row> Where </Row>
-                  <Row> Duy Tan University </Row>
-                  <Row> Da Nang, Viet Nam </Row>
+                  <Row>{this.props.landingPage.conference.address.street} </Row>
+                  <Row>
+                    <div>
+                      {this.props.landingPage.conference.address.city}, <span />
+                      {this.props.landingPage.conference.address.country}
+                    </div>
+                  </Row>
                 </Col>
                 <Col xs={3}>
                   <Row> When </Row>
-                  <Row> From 1/1/2018 </Row>
-                  <Row> To 2/2/2018 </Row>
+                  <Row> From 1/11/2017</Row>
+                  <Row> To 3/11/2017</Row>
                 </Col>
                 <Col xs={4}>
                   <button className="btn register-button">

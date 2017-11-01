@@ -13,9 +13,7 @@ class Speaker extends Component {
             <Col xs={10} className="section-col">
               <h1 className="landingpage-title speaker"> The Speakers </h1>
               <p className="speaker-description">
-                We attract only the best speakers in the construction industry
-                for Academic Conference, bringing you talented individuals with
-                creative minds, future-thinkers and innovators.
+                {this.props.landingPage.speaker_description}
               </p>
             </Col>
           </Row>

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Component } from 'react';
 import './style.css';
-import { images } from '../theme';
 import Register from './section/register';
 import Description from './section/description';
 import Paper from './section/paper';
@@ -9,7 +8,9 @@ import Speaker from './section/speaker/index';
 import CountDownTimer from './section/countdownTimer';
 import Map from './section/map';
 import Footer from './section/footer';
-
+import { graphql, compose } from 'react-apollo';
+import { queries } from './helpers/index';
+import Home from './section/home';
 class LandingPage extends Component {
   handleScriptCreate() {
     this.setState({ scriptLoaded: false });
@@ -23,6 +24,10 @@ class LandingPage extends Component {
     this.setState({ scriptLoaded: true });
   }
   render() {
+    const { loading, getLandingPageByConferenceId } = this.props.data;
+    if (loading) return <div>loading</div>;
+    const landingPage = getLandingPageByConferenceId[0];
+    //console.log(landingPage);
     return (
       <div className="landingpage-body">
         <div className="container">
@@ -41,24 +46,24 @@ class LandingPage extends Component {
             </div>
           </div>
           <div className="main">
-            <div className="img-container">
-              <img
-                src={images.conference1}
-                className="img landing conference1"
-                alt=""
-              />
-            </div>
-            <Register />
-            <Description />
-            <Paper />
-            <CountDownTimer />
-            <Speaker />
-            <Map />
-            <Footer />
+            <Home landingPage={landingPage} />
+            <Register landingPage={landingPage} />
+            <Description landingPage={landingPage} />
+            <Paper landingPage={landingPage} />
+            <CountDownTimer landingPage={landingPage} />
+            <Speaker landingPage={landingPage} />
+            <Map landingPage={landingPage} />
+            <Footer landingPage={landingPage} />
           </div>
         </div>
       </div>
     );
   }
 }
-export default LandingPage;
+export default compose(
+  graphql(queries.GET_LANDING_PAGE_BY_CONFERENCE_ID_QUERY, {
+    options: ownProps => ({
+      variables: { conference_id: '2' },
+    }),
+  }),
+)(LandingPage);

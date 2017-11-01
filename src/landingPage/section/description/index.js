@@ -14,17 +14,10 @@ class Description extends Component {
               <Row around="xs" className="section-row">
                 <Col xs={10}>
                   <h1 className="landingpage-title description">
-                    Academic Conference Management
+                    {this.props.landingPage.conference.title}
                   </h1>
                   <p className="section-text">
-                    Over the course of two intensive (but fun) days, we’ll
-                    gather for a series of keynotes, panel, and interactive
-                    seminar sessions from BIM and digital construction experts
-                    from across the globe. We’ll be addressing everything new in
-                    the world of digital construction and advanced technologies;
-                    from artificial intelligence to predictive data. Plus,
-                    you’ll also get exclusive access to never before seen
-                    technological developments.
+                    {this.props.landingPage.conference.description}
                   </p>
                 </Col>
               </Row>

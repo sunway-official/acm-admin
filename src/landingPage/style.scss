@@ -78,19 +78,6 @@ width: inherit;
 .cbp-af-header.cbp-af-header-shrink h2 {
 	font-size: 2em;
 }
-
-.img{
-  &.landing{
-    display: block;
-    opacity: 0.75;
-  }
-  &.conference1 {
-    width: 100%;
-    // height: auto;
-    // background: #000;
-    opacity: .85;
-  }
-}
 .btn{
   &.get-ticket{
     color: #ff5722;

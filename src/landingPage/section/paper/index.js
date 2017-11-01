@@ -24,13 +24,7 @@ class Paper extends Component {
                     Call for papers is now open!
                   </h1>
                   <p className="section-text">
-                    We’re seeking speakers to join us at this truly
-                    one-of-a-kind event in the construction industry. BIM Show
-                    Live is best known for its high-profile, content-driven
-                    approach to digital construction and showcases the very best
-                    in modern construction methods, techniques and technologies.
-                    Which is why we are inviting everyone and anyone with a
-                    passion for BIM to come forward and request a speaker place.
+                    {this.props.landingPage.call_paper_description}
                   </p>
                 </Col>
               </Row>
