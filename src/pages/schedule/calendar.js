@@ -15,7 +15,13 @@ import {
   ActionHome,
 } from 'material-ui/svg-icons';
 
-import { functions, queries, mutations } from './helpers';
+import {
+  functions,
+  queries,
+  mutations,
+  addActivityFunc,
+  editActivityFunc,
+} from './helpers';
 import { graphql, compose } from 'react-apollo';
 
 BigCalendar.momentLocalizer(moment);
@@ -58,50 +64,16 @@ class MyCalendar extends React.PureComponent {
 
     const conferenceId = this.props.conference.id;
 
-    INSERT_ACTIVITY_MUTATION({
-      variables: {
-        conference_id: conferenceId,
-        title: values.title,
-        description: values.description,
-      },
-    })
-      .then(({ data }) => {
-        // eslint-disable-next-line array-callback-return
-        values.schedules.map(schedule => {
-          const newStarTime = functions.getDateTime(
-            schedule.date,
-            schedule.startTime,
-          );
-          const newEndTime = functions.getDateTime(
-            schedule.date,
-            schedule.endTime,
-          );
-
-          INSERT_SCHEDULE_MUTATION({
-            variables: {
-              activity_id: data.insertActivity.id,
-              room_id: schedule.room,
-              conference_id: conferenceId,
-              start: newStarTime,
-              end: newEndTime,
-            },
-            refetchQueries: [
-              {
-                query: queries.GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY,
-                variables: { conference_id: conferenceId },
-              },
-            ],
-          });
-        });
-      })
-      .catch(error => {
-        console.log('there was an error sending the query', error);
-      });
+    const data = {
+      INSERT_ACTIVITY_MUTATION,
+      INSERT_SCHEDULE_MUTATION,
+      conferenceId,
+      values,
+    };
+    addActivityFunc(data);
   }
   // deleteIds
   editActivity(values) {
-    console.log(values);
-    const schedules = values.schedules;
     const {
       UPDATE_ACTIVITY_MUTATION,
       UPDATE_SCHEDULE_MUTATION,
@@ -110,88 +82,19 @@ class MyCalendar extends React.PureComponent {
     } = this.props;
     const conferenceId = this.props.conference.id;
     this.props.toggleEdit();
-    UPDATE_ACTIVITY_MUTATION({
-      variables: {
-        id: values.id,
-        title: values.title,
-        description: values.description,
-      },
-    })
-      .then(() => {
-        const deleteIds = this.props.deleteIds;
-        // xoa schedule
-        if (deleteIds) {
-          deleteIds.map(id => {
-            DELETE_SCHEDULE_MUTATION({
-              variables: {
-                id: id,
-              },
-            });
-          });
-        }
+    const deleteIds = this.props.deleteIds;
 
-        // lap va update schedule
-        schedules.map((schedule, index) => {
-          const newStarTime = functions.getDateTime(
-            schedule.date,
-            schedule.startTime,
-          );
+    const data = {
+      UPDATE_ACTIVITY_MUTATION,
+      conferenceId,
+      values,
+      DELETE_SCHEDULE_MUTATION,
+      UPDATE_SCHEDULE_MUTATION,
+      INSERT_SCHEDULE_MUTATION,
+      deleteIds,
+    };
 
-          const newEndTime = functions.getDateTime(
-            schedule.date,
-            schedule.endTime,
-          );
-          // eslint-disable-next-line array-callback-return
-          if (schedule.id) {
-            if (index < schedules.length - 1) {
-              UPDATE_SCHEDULE_MUTATION({
-                variables: {
-                  id: schedule.id,
-                  activity_id: values.id,
-                  start: newStarTime,
-                  end: newEndTime,
-                  room_id: schedule.room,
-                },
-              });
-            } else {
-              UPDATE_SCHEDULE_MUTATION({
-                variables: {
-                  id: schedule.id,
-                  activity_id: values.id,
-                  start: newStarTime,
-                  end: newEndTime,
-                  room_id: schedule.room,
-                },
-                refetchQueries: [
-                  {
-                    query: queries.GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY,
-                    variables: { conference_id: conferenceId },
-                  },
-                ],
-              });
-            }
-          } else {
-            INSERT_SCHEDULE_MUTATION({
-              variables: {
-                activity_id: values.id,
-                room_id: schedule.room,
-                conference_id: conferenceId,
-                start: newStarTime,
-                end: newEndTime,
-              },
-              refetchQueries: [
-                {
-                  query: queries.GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY,
-                  variables: { conference_id: conferenceId },
-                },
-              ],
-            });
-          }
-        });
-      })
-      .catch(error => {
-        console.log('there was an error sending the query', error);
-      });
+    editActivityFunc(data);
   }
 
   render() {
@@ -246,8 +149,8 @@ class MyCalendar extends React.PureComponent {
             start_date={start_date}
             end_date={end_date}
           />
-          <div>
-            <Toggle label="Format 24h" onToggle={this.handleTimeFormat} />
+          <div id="format-time">
+            <Toggle label="24h" onToggle={this.handleTimeFormat} />
           </div>
         </div>
 

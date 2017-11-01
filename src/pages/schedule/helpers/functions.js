@@ -1,5 +1,6 @@
 import * as moment from 'moment';
 import React from 'react';
+import queries from './queries';
 
 export const getSchedules = array => {
   let schedules = [];
@@ -85,7 +86,6 @@ export const EventAgenda = ({ event }) => {
 export const checkSchedules = schedules => {
   let countRoom = 0;
   let countDate = 0;
-  console.log(schedules);
   for (let i = 0; i < schedules.length - 1; i = i + 1) {
     let item = schedules[i];
     for (let j = i + 1; j < schedules.length; j = j + 1) {
