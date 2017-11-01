@@ -22,25 +22,25 @@ export const getSchedules = array => {
 
 export const getEvents = array => {
   let events = [];
-  array.map(item => {
-    const schedules = getSchedules(item.schedules);
-    item.schedules.map(schedule => {
-      const start = moment(schedule.start)._d;
-      const end = moment(schedule.end)._d;
+  if (array) {
+    array.map(item => {
+      const schedules = getSchedules(item.schedules);
+      item.schedules.map(schedule => {
+        const start = moment(schedule.start)._d;
+        const end = moment(schedule.end)._d;
 
-      const event = {
-        id: item.id,
-        title: item.title,
-        description: item.description,
-        start_date: item.conference.start_date,
-        end_date: item.conference.end_date,
-        start: start,
-        end: end,
-        schedules: schedules,
-      };
-      events.push(event);
+        const event = {
+          id: item.id,
+          title: item.title,
+          description: item.description,
+          start: start,
+          end: end,
+          schedules: schedules,
+        };
+        events.push(event);
+      });
     });
-  });
+  }
 
   return events;
 };
@@ -82,40 +82,48 @@ export const EventAgenda = ({ event }) => {
   );
 };
 
-export const checkSchedules = (schedules, schedule) => {
+export const checkSchedules = schedules => {
   let countRoom = 0;
   let countDate = 0;
+  console.log(schedules);
   for (let i = 0; i < schedules.length - 1; i = i + 1) {
     let item = schedules[i];
-    let checkRoom = schedule.room && item.room && item.room === schedule.room;
-    let checkDate =
-      schedule.date &&
-      item.date &&
-      new Date(item.date).getDay() === new Date(schedule.date).getDay() &&
-      new Date(item.date).getMonth() === new Date(schedule.date).getMonth() &&
-      new Date(item.date).getFullYear() ===
-        new Date(schedule.date).getFullYear();
+    for (let j = i + 1; j < schedules.length; j = j + 1) {
+      let schedule = schedules[j];
+      let checkRoom = schedule.room && item.room && item.room === schedule.room;
+      let checkDate =
+        schedule.date &&
+        item.date &&
+        new Date(item.date).getDay() === new Date(schedule.date).getDay() &&
+        new Date(item.date).getMonth() === new Date(schedule.date).getMonth() &&
+        new Date(item.date).getFullYear() ===
+          new Date(schedule.date).getFullYear();
 
-    if (checkRoom) {
-      countRoom = countRoom + 1;
-    }
-    if (checkDate) {
-      countDate = countDate + 1;
-    }
-    if (
-      countDate > 0 &&
-      countRoom > 0 &&
-      schedule.startTime &&
-      schedule.endTime
-    ) {
-      let checkDurationTime =
-        schedule.startTime > item.endTime || schedule.endTime < item.startTime;
-      if (!checkDurationTime) {
-        return false;
+      if (checkRoom) {
+        countRoom = countRoom + 1;
+      }
+      if (checkDate) {
+        countDate = countDate + 1;
+      }
+      if (
+        countDate > 0 &&
+        countRoom > 0 &&
+        schedule.startTime &&
+        schedule.endTime
+      ) {
+        const newStarTime = getDateTime(schedule.date, schedule.startTime);
+        const newEndTime = getDateTime(schedule.date, schedule.endTime);
+        const itemStarTime = getDateTime(item.date, item.startTime);
+        const itemEndTime = getDateTime(item.date, item.endTime);
+        let checkDurationTime =
+          newStarTime > itemEndTime || newEndTime < itemStarTime;
+        if (!checkDurationTime) {
+          return j;
+        }
       }
     }
   }
-  return true;
+  return 0;
 };
 
 export default {
