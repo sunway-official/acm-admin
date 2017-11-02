@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { graphql, gql, compose } from 'react-apollo';
 import DialogEdit from './dialogEdit';
 import GetRoles from './getRoles';
-import { roleOperations } from 'store/ducks/roles';
-import { connect } from 'react-redux';
 
 import {
   Table,
@@ -21,30 +19,27 @@ class Index extends Component {
   constructor(props) {
     super(props);
     this.handleOpenDialog = this.handleOpenDialog.bind(this);
+    this.state = {
+      openDelete: false,
+      openDialog: false,
+      staff: { id: 0 },
+    };
   }
-  state = {
-    openDelete: false,
-    openDialog: false,
-    staff: {},
-  };
+
   handleOpenDelete = UserId => {
     this.setState({ openDelete: true });
     this.setState({
       UserId: UserId,
     });
   };
-  handleOpenDialog(staff, role) {
+  handleOpenDialog(staff) {
     this.setState({ openDialog: true, staff: staff });
-    this.props.setRole(role);
   }
   handleClose = () => {
     this.setState({ openDelete: false, openDialog: false });
   };
 
   render() {
-    const { loading, getAllRolesByUserID } = this.props.data;
-    if (loading) return <div>Loading...</div>;
-    const roles = this.props.data.getAllRolesByUserID;
     const allStaff = this.props.allStaff;
     const actionDelete = [
       <RaisedButton
@@ -84,8 +79,8 @@ class Index extends Component {
                     <RaisedButton
                       primary={true}
                       label="edit"
-                      onClick={roles => {
-                        this.handleOpenDialog(staff, roles);
+                      onClick={() => {
+                        this.handleOpenDialog(staff);
                       }}
                     />
                     <RaisedButton
@@ -99,9 +94,10 @@ class Index extends Component {
           </Table>
           <DialogEdit
             openDialog={this.state.openDialog}
-            handleClose={() => this.handleClose()}
-            allStaff={this.state.staff}
-            roles={roles}
+            handleClose={() => {
+              this.handleClose();
+            }}
+            staff={this.state.staff}
           />
 
           <Dialog
@@ -116,9 +112,7 @@ class Index extends Component {
     );
   }
 }
-const mapDispatchToProps = dispatch => {
-  return { setRole: role => dispatch(roleOperations.setRoleOperations(role)) };
-};
+
 const DELETE_USER = gql`
   mutation deleteUser($id: ID!) {
     deleteUser(id: $id) {
@@ -126,24 +120,8 @@ const DELETE_USER = gql`
     }
   }
 `;
-const GET_ALL_ROLES_BY_USER_ID = gql`
-  query getAllRolesByUserID($user_id: ID!) {
-    getAllRolesByUserID(user_id: $user_id) {
-      role {
-        name
-      }
-    }
-  }
-`;
 export default compose(
-  connect(undefined, mapDispatchToProps),
   graphql(DELETE_USER, {
     name: 'DELETE_USER',
-  }),
-  graphql(GET_ALL_ROLES_BY_USER_ID, {
-    options: ownProps => ({
-      variables: { user_id: 16 },
-      name: 'GET_ALL_ROLES_BY_USER_ID',
-    }),
   }),
 )(Index);

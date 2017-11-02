@@ -1,13 +1,21 @@
 import React from 'react';
 import { Dialog, Tabs, Tab, IconButton } from 'material-ui';
 import { NavigationClose } from 'material-ui/svg-icons';
+import RolesInfo from './rolesInfo';
 import PersonalInfo from './personalInfo';
 import { connect } from 'react-redux';
-import { roleOperations } from 'store/ducks/roles';
+import { graphql, gql, compose } from 'react-apollo';
 
 class DialogEdit extends React.Component {
   render() {
-    const roles = this.props.roles;
+    const { loading, error, getAllRolesByUserID } = this.props.data;
+    if (loading) {
+      return <div>Loading...</div>;
+    }
+    if (error) {
+      return <div>error</div>;
+    }
+    const roles = getAllRolesByUserID;
     const actions = (
       <div>
         <IconButton
@@ -27,9 +35,9 @@ class DialogEdit extends React.Component {
               initialValues={this.props.initialValues}
               roles={roles}
             />
-          </Tab>
+          </Tab>,
           <Tab label="Roles Information">
-            <div>Role</div>
+            <RolesInfo />
           </Tab>
         </Tabs>
       </Dialog>
@@ -38,8 +46,8 @@ class DialogEdit extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const staff = ownProps.allStaff;
-  const roles = ownProps.roles;
+  const staff = ownProps.staff;
+  // console.log('staff', staff);
   return {
     initialValues: {
       id: staff.id,
@@ -48,9 +56,26 @@ const mapStateToProps = (state, ownProps) => {
       email: staff.email,
       dob: staff.dob,
       gender: staff.gender,
-      role: roles[0].role.name,
     },
   };
 };
 
-export default connect(mapStateToProps, undefined)(DialogEdit);
+const GET_ALL_ROLES_BY_USER_ID = gql`
+  query getAllRolesByUserID($user_id: ID!) {
+    getAllRolesByUserID(user_id: $user_id) {
+      role {
+        name
+        id
+      }
+    }
+  }
+`;
+
+export default compose(
+  connect(mapStateToProps, undefined),
+  graphql(GET_ALL_ROLES_BY_USER_ID, {
+    options: ownProps => ({
+      variables: { user_id: ownProps.staff.id },
+    }),
+  }),
+)(DialogEdit);

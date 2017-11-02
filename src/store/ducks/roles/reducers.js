@@ -4,12 +4,12 @@ const reducer = (state = {}, action) => {
   switch (action.type) {
     case types.SET_ROLES_SUCCESS: {
       const newState = Object.assign({}, state, {
-        role: action.payload.role,
+        roles: action.payload.roles,
       });
       return newState;
     }
     case types.SET_ROLES_FAILURE: {
-      return console.log('Error');
+      return state;
     }
     default:
       return state;

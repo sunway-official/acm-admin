@@ -9,11 +9,8 @@ import {
 } from 'material-ui/svg-icons';
 import { Field, reduxForm } from 'redux-form';
 import CustomInput from 'components/CustomInput';
-import GetRoles from './getRoles';
 class PersonalInfo extends Component {
   render() {
-    console.log(this.props.initialValues.role);
-    const { handleSubmit, onSubmit } = this.props;
     return (
       <form
         className="form conference-info view-form"
@@ -42,12 +39,18 @@ class PersonalInfo extends Component {
               leftIcon={<ActionWork />}
               disabled={true}
             />
-            <TextField
-              name="role"
-              underlineShow={false}
-              disabled={true}
-              hintText={'' + this.props.initialValues.role}
-            />
+            {this.props.roles.map(data => {
+              return (
+                <TextField
+                  disabled={true}
+                  underlineShow={false}
+                  key={data.role.id}
+                  multiLine={true}
+                  rows={2}
+                  hintText={'' + data.role.name}
+                />
+              );
+            })}
           </div>
           <div className="d-flex form-group">
             <ListItem

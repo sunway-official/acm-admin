@@ -4,10 +4,10 @@ const setRolesRequested = () => ({
   type: types.SET_ROLES_REQUESTED,
 });
 
-const setRolesSuccess = role => ({
+const setRolesSuccess = roles => ({
   type: types.SET_ROLES_SUCCESS,
   payload: {
-    role,
+    roles,
   },
 });
 

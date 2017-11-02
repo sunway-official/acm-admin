@@ -1,14 +1,14 @@
 import actions from './actions';
 
-const setRoleOperations = role => async dispatch => {
+const setRolesOperation = roles => async dispatch => {
   dispatch(actions.setRolesRequested());
   try {
-    return dispatch(actions.setRolesSuccess(role));
+    return dispatch(actions.setRolesSuccess(roles));
   } catch (e) {
     return dispatch(actions.setRolesFailure());
   }
 };
 
 export default {
-  setRoleOperations,
+  setRolesOperation,
 };
