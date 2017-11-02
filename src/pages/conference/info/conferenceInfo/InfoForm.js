@@ -7,6 +7,7 @@ import Subheader from 'material-ui/Subheader';
 
 import CustomInput from 'components/CustomInput';
 import CustomDatePicker from 'components/CustomDatePicker';
+import AppMap from 'components/AppMap';
 import normalizePhone from 'utils/normalizePhone';
 import validate from '../validate';
 
@@ -16,12 +17,32 @@ const InfoForm = ({
   submitting,
   pristine,
   invalid,
+  initialValues,
 }) => (
   <form className="form conference-info" onSubmit={handleSubmit}>
     <div>
       <div>
         <div>
           <Subheader className="header title">Basic Information</Subheader>
+          <AppMap
+            initalPosition={{
+              lat: initialValues.lat,
+              long: initialValues.long,
+            }}
+            isMarkerShown
+            googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyDFNlwjsuntl-BmMpDKJPOiUvwxhAEyMEI"
+            loadingElement={<div style={{ height: `100%` }} />}
+            containerElement={<div style={{ height: `400px` }} />}
+            mapElement={
+              <div
+                style={{
+                  height: `100%`,
+                  marginLeft: '-50%',
+                  marginRight: '-50%',
+                }}
+              />
+            }
+          />
           <div>
             <div className="d-flex form-group">
               <label>Title :</label>

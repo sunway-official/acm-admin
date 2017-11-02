@@ -78,7 +78,7 @@ const validate = (values, props) => {
         values.schedules.length !== 1
       ) {
         const check = functions.checkSchedules(values.schedules);
-        if (!check == 0) {
+        if (!check === 0) {
           scheduleErrors.room = 'This room is choosing';
           ArrayErrors[check] = scheduleErrors;
         }

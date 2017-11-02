@@ -25,6 +25,10 @@ const GET_CONFERENCE_BY_ID_QUERY = gql`
           id
         }
       }
+      address {
+        lat
+        long
+      }
     }
   }
 `;
