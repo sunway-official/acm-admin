@@ -18,6 +18,7 @@ const InfoForm = ({
   pristine,
   invalid,
   initialValues,
+  onMapSearchChange,
 }) => (
   <form className="form conference-info" onSubmit={handleSubmit}>
     <div>
@@ -25,11 +26,11 @@ const InfoForm = ({
         <div>
           <Subheader className="header title">Basic Information</Subheader>
           <AppMap
+            onMapSearchChange={onMapSearchChange}
             initalPosition={{
               lat: initialValues.lat,
               long: initialValues.long,
             }}
-            isMarkerShown
             googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyDFNlwjsuntl-BmMpDKJPOiUvwxhAEyMEI"
             loadingElement={<div style={{ height: `100%` }} />}
             containerElement={<div style={{ height: `400px` }} />}

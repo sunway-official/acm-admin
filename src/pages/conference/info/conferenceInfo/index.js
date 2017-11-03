@@ -12,6 +12,7 @@ class ConferenceInfo extends PureComponent {
     this.handleUpdateConferenceInfo = this.handleUpdateConferenceInfo.bind(
       this,
     );
+    this.onMapSearchChange = this.onMapSearchChange.bind(this);
   }
   async handleUpdateConferenceInfo({
     title,
@@ -22,7 +23,9 @@ class ConferenceInfo extends PureComponent {
     organizerEmail,
     organizerWebsite,
     organizerPhoneNumber,
+    ...rest
   }) {
+    console.log(rest);
     try {
       await this.props.UPDATE_CONFERENCE_MUTATION({
         variables: {
@@ -47,12 +50,16 @@ class ConferenceInfo extends PureComponent {
       throw new SubmissionError(error);
     }
   }
+  onMapSearchChange(props) {
+    console.log(props);
+  }
   render() {
     return (
       <InfoForm
         initialValues={this.props.initialValues}
         conference={this.props.conference}
         onSubmit={this.handleUpdateConferenceInfo}
+        onMapSearchChange={this.onMapSearchChange}
       />
     );
   }

@@ -21,21 +21,78 @@ class AppMap extends PureComponent {
       },
       markers: [],
     };
+
+    this.onPlacesChanged = this.onPlacesChanged.bind(this);
+    this.onBoundsChanged = this.onBoundsChanged.bind(this);
+  }
+  onBoundsChanged() {
+    this.setState({
+      center: this.googleMapRef.getCenter(),
+      bounds: this.googleMapRef.getBounds(),
+    });
+  }
+  onPlacesChanged() {
+    const google = window.google;
+
+    const places = this.searchBoxRef.getPlaces();
+    const bounds = new google.maps.LatLngBounds();
+
+    places.forEach(place => {
+      if (place.geometry.viewport) {
+        bounds.union(place.geometry.viewport);
+      } else {
+        bounds.extend(place.geometry.location);
+      }
+    });
+
+    const nextMarkers = places.map(place => ({
+      position: place.geometry.location,
+    }));
+
+    const nextLat = nextMarkers[0].position.lat();
+    const nextLng = nextMarkers[0].position.lng();
+
+    console.log(nextLat, nextLng);
+    const newCenter = {
+      lat: nextLat,
+      lng: nextLng,
+    };
+    this.setState(
+      {
+        center: newCenter,
+      },
+      () => {
+        console.log(this.state);
+      },
+    );
+
+    this.googleMapRef.fitBounds(bounds);
+
+    this.props.onMapSearchChange(nextLat);
   }
   render() {
     const google = window.google;
-    console.log(this.props);
+    const position = this.state.center;
     return (
-      <GoogleMap defaultZoom={17} defaultCenter={{ ...this.state.center }}>
+      <GoogleMap
+        ref={ref => {
+          this.googleMapRef = ref;
+        }}
+        defaultZoom={17}
+        defaultCenter={position}
+        onBoundsChanged={this.onBoundsChanged}
+      >
         <SearchBox
-          ref={this.props.onSearchBoxMounted}
-          bounds={this.props.bounds}
+          ref={ref => {
+            this.searchBoxRef = ref;
+          }}
+          bounds={this.state.bounds}
           controlPosition={google.maps.ControlPosition.TOP_LEFT}
-          onPlacesChanged={this.props.onPlacesChanged}
+          onPlacesChanged={this.onPlacesChanged}
         >
           <input
             type="text"
-            placeholder="Customized your placeholder"
+            placeholder="Search the location"
             style={{
               boxSizing: `border-box`,
               border: `1px solid transparent`,
@@ -51,9 +108,7 @@ class AppMap extends PureComponent {
             }}
           />
         </SearchBox>
-        {this.props.isMarkerShown && (
-          <Marker position={{ ...this.state.center }} />
-        )}
+        <Marker position={position} />
       </GoogleMap>
     );
   }
