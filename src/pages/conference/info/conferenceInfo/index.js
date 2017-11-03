@@ -12,7 +12,13 @@ class ConferenceInfo extends PureComponent {
     this.handleUpdateConferenceInfo = this.handleUpdateConferenceInfo.bind(
       this,
     );
-    this.onMapSearchChange = this.onMapSearchChange.bind(this);
+    this.state = {
+      position: {
+        lat: this.props.conference.address.lat,
+        long: this.props.conference.address.long,
+      },
+    };
+    this.onMapPositionChanged = this.onMapPositionChanged.bind(this);
   }
   async handleUpdateConferenceInfo({
     title,
@@ -23,9 +29,7 @@ class ConferenceInfo extends PureComponent {
     organizerEmail,
     organizerWebsite,
     organizerPhoneNumber,
-    ...rest
   }) {
-    console.log(rest);
     try {
       await this.props.UPDATE_CONFERENCE_MUTATION({
         variables: {
@@ -50,8 +54,15 @@ class ConferenceInfo extends PureComponent {
       throw new SubmissionError(error);
     }
   }
-  onMapSearchChange(props) {
-    console.log(props);
+  onMapPositionChanged(position) {
+    this.setState(
+      {
+        position,
+      },
+      () => {
+        console.log(this.state.position);
+      },
+    );
   }
   render() {
     return (
@@ -59,7 +70,7 @@ class ConferenceInfo extends PureComponent {
         initialValues={this.props.initialValues}
         conference={this.props.conference}
         onSubmit={this.handleUpdateConferenceInfo}
-        onMapSearchChange={this.onMapSearchChange}
+        onMapPositionChanged={this.onMapPositionChanged}
       />
     );
   }

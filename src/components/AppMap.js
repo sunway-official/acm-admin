@@ -19,11 +19,15 @@ class AppMap extends PureComponent {
         lat: lat,
         lng: long,
       },
-      markers: [],
+      position: {
+        lat: lat,
+        lng: long,
+      },
     };
 
     this.onPlacesChanged = this.onPlacesChanged.bind(this);
     this.onBoundsChanged = this.onBoundsChanged.bind(this);
+    this.onMarkerPositionChanged = this.onMarkerPositionChanged.bind(this);
   }
   onBoundsChanged() {
     this.setState({
@@ -52,7 +56,6 @@ class AppMap extends PureComponent {
     const nextLat = nextMarkers[0].position.lat();
     const nextLng = nextMarkers[0].position.lng();
 
-    console.log(nextLat, nextLng);
     const newCenter = {
       lat: nextLat,
       lng: nextLng,
@@ -60,26 +63,39 @@ class AppMap extends PureComponent {
     this.setState(
       {
         center: newCenter,
+        position: newCenter,
       },
       () => {
-        console.log(this.state);
+        this.googleMapRef.fitBounds(bounds);
+        this.props.onMapPositionChanged(this.state.position);
       },
     );
-
-    this.googleMapRef.fitBounds(bounds);
-
-    this.props.onMapSearchChange(nextLat);
+  }
+  onMarkerPositionChanged() {
+    const newPosition = this.markerRef.getPosition();
+    this.setState(
+      {
+        position: {
+          lat: newPosition.lat(),
+          lng: newPosition.lng(),
+        },
+      },
+      () => {
+        this.props.onMapPositionChanged(this.state.position);
+      },
+    );
   }
   render() {
     const google = window.google;
-    const position = this.state.center;
+    const center = this.state.center;
+    const position = this.state.position;
     return (
       <GoogleMap
         ref={ref => {
           this.googleMapRef = ref;
         }}
         defaultZoom={17}
-        defaultCenter={position}
+        defaultCenter={center}
         onBoundsChanged={this.onBoundsChanged}
       >
         <SearchBox
@@ -108,7 +124,14 @@ class AppMap extends PureComponent {
             }}
           />
         </SearchBox>
-        <Marker position={position} />
+        <Marker
+          draggable
+          ref={ref => {
+            this.markerRef = ref;
+          }}
+          position={position}
+          onDragEnd={this.onMarkerPositionChanged}
+        />
       </GoogleMap>
     );
   }

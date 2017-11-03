@@ -18,7 +18,7 @@ const InfoForm = ({
   pristine,
   invalid,
   initialValues,
-  onMapSearchChange,
+  onMapPositionChanged,
 }) => (
   <form className="form conference-info" onSubmit={handleSubmit}>
     <div>
@@ -26,7 +26,7 @@ const InfoForm = ({
         <div>
           <Subheader className="header title">Basic Information</Subheader>
           <AppMap
-            onMapSearchChange={onMapSearchChange}
+            onMapPositionChanged={onMapPositionChanged}
             initalPosition={{
               lat: initialValues.lat,
               long: initialValues.long,
