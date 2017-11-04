@@ -6,6 +6,7 @@ import types from './types';
 
 const reducer = (state = {}, action) => {
   switch (action.type) {
+    // GET CONFERENCE
     case types.GET_CONFERENCE_SUCCESS: {
       const newState = Object.assign({}, state, {
         conference: action.payload.conference,
@@ -16,6 +17,8 @@ const reducer = (state = {}, action) => {
       // Maybe show the error message here?
       return state;
     }
+
+    // GET ID
     case types.GET_ID_SUCCESS: {
       const newState = Object.assign({}, state, {
         id: action.payload.id,
@@ -23,7 +26,17 @@ const reducer = (state = {}, action) => {
       return newState;
     }
     case types.GET_ID_FAILURE: {
-      // Maybe show the error message here?
+      return state;
+    }
+
+    // GET POSITION
+    case types.GET_POSITION_SUCCESS: {
+      const newState = Object.assign({}, state, {
+        position: action.payload.position,
+      });
+      return newState;
+    }
+    case types.GET_POSITION_FAILURE: {
       return state;
     }
     default: {

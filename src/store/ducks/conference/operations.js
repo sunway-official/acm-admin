@@ -1,5 +1,6 @@
 import actions from './actions';
 
+// GET CONFERENCE
 const getConferenceOperation = conference => async dispatch => {
   dispatch(actions.getConferenceRequested());
   try {
@@ -9,6 +10,8 @@ const getConferenceOperation = conference => async dispatch => {
     return dispatch(actions.getConferenceFailure());
   }
 };
+
+// GET ID
 const getIdOperation = id => async dispatch => {
   dispatch(actions.getIdRequested());
   try {
@@ -19,7 +22,19 @@ const getIdOperation = id => async dispatch => {
   }
 };
 
+// GET POSITION
+const getPositionOperation = position => async dispatch => {
+  dispatch(actions.getPositionRequested());
+  try {
+    return dispatch(actions.getPositionSuccess(position));
+  } catch (e) {
+    console.log(e);
+    return dispatch(actions.getPositionFailure());
+  }
+};
+
 export default {
   getConferenceOperation,
   getIdOperation,
+  getPositionOperation,
 };

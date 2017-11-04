@@ -3,6 +3,7 @@ import React from 'react';
 
 export const getSchedules = array => {
   let schedules = [];
+  // eslint-disable-next-line array-callback-return
   array.map(item => {
     const date = moment(item.start, 'YYYY MM DD');
     const start = moment(item.start)._d;
@@ -23,8 +24,10 @@ export const getSchedules = array => {
 export const getEvents = array => {
   let events = [];
   if (array) {
+    // eslint-disable-next-line array-callback-return
     array.map(item => {
       const schedules = getSchedules(item.schedules);
+      // eslint-disable-next-line array-callback-return
       item.schedules.map(schedule => {
         const start = moment(schedule.start)._d;
         const end = moment(schedule.end)._d;
