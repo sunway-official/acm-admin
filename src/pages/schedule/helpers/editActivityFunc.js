@@ -21,6 +21,7 @@ export const editActivityFunc = data => {
     .then(() => {
       // xoa schedule
       if (deleteIds) {
+        // eslint-disable-next-line array-callback-return
         deleteIds.map(id => {
           DELETE_SCHEDULE_MUTATION({
             variables: {
@@ -31,6 +32,7 @@ export const editActivityFunc = data => {
       }
 
       // lap va update schedule
+      // eslint-disable-next-line array-callback-return
       values.schedules.map((schedule, index) => {
         const newStarTime = functions.getDateTime(
           schedule.date,

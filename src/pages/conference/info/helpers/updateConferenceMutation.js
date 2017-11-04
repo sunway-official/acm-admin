@@ -20,6 +20,9 @@ const UPDATE_CONFERENCE_MUTATION = gql`
       description
       start_date
       end_date
+      address {
+        id
+      }
     }
   }
 `;
