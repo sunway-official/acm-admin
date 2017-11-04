@@ -56,7 +56,6 @@ class InfoTabs extends React.Component {
         },
       ],
     });
-    window.alert('Update successful!');
   }
   savePassword(values) {
     const { UPDATE_PASSWORD_MUTATION } = this.props;
@@ -66,7 +65,6 @@ class InfoTabs extends React.Component {
         newPassword: values.newPassword,
       },
     });
-    window.alert('Update successful!');
   }
   render() {
     const me = this.props.me;

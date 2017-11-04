@@ -5,6 +5,10 @@ export const GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY = gql`
       id
       title
       description
+      conference {
+        start_date
+        end_date
+      }
       schedules {
         id
         start
@@ -14,6 +18,16 @@ export const GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY = gql`
           name
         }
       }
+    }
+  }
+`;
+
+export const GET_CONFERENCE_BY_ID = gql`
+  query getConferenceByID($id: ID!) {
+    getConferenceByID(id: $id) {
+      id
+      start_date
+      end_date
     }
   }
 `;
@@ -30,4 +44,5 @@ export const GET_ALL_ROOM_QUERY = gql`
 export default {
   GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY,
   GET_ALL_ROOM_QUERY,
+  GET_CONFERENCE_BY_ID,
 };
