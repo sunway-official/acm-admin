@@ -39,6 +39,8 @@ class SpeakerAvatar extends Component {
       slidesToScroll: 1,
       autoplay: true,
       autoplaySpeed: 2000,
+      nextArrow: false,
+      prevArrow: false,
     };
     const content = listImage.map(image => (
       <div key={image.id} className="hover08">
@@ -52,7 +54,7 @@ class SpeakerAvatar extends Component {
       </div>
     ));
     return (
-      <Slider className="list-image" {...settings}>
+      <Slider className="list-image" {...settings} arrows={false}>
         {content}
       </Slider>
     );

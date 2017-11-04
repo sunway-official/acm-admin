@@ -12,17 +12,6 @@ import { graphql, compose } from 'react-apollo';
 import { queries } from './helpers/index';
 import Home from './section/home';
 class LandingPage extends Component {
-  handleScriptCreate() {
-    this.setState({ scriptLoaded: false });
-  }
-
-  handleScriptError() {
-    this.setState({ scriptError: true });
-  }
-
-  handleScriptLoad() {
-    this.setState({ scriptLoaded: true });
-  }
   render() {
     const { loading, getLandingPageByConferenceId } = this.props.data;
     if (loading) return <div>loading</div>;
@@ -40,6 +29,7 @@ class LandingPage extends Component {
                 </a>
                 <a href="">Speaker</a>
                 <a href="">Paper</a>
+                <a href="/landingpage/schedule">Schedule</a>
                 <a href="">Contact Us</a>
                 <button className="btn get-ticket">Get Ticket</button>
               </nav>

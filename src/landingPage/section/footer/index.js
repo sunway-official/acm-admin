@@ -14,16 +14,22 @@ class Footer extends Component {
             </Col>
             <Col xs={4}>
               <h3 className="footer-title">Contact Us</h3>
-              <p className="footer-text">Phone: 0123456789</p>
-              <p className="footer-text">Email: academicconference@gmail.com</p>
+              <p className="footer-text">
+                Phone: <span /> {this.props.landingPage.phone_number}
+              </p>
+              <p className="footer-text">
+                Email: <span /> {this.props.landingPage.email}
+              </p>
             </Col>
             <Col xs={4}>
               <h3 className="footer-title">Connect With Us</h3>
               <div className="icon-cover">
-                <i
-                  className="fa fa-facebook-square fa-lg footer-icon"
-                  aria-hidden="true"
-                />
+                <a href={this.props.landingPage.facebook_id}>
+                  <i
+                    className="fa fa-facebook-square fa-lg footer-icon"
+                    aria-hidden="true"
+                  />
+                </a>
                 <i
                   className="fa fa-twitter-square fa-lg footer-icon"
                   aria-hidden="true"

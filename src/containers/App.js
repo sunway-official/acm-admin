@@ -17,10 +17,17 @@ import WithThunk from '../pages/withThunk';
 import { muiTheme } from '../theme';
 import Wrapper from './wrapper';
 import LandingPage from '../landingPage';
+import LandingPageManagement from '../pages/landingPageManagement';
+import LandingPageSchedule from '../landingPage/schedule/index';
 
 export default () => (
   <MuiThemeProvider muiTheme={muiTheme}>
     <Switch>
+      <AuthRoute
+        needGuest
+        path="/landingpage/schedule"
+        component={LandingPageSchedule}
+      />
       <AuthRoute needGuest path="/landingpage" component={LandingPage} />
       <AuthRoute needGuest path="/login" component={Login} />
       <AuthRoute needGuest path="/register" component={Register} />
@@ -33,6 +40,10 @@ export default () => (
           <AuthRoute
             path="/conference/:conference_id/people/staff"
             component={ConferenceStaffList}
+          />
+          <AuthRoute
+            path="/conference/:id/landing-page-management"
+            component={LandingPageManagement}
           />
           <AuthRoute
             needAuth

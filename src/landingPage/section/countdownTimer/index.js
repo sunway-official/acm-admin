@@ -3,12 +3,12 @@ import { Component } from 'react';
 import { Col, Grid, Row } from 'react-flexbox-grid';
 import './style.css';
 import { images } from '../../../theme';
+import * as moment from 'moment';
 
 class CountDownTimer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      weeks: 0,
       days: 0,
       hours: 0,
       minutes: 0,
@@ -27,20 +27,22 @@ class CountDownTimer extends Component {
       var minutes = Math.floor(seconds / 60);
       var hours = Math.floor(minutes / 60);
       var days = Math.floor(hours / 24);
-      var weeks = Math.floor(days / 7);
 
-      days %= 7;
       hours %= 24;
       minutes %= 60;
       seconds %= 60;
 
-      this.setState({ weeks, days, hours, minutes, seconds });
+      this.setState({ days, hours, minutes, seconds });
     }
   }
   componentWillMount() {
     var timer;
     var compareDate = new Date();
-    compareDate.setDate(compareDate.getDate() + 100); // this is just a demo for 100 day
+    var now = moment(new Date()); //todays date
+    var end = moment(this.props.landingPage.conference.start_date); // another date
+    var duration = moment.duration(end.diff(now));
+    var days = duration.asDays();
+    compareDate.setDate(compareDate.getDate() + days); // this is just a demo for 100 day
     timer = setInterval(
       function() {
         this.timeBetweenDates(compareDate, timer);
@@ -68,10 +70,6 @@ class CountDownTimer extends Component {
           <Row around="xs">
             <Col>
               <div id="timer">
-                <div className="small-timer">
-                  <span id="weeks">{this.state.weeks}</span>
-                  <div className="small-text">weeks</div>
-                </div>
                 <div className="small-timer">
                   <span id="days">{this.state.days}</span>
                   <div className="small-text">days</div>

@@ -5,6 +5,12 @@ import './style.css';
 import * as moment from 'moment';
 class Register extends Component {
   render() {
+    const start = moment(this.props.landingPage.conference.start_date).format(
+      'DD-MM-YYYY',
+    );
+    const end = moment(this.props.landingPage.conference.end_date).format(
+      'DD-MM-YYYY',
+    );
     return (
       <div className="orange-section">
         <Grid fluid>
@@ -33,8 +39,12 @@ class Register extends Component {
                 </Col>
                 <Col xs={3}>
                   <Row> When </Row>
-                  <Row> From 1/11/2017</Row>
-                  <Row> To 3/11/2017</Row>
+                  <Row>
+                    From: <span /> {start}
+                  </Row>
+                  <Row>
+                    To: <span /> {end}
+                  </Row>
                 </Col>
                 <Col xs={4}>
                   <button className="btn register-button">

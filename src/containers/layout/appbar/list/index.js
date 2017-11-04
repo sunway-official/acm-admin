@@ -9,6 +9,7 @@ import {
   // EditorShowChart,
   NotificationEventAvailable,
   HardwareKeyboardArrowRight,
+  AvWeb,
 } from 'material-ui/svg-icons';
 import style from './style.css';
 class ListExampleSimple extends React.Component {
@@ -85,6 +86,13 @@ class ListExampleSimple extends React.Component {
               </Menu>
             </Popover>
           </ListItem>
+          <Link to="/conference/2/landing-page-management">
+            <ListItem
+              className="item"
+              primaryText={'Landing Page'}
+              leftIcon={<AvWeb />}
+            />
+          </Link>
           {/*
           <ListItem
             className="item"
