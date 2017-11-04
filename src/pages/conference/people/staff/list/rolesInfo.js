@@ -1,103 +1,102 @@
 import React, { Component } from 'react';
-import { Toggle, ListItem } from 'material-ui';
+import { Toggle, ListItem, RaisedButton } from 'material-ui';
+import { connect } from 'react-redux';
 class RolesInfo extends Component {
+  constructor(props) {
+    super(props);
+    this.handleToggleModerator = this.handleToggleModerator.bind(this);
+  }
   state = {
-    open1: false,
-    open: false,
-    toggled: true,
+    toggleModerator: false,
+    toggleSupporter: false,
+    toggleTicketChecker: false,
+    toggleReviewer: false,
+    toggleAuthor: false,
   };
-  handleToggle = () => {
-    this.setState({ open: !this.state.open });
-  };
-
-  handleNestedListToggle = item => {
-    this.setState({
-      open: item.state.open1,
-    });
-  };
-  handleToggle1 = () => {
-    this.setState({ open1: !this.state.open1 });
-  };
-
-  handleNestedListToggle1 = item => {
-    this.setState({
-      open1: item.state.open1,
-    });
-  };
+  handleToggleModerator() {
+    this.setState({ toggleModerator: !this.state.toggleModerator });
+  }
+  // componentWillMount() {
+  //   {
+  //     this.props.roles.map(data => {
+  //       switch (data.role.name) {
+  //         case 'Moderator':
+  //           this.setState({ toggleModerator: true });
+  //           break;
+  //         case 'Supporter':
+  //           this.setState({ toggleSupporter: true });
+  //           break;
+  //         case 'Ticket Checker':
+  //           this.setState({ toggleTicketChecker: true });
+  //           break;
+  //         case 'Reviewer':
+  //           this.setState({ toggleReviewer: true });
+  //           break;
+  //         case 'Author':
+  //           this.setState({ toggleAuthor: true });
+  //           break;
+  //         default:
+  //           false;
+  //           break;
+  //       }
+  //     });
+  //   }
+  // }
   render() {
-    const roles = [
-      {
-        key: 1,
-        primaryText: 'ABC',
-        open: this.state.open,
-        onNestedListToggle: this.handleNestedListToggle,
-        onToggle: this.handleToggle,
-        features: [
-          {
-            key: 1,
-            primaryText: 'a',
-          },
-          {
-            key: 2,
-            primaryText: 'b',
-          },
-        ],
-      },
-      {
-        key: 2,
-        primaryText: 'DCD',
-        open: this.state.open1,
-        onNestedListToggle: this.handleNestedListToggle1,
-        onToggle: this.handleToggle1,
-        features: [
-          {
-            key: 3,
-            primaryText: 'd',
-          },
-          {
-            key: 4,
-            primaryText: 'e',
-          },
-        ],
-      },
-    ];
+    // const roles = this.props.roles;
+    // console.log('Moderator', this.state.toggleModerator);
+    console.log('dispatch', this.props);
+
     return (
-      <div>
-        {roles.map(role => {
-          return (
-            <div className="m-auto" style={{ width: '80%' }} key={role.key}>
-              <ListItem
-                className="123"
-                primaryText={role.primaryText}
-                open={role.open}
-                onNestedListToggle={role.onNestedListToggle}
-                rightToggle={
-                  <Toggle
-                    toggled={role.open}
-                    onToggle={role.onToggle}
-                    labelPosition="left"
-                  />
-                }
-                nestedItems={role.features.map(feature => {
-                  return (
-                    <ListItem
-                      className="Test"
-                      key={feature.key}
-                      primaryText={feature.primaryText}
-                      rightToggle={
-                        <Toggle defaultToggled={this.state.toggled} />
-                      }
-                      innerDivStyle={{ width: '75%' }}
-                    />
-                  );
-                })}
-              />
-            </div>
-          );
-        })}
-      </div>
+      // <div>
+      //   <div>
+      //     <ListItem
+      //       primaryText="Moderator"
+      //       rightToggle={
+      //         <Toggle
+      //           onToggle={() =>
+      //             this.handleToggleModerator +
+      //             console.log(this.state.toggleModerator)}
+      //           defaultToggled={this.state.toggleModerator}
+      //         />
+      //       }
+      //     />
+      //     <ListItem
+      //       primaryText="Supporter"
+      //       rightToggle={<Toggle defaultToggled={this.state.toggleSupporter} />}
+      //     />
+      //     <ListItem
+      //       primaryText="Ticket Checker"
+      //       rightToggle={
+      //         <Toggle defaultToggled={this.state.toggleTicketChecker} />
+      //       }
+      //     />
+      //     <ListItem
+      //       primaryText="Reviewer"
+      //       rightToggle={<Toggle defaultToggled={this.state.toggleReviewer} />}
+      //     />
+      //     <ListItem
+      //       primaryText="Author"
+      //       rightToggle={<Toggle defaultToggled={this.state.toggleAuthor} />}
+      //     />
+      //   </div>
+      //   <div>
+      //     <RaisedButton
+      //       style={{ width: '0' }}
+      //       className="d-flex m-auto"
+      //       label="Save"
+      //       primary={true}
+      //     />
+      //   </div>
+      // </div>
+      <div>asd</div>
     );
   }
 }
+const mapStateToProps = state => {
+  const roles = state.roles;
+  console.log(roles);
+  return {};
+};
 
-export default RolesInfo;
+export default connect(mapStateToProps, undefined)(RolesInfo);

@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { graphql, gql } from 'react-apollo';
-
+import { graphql } from 'react-apollo';
+import GET_ALL_ROLES_BY_USER_ID from './helpers/getAllRolesByUserID';
 class GetRoles extends Component {
   render() {
-    console.log(this.props);
     const { loading, error } = this.props.data;
     if (loading) {
       return <div>Loading...</div>;
@@ -26,20 +25,8 @@ class GetRoles extends Component {
   }
 }
 
-const GET_ALL_ROLES_BY_USER_ID = gql`
-  query getAllRolesByUserID($user_id: ID!) {
-    getAllRolesByUserID(user_id: $user_id) {
-      role {
-        name
-        id
-      }
-    }
-  }
-`;
-
 export default graphql(GET_ALL_ROLES_BY_USER_ID, {
   options: ownProps => ({
     variables: { user_id: ownProps.id },
-    // name: GET_ALL_ROLES_BY_USER_ID,
   }),
 })(GetRoles);

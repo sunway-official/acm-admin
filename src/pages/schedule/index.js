@@ -184,7 +184,6 @@ class MyCalendar extends React.PureComponent {
 }
 
 const mapStateToProps = state => {
-  console.log(state.schedule.openEditFormModal);
   return {
     openEdit: state.schedule.openEditFormModal,
   };

@@ -4,9 +4,16 @@ import { NavigationClose } from 'material-ui/svg-icons';
 import RolesInfo from './rolesInfo';
 import PersonalInfo from './personalInfo';
 import { connect } from 'react-redux';
-import { graphql, gql, compose } from 'react-apollo';
+import GET_ALL_ROLES_BY_USER_ID from './helpers/getAllRolesByUserID';
+import { graphql, compose } from 'react-apollo';
+import { rolesOperations } from 'store/ducks/roles';
 
 class DialogEdit extends React.Component {
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.data.loading !== this.props.data.loading) {
+      nextProps.setRole(nextProps.data.getAllRolesByUserID);
+    }
+  }
   render() {
     const { loading, error, getAllRolesByUserID } = this.props.data;
     if (loading) {
@@ -16,6 +23,7 @@ class DialogEdit extends React.Component {
       return <div>error</div>;
     }
     const roles = getAllRolesByUserID;
+    console.log(this.props);
     const actions = (
       <div>
         <IconButton
@@ -44,10 +52,14 @@ class DialogEdit extends React.Component {
     );
   }
 }
+const mapdispatchToProps = dispatch => {
+  return {
+    setRole: roles => dispatch(rolesOperations.setRolesOperation(roles)),
+  };
+};
 
 const mapStateToProps = (state, ownProps) => {
   const staff = ownProps.staff;
-  // console.log('staff', staff);
   return {
     initialValues: {
       id: staff.id,
@@ -60,19 +72,8 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-const GET_ALL_ROLES_BY_USER_ID = gql`
-  query getAllRolesByUserID($user_id: ID!) {
-    getAllRolesByUserID(user_id: $user_id) {
-      role {
-        name
-        id
-      }
-    }
-  }
-`;
-
 export default compose(
-  connect(mapStateToProps, undefined),
+  connect(mapStateToProps, mapdispatchToProps),
   graphql(GET_ALL_ROLES_BY_USER_ID, {
     options: ownProps => ({
       variables: { user_id: ownProps.staff.id },

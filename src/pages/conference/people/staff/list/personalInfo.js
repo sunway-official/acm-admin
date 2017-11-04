@@ -39,18 +39,12 @@ class PersonalInfo extends Component {
               leftIcon={<ActionWork />}
               disabled={true}
             />
-            {this.props.roles.map(data => {
-              return (
-                <TextField
-                  disabled={true}
-                  underlineShow={false}
-                  key={data.role.id}
-                  multiLine={true}
-                  rows={2}
-                  hintText={'' + data.role.name}
-                />
-              );
-            })}
+
+            <TextField
+              disabled={true}
+              underlineShow={false}
+              hintText={'' + this.props.roles.map(data => ' ' + data.role.name)}
+            />
           </div>
           <div className="d-flex form-group">
             <ListItem
