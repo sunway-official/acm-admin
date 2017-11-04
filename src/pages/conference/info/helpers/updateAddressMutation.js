@@ -1,7 +1,7 @@
 import { gql } from 'react-apollo';
 
 const UPDATE_ADDRESS_MUTATION = gql`
-  mutation updateAddress($id: ID!, $lat: Float!, $long: Float!) {
+  mutation updateAddress($id: ID!, $lat: String!, $long: String!) {
     updateAddress(id: $id, lat: $lat, long: $long) {
       id
     }
