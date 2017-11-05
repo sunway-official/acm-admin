@@ -36,13 +36,10 @@ export const editActivityFunc = data => {
       values.schedules.map((schedule, index) => {
         const newStarTime = functions.getDateTime(
           schedule.date,
-          schedule.startTime,
+          schedule.start,
         );
 
-        const newEndTime = functions.getDateTime(
-          schedule.date,
-          schedule.endTime,
-        );
+        const newEndTime = functions.getDateTime(schedule.date, schedule.end);
         // eslint-disable-next-line array-callback-return
         if (schedule.id) {
           if (index < values.schedules.length - 1) {
