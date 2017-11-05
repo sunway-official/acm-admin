@@ -63,7 +63,7 @@ class MyCalendar extends React.PureComponent {
     const { INSERT_ACTIVITY_MUTATION, INSERT_SCHEDULE_MUTATION } = this.props;
 
     const conferenceId = this.props.conference.id;
-
+    console.log(values);
     const data = {
       INSERT_ACTIVITY_MUTATION,
       INSERT_SCHEDULE_MUTATION,
@@ -103,6 +103,8 @@ class MyCalendar extends React.PureComponent {
     if (loading) return <div>loading</div>;
 
     const events = functions.getEvents(getActivitiesByConferenceID);
+    const allSchedules = functions.getAllSchedules(events);
+    // console.log(allSchedules);
     const rooms = this.props.GET_ALL_ROOM_QUERY.getAllRooms;
     const start_date = this.props.conference.start_date;
     const end_date = this.props.conference.end_date;
@@ -148,6 +150,7 @@ class MyCalendar extends React.PureComponent {
             rooms={rooms}
             start_date={start_date}
             end_date={end_date}
+            allSchedules={allSchedules}
           />
           <div id="format-time">
             <Toggle label="24h" onToggle={this.handleTimeFormat} />
@@ -162,6 +165,7 @@ class MyCalendar extends React.PureComponent {
           <EditActivity
             onSubmit={this.editActivity}
             rooms={rooms}
+            allSchedules={allSchedules}
             conferenceId={this.props.conference.id}
             start_date={start_date}
             end_date={end_date}

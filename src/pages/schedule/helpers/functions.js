@@ -49,10 +49,9 @@ export const getEvents = array => {
 };
 
 export const getDateTime = (date, time) => {
-  const dateTime = moment(date, 'YYYY MM DD')
+  const dateTime = moment(date, 'YYYY MM DD HH:mm')
     .set('hour', time.getHours())
     .set('minute', time.getMinutes());
-
   return dateTime;
 };
 
@@ -88,6 +87,7 @@ export const EventAgenda = ({ event }) => {
 export const checkSchedules = schedules => {
   let countRoom = 0;
   let countDate = 0;
+  // console.log(schedules);
   for (let i = 0; i < schedules.length - 1; i = i + 1) {
     let item = schedules[i];
     for (let j = i + 1; j < schedules.length; j = j + 1) {
@@ -96,10 +96,8 @@ export const checkSchedules = schedules => {
       let checkDate =
         schedule.date &&
         item.date &&
-        new Date(item.date).getDay() === new Date(schedule.date).getDay() &&
-        new Date(item.date).getMonth() === new Date(schedule.date).getMonth() &&
-        new Date(item.date).getFullYear() ===
-          new Date(schedule.date).getFullYear();
+        moment(item.date).format('YYYY MM DD') ===
+          moment(schedule.date).format('YYYY MM DD');
 
       if (checkRoom) {
         countRoom = countRoom + 1;
@@ -107,26 +105,142 @@ export const checkSchedules = schedules => {
       if (checkDate) {
         countDate = countDate + 1;
       }
-      if (
-        countDate > 0 &&
-        countRoom > 0 &&
-        schedule.startTime &&
-        schedule.endTime
-      ) {
-        const newStarTime = getDateTime(schedule.date, schedule.startTime);
-        const newEndTime = getDateTime(schedule.date, schedule.endTime);
-        const itemStarTime = getDateTime(item.date, item.startTime);
-        const itemEndTime = getDateTime(item.date, item.endTime);
+      if (countDate > 0 && countRoom > 0 && schedule.start && schedule.end) {
+        const newStarTime = getDateTime(schedule.date, schedule.start);
+        const newEndTime = getDateTime(schedule.date, schedule.end);
+        const itemStarTime = getDateTime(item.date, item.start);
+        const itemEndTime = getDateTime(item.date, item.end);
         let checkDurationTime =
-          newStarTime > itemEndTime || newEndTime < itemStarTime;
+          newStarTime.isAfter(itemEndTime) || newEndTime.isBefore(itemStarTime);
+        // console.log(checkDurationTime);
         if (!checkDurationTime) {
-          return j;
+          return true;
         }
       }
     }
   }
-  return 0;
+  return false;
 };
+
+export const compareDate = (date1, date2) => {
+  const str1 = date1.format('YYYY MM DD');
+  const str2 = date2.format('YYYY MM DD');
+  console.log(str1);
+  console.log(str2);
+  // const check =
+  // new Date(date1).getDate() === new Date(date2).getDate() &&
+  // new Date(date1).getMonth() === new Date(date2).getMonth() &&
+  // new Date(date1).getFullYear() === new Date(date2).getFullYear();
+  return str1 === str2;
+};
+
+// check all schedule when insert
+export const checkAllSchedules = (allSchedules, schedules) => {
+  // console.log(allSchedules);
+  // console.log(schedule);
+  let countDate = 0;
+  let countRoom = 0;
+  for (let i = 0; i < allSchedules.length; i += 1) {
+    let item = allSchedules[i];
+    for (let j = 0; j < schedules.length; j += 1) {
+      let schedule = schedules[j];
+      const checkDate = compareDate(
+        item.date,
+        moment(schedule.date, 'YYYY MM DD'),
+      );
+      if (checkDate) {
+        countDate += 1;
+      }
+      const checkRoom =
+        schedule.room && item.room && item.room.id === schedule.room;
+      if (checkRoom) {
+        countRoom += 1;
+      }
+      console.log(countRoom);
+      // if (countDate > 0 && countRoom > 0 && schedule.start && schedule.end) {
+      //   const newStarTime = getDateTime(schedule.date, schedule.start);
+      //   const newEndTime = getDateTime(schedule.date, schedule.end);
+      //   const itemStarTime = getDateTime(item.date, item.start);
+      //   const itemEndTime = getDateTime(item.date, item.end);
+      //   let checkDurationTime =
+      //     newStarTime.isAfter(itemEndTime) || newEndTime.isBefore(itemStarTime);
+      //   // console.log(checkDurationTime);
+      //   if (!checkDurationTime) {
+      //     return true;
+      //   }
+      // }
+    }
+  }
+  console.log(countDate - schedules.length);
+  if (countDate - schedules.length > 0 && countRoom > 0) return true; // co trung
+  return false;
+  // console.log(allSchedules);
+  // allSchedules.map(async item => {
+  //   console.log(item);
+  //   const checkDate = compareDate(
+  //     item.date,
+  //     moment(schedule.date, 'YYYY MM DD'),
+  //   );
+  //   if (checkDate === true) return true;
+  //   console.log(checkDate);
+  // });
+  // console.log(schedule);
+  // return false;
+
+  // console.log(schedule);
+  // let countRoom = 0;
+  // let countDate = 0;
+  // let count = 0;
+  // for (let i = 0; i < allSchedules.length; i = i + 1) {
+  //   let item = allSchedules[i];
+  //   // console.log(item);
+  //   // let checkRoom =
+  //   //   schedule.room && item.room && item.room.id === schedule.room;
+  //   // const currentSchedule = moment(schedule.date)
+  //   //   .hours(0)
+  //   //   .minutes(0)
+  //   //   .milliseconds(0);
+  //   // console.log(item.date);
+  //   // console.log(schedule.date);
+  //   // const current = new Date(schedule.date);
+  //   // console.log(current.getDate());
+  //   // console.log(current.getUTCDate());
+  //   // console.log(current.getDate());
+  //   let checkDate = false;
+  //   if (schedule.date != null)
+  //     checkDate = compareDate(item.date, moment(schedule.date, 'YYYY MM DD'));
+  //   // console.log(checkDate);
+
+  //   if (checkDate) {
+  //     return true;
+  //   }
+  // }
+  // return false;
+};
+
+// get all schedule of conference
+export const getAllSchedules = events => {
+  let allSchedules = [];
+  let eventsId = [];
+
+  // eslint-disable-next-line array-callback-return
+  events.map(event => {
+    // eslint-disable-next-line array-callback-return
+    if (!eventsId.includes(event.id)) {
+      allSchedules = allSchedules.concat(event.schedules);
+      eventsId.push(event.id);
+    }
+  });
+  return allSchedules;
+};
+
+// export const formatSchedules = schedules => {
+//   console.log(schedules);
+//   schedules.map(schedule => {
+//     schedule.date = moment(schedule.date);
+//   });
+//   return schedules;
+// };
 
 export default {
   EventAgenda,
@@ -134,4 +248,7 @@ export default {
   getEvents,
   getDateTime,
   checkSchedules,
+  getAllSchedules,
+  checkAllSchedules,
+  // formatSchedules,
 };
