@@ -12,6 +12,13 @@ class ConferenceInfo extends PureComponent {
     this.handleUpdateConferenceInfo = this.handleUpdateConferenceInfo.bind(
       this,
     );
+    this.state = {
+      position: {
+        lat: this.props.conference.address.lat,
+        long: this.props.conference.address.long,
+      },
+    };
+    this.onMapPositionChanged = this.onMapPositionChanged.bind(this);
   }
   async handleUpdateConferenceInfo({
     title,
@@ -47,12 +54,23 @@ class ConferenceInfo extends PureComponent {
       throw new SubmissionError(error);
     }
   }
+  onMapPositionChanged(position) {
+    this.setState(
+      {
+        position,
+      },
+      () => {
+        console.log(this.state.position);
+      },
+    );
+  }
   render() {
     return (
       <InfoForm
         initialValues={this.props.initialValues}
         conference={this.props.conference}
         onSubmit={this.handleUpdateConferenceInfo}
+        onMapPositionChanged={this.onMapPositionChanged}
       />
     );
   }
@@ -69,7 +87,8 @@ const mapStateToProps = (state, ownProps) => {
       description: conference.description,
       startDate: new Date(conference.start_date),
       endDate: new Date(conference.end_date),
-
+      lat: conference.address.lat,
+      long: conference.address.long,
       organizerName: organizerDetail.name,
       organizerEmail: organizerDetail.email,
       organizerWebsite: organizerDetail.website,
