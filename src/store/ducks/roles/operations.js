@@ -1,9 +1,9 @@
 import actions from './actions';
 
-const setRolesOperation = roles => async dispatch => {
+const setRolesOperation = data => async dispatch => {
   dispatch(actions.setRolesRequested());
   try {
-    return dispatch(actions.setRolesSuccess(roles));
+    return dispatch(actions.setRolesSuccess(data));
   } catch (e) {
     return dispatch(actions.setRolesFailure());
   }

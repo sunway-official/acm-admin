@@ -9,11 +9,11 @@ import { graphql, compose } from 'react-apollo';
 import { rolesOperations } from 'store/ducks/roles';
 
 class DialogEdit extends React.Component {
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.data.loading !== this.props.data.loading) {
-      nextProps.setRole(nextProps.data.getAllRolesByUserID);
-    }
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   if (this.props.data.loading !== nextProps.data.loading) {
+  //     nextProps.setRoles(nextProps.data.getAllRolesByUserID);
+  //   }
+  // }
   render() {
     const { loading, error, getAllRolesByUserID } = this.props.data;
     if (loading) {
@@ -23,7 +23,6 @@ class DialogEdit extends React.Component {
       return <div>error</div>;
     }
     const roles = getAllRolesByUserID;
-    console.log(this.props);
     const actions = (
       <div>
         <IconButton
@@ -43,23 +42,25 @@ class DialogEdit extends React.Component {
               initialValues={this.props.initialValues}
               roles={roles}
             />
-          </Tab>,
+          </Tab>
           <Tab label="Roles Information">
-            <RolesInfo />
+            <RolesInfo roles={roles} />
           </Tab>
         </Tabs>
       </Dialog>
     );
   }
 }
-const mapdispatchToProps = dispatch => {
+
+const mapDispatchToProps = dispatch => {
   return {
-    setRole: roles => dispatch(rolesOperations.setRolesOperation(roles)),
+    setRoles: roles => dispatch(rolesOperations.setRolesOperation(roles)),
   };
 };
 
 const mapStateToProps = (state, ownProps) => {
   const staff = ownProps.staff;
+  // console.log(state);
   return {
     initialValues: {
       id: staff.id,
@@ -69,11 +70,12 @@ const mapStateToProps = (state, ownProps) => {
       dob: staff.dob,
       gender: staff.gender,
     },
+    roles: state.roles.data,
   };
 };
 
 export default compose(
-  connect(mapStateToProps, mapdispatchToProps),
+  connect(mapStateToProps, mapDispatchToProps),
   graphql(GET_ALL_ROLES_BY_USER_ID, {
     options: ownProps => ({
       variables: { user_id: ownProps.staff.id },
