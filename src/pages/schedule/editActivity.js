@@ -119,11 +119,13 @@ const mapStateToProps = state => {
     initialValues: {
       id: event.id,
       title: event.title,
-      endTime: event.end,
-      startTime: event.start,
-      date: new Date(event.start),
       description: event.description,
-      schedules: event.schedules,
+      // start: moment(event.start, 'HH:mm'),
+      // end: moment(event.end, 'HH:mm'),
+      // start: moment(event.start).format('HH:mm'),
+      // end: moment(event.end).format('HH:mm'),
+      // date: new Date(event.start),
+      // schedules: event.schedules,
     },
     event: event,
   };

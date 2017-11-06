@@ -20,12 +20,9 @@ export const addActivityFunc = data => {
       values.schedules.map(schedule => {
         const newStarTime = functions.getDateTime(
           schedule.date,
-          schedule.startTime,
+          schedule.start,
         );
-        const newEndTime = functions.getDateTime(
-          schedule.date,
-          schedule.endTime,
-        );
+        const newEndTime = functions.getDateTime(schedule.date, schedule.end);
 
         INSERT_SCHEDULE_MUTATION({
           variables: {

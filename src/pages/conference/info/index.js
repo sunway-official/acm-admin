@@ -14,6 +14,7 @@ class Index extends PureComponent {
     if (loading) return <div>loading...</div>;
 
     const conference = this.props.data.getConferenceByID;
+    console.log(conference);
     // khai bao conference dua tren query getConferenceByID
     const coOrganizerDetails = conference.coOrganizerDetails;
     // khai bao coOrganizerDetails dua tren query coOrganizerDetails bang getConferenceByID
