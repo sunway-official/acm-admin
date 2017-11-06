@@ -7,7 +7,6 @@ import { mutations, queries } from './helpers';
 import { compose, graphql } from 'react-apollo';
 import { renderSchedulesEdit, renderTextField } from './render';
 import { scheduleOperations } from 'store/ducks/schedule';
-import moment from 'moment';
 
 import validate from './validate';
 class EditActivity extends React.PureComponent {

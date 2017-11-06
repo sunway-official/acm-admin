@@ -23,25 +23,21 @@ const validate = (values, props) => {
   if (!values.schedules || !values.schedules.length) {
     errors.schedules = { _error: '.' };
   } else {
-    const allSchedules = props.allSchedules;
-    // console.log(scheduleIndex);
-    // const checkAllSchedules = checkAllSchedules
-    let checkError1 = true;
-    console.log(values.schedules.length);
     const schedules = values.schedules;
+    let allSchedules = props.allSchedules;
+    if (schedules.length > 0 && schedules[0].id) {
+      allSchedules = functions.removeSchedulesExists(allSchedules, schedules);
+    }
     const length = schedules.length;
     let scheduleErrors = {};
-
+    let checkError = 0;
     if (schedules.length > 0 && schedules[length - 1].date) {
-      checkError1 = functions.checkAllSchedules(allSchedules, values.schedules);
-      if (checkError1) {
+      checkError = functions.checkAllSchedules(allSchedules, schedules);
+      if (checkError >= 0) {
         scheduleErrors.room = 'This room is choosing';
-        ArrayErrors[length - 1] = scheduleErrors;
+        ArrayErrors[checkError] = scheduleErrors;
       }
     }
-
-    // const checkError = functions.checkSchedules(values.schedules);
-    console.log(checkError1);
 
     values.schedules.forEach((schedule, scheduleIndex) => {
       scheduleErrors = {};
@@ -110,7 +106,6 @@ const validate = (values, props) => {
         }
       }
     });
-    // console.log(ArrayErrors);
     if (ArrayErrors.length) {
       errors.schedules = ArrayErrors;
       props.checkError(true);

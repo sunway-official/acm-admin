@@ -104,7 +104,6 @@ class MyCalendar extends React.PureComponent {
 
     const events = functions.getEvents(getActivitiesByConferenceID);
     const allSchedules = functions.getAllSchedules(events);
-    // console.log(allSchedules);
     const rooms = this.props.GET_ALL_ROOM_QUERY.getAllRooms;
     const start_date = this.props.conference.start_date;
     const end_date = this.props.conference.end_date;
