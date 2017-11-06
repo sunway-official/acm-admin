@@ -10,38 +10,8 @@ import validate from './validate';
 import { renderField } from '../../../utils';
 import { withRouter } from 'react-router';
 import { AppBar } from 'material-ui';
-import normalizePhone from 'utils/normalizePhone';
+import { normalizePhone } from 'utils';
 
-const listItem = [
-  {
-    id: 1,
-    primaryText: 'Slogan',
-  },
-  {
-    id: 2,
-    primaryText: 'Register Description',
-  },
-  {
-    id: 3,
-    primaryText: 'Call For Paper Description',
-  },
-  {
-    id: 4,
-    primaryText: 'Speaker Description',
-  },
-  {
-    id: 5,
-    primaryText: 'Email',
-  },
-  {
-    id: 6,
-    primaryText: 'Facebook',
-  },
-  {
-    id: 7,
-    primaryText: 'Phone Number',
-  },
-];
 const listField = [
   {
     id: 1,
@@ -50,6 +20,7 @@ const listField = [
     rows: 1,
     rowsMax: 1,
     multiLine: false,
+    primaryText: 'Slogan',
   },
   {
     id: 2,
@@ -58,6 +29,8 @@ const listField = [
     rows: 1,
     rowsMax: 2,
     multiLine: true,
+    className: 'multi-row',
+    primaryText: 'Register Description',
   },
   {
     id: 3,
@@ -66,6 +39,8 @@ const listField = [
     rows: 1,
     rowsMax: 2,
     multiLine: true,
+    className: 'multi-row',
+    primaryText: 'Call For Paper',
   },
   {
     id: 4,
@@ -74,6 +49,8 @@ const listField = [
     rows: 1,
     rowsMax: 2,
     multiLine: true,
+    className: 'multi-row',
+    primaryText: 'Speaker Description',
   },
   {
     id: 5,
@@ -82,6 +59,7 @@ const listField = [
     multiLine: false,
     rows: 1,
     rowsMax: 1,
+    primaryText: 'Email',
   },
   {
     id: 6,
@@ -90,6 +68,7 @@ const listField = [
     rows: 1,
     rowsMax: 1,
     multiLine: false,
+    primaryText: 'Facebook Link',
   },
 ];
 class LandingPageForm extends Component {
@@ -102,31 +81,34 @@ class LandingPageForm extends Component {
   }
   render() {
     const { handleSubmit, submitting, pristine, invalid } = this.props;
-    const ListItems = listItem.map(item => (
-      <div key={item.id}>
-        <Row className="firstColunm">
-          <ListItem
-            className="list-item"
-            primaryText={item.primaryText}
-            disabled={true}
-          />
-        </Row>
-      </div>
-    ));
     const ListFields = listField.map(field => (
       <div key={field.id}>
-        <Row className="landing-page-second-column">
-          <Field
-            id="text-field-default"
-            name={field.name}
-            type="text"
-            hintText={field.hintText}
-            component={renderField}
-            multiLine={field.multiLine}
-            rows={field.rows}
-            rowsMax={field.rowsMax}
-            fullWidth={true}
-          />
+        <Row around="xs" className={field.className}>
+          <Col xs={3}>
+            <Row className="firstColunm">
+              <ListItem
+                className="list-item"
+                primaryText={field.primaryText}
+                disabled={true}
+              />
+            </Row>
+          </Col>
+          <Col xs={9}>
+            <Row className="landing-page-second-column">
+              <Field
+                id="text-field-default"
+                name={field.name}
+                type="text"
+                hintText={field.hintText}
+                component={renderField}
+                multiLine={field.multiLine}
+                rows={field.rows}
+                rowsMax={field.rowsMax}
+                fullWidth={true}
+                normalize={field.normalize}
+              />
+            </Row>
+          </Col>
         </Row>
       </div>
     ));
@@ -137,38 +119,53 @@ class LandingPageForm extends Component {
           title="Edit Your Landing Page Information"
           showMenuIconButton={false}
         />
-        <Grid fluid>
+        <Grid fluid className="landing-page-grid">
           <Row around="xs">
-            <Col xs={3}> {ListItems} </Col>
-            <Col xs={9}>
-              <form onSubmit={handleSubmit}>
-                {ListFields}
-                <Row className="landing-page-second-column">
-                  <Field
-                    name="phone_number"
-                    component={renderField}
-                    hintText="Phone Number"
-                    fullWidth={true}
-                    normalize={normalizePhone}
-                  />
-                </Row>
-                <div className="personal-info-button">
-                  <RaisedButton
-                    className="btn save-change"
-                    label="Save Change"
-                    primary={true}
-                    disabled={pristine || submitting || invalid}
-                    type="submit"
-                  />
-                  <RaisedButton
-                    className="btn cancel"
-                    label="Cancel"
-                    default={true}
-                    onClick={this.handleCancel}
-                  />
-                </div>
-              </form>
-            </Col>
+            <form onSubmit={handleSubmit} className="landing-page-redux-form">
+              {ListFields}
+              <Row around="xs">
+                <Col xs={3}>
+                  <Row className="firstColunm">
+                    <ListItem
+                      className="list-item"
+                      primaryText="Phone Number"
+                      disabled={true}
+                    />
+                  </Row>
+                </Col>
+                <Col xs={9}>
+                  <Row className="landing-page-second-column">
+                    <Field
+                      id="text-field-default"
+                      name="phone_number"
+                      type="text"
+                      hintText="Phone Number"
+                      component={renderField}
+                      multiLine={false}
+                      rows={1}
+                      rowsMax={1}
+                      fullWidth={true}
+                      normalize={normalizePhone}
+                    />
+                  </Row>
+                </Col>
+              </Row>
+              <Row className="personal-info-button" center="xs">
+                <RaisedButton
+                  className="btn save-change"
+                  label="Save Change"
+                  primary={true}
+                  disabled={pristine || submitting || invalid}
+                  type="submit"
+                />
+                <RaisedButton
+                  className="btn cancel"
+                  label="Cancel"
+                  default={true}
+                  onClick={this.handleCancel}
+                />
+              </Row>
+            </form>
           </Row>
         </Grid>
       </div>

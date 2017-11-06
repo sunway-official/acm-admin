@@ -24,7 +24,7 @@ class LandingPage extends Component {
             <div className="cbp-af-inner">
               <h2>ACM</h2>
               <nav>
-                <a href="" className="home">
+                <a href="/landingpage" className="home">
                   Home
                 </a>
                 <a href="">Speaker</a>
