@@ -22,6 +22,8 @@ class Index extends Component {
         speaker_description: values.speaker_description,
         email: values.email,
         facebook_id: values.facebook_id,
+        linkedin_id: values.linkedin_id,
+        twitter_id: values.twitter_id,
         phone_number: values.phone_number,
       },
       refetchQueries: [
@@ -31,7 +33,6 @@ class Index extends Component {
         },
       ],
     });
-    console.log(values);
     window.alert('success');
   }
   render() {

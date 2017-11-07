@@ -70,6 +70,24 @@ const listField = [
     multiLine: false,
     primaryText: 'Facebook Link',
   },
+  {
+    id: 7,
+    name: 'twitter_id',
+    hintText: 'Twitter',
+    rows: 1,
+    rowsMax: 1,
+    multiLine: false,
+    primaryText: 'Twitter Link',
+  },
+  {
+    id: 8,
+    name: 'linkedin_id',
+    hintText: 'Linkedin',
+    rows: 1,
+    rowsMax: 1,
+    multiLine: false,
+    primaryText: 'Linkedin Link',
+  },
 ];
 class LandingPageForm extends Component {
   constructor(props) {
@@ -183,6 +201,8 @@ const mapStateToProps = (state, ownProps) => {
       speaker_description: landingPage.speaker_description,
       email: landingPage.email,
       facebook_id: landingPage.facebook_id,
+      twitter_id: landingPage.twitter_id,
+      linkedin_id: landingPage.linkedin_id,
       phone_number: landingPage.phone_number,
     },
   };

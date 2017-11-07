@@ -30,14 +30,18 @@ class Footer extends Component {
                     aria-hidden="true"
                   />
                 </a>
-                <i
-                  className="fa fa-twitter-square fa-lg footer-icon"
-                  aria-hidden="true"
-                />
-                <i
-                  className="fa fa-linkedin-square fa-lg footer-icon"
-                  aria-hidden="true"
-                />
+                <a href={this.props.landingPage.twitter_id}>
+                  <i
+                    className="fa fa-twitter-square fa-lg footer-icon"
+                    aria-hidden="true"
+                  />
+                </a>
+                <a href={this.props.landingPage.linkedin_id}>
+                  <i
+                    className="fa fa-linkedin-square fa-lg footer-icon"
+                    aria-hidden="true"
+                  />
+                </a>
               </div>
             </Col>
           </Row>

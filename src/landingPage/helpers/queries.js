@@ -11,6 +11,8 @@ export const GET_LANDING_PAGE_BY_CONFERENCE_ID_QUERY = gql`
       phone_number
       email
       facebook_id
+      twitter_id
+      linkedin_id
       conference {
         title
         address {

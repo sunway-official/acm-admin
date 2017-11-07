@@ -40,10 +40,14 @@ class Register extends Component {
                 <Col xs={3}>
                   <Row> When </Row>
                   <Row>
-                    From: <span /> {start}
+                    <p className="register-text">
+                      From: <span /> {start}
+                    </p>
                   </Row>
                   <Row>
-                    To: <span /> {end}
+                    <p className="register-text">
+                      To: <span /> {end}
+                    </p>
                   </Row>
                 </Col>
                 <Col xs={4}>

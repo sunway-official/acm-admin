@@ -3,13 +3,15 @@ import { gql } from 'react-apollo';
 const UPDATE_LANDING_PAGE_MUTATION = gql`
   mutation UpdateLandingPage(
     $id: ID!
-    $slogan: String!
-    $register_description: String!
-    $call_paper_description: String!
-    $speaker_description: String!
-    $email: String!
-    $phone_number: String!
-    $facebook_id: String!
+    $slogan: String
+    $register_description: String
+    $call_paper_description: String
+    $speaker_description: String
+    $email: String
+    $phone_number: String
+    $facebook_id: String
+    $twitter_id: String
+    $linkedin_id: String
   ) {
     updateLandingPage(
       id: $id
@@ -20,6 +22,8 @@ const UPDATE_LANDING_PAGE_MUTATION = gql`
       email: $email
       phone_number: $phone_number
       facebook_id: $facebook_id
+      twitter_id: $twitter_id
+      linkedin_id: $linkedin_id
     ) {
       id
       slogan
@@ -29,6 +33,8 @@ const UPDATE_LANDING_PAGE_MUTATION = gql`
       email
       phone_number
       facebook_id
+      twitter_id
+      linkedin_id
     }
   }
 `;

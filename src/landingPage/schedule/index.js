@@ -12,12 +12,12 @@ class LandingPageSchedule extends Component {
     this.sortActivities = this.sortActivities.bind(this);
   }
   sortActivities(events) {
-    var i = 0;
+    var i;
     var j;
     var temp;
-    for (i; i < events.length - 1; i++) {
-      for (j = i + 1; j < events.length - 1; j++) {
-        if (moment(events[i].start).isAfter(events[i + 1].start)) {
+    for (i = 0; i < events.length; i++) {
+      for (j = i + 1; j < events.length; j++) {
+        if (moment(events[i].start).isAfter(events[j].start)) {
           temp = events[i];
           events[i] = events[j];
           events[j] = temp;

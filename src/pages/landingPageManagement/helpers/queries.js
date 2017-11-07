@@ -10,6 +10,8 @@ export const GET_LANDING_PAGE_BY_CONFERENCE_ID_QUERY = gql`
       slogan
       email
       facebook_id
+      twitter_id
+      linkedin_id
       phone_number
     }
   }

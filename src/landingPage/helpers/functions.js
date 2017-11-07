@@ -44,15 +44,6 @@ export const getEvents = array => {
   return events;
 };
 
-export const getDateTime = (date, time) => {
-  const dateTime = moment(date, 'YYYY MM DD')
-    .set('hour', time.getHours())
-    .set('minute', time.getMinutes());
-
-  return dateTime;
-};
-
 export default {
   getEvents,
-  getDateTime,
 };
