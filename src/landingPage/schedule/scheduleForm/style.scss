@@ -1,0 +1,40 @@
+.event-body{
+  padding-left: 15%;
+  background-color: #FFFFFF;
+  font-family: "Roboto";
+  height: 100%;
+}
+.event-time{
+  font-size: 14px;
+  color: #ff5722;
+}
+.event-detail{
+  margin-bottom: 3vw;
+}
+.event-detail::after{
+  content: "";
+  display: block;
+  height: 3px;
+  width: 50%;
+  background: rgb(235, 235, 235);
+  margin-top: 3vw;
+}
+.event-title{
+  font-size: 4vw;
+  font-weight: 900;
+  margin: 0px !important;
+  margin-bottom: 0.5vw;
+  padding-bottom: 1vw;
+  padding-top: 1vw;
+}
+.schedule-title{
+  margin-bottom: 6vw;
+  font-size: 5vw;
+  font-weight: 900;
+  border-bottom: 0.2vw solid #ff5222;
+  display: inline-block;
+  position: relative;
+}
+.schedule-content{
+  width: 80%;
+}
