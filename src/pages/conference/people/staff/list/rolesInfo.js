@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import { Toggle, ListItem, RaisedButton } from 'material-ui';
 import { connect } from 'react-redux';
+
 class RolesInfo extends Component {
-  constructor(props) {
-    super(props);
-    this.handleToggleModerator = this.handleToggleModerator.bind(this);
-  }
   state = {
     toggleModerator: false,
     toggleSupporter: false,
@@ -13,49 +10,15 @@ class RolesInfo extends Component {
     toggleReviewer: false,
     toggleAuthor: false,
   };
-  handleToggleModerator() {
-    this.setState({ toggleModerator: !this.state.toggleModerator });
-  }
-  componentWillMount() {
-    {
-      this.props.roles.map(data => {
-        switch (data.role.name) {
-          case 'Moderator':
-            this.setState({ toggleModerator: true });
-            break;
-          case 'Supporter':
-            this.setState({ toggleSupporter: true });
-            break;
-          case 'Ticket Checker':
-            this.setState({ toggleTicketChecker: true });
-            break;
-          case 'Reviewer':
-            this.setState({ toggleReviewer: true });
-            break;
-          case 'Author':
-            this.setState({ toggleAuthor: true });
-            break;
-          default:
-            false;
-            break;
-        }
-      });
-    }
-  }
+
   render() {
+    console.log('props', this.props);
     return (
       <div>
         <div>
           <ListItem
             primaryText="Moderator"
-            rightToggle={
-              <Toggle
-                onToggle={() =>
-                  this.handleToggleModerator +
-                  console.log(this.state.toggleModerator)}
-                defaultToggled={this.state.toggleModerator}
-              />
-            }
+            rightToggle={<Toggle defaultToggled={this.state.toggleModerator} />}
           />
           <ListItem
             primaryText="Supporter"
@@ -89,9 +52,12 @@ class RolesInfo extends Component {
   }
 }
 const mapStateToProps = state => {
-  const roles = state.roles;
-  console.log(roles);
-  return {};
+  const userID = state.user.data.id;
+  console.log('state', state.roles.data);
+  return {
+    id: userID,
+    roles: state.roles.data,
+  };
 };
 
 export default connect(mapStateToProps, undefined)(RolesInfo);

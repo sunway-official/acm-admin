@@ -6,15 +6,10 @@ import PersonalInfo from './personalInfo';
 import { connect } from 'react-redux';
 import GET_ALL_ROLES_BY_USER_ID from './helpers/getAllRolesByUserID';
 import { graphql, compose } from 'react-apollo';
-import { rolesOperations } from 'store/ducks/roles';
 
 class DialogEdit extends React.Component {
-  // componentWillReceiveProps(nextProps) {
-  //   if (this.props.data.loading !== nextProps.data.loading) {
-  //     nextProps.setRoles(nextProps.data.getAllRolesByUserID);
-  //   }
-  // }
   render() {
+    console.log(this.props);
     const { loading, error, getAllRolesByUserID } = this.props.data;
     if (loading) {
       return <div>Loading...</div>;
@@ -38,13 +33,10 @@ class DialogEdit extends React.Component {
       <Dialog open={this.props.openDialog} actions={actions}>
         <Tabs style={{ marginTop: '20px' }}>
           <Tab label="Personal Information">
-            <PersonalInfo
-              initialValues={this.props.initialValues}
-              roles={roles}
-            />
+            <PersonalInfo initialValues={this.props.user} roles={roles} />
           </Tab>
           <Tab label="Roles Information">
-            <RolesInfo roles={roles} />
+            <RolesInfo />
           </Tab>
         </Tabs>
       </Dialog>
@@ -52,33 +44,17 @@ class DialogEdit extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapStateToProps = state => {
   return {
-    setRoles: roles => dispatch(rolesOperations.setRolesOperation(roles)),
-  };
-};
-
-const mapStateToProps = (state, ownProps) => {
-  const staff = ownProps.staff;
-  // console.log(state);
-  return {
-    initialValues: {
-      id: staff.id,
-      firstname: staff.firstname,
-      lastname: staff.lastname,
-      email: staff.email,
-      dob: staff.dob,
-      gender: staff.gender,
-    },
-    roles: state.roles.data,
+    user: state.user.data,
   };
 };
 
 export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
+  connect(mapStateToProps, undefined),
   graphql(GET_ALL_ROLES_BY_USER_ID, {
     options: ownProps => ({
-      variables: { user_id: ownProps.staff.id },
+      variables: { user_id: ownProps.staff_id },
     }),
   }),
 )(DialogEdit);

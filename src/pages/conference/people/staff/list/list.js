@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { graphql, gql, compose } from 'react-apollo';
 import DialogEdit from './dialogEdit';
 import GetRoles from './getRoles';
+import { userActions } from 'store/ducks/user';
+import { connect } from 'react-redux';
 
 import {
   Table,
@@ -15,32 +16,25 @@ import {
 } from 'material-ui';
 import { style } from './style.css';
 
-class Index extends Component {
+class List extends Component {
   constructor(props) {
     super(props);
     this.handleOpenDialog = this.handleOpenDialog.bind(this);
     this.state = {
-      openDelete: false,
       openDialog: false,
-      staff: { id: 0 },
+      staffId: 0,
     };
   }
-
-  handleOpenDelete = UserId => {
-    this.setState({ openDelete: true });
-    this.setState({
-      UserId: UserId,
-    });
-  };
-  handleOpenDialog(staff) {
-    this.setState({ openDialog: true, staff: staff });
+  handleOpenDialog(staff, staffId) {
+    this.setState({ openDialog: !this.state.openDialog, staffId: staffId });
+    this.props.setUser(staff);
   }
   handleClose = () => {
-    this.setState({ openDelete: false, openDialog: false });
+    this.setState({ openDialog: !this.state.openDialog });
   };
 
   render() {
-    const allStaff = this.props.allStaff;
+    const staffs = this.props.staffs;
     const actionDelete = [
       <RaisedButton
         label="Submit"
@@ -65,7 +59,7 @@ class Index extends Component {
               </TableRow>
             </TableHeader>
             <TableBody displayRowCheckbox={false}>
-              {allStaff.map((staff, index) => (
+              {staffs.map((staff, index) => (
                 <TableRow key={staff.id}>
                   <TableRowColumn>{index + 1}</TableRowColumn>
                   <TableRowColumn>
@@ -80,12 +74,8 @@ class Index extends Component {
                       primary={true}
                       label="edit"
                       onClick={() => {
-                        this.handleOpenDialog(staff);
+                        this.handleOpenDialog(staff, staff.id);
                       }}
-                    />
-                    <RaisedButton
-                      label="delete"
-                      onClick={() => this.handleOpenDelete(staff.id)}
                     />
                   </TableRowColumn>
                 </TableRow>
@@ -97,15 +87,7 @@ class Index extends Component {
             handleClose={() => {
               this.handleClose();
             }}
-            staff={this.state.staff}
-          />
-
-          <Dialog
-            title="Do you want to delete this staff?"
-            modal={true}
-            onRequestClose={this.handleClose}
-            open={this.state.openDelete}
-            actions={actionDelete}
+            staff_id={this.state.staffId}
           />
         </div>
       </div>
@@ -113,15 +95,10 @@ class Index extends Component {
   }
 }
 
-const DELETE_USER = gql`
-  mutation deleteUser($id: ID!) {
-    deleteUser(id: $id) {
-      id
-    }
-  }
-`;
-export default compose(
-  graphql(DELETE_USER, {
-    name: 'DELETE_USER',
-  }),
-)(Index);
+const mapDispatchToProps = dispatch => {
+  return {
+    setUser: user => dispatch(userActions.setUser(user)),
+  };
+};
+
+export default connect(undefined, mapDispatchToProps)(List);

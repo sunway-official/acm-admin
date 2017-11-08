@@ -1,10 +1,10 @@
 import types from './types';
 
-const setRoles = data => ({
-  type: types.SET_ROLES,
+const setUser = data => ({
+  type: types.SET_USER,
   payload: data,
 });
 
 export default {
-  setRoles,
+  setUser,
 };

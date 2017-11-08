@@ -9,7 +9,13 @@ import {
 } from 'material-ui/svg-icons';
 import { Field, reduxForm } from 'redux-form';
 import CustomInput from 'components/CustomInput';
+import { connect } from 'react-redux';
+import { rolesActions } from 'store/ducks/roles';
+
 class PersonalInfo extends Component {
+  componentDidMount() {
+    this.props.setRoles(this.props.roles);
+  }
   render() {
     return (
       <form
@@ -31,7 +37,6 @@ class PersonalInfo extends Component {
               disabled={true}
             />
           </div>
-          {/*Chua connect data cho position*/}
           <div className="d-flex form-group">
             <ListItem
               className="title-group"
@@ -41,6 +46,7 @@ class PersonalInfo extends Component {
             />
 
             <TextField
+              name="role"
               disabled={true}
               underlineShow={false}
               hintText={'' + this.props.roles.map(data => ' ' + data.role.name)}
@@ -93,7 +99,11 @@ class PersonalInfo extends Component {
     );
   }
 }
+const mapDispatchToProps = dispatch => {
+  return {
+    setRoles: roles => dispatch(rolesActions.setRoles(roles)),
+  };
+};
 
-export default reduxForm({
-  form: 'PersonalInfo',
-})(PersonalInfo);
+PersonalInfo = connect(undefined, mapDispatchToProps)(PersonalInfo);
+export default reduxForm({ form: 'PersonalInfo' })(PersonalInfo);

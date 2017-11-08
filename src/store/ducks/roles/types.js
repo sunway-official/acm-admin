@@ -1,9 +1,5 @@
-const SET_ROLES_REQUESTED = 'cem-admin/roles/SET_ROLES_REQUESTED';
-const SET_ROLES_SUCCESS = 'cem-admin/roles/SET_ROLES_SUCCESS';
-const SET_ROLES_FAILURE = 'cem-admin/roles/SET_ROLES_FAILURE';
+const SET_ROLES = 'SET_ROLES';
 
 export default {
-  SET_ROLES_REQUESTED,
-  SET_ROLES_SUCCESS,
-  SET_ROLES_FAILURE,
+  SET_ROLES,
 };

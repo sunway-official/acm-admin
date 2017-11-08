@@ -10,7 +10,7 @@ class Index extends Component {
     const { loading } = this.props.data;
     if (loading) return <div>Loading...</div>;
 
-    const allStaff = this.props.data.getAllStaffInConference;
+    const staffs = this.props.data.getAllStaffInConference;
     return (
       <div className="conference">
         <Subheader className="subheader"> Staff List</Subheader>
@@ -31,7 +31,7 @@ class Index extends Component {
           <span>Staff</span>
         </div>
         <div className="dashboard content d-flex">
-          <List allStaff={allStaff} />
+          <List staffs={staffs} />
         </div>
       </div>
     );
