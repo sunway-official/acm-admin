@@ -8,8 +8,8 @@ const validate = (values, props) => {
     'title',
     'description',
     'date',
-    'startTime',
-    'endTime',
+    'start',
+    'end',
     'room',
   ];
   requiredFields.forEach(field => {
@@ -17,14 +17,30 @@ const validate = (values, props) => {
       errors[field] = 'This field is required';
     }
   });
-  if (values.endTime <= values.startTime) {
-    errors.endTime = 'End time of schedule must be greater than start time!!!';
+  if (values.end <= values.start) {
+    errors.end = 'End time of schedule must be greater than start time!!!';
   }
   if (!values.schedules || !values.schedules.length) {
     errors.schedules = { _error: '.' };
   } else {
+    const schedules = values.schedules;
+    let allSchedules = props.allSchedules;
+    if (schedules.length > 0 && schedules[0].id) {
+      allSchedules = functions.removeSchedulesExists(allSchedules, schedules);
+    }
+    const length = schedules.length;
+    let scheduleErrors = {};
+    let checkError = 0;
+    if (schedules.length > 0 && schedules[length - 1].date) {
+      checkError = functions.checkAllSchedules(allSchedules, schedules);
+      if (checkError >= 0) {
+        scheduleErrors.room = 'This room is choosing';
+        ArrayErrors[checkError] = scheduleErrors;
+      }
+    }
+
     values.schedules.forEach((schedule, scheduleIndex) => {
-      const scheduleErrors = {};
+      scheduleErrors = {};
       if (!schedule || !schedule.date) {
         scheduleErrors.date = 'This field is required';
         ArrayErrors[scheduleIndex] = scheduleErrors;
@@ -33,37 +49,41 @@ const validate = (values, props) => {
         scheduleErrors.room = 'This field is required';
         ArrayErrors[scheduleIndex] = scheduleErrors;
       }
-      if (!schedule || !schedule.startTime) {
-        scheduleErrors.startTime = 'This field is required';
+      if (!schedule || !schedule.start) {
+        scheduleErrors.start = 'Required';
         ArrayErrors[scheduleIndex] = scheduleErrors;
       }
-      let startTimeHours = 0;
-      let endTimeHours = 0;
-      let startTimeMinutes = 0;
-      let endTimeMinutes = 1;
-      if (!schedule || !schedule.endTime) {
-        scheduleErrors.endTime = 'This field is required';
+      let startHours = 0;
+      let endHours = 0;
+      let startMinutes = 0;
+      let endMinutes = 1;
+      if (!schedule || !schedule.end) {
+        scheduleErrors.end = 'Required';
         ArrayErrors[scheduleIndex] = scheduleErrors;
-      } else if (schedule.startTime && schedule.endTime) {
-        startTimeHours = moment(schedule.startTime).hours();
-        endTimeHours = moment(schedule.endTime).hours();
-        startTimeMinutes = moment(schedule.startTime).minutes();
-        endTimeMinutes = moment(schedule.endTime).minutes();
+      } else if (schedule.start && schedule.end) {
+        startHours = moment(schedule.start).hours();
+        endHours = moment(schedule.end).hours();
+        startMinutes = moment(schedule.start).minutes();
+        endMinutes = moment(schedule.end).minutes();
       }
 
       if (
-        startTimeHours > endTimeHours ||
-        (startTimeHours === endTimeHours && startTimeMinutes >= endTimeMinutes)
+        startHours > endHours ||
+        (startHours === endHours && startMinutes >= endMinutes)
       ) {
-        scheduleErrors.endTime =
+        scheduleErrors.end =
           'End time of schedule must be greater than start time and in the same day!!!';
         ArrayErrors[scheduleIndex] = scheduleErrors;
       }
 
       if (
         schedule.date &&
-        (moment(schedule.date).isBefore(moment(props.start_date)) ||
-          moment(schedule.date).isAfter(moment(props.end_date)))
+        (moment(schedule.date, 'DD/MM/YYYY HH:mm').isBefore(
+          moment(props.start_date, 'DD/MM/YYYY HH:mm'),
+        ) ||
+          moment(schedule.date, 'DD/MM/YYYY HH:mm').isAfter(
+            moment(props.end_date, 'DD/MM/YYYY HH:mm'),
+          ))
       ) {
         scheduleErrors.date =
           'Please choose date from ' +
@@ -73,14 +93,16 @@ const validate = (values, props) => {
         ArrayErrors[scheduleIndex] = scheduleErrors;
       }
 
+      // check allschedules
+
       if (
         scheduleIndex === values.schedules.length - 1 &&
         values.schedules.length !== 1
       ) {
-        const check = functions.checkSchedules(values.schedules);
-        if (!check === 0) {
+        const checkError = functions.checkSchedules(values.schedules);
+        if (checkError) {
           scheduleErrors.room = 'This room is choosing';
-          ArrayErrors[check] = scheduleErrors;
+          ArrayErrors[scheduleIndex] = scheduleErrors;
         }
       }
     });
@@ -91,7 +113,6 @@ const validate = (values, props) => {
       props.checkError(false);
     }
   }
-
   return errors;
 };
 

@@ -12,7 +12,6 @@ import {
   TableRow,
   TableRowColumn,
   RaisedButton,
-  Dialog,
 } from 'material-ui';
 import { style } from './style.css';
 
@@ -35,15 +34,6 @@ class List extends Component {
 
   render() {
     const staffs = this.props.staffs;
-    const actionDelete = [
-      <RaisedButton
-        label="Submit"
-        primary={true}
-        onClick={this.handleClose}
-        type="submit"
-      />,
-      <RaisedButton label="Cancel" onClick={this.handleClose} />,
-    ];
     return (
       <div className="d-flex">
         <style dangerouslySetInnerHTML={{ __html: style }} />

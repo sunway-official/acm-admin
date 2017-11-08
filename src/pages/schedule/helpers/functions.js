@@ -3,6 +3,7 @@ import React from 'react';
 
 export const getSchedules = array => {
   let schedules = [];
+  // eslint-disable-next-line array-callback-return
   array.map(item => {
     const date = moment(item.start, 'YYYY MM DD');
     const start = moment(item.start)._d;
@@ -23,8 +24,10 @@ export const getSchedules = array => {
 export const getEvents = array => {
   let events = [];
   if (array) {
+    // eslint-disable-next-line array-callback-return
     array.map(item => {
       const schedules = getSchedules(item.schedules);
+      // eslint-disable-next-line array-callback-return
       item.schedules.map(schedule => {
         const start = moment(schedule.start)._d;
         const end = moment(schedule.end)._d;
@@ -46,10 +49,9 @@ export const getEvents = array => {
 };
 
 export const getDateTime = (date, time) => {
-  const dateTime = moment(date, 'YYYY MM DD')
+  const dateTime = moment(date, 'YYYY MM DD HH:mm')
     .set('hour', time.getHours())
     .set('minute', time.getMinutes());
-
   return dateTime;
 };
 
@@ -93,10 +95,8 @@ export const checkSchedules = schedules => {
       let checkDate =
         schedule.date &&
         item.date &&
-        new Date(item.date).getDay() === new Date(schedule.date).getDay() &&
-        new Date(item.date).getMonth() === new Date(schedule.date).getMonth() &&
-        new Date(item.date).getFullYear() ===
-          new Date(schedule.date).getFullYear();
+        moment(item.date).format('YYYY MM DD') ===
+          moment(schedule.date).format('YYYY MM DD');
 
       if (checkRoom) {
         countRoom = countRoom + 1;
@@ -104,25 +104,93 @@ export const checkSchedules = schedules => {
       if (checkDate) {
         countDate = countDate + 1;
       }
-      if (
-        countDate > 0 &&
-        countRoom > 0 &&
-        schedule.startTime &&
-        schedule.endTime
-      ) {
-        const newStarTime = getDateTime(schedule.date, schedule.startTime);
-        const newEndTime = getDateTime(schedule.date, schedule.endTime);
-        const itemStarTime = getDateTime(item.date, item.startTime);
-        const itemEndTime = getDateTime(item.date, item.endTime);
+      if (countDate > 0 && countRoom > 0 && schedule.start && schedule.end) {
+        const newStarTime = getDateTime(schedule.date, schedule.start);
+        const newEndTime = getDateTime(schedule.date, schedule.end);
+        const itemStarTime = getDateTime(item.date, item.start);
+        const itemEndTime = getDateTime(item.date, item.end);
         let checkDurationTime =
-          newStarTime > itemEndTime || newEndTime < itemStarTime;
+          newStarTime.isAfter(itemEndTime) || newEndTime.isBefore(itemStarTime);
+        if (!checkDurationTime) {
+          return true;
+        }
+      }
+    }
+  }
+  return false;
+};
+
+export const compareDate = (date1, date2, strFormat) => {
+  const str1 = date1.format(strFormat);
+  const str2 = date2.format(strFormat);
+  return str1 === str2;
+};
+
+export const removeSchedulesExists = (allSchedules, schedules) => {
+  for (let i = 0; i < allSchedules.length; i += 1) {
+    let item = allSchedules[i];
+    for (let j = 0; j < schedules.length; j += 1) {
+      let schedule = schedules[j];
+      if (item.id === schedule.id) {
+        allSchedules.splice(i, 1);
+        i -= 1;
+      }
+    }
+  }
+  return allSchedules;
+};
+
+// check all schedule when insert
+export const checkAllSchedules = (allSchedules, schedules) => {
+  for (let i = 0; i < allSchedules.length; i += 1) {
+    let item = allSchedules[i];
+    for (let j = 0; j < schedules.length; j += 1) {
+      let schedule = schedules[j];
+      let countDate = 0;
+      let countRoom = 0;
+      const checkDate = compareDate(
+        item.date,
+        moment(schedule.date, 'YYYY MM DD'),
+        'YYYY MM DD',
+      );
+      if (checkDate) {
+        countDate += 1;
+      }
+      const checkRoom =
+        schedule.room && item.room && item.room.id === schedule.room;
+      if (checkRoom) {
+        countRoom += 1;
+      }
+      if (countDate > 0 && countRoom > 0 && schedule.start && schedule.end) {
+        const newStarTime = getDateTime(schedule.date, schedule.start);
+        const newEndTime = getDateTime(schedule.date, schedule.end);
+        const itemStarTime = getDateTime(item.date, item.start);
+        const itemEndTime = getDateTime(item.date, item.end);
+        let checkDurationTime =
+          newStarTime.isAfter(itemEndTime) || newEndTime.isBefore(itemStarTime);
         if (!checkDurationTime) {
           return j;
         }
       }
     }
   }
-  return 0;
+  return -1;
+};
+
+// get all schedule of conference
+export const getAllSchedules = events => {
+  let allSchedules = [];
+  let eventsId = [];
+
+  // eslint-disable-next-line array-callback-return
+  events.map(event => {
+    // eslint-disable-next-line array-callback-return
+    if (!eventsId.includes(event.id)) {
+      allSchedules = allSchedules.concat(event.schedules);
+      eventsId.push(event.id);
+    }
+  });
+  return allSchedules;
 };
 
 export default {
@@ -131,4 +199,7 @@ export default {
   getEvents,
   getDateTime,
   checkSchedules,
+  getAllSchedules,
+  checkAllSchedules,
+  removeSchedulesExists,
 };

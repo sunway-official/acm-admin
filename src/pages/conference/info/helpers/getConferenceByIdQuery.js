@@ -8,6 +8,10 @@ const GET_CONFERENCE_BY_ID_QUERY = gql`
       description
       start_date
       end_date
+      address {
+        lat
+        long
+      }
       organizerDetail {
         id
         name
@@ -24,10 +28,6 @@ const GET_CONFERENCE_BY_ID_QUERY = gql`
         conference {
           id
         }
-      }
-      address {
-        lat
-        long
       }
     }
   }

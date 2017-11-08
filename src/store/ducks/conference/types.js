@@ -7,6 +7,10 @@ const GET_ID_REQUESTED = 'cem-admin/conference/GET_ID_REQUESTED';
 const GET_ID_SUCCESS = 'cem-admin/conference/GET_ID_SUCCESS';
 const GET_ID_FAILURE = 'cem-admin/conference/GET_ID_FAILURE';
 
+const GET_POSITION_REQUESTED = 'cem-admin/conference/GET_POSITION_REQUESTED';
+const GET_POSITION_SUCCESS = 'cem-admin/conference/GET_POSITION_SUCCESS';
+const GET_POSITION_FAILURE = 'cem-admin/conference/GET_POSITION_FAILURE';
+
 export default {
   GET_CONFERENCE_REQUESTED,
   GET_CONFERENCE_SUCCESS,
@@ -14,4 +18,7 @@ export default {
   GET_ID_REQUESTED,
   GET_ID_SUCCESS,
   GET_ID_FAILURE,
+  GET_POSITION_REQUESTED,
+  GET_POSITION_SUCCESS,
+  GET_POSITION_FAILURE,
 };

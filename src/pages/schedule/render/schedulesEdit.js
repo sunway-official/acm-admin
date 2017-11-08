@@ -44,9 +44,9 @@ class renderSchedules extends React.Component {
     for (let i = 0; i < length; i = i + 1) {
       const schedule = {
         id: schedules[i].id,
-        date: new Date(schedules[i].date),
-        startTime: new Date(schedules[i].start),
-        endTime: new Date(schedules[i].end),
+        date: new Date(schedules[i].start),
+        start: new Date(schedules[i].start),
+        end: new Date(schedules[i].end),
         room: schedules[i].room.id,
       };
       this.props.fields.push(schedule);
@@ -125,7 +125,7 @@ class renderSchedules extends React.Component {
                 <div className="d-flex form-group">
                   <label className="schedule-time-from">Start From :</label>
                   <Field
-                    name={`${schedule}.startTime`}
+                    name={`${schedule}.start`}
                     component={renderTimePicker}
                     format={null}
                     hintText="Begin Schedule"
@@ -135,7 +135,7 @@ class renderSchedules extends React.Component {
                 <div className="d-flex form-group">
                   <label className="text-align-center">To :</label>
                   <Field
-                    name={`${schedule}.endTime`}
+                    name={`${schedule}.end`}
                     component={renderTimePicker}
                     format={null}
                     hintText="End Schedule"
