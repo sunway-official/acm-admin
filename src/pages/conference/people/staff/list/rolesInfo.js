@@ -12,7 +12,6 @@ class RolesInfo extends Component {
   };
 
   render() {
-    console.log('props', this.props);
     return (
       <div>
         <div>
@@ -53,7 +52,6 @@ class RolesInfo extends Component {
 }
 const mapStateToProps = state => {
   const userID = state.user.data.id;
-  console.log('state', state.roles.data);
   return {
     id: userID,
     roles: state.roles.data,
