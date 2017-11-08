@@ -59,7 +59,7 @@ class LandingPageSchedule extends Component {
 export default compose(
   graphql(queries.GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY, {
     options: ownProps => ({
-      variables: { conference_id: '2' },
+      variables: { conference_id: '1' },
     }),
   }),
 )(LandingPageSchedule);

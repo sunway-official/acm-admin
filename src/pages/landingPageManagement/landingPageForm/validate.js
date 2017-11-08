@@ -8,6 +8,8 @@ const validate = values => {
     'speaker_description',
     'email',
     'facebook_id',
+    'twitter_id',
+    'linkedin_id',
     'phone_number',
   ];
   requiredFields.forEach(field => {

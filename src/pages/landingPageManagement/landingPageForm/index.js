@@ -11,84 +11,7 @@ import { renderField } from '../../../utils';
 import { withRouter } from 'react-router';
 import { AppBar } from 'material-ui';
 import { normalizePhone } from 'utils';
-
-const listField = [
-  {
-    id: 1,
-    name: 'slogan',
-    hintText: 'Slogan',
-    rows: 1,
-    rowsMax: 1,
-    multiLine: false,
-    primaryText: 'Slogan',
-  },
-  {
-    id: 2,
-    name: 'register_description',
-    hintText: ' Register Description',
-    rows: 1,
-    rowsMax: 2,
-    multiLine: true,
-    className: 'multi-row',
-    primaryText: 'Register Description',
-  },
-  {
-    id: 3,
-    name: 'call_paper_description',
-    hintText: ' Call For Paper',
-    rows: 1,
-    rowsMax: 2,
-    multiLine: true,
-    className: 'multi-row',
-    primaryText: 'Call For Paper',
-  },
-  {
-    id: 4,
-    name: 'speaker_description',
-    hintText: ' Speaker Description',
-    rows: 1,
-    rowsMax: 2,
-    multiLine: true,
-    className: 'multi-row',
-    primaryText: 'Speaker Description',
-  },
-  {
-    id: 5,
-    name: 'email',
-    hintText: 'Email',
-    multiLine: false,
-    rows: 1,
-    rowsMax: 1,
-    primaryText: 'Email',
-  },
-  {
-    id: 6,
-    name: 'facebook_id',
-    hintText: 'Facebook',
-    rows: 1,
-    rowsMax: 1,
-    multiLine: false,
-    primaryText: 'Facebook Link',
-  },
-  {
-    id: 7,
-    name: 'twitter_id',
-    hintText: 'Twitter',
-    rows: 1,
-    rowsMax: 1,
-    multiLine: false,
-    primaryText: 'Twitter Link',
-  },
-  {
-    id: 8,
-    name: 'linkedin_id',
-    hintText: 'Linkedin',
-    rows: 1,
-    rowsMax: 1,
-    multiLine: false,
-    primaryText: 'Linkedin Link',
-  },
-];
+import { listField } from './listField';
 class LandingPageForm extends Component {
   constructor(props) {
     super(props);
@@ -173,7 +96,7 @@ class LandingPageForm extends Component {
                   className="btn save-change"
                   label="Save Change"
                   primary={true}
-                  disabled={pristine || submitting || invalid}
+                  disabled={submitting}
                   type="submit"
                 />
                 <RaisedButton
@@ -193,8 +116,12 @@ class LandingPageForm extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   const landingPage = ownProps.landingPage;
+  if (!landingPage) {
+    return {};
+  }
   return {
     initialValues: {
+      id: landingPage.id,
       slogan: landingPage.slogan,
       register_description: landingPage.register_description,
       call_paper_description: landingPage.call_paper_description,
@@ -204,6 +131,7 @@ const mapStateToProps = (state, ownProps) => {
       twitter_id: landingPage.twitter_id,
       linkedin_id: landingPage.linkedin_id,
       phone_number: landingPage.phone_number,
+      conference_id: landingPage.conference.id,
     },
   };
 };

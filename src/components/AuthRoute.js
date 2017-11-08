@@ -5,6 +5,7 @@ import { graphql, gql, compose } from 'react-apollo';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { authActions } from '../store/ducks/auth';
+import { conferenceOperations } from 'store/ducks/conference';
 
 class AuthRoute extends PureComponent {
   constructor(props) {
@@ -49,6 +50,7 @@ class AuthRoute extends PureComponent {
   }
   componentDidMount() {
     this.subscribeToMe();
+    this.props.getId(1);
   }
   render() {
     const {
@@ -106,6 +108,7 @@ const ME_QUERY = gql`
 
 const mapDispatchToProps = dispatch => ({
   setCurrentUser: bindActionCreators(authActions.setCurrentUser, dispatch),
+  getId: id => dispatch(conferenceOperations.getIdOperation(id)),
 });
 
 export default compose(

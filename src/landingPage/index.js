@@ -53,7 +53,7 @@ class LandingPage extends Component {
 export default compose(
   graphql(queries.GET_LANDING_PAGE_BY_CONFERENCE_ID_QUERY, {
     options: ownProps => ({
-      variables: { conference_id: '2' },
+      variables: { conference_id: '1' },
     }),
   }),
 )(LandingPage);

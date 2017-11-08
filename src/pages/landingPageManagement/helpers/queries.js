@@ -13,6 +13,9 @@ export const GET_LANDING_PAGE_BY_CONFERENCE_ID_QUERY = gql`
       twitter_id
       linkedin_id
       phone_number
+      conference {
+        id
+      }
     }
   }
 `;

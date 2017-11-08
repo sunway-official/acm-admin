@@ -42,7 +42,7 @@ export default () => (
             component={ConferenceStaffList}
           />
           <AuthRoute
-            path="/conference/:id/landing-page-management"
+            path="/conference/landing-page-management"
             component={LandingPageManagement}
           />
           <AuthRoute
