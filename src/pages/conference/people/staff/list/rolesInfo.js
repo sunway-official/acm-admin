@@ -2,26 +2,33 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { graphql, gql, compose } from 'react-apollo';
 import { Toggle, ListItem } from 'material-ui';
-import GET_ALL_ROLES_ACTIVE_BY_USER_ID_QUERY from './helpers/getAllRolesByUserID';
+import GET_ALL_ROLES_ACTIVE_BY_USER_ID_QUERY from './helpers/getAllRolesActiveByUserID';
 
 class RolesInfo extends Component {
   constructor(props) {
     super(props);
     this.handleUpdate = this.handleUpdate.bind(this);
   }
+  state = {
+    toggle: false,
+  };
+
   async handleUpdate(role_id) {
     try {
       await this.props.UPDATE_STATUS_ROlE_OF_USER({
         variables: {
           user_id: this.props.id,
           role_id: role_id,
-          status: 'off',
+          status: 'on',
           conference_id: this.props.conference_id,
         },
         refetchQueries: [
           {
             query: GET_ALL_ROLES_ACTIVE_BY_USER_ID_QUERY,
-            variables: { user_id: this.props.id },
+            variables: {
+              user_id: this.props.id,
+              conference_id: this.props.conference_id,
+            },
           },
         ],
       });

@@ -35,6 +35,7 @@ class List extends Component {
   };
 
   render() {
+    const conference_id = this.props.conference_id;
     const staffs = this.props.staffs;
     return (
       <div className="d-flex">
@@ -59,7 +60,7 @@ class List extends Component {
                   </TableRowColumn>
                   <TableRowColumn>{staff.email}</TableRowColumn>
                   <TableRowColumn>
-                    <GetRoles id={staff.id} />
+                    <GetRoles id={staff.id} conference_id={conference_id} />
                   </TableRowColumn>
                   <TableRowColumn>
                     <RaisedButton
@@ -80,6 +81,7 @@ class List extends Component {
               this.handleClose();
             }}
             staff_id={this.state.staffId}
+            conference_id={conference_id}
           />
         </div>
       </div>
