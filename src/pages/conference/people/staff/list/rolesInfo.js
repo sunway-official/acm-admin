@@ -2,43 +2,42 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { graphql, gql, compose } from 'react-apollo';
 import { Toggle, ListItem } from 'material-ui';
+import GET_ALL_ROLES_ACTIVE_BY_USER_ID_QUERY from './helpers/getAllRolesByUserID';
 
 class RolesInfo extends Component {
   constructor(props) {
     super(props);
     this.handleUpdate = this.handleUpdate.bind(this);
   }
-  // state = {
-  //   toggle: false,
-  // };
   async handleUpdate(role_id) {
-    console.log(role_id);
     try {
-      await this.props
-        .UPDATE_STATUS_ROlE_OF_USER({
-          variables: {
-            user_id: this.props.id,
-            role_id: role_id,
-            status: 'on',
+      await this.props.UPDATE_STATUS_ROlE_OF_USER({
+        variables: {
+          user_id: this.props.id,
+          role_id: role_id,
+          status: 'off',
+          conference_id: this.props.conference_id,
+        },
+        refetchQueries: [
+          {
+            query: GET_ALL_ROLES_ACTIVE_BY_USER_ID_QUERY,
+            variables: { user_id: this.props.id },
           },
-        })
-        .then(({ data }) => {
-          console.log(data);
-        });
+        ],
+      });
     } catch (error) {
       throw error;
     }
   }
   render() {
-    console.log(this.props);
-    const { loading, error } = this.props.GET_ALL_ROLES;
+    const { loading, error, getAllRoles } = this.props.GET_ALL_ROLES;
     if (loading) {
       return <div>Loading...</div>;
     }
     if (error) {
       return <div>error</div>;
     }
-    const allRoles = this.props.GET_ALL_ROLES.getAllRoles;
+    const allRoles = getAllRoles;
     const names = ['Participant', 'Organizer', 'Speaker'];
     return (
       <div>
@@ -75,12 +74,14 @@ const UPDATE_STATUS_ROlE_OF_USER = gql`
   mutation updateStatusRoleOfUser(
     $user_id: ID!
     $role_id: ID!
-    $status: Status
+    $status: Status!
+    $conference_id: ID!
   ) {
     updateStatusRoleOfUser(
       user_id: $user_id
       role_id: $role_id
       status: $status
+      conference_id: $conference_id
     ) {
       id
     }
@@ -92,6 +93,7 @@ const mapStateToProps = state => {
   return {
     id: userID,
     roles: state.roles.data,
+    conference_id: state.conference.id,
   };
 };
 

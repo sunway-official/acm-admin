@@ -4,19 +4,19 @@ import { NavigationClose } from 'material-ui/svg-icons';
 import RolesInfo from './rolesInfo';
 import PersonalInfo from './personalInfo';
 import { connect } from 'react-redux';
-import GET_ALL_ROLES_BY_USER_ID from './helpers/getAllRolesByUserID';
+import GET_ALL_ROLES_ACTIVE_BY_USER_ID_QUERY from './helpers/getAllRolesByUserID';
 import { graphql, compose } from 'react-apollo';
 
 class DialogEdit extends React.Component {
   render() {
-    const { loading, error, getAllRolesByUserID } = this.props.data;
+    const { loading, error, getAllRolesActiveByUserID } = this.props.data;
     if (loading) {
       return <div>Loading...</div>;
     }
     if (error) {
       return <div>error</div>;
     }
-    const roles = getAllRolesByUserID;
+    const roles = getAllRolesActiveByUserID;
     const actions = (
       <div>
         <IconButton
@@ -51,7 +51,7 @@ const mapStateToProps = state => {
 
 export default compose(
   connect(mapStateToProps, undefined),
-  graphql(GET_ALL_ROLES_BY_USER_ID, {
+  graphql(GET_ALL_ROLES_ACTIVE_BY_USER_ID_QUERY, {
     options: ownProps => ({
       variables: { user_id: ownProps.staff_id },
     }),

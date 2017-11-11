@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import DialogEdit from './dialogEdit';
 import GetRoles from './getRoles';
 import { userActions } from 'store/ducks/user';
+import { conferenceOperations } from 'store/ducks/conference';
 import { connect } from 'react-redux';
 
 import {
@@ -27,6 +28,7 @@ class List extends Component {
   handleOpenDialog(staff, staffId) {
     this.setState({ openDialog: !this.state.openDialog, staffId: staffId });
     this.props.setUser(staff);
+    this.props.getConferenceId(this.props.conference_id);
   }
   handleClose = () => {
     this.setState({ openDialog: !this.state.openDialog });
@@ -88,6 +90,8 @@ class List extends Component {
 const mapDispatchToProps = dispatch => {
   return {
     setUser: user => dispatch(userActions.setUser(user)),
+    getConferenceId: conference_id =>
+      dispatch(conferenceOperations.getIdOperation(conference_id)),
   };
 };
 

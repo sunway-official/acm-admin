@@ -31,7 +31,10 @@ class Index extends Component {
           <span>Staff</span>
         </div>
         <div className="dashboard content d-flex">
-          <List staffs={staffs} />
+          <List
+            staffs={staffs}
+            conference_id={this.props.match.params.conference_id}
+          />
         </div>
       </div>
     );
