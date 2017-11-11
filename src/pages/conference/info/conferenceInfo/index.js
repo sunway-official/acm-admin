@@ -14,13 +14,14 @@ class ConferenceInfo extends PureComponent {
     this.handleUpdateConferenceInfo = this.handleUpdateConferenceInfo.bind(
       this,
     );
+    this.onMapPositionChanged = this.onMapPositionChanged.bind(this);
+
     this.state = {
       position: {
         lat: this.props.conference.address.lat,
         long: this.props.conference.address.long,
       },
     };
-    this.onMapPositionChanged = this.onMapPositionChanged.bind(this);
   }
   async handleUpdateConferenceInfo({
     title,

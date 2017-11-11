@@ -9,7 +9,6 @@ import { graphql, compose } from 'react-apollo';
 
 class DialogEdit extends React.Component {
   render() {
-    console.log(this.props);
     const { loading, error, getAllRolesByUserID } = this.props.data;
     if (loading) {
       return <div>Loading...</div>;

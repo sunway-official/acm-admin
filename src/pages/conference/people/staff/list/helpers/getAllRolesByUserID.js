@@ -6,6 +6,9 @@ const GET_ALL_ROLES_BY_USER_ID = gql`
       role {
         name
         id
+        permissions {
+          status
+        }
       }
     }
   }

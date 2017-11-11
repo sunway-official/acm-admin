@@ -13,10 +13,11 @@ class GetRoles extends Component {
     const roles = this.props.data.getAllRolesByUserID;
     return (
       <div>
-        {roles.map(role => {
+        {roles.map(data => {
+          console.log(data.role);
           return (
-            <div key={role.role.id}>
-              <div>{role.role.name}</div>
+            <div key={data.role.id}>
+              <div>{data.role.name}</div>
             </div>
           );
         })}

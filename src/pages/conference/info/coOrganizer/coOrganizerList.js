@@ -99,7 +99,7 @@ class CoOrganizerList extends PureComponent {
         onClick={this.handleDelete}
         type="submit"
       />,
-      <RaisedButton label="Cancel" onClick={this.handleCloseDelete} />,
+      <RaisedButton label="No" onClick={this.handleCloseDelete} />,
     ];
     const actions = [
       <IconButton
