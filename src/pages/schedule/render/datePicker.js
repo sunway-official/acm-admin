@@ -8,7 +8,7 @@ export const renderDatePicker = ({
   ...custom
 }) => (
   <DatePicker
-    minDate={new Date()}
+    /* minDate={new Date()} */
     errorText={touched && error}
     onChange={(e, val) => {
       return input.onChange(val);

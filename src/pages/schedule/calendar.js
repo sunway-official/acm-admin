@@ -104,7 +104,8 @@ class MyCalendar extends React.PureComponent {
 
     const events = functions.getEvents(getActivitiesByConferenceID);
     const allSchedules = functions.getAllSchedules(events);
-    const rooms = this.props.GET_ALL_ROOM_QUERY.getAllRooms;
+    console.log(this.props);
+    const rooms = this.props.GET_ROOMS_BY_STATUS_QUERY.getRoomsByStatus;
     const start_date = this.props.conference.start_date;
     const end_date = this.props.conference.end_date;
 
@@ -204,8 +205,14 @@ export default compose(
       variables: { conference_id: ownProps.conference.id },
     }),
   }),
-  graphql(queries.GET_ALL_ROOM_QUERY, {
-    name: 'GET_ALL_ROOM_QUERY',
+  graphql(queries.GET_ALL_ROLES, {
+    name: 'GET_ALL_ROLES',
+  }),
+  graphql(queries.GET_ROOMS_BY_STATUS_QUERY, {
+    options: {
+      variables: { status: 'on' },
+    },
+    name: 'GET_ROOMS_BY_STATUS_QUERY',
   }),
   graphql(mutations.DELETE_SCHEDULE_MUTATION, {
     name: 'DELETE_SCHEDULE_MUTATION',

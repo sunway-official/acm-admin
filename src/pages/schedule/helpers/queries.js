@@ -32,9 +32,18 @@ export const GET_CONFERENCE_BY_ID = gql`
   }
 `;
 
-export const GET_ALL_ROOM_QUERY = gql`
-  query getAllRooms {
-    getAllRooms {
+export const GET_ROOMS_BY_STATUS_QUERY = gql`
+  query getRoomsByStatus($status: Status!) {
+    getRoomsByStatus(status: $status) {
+      id
+      name
+    }
+  }
+`;
+
+export const GET_ALL_ROLES = gql`
+  query getAllRoles {
+    getAllRoles {
       id
       name
     }
@@ -43,6 +52,7 @@ export const GET_ALL_ROOM_QUERY = gql`
 
 export default {
   GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY,
-  GET_ALL_ROOM_QUERY,
+  GET_ROOMS_BY_STATUS_QUERY,
   GET_CONFERENCE_BY_ID,
+  GET_ALL_ROLES,
 };

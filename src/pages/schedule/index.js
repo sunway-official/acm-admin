@@ -3,6 +3,7 @@ import Calendar from './calendar';
 
 import { queries } from './helpers';
 import { graphql } from 'react-apollo';
+import './css/style.css';
 
 const Index = props => {
   const { loading, getConferenceByID } = props.data;
