@@ -21,7 +21,7 @@ class LandingPageForm extends Component {
     this.props.history.replace('/');
   }
   render() {
-    const { handleSubmit, submitting, pristine, invalid } = this.props;
+    const { handleSubmit, submitting } = this.props;
     const ListFields = listField.map(field => (
       <div key={field.id}>
         <Row around="xs" className={field.className}>
