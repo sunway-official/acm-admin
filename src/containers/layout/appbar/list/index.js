@@ -9,13 +9,18 @@ import {
   // EditorShowChart,
   NotificationEventAvailable,
   HardwareKeyboardArrowRight,
+  AvWeb,
 } from 'material-ui/svg-icons';
 import style from './style.css';
+import { connect } from 'react-redux';
+
 class ListExampleSimple extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       open: false,
+      openLanding: false,
+      conference_id: this.props.conference_id,
     };
   }
 
@@ -27,10 +32,18 @@ class ListExampleSimple extends React.Component {
       anchorEl: event.currentTarget,
     });
   };
+  handleLanding = event => {
+    event.preventDefault();
 
+    this.setState({
+      openLanding: true,
+      anchorLanding: event.currentTarget,
+    });
+  };
   handleRequestClose = () => {
     this.setState({
       open: false,
+      openLanding: false,
     });
   };
 
@@ -85,6 +98,39 @@ class ListExampleSimple extends React.Component {
               </Menu>
             </Popover>
           </ListItem>
+          <ListItem
+            className="item landing-page"
+            primaryText={'Landing Page'}
+            leftIcon={<AvWeb />}
+            onClick={this.handleLanding}
+            rightIcon={<HardwareKeyboardArrowRight />}
+          >
+            <Popover
+              open={this.state.openLanding}
+              className="landing"
+              anchorEl={this.state.anchorLanding}
+              anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+              targetOrigin={{ horizontal: 'left', vertical: 'top' }}
+              onRequestClose={this.handleRequestClose}
+            >
+              <Menu style={{ color: 'black' }}>
+                <Link to="/conference/landing-page-management">
+                  <MenuItem
+                    className="item"
+                    primaryText={'Edit'}
+                    onClick={this.handleRequestClose}
+                  />
+                </Link>
+                <Link to="/">
+                  <MenuItem
+                    className="item"
+                    primaryText={'View'}
+                    onClick={this.handleRequestClose}
+                  />
+                </Link>
+              </Menu>
+            </Popover>
+          </ListItem>
           {/*
           <ListItem
             className="item"
@@ -107,5 +153,9 @@ class ListExampleSimple extends React.Component {
     );
   }
 }
-
-export default ListExampleSimple;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    conference_id: state.conference.id,
+  };
+};
+export default connect(mapStateToProps, undefined)(ListExampleSimple);

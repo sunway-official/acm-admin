@@ -1,0 +1,43 @@
+.first-column {
+  display: flex;
+  padding-top: 4px;
+}
+.landing-page-second-column {
+  font-family: Roboto, sans-serif !important;
+  font-size: 16px;
+  font-weight: inherit;
+  height: 52px !important;
+}
+.personal-info-button{
+  display: flex;
+  .btn {
+    &.save-change {
+      width: 150px !important;
+      margin-top: 20px;
+    }
+    &.cancel {
+      width: 150px !important;
+      margin: 20px 0px 0px 30px;
+    }
+  }
+}
+.editField{
+  height: 44px !important;
+  padding-left: 0px !important;
+}
+.landing-page-form{
+  width: 100%;
+}
+.landing-page-app-bar{
+  position: initial !important;
+}
+.landing-page-redux-form{
+  width: 100%;
+}
+.multi-row{
+  margin-bottom: 1vw !important;
+}
+.landing-page-grid{
+  margin-top: 2vw;
+  width: 85%;
+}
