@@ -27,22 +27,22 @@
   position: relative;
 }
 
-table {
+.landing-page-table {
   font-family: arial, sans-serif;
   width: 100%;
   border-collapse: collapse;
 }
 
-td, th {
+.landing-page-th {
   padding: 10px;
   text-align: left;
   padding: 16px;
   border: 0.5px solid #dddddd;
 }
-tr:nth-child(even) {
+landing-page-tr:nth-child(even) {
   background-color: #f7f7f7;
 }
-body:not(.nohover) tbody tr:hover {
+body:not(.nohover) .landing-page-tbody .landing-page-tr:hover {
   background-color: #dddddd;
 }
 .table-title{

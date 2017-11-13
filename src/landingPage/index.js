@@ -43,8 +43,8 @@ class LandingPage extends Component {
             <CountDownTimer landingPage={landingPage} />
             <Speaker landingPage={landingPage} />
             <Map landingPage={landingPage} />
-            <Footer landingPage={landingPage} />
           </div>
+          <Footer landingPage={landingPage} />
         </div>
       </div>
     );
