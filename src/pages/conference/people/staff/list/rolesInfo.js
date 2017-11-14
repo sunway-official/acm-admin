@@ -12,14 +12,14 @@ class RolesInfo extends Component {
   state = {
     toggle: false,
   };
-
   async handleUpdate(role_id) {
+    console.log(this.props.roles);
     try {
       await this.props.UPDATE_STATUS_ROlE_OF_USER({
         variables: {
           user_id: this.props.id,
           role_id: role_id,
-          status: 'on',
+          status: 'off',
           conference_id: this.props.conference_id,
         },
         refetchQueries: [
@@ -45,21 +45,31 @@ class RolesInfo extends Component {
       return <div>error</div>;
     }
     const allRoles = getAllRoles;
-    const names = ['Participant', 'Organizer', 'Speaker'];
+    const roleArrayNames = ['Participant', 'Organizer', 'Speaker'];
     return (
       <div>
-        {allRoles.map(data => {
-          if (names.includes(data.name)) {
-            return <div key={data.id} />;
+        {allRoles.map((role, index) => {
+          if (roleArrayNames.includes(role.name)) {
+            return <div key={index} />;
           } else {
             return (
-              <ListItem
-                key={data.id}
-                primaryText={data.name}
-                rightToggle={
-                  <Toggle onToggle={() => this.handleUpdate(data.id)} />
-                }
-              />
+              <div>
+                {this.props.roles.map(data => {
+                  return (
+                    <ListItem
+                      primaryText={role.name}
+                      rightToggle={
+                        <Toggle
+                          defaultToggled={
+                            role.id === data.role.id ? true : false
+                          }
+                          onToggle={() => this.handleUpdate(role.id)}
+                        />
+                      }
+                    />
+                  );
+                })}
+              </div>
             );
           }
         })}
@@ -99,8 +109,8 @@ const mapStateToProps = state => {
   const userID = state.user.data.id;
   return {
     id: userID,
-    roles: state.roles.data,
     conference_id: state.conference.id,
+    roles: state.roles.data,
   };
 };
 
