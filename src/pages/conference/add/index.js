@@ -1,8 +1,8 @@
 import React from 'react';
-import { ME_QUERY } from './mutation';
+import { ME_QUERY } from './helpers/mutation';
 import { graphql, compose } from 'react-apollo';
 
-import GetAllConfs from './getAllConferences';
+import GetAllConfs from './addConference/getAllConferences';
 
 class ConfMgtSidebar extends React.Component {
   constructor(props) {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { GET_ALL_CONFERENCES_BY_USER_ID_QUERY } from './mutation';
+import { GET_ALL_CONFERENCES_BY_USER_ID_QUERY } from './../helpers/mutation';
 import { graphql, compose } from 'react-apollo';
 import { List, ListItem } from 'material-ui';
 import DeleteDialog from './deleteDialog';
@@ -11,7 +11,8 @@ import {
   NavigationClose,
 } from 'material-ui/svg-icons';
 import AddDialog from './addDialog';
-import style from '../../../containers/layout/appbar/style.css';
+// import style from '../../../containers/layout/appbar/style.css';
+import { style } from './../style/style.css';
 
 const styles = {
   smallIcon: {
@@ -56,6 +57,7 @@ class GetAllConfs extends React.Component {
 
     if (loading) return <div> loading... </div>;
     const conferences = this.props.data.getConferenceByUserID;
+    console.log(this.props);
 
     return (
       <div>
