@@ -1,0 +1,46 @@
+#map-body{
+  position: relative;
+}
+.map-image{
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.map-description{
+  background-color: #FFFFFF;
+  position: absolute;
+  width: 25vw;
+  height: 30vw;
+  top: 50%;
+  left: 20%;
+  transform: translate(-50%, -50%);
+}
+.map-title{
+  font-size: 1.5vw;
+  margin: 0px;
+  margin-left: 3vw;
+  font-weight: 800;
+}
+.map-text{
+  font-size: 1.1vw;
+  margin: 0px;
+  margin-left: 3vw;
+  margin-bottom: 0.5vw;
+  font-weight: 700;
+  color: #2C303B;
+}
+.landingpage-title{
+  &.map{
+    color: #ff5722;
+    margin: 0px;
+    margin-left: 3vw;
+    padding-top: 2.5vw;
+    font-weight: 800;
+  }
+}
+.map-time{
+  margin-top: 2vw;
+}
+.map-location{
+  margin-top: 2vw;
+}
