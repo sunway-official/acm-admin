@@ -13,7 +13,6 @@ class RolesInfo extends Component {
     toggle: false,
   };
   async handleUpdate(role_id) {
-    console.log(this.props.roles);
     try {
       await this.props.UPDATE_STATUS_ROlE_OF_USER({
         variables: {
@@ -46,6 +45,10 @@ class RolesInfo extends Component {
     }
     const allRoles = getAllRoles;
     const roleArrayNames = ['Participant', 'Organizer', 'Speaker'];
+    const allRolesId = allRoles.map(role => {
+      console.log(role.id);
+    });
+    console.log(allRolesId);
     return (
       <div>
         {allRoles.map((role, index) => {
