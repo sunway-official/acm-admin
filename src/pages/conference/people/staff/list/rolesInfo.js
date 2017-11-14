@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { graphql, gql, compose } from 'react-apollo';
 import { Toggle, ListItem } from 'material-ui';
 import GET_ALL_ROLES_ACTIVE_BY_USER_ID_QUERY from './helpers/getAllRolesActiveByUserID';
+import functions from './helpers/functions';
 
 class RolesInfo extends Component {
   constructor(props) {
@@ -45,6 +46,8 @@ class RolesInfo extends Component {
       return <div>error</div>;
     }
     const allRoles = getAllRoles;
+    const { roles } = this.props;
+    const rolesActive = functions.getArrayRolesID(roles);
     const roleArrayNames = ['Participant', 'Organizer', 'Speaker'];
     return (
       <div>
@@ -53,22 +56,18 @@ class RolesInfo extends Component {
             return <div key={index} />;
           } else {
             return (
-              <div>
-                {this.props.roles.map(data => {
-                  return (
-                    <ListItem
-                      primaryText={role.name}
-                      rightToggle={
-                        <Toggle
-                          defaultToggled={
-                            role.id === data.role.id ? true : false
-                          }
-                          onToggle={() => this.handleUpdate(role.id)}
-                        />
+              <div key={index}>
+                <ListItem
+                  primaryText={role.name}
+                  rightToggle={
+                    <Toggle
+                      defaultToggled={
+                        rolesActive.includes(role.id) ? true : false
                       }
+                      onToggle={() => this.handleUpdate(role.id)}
                     />
-                  );
-                })}
+                  }
+                />
               </div>
             );
           }
@@ -107,6 +106,7 @@ const UPDATE_STATUS_ROlE_OF_USER = gql`
 
 const mapStateToProps = state => {
   const userID = state.user.data.id;
+  console.log(state);
   return {
     id: userID,
     conference_id: state.conference.id,
