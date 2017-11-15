@@ -19,16 +19,13 @@ import Wrapper from './wrapper';
 import LandingPage from '../landingPage';
 import LandingPageManagement from '../pages/landingPageManagement';
 import LandingPageSchedule from '../landingPage/schedule/index';
+import RoomsManagement from '../pages/conference/room';
 
 export default () => (
   <MuiThemeProvider muiTheme={muiTheme}>
     <Switch>
-      <AuthRoute
-        needGuest
-        path="/landingpage/schedule"
-        component={LandingPageSchedule}
-      />
-      <AuthRoute needGuest path="/landingpage" component={LandingPage} />
+      <AuthRoute path="/landingpage/schedule" component={LandingPageSchedule} />
+      <AuthRoute path="/landingpage" component={LandingPage} />
       <AuthRoute needGuest path="/login" component={Login} />
       <AuthRoute needGuest path="/register" component={Register} />
       <AuthRoute needGuest path="/forgot" component={ForgotPassword} />
@@ -42,8 +39,16 @@ export default () => (
             component={ConferenceStaffList}
           />
           <AuthRoute
+            needAuth
+            exact
             path="/conference/landing-page-management"
             component={LandingPageManagement}
+          />
+          <AuthRoute
+            needAuth
+            exact
+            path="/conference/rooms-management"
+            component={RoomsManagement}
           />
           <AuthRoute
             needAuth

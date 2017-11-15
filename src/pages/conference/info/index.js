@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { Subheader, IconButton, Tabs, Tab } from 'material-ui';
 import { Link } from 'react-router-dom';
 import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
@@ -7,7 +7,7 @@ import { graphql } from 'react-apollo';
 import CoOrganizerList from './coOrganizer/coOrganizerList';
 import GET_CONFERENCE_BY_ID_QUERY from './helpers/getConferenceByIdQuery';
 
-class Index extends PureComponent {
+class Index extends Component {
   render() {
     const { loading } = this.props.data;
 

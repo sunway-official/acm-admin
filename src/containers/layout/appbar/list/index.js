@@ -121,7 +121,7 @@ class ListExampleSimple extends React.Component {
                     onClick={this.handleRequestClose}
                   />
                 </Link>
-                <Link to="/">
+                <Link to="/landingpage">
                   <MenuItem
                     className="item"
                     primaryText={'View'}
@@ -131,6 +131,13 @@ class ListExampleSimple extends React.Component {
               </Menu>
             </Popover>
           </ListItem>
+          <Link to="/conference/rooms-management">
+            <ListItem
+              className="item"
+              primaryText={'Rooms'}
+              leftIcon={<NotificationEventAvailable />}
+            />
+          </Link>
           {/*
           <ListItem
             className="item"

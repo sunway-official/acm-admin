@@ -11,12 +11,19 @@ import Footer from './section/footer';
 import { graphql, compose } from 'react-apollo';
 import { queries } from './helpers/index';
 import Home from './section/home';
+import { connect } from 'react-redux';
 class LandingPage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      id: this.props.conference_id,
+    };
+  }
   render() {
+    console.log(this.props.conference_id);
     const { loading, getLandingPageByConferenceId } = this.props.data;
     if (loading) return <div>loading</div>;
     const landingPage = getLandingPageByConferenceId[0];
-    //console.log(landingPage);
     return (
       <div className="landingpage-body">
         <div className="container">
@@ -43,17 +50,24 @@ class LandingPage extends Component {
             <CountDownTimer landingPage={landingPage} />
             <Speaker landingPage={landingPage} />
             <Map landingPage={landingPage} />
+            <Footer landingPage={landingPage} />
           </div>
-          <Footer landingPage={landingPage} />
         </div>
       </div>
     );
   }
 }
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    conference_id: state.conference.id,
+  };
+};
 export default compose(
+  connect(mapStateToProps, undefined),
   graphql(queries.GET_LANDING_PAGE_BY_CONFERENCE_ID_QUERY, {
     options: ownProps => ({
-      variables: { conference_id: '1' },
+      variables: { conference_id: ownProps.conference_id },
     }),
   }),
 )(LandingPage);
