@@ -1,6 +1,5 @@
 import React from 'react';
 import List from './list';
-import ConfMgtSidebar from './../../../pages/conference/add/index';
 import MenuAppBar from './menu';
 import { AppBar, Drawer } from 'material-ui';
 import { ActionReorder } from 'material-ui/svg-icons';
@@ -17,6 +16,7 @@ export default class AppBarExampleIcon extends React.Component {
   }
 
   handleToggle = () => this.setState({ open: !this.state.open });
+
   handleTouchTap = event => {
     event.preventDefault();
 
@@ -55,7 +55,7 @@ export default class AppBarExampleIcon extends React.Component {
               className="sidebar"
               onClick={this.handleToggle}
             />
-            <ConfMgtSidebar />
+            <List />
           </Drawer>
           <MenuAppBar />
         </AppBar>
