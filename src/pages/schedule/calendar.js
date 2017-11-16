@@ -134,7 +134,9 @@ class MyCalendar extends React.PureComponent {
             defaultView="week"
             defaultDate={new Date()}
             onSelectEvent={event => {
-              this.handleEdit(event);
+              const checkDate = moment(event.start).isAfter(moment());
+
+              if (checkDate) this.handleEdit(event);
             }}
             min={
               new Date(
@@ -144,6 +146,9 @@ class MyCalendar extends React.PureComponent {
                 this.state.timeFormat,
               )
             }
+            components={{
+              event: functions.Event,
+            }}
           />
           <AddActivity
             onSubmit={this.addActivity}
