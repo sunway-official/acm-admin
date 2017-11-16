@@ -4,7 +4,7 @@ import { NavigationClose } from 'material-ui/svg-icons';
 import RolesInfo from './rolesInfo';
 import PersonalInfo from './personalInfo';
 import { connect } from 'react-redux';
-import GET_ALL_ROLES_ACTIVE_BY_USER_ID_QUERY from './helpers/getAllRolesActiveByUserID';
+import { GET_ALL_ROLES_ACTIVE_BY_USER_ID_QUERY } from './helpers';
 import { graphql, compose } from 'react-apollo';
 
 class DialogEdit extends React.Component {
