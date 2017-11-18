@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { GET_ALL_CONFERENCES_BY_USER_ID_QUERY } from './../helpers/mutation';
-import { graphql, compose } from 'react-apollo';
+import { graphql, compose, gql } from 'react-apollo';
 import { List, ListItem } from 'material-ui';
 import DeleteDialog from './deleteDialog';
 // import { red500 } from 'material-ui/styles/colors';
@@ -11,6 +11,7 @@ import {
   NavigationClose,
 } from 'material-ui/svg-icons';
 import AddDialog from './addDialog';
+import { withRouter } from 'react-router-dom';
 // import style from '../../../containers/layout/appbar/style.css';
 import { style } from './../style/style.css';
 
@@ -32,10 +33,23 @@ class GetAllConfs extends React.Component {
     this.handleOpen = this.handleOpen.bind(this);
     this.handleToggle = this.handleOpen.bind(this);
     this.handLinkClick = this.handLinkClick.bind(this);
+    this.handleSwitch = this.handleSwitch.bind(this);
+  }
+
+  async handleSwitch(conference_id) {
+    await this.props.SWITCH_CURRENT_CONFERENCE({
+      variables: {
+        conference_id: conference_id,
+      },
+      refetchQueries: [
+        {
+          query: ME_QUERY,
+        },
+      ],
+    });
   }
 
   handleOpen(index) {
-    console.log(index);
     this.setState({
       openDialog: true,
       selectElement: index,
@@ -57,7 +71,6 @@ class GetAllConfs extends React.Component {
 
     if (loading) return <div> loading... </div>;
     const conferences = this.props.data.getConferenceByUserID;
-    console.log(this.props);
 
     return (
       <div>
@@ -100,10 +113,12 @@ class GetAllConfs extends React.Component {
                         primaryText="Switch"
                         className="switch-text"
                         leftIcon={<ContentSend style={styles.smallIcon} />}
-                        containerElement={
-                          <Link to={`/conference/${conference.id}/info`} />
-                        }
-                        onClick={() => this.handLinkClick()}
+                        containerElement={<Link to={`/conference/info`} />}
+                        onClick={async () => {
+                          // clg;
+                          await this.handleSwitch(conference.id);
+                          window.location.reload();
+                        }}
                       />,
                       <ListItem
                         key={2}
@@ -129,6 +144,24 @@ class GetAllConfs extends React.Component {
   }
 }
 
+const withRouterGetAllConfs = withRouter(GetAllConfs);
+
+export const SWITCH_CURRENT_CONFERENCE = gql`
+  mutation switchCurrentConference($conference_id: ID!) {
+    switchCurrentConference(conference_id: $conference_id) {
+      id
+    }
+  }
+`;
+
+export const ME_QUERY = gql`
+  query Me {
+    me {
+      id
+    }
+  }
+`;
+
 export default compose(
   graphql(GET_ALL_CONFERENCES_BY_USER_ID_QUERY, {
     options: ownProps => ({
@@ -137,4 +170,7 @@ export default compose(
       },
     }),
   }),
-)(GetAllConfs);
+  graphql(SWITCH_CURRENT_CONFERENCE, {
+    name: 'SWITCH_CURRENT_CONFERENCE',
+  }),
+)(withRouterGetAllConfs);

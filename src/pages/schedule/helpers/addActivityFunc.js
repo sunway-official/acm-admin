@@ -10,7 +10,6 @@ export const addActivityFunc = data => {
   } = data;
   INSERT_ACTIVITY_MUTATION({
     variables: {
-      conference_id: conferenceId,
       title: values.title,
       description: values.description,
     },
@@ -28,14 +27,12 @@ export const addActivityFunc = data => {
           variables: {
             activity_id: data.insertActivity.id,
             room_id: schedule.room,
-            conference_id: conferenceId,
             start: newStarTime,
             end: newEndTime,
           },
           refetchQueries: [
             {
               query: queries.GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY,
-              variables: { conference_id: conferenceId },
             },
           ],
         });

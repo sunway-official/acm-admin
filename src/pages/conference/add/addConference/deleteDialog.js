@@ -34,7 +34,6 @@ class DeleteDialog extends React.Component {
   }
 
   render() {
-    console.log(this.props);
     const actions = [
       <FlatButton
         label="Cancel"
@@ -44,8 +43,7 @@ class DeleteDialog extends React.Component {
       <FlatButton label="Submit" primary={true} onClick={this.handleDelete} />,
     ];
 
-    const id = this.props.id;
-    console.log(id);
+    // const id = this.props.id;
     return (
       <div>
         <Dialog
