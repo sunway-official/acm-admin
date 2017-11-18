@@ -15,16 +15,26 @@ class Index extends Component {
   constructor(props) {
     super(props);
     this.handleOpenAddDialog = this.handleOpenAddDialog.bind(this);
+    this.handleCloseAddDialog = this.handleCloseAddDialog.bind(this);
   }
   state = {
     openDialog: false,
+    userId: 0,
   };
   handleOpenAddDialog() {
     this.setState({
       openDialog: !this.state.openDialog,
     });
   }
+  handleCloseAddDialog() {
+    this.setState({
+      openDialog: !this.state.openDialog,
+    });
+  }
   render() {
+    const { getAllUsers } = this.props.GET_ALL_USERS;
+
+    const allUsers = getAllUsers;
     const { loading } = this.props.data;
     if (loading)
       return (
@@ -64,7 +74,12 @@ class Index extends Component {
             label="Add New Staff"
           />
         </div>
-        <AddDialog open={this.state.openDialog} />
+        <AddDialog
+          allUsers={allUsers}
+          id={this.state.userId}
+          open={this.state.openDialog}
+          handleClose={this.handleOpenAddDialog}
+        />
       </div>
     );
   }
@@ -82,11 +97,22 @@ export const GET_ALL_STAFF_IN_CONFERENCE = gql`
     }
   }
 `;
-
+const GET_ALL_USERS = gql`
+  query getAllUsers {
+    getAllUsers {
+      id
+      firstname
+      lastname
+    }
+  }
+`;
 export default compose(
   graphql(GET_ALL_STAFF_IN_CONFERENCE, {
     options: ownProps => ({
       variables: { conference_id: ownProps.match.params.conference_id },
     }),
+  }),
+  graphql(GET_ALL_USERS, {
+    name: 'GET_ALL_USERS',
   }),
 )(Index);
