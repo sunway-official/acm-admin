@@ -27,7 +27,7 @@ export default () => (
       <Wrapper>
         <Switch>
           <AuthRoute needAuth exact path="/" component={Dashboard} />
-          <AuthRoute path="/conference/:id/info" component={ConferenceInfo} />
+          <AuthRoute path="/conference/info" component={ConferenceInfo} />
           <AuthRoute
             path="/conference/:conference_id/people/staff"
             component={ConferenceStaffList}
@@ -38,11 +38,7 @@ export default () => (
             path="/user-profile"
             component={UserProfile}
           />
-          <AuthRoute
-            exact
-            path="/conference/:id/schedules"
-            component={Schedule}
-          />
+          <AuthRoute exact path="/conference/activities" component={Schedule} />
           <AuthRoute path="/withThunk" component={WithThunk} />
           <AuthRoute component={NoMatch} />
         </Switch>
