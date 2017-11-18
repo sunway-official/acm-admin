@@ -39,17 +39,17 @@ class ListExampleSimple extends React.Component {
       <div>
         <style dangerouslySetInnerHTML={{ __html: style }} />
         <List className="list">
-          <Link to="/conference/1/info">
+          <Link to="/conference/info">
             <ListItem
               className="item"
               primaryText={'Information'}
               leftIcon={<ActionInfoOutline />}
             />
           </Link>
-          <Link to="/conference/1/schedules">
+          <Link to="/conference/activities">
             <ListItem
               className="item"
-              primaryText={'Schedule'}
+              primaryText={'Activities management'}
               leftIcon={<NotificationEventAvailable />}
             />
           </Link>

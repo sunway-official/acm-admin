@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import {
   GET_ALL_ROLES_ACTIVE_BY_USER_ID_QUERY,
   UPDATE_USER_ROLE_STATUS,
-  GET_ALL_ROLES,
+  // GET_ALL_ROLES,
 } from './helpers';
 class RoleItem extends Component {
   constructor(props) {
@@ -41,7 +41,7 @@ class RoleItem extends Component {
   render() {
     const role = this.props.role;
     const rolesActive = this.props.rolesActive;
-    const roles = this.props.roles;
+    // const roles = this.props.roles;
     return (
       <ListItem
         primaryText={role.name}
