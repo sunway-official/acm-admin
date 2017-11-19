@@ -121,15 +121,6 @@ export const INSERT_ORGANIZER_DETAIL_MUTATION = gql`
     }
   }
 `;
-
-export const INSERT_ADDRESS_MUTATION = gql`
-  mutation deleteConference($id: ID!) {
-    deleteConference(id: $id) {
-      id
-      title
-    }
-  }
-`;
 export const DELETE_CONFERENCE_BY_ID = gql`
   mutation deleteConference($id: ID!) {
     deleteConference(id: $id) {

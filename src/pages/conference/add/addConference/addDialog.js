@@ -3,7 +3,6 @@ import {
   INSERT_CONFERENCE_MUTATION,
   INSERT_ORGANIZER_DETAIL_MUTATION,
   GET_ALL_CONFERENCES_BY_USER_ID_QUERY,
-  INSERT_ADDRESS_MUTATION,
   ME_QUERY,
 } from './../helpers/mutation';
 import ContentAdd from 'material-ui/svg-icons/content/add';
@@ -23,15 +22,20 @@ const customContentStyle = {
 };
 
 class DialogInsertConf extends React.Component {
+  state = {
+    open: false,
+  };
   constructor() {
     super();
     this.handleClose = this.handleClose.bind(this);
     this.submit = this.submit.bind(this);
 
     this.state = {
-      open: false,
+      position: {
+        lat: '',
+        long: '',
+      },
     };
-
     this.onMapPositionChanged = this.onMapPositionChanged.bind(this);
   }
 
@@ -47,57 +51,58 @@ class DialogInsertConf extends React.Component {
     this.props.getPosition(position);
   }
 
-  async submit(values) {
+  submit(values) {
     // console.log(values);
-    try {
-      console.log(this.props.position);
-      await this.props.INSERT_ADDRESS_MUTATION({
-        variables: {
-          lat: this.props.position.lat,
-          long: this.props.position.long,
-        },
-      });
-    } catch (error) {
-      console.log('There was an error sending the query', error);
-    }
+    const {
+      INSERT_ORGANIZER_DETAIL_MUTATION,
+      INSERT_CONFERENCE_MUTATION,
+    } = this.props;
 
-    try {
-      const user_id = this.props.data.me.id;
-      await this.props
-        .INSERT_ORGANIZER_DETAIL_MUTATION({
+    console.log(this.props.position);
+    const id = values.address.id;
+    this.props.UPDATE_ADDRESS_MUTATION({
+      variables: {
+        id: id,
+        lat: this.props.position.lat,
+        long: this.props.position.lng,
+      },
+    });
+
+    const user_id = this.props.data.me.id;
+    INSERT_ORGANIZER_DETAIL_MUTATION({
+      variables: {
+        user_id: user_id,
+        name: values.organizerName,
+        email: values.organizerEmail,
+        website: values.organizerWebsite,
+        address: values.organizerAddress,
+        phone: values.organizerPhoneNumber,
+      },
+    })
+      .then(({ data }) => {
+        // eslint-disable-next-line array-callback-return
+        INSERT_CONFERENCE_MUTATION({
           variables: {
-            user_id: user_id,
-            name: values.organizerName,
-            email: values.organizerEmail,
-            website: values.organizerWebsite,
-            address: values.organizerAddress,
-            phone: values.organizerPhoneNumber,
+            organizer_detail_id: data.insertOrganizerDetail.id,
+            address_id: values.address_id,
+            title: values.title,
+            description: values.description,
+            start_date: values.startDate,
+            end_date: values.endDate,
+            bg_image: values.bg_image,
           },
-        })
-        .then(({ data }) => {
-          // eslint-disable-next-line array-callback-return
-          INSERT_CONFERENCE_MUTATION({
-            variables: {
-              organizer_detail_id: data.insertOrganizerDetail.id,
-              address_id: values.address_id,
-              title: values.title,
-              description: values.description,
-              start_date: values.startDate,
-              end_date: values.endDate,
-              bg_image: values.bg_image,
+          refetchQueries: [
+            {
+              query: GET_ALL_CONFERENCES_BY_USER_ID_QUERY,
+              variables: { user_id: user_id },
             },
-            refetchQueries: [
-              {
-                query: GET_ALL_CONFERENCES_BY_USER_ID_QUERY,
-                variables: { user_id: user_id },
-              },
-            ],
-          });
-          // console.log(data);
+          ],
         });
-    } catch (error) {
-      console.log('There was an error sending the query', error);
-    }
+        // console.log(data);
+      })
+      .catch(error => {
+        console.log('There was an error sending the query', error);
+      });
     // console.log(values);
   }
 
@@ -135,9 +140,6 @@ export default compose(
   graphql(INSERT_CONFERENCE_MUTATION, { name: 'INSERT_CONFERENCE_MUTATION' }),
   graphql(INSERT_ORGANIZER_DETAIL_MUTATION, {
     name: 'INSERT_ORGANIZER_DETAIL_MUTATION',
-  }),
-  graphql(INSERT_ADDRESS_MUTATION, {
-    name: 'INSERT_ADDRESS_MUTATION',
   }),
   graphql(ME_QUERY),
 )(DialogInsertConf);
