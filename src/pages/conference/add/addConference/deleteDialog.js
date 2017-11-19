@@ -5,7 +5,7 @@ import { graphql, compose } from 'react-apollo';
 import {
   DELETE_CONFERENCE_BY_ID,
   GET_ALL_CONFERENCES_BY_USER_ID_QUERY,
-} from './../helpers/mutation';
+} from './mutation';
 
 class DeleteDialog extends React.Component {
   constructor() {
