@@ -1,11 +1,10 @@
 import React, { PureComponent } from 'react';
-
 import { graphql, compose } from 'react-apollo';
 import { connect } from 'react-redux';
 import { SubmissionError } from 'redux-form';
 import { bindActionCreators } from 'redux';
-import { mutations } from './helpers';
-import CoOrganizerForm from './CoOrganizerForm';
+import { mutations } from '../helpers';
+import CoOrganizerForm from './Form';
 import { conferenceCoOranizerActions } from 'store/ducks/conference/info/coOrganizer';
 import './style.css';
 
@@ -25,7 +24,6 @@ class CoOrganizerInfo extends PureComponent {
     coOrganizerWebsite,
     coOrganizerPhone,
   }) {
-    console.log(coOrganizerName);
     try {
       await this.props.INSERT_COORGANIZER({
         variables: {
@@ -74,9 +72,9 @@ class CoOrganizerInfo extends PureComponent {
 }
 
 const mapStateToProps = (state, ownProps) => {
+  console.log(state);
   const coOrganizerDetails = ownProps.coOrganizerDetails;
   const isAdd = ownProps.isAdd;
-  console.log(isAdd);
   return {
     coOrganizerId: coOrganizerDetails.id,
     initialValues: isAdd

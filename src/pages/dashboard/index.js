@@ -8,7 +8,6 @@ import style from './style.css';
 
 class Index extends Component {
   render() {
-    console.log(this.props.me);
     const id = this.props.me.id;
     const firstName = this.props.me.firstname;
     let lastName = this.props.me.lastname;

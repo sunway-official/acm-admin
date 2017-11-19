@@ -16,8 +16,8 @@ import {
 import { NavigationClose } from 'material-ui/svg-icons';
 
 import { conferenceCoOranizerActions } from 'store/ducks/conference/info/coOrganizer';
-import CoOrganizerInfo from './coOrganizerInfo';
-import GET_CONFERENCE_BY_ID_QUERY from '../helpers/getConferenceByIdQuery';
+import CoOrganizerInfo from '../coOrganizer';
+import { queries } from '../helpers';
 
 class CoOrganizerList extends PureComponent {
   constructor() {
@@ -72,12 +72,12 @@ class CoOrganizerList extends PureComponent {
         },
         update: (store, { data: { deleteCoOrganizerDetail } }) => {
           const data = store.readQuery({
-            query: GET_CONFERENCE_BY_ID_QUERY,
+            query: queries.GET_CONFERENCE_BY_ID_QUERY,
           });
           data.getConferenceByID.coOrganizerDetails = this.props.coOrganizerDetails.filter(
             item => item.id !== this.state.coOrganizerId,
           );
-          store.writeQuery({ query: GET_CONFERENCE_BY_ID_QUERY, data });
+          store.writeQuery({ query: queries.GET_CONFERENCE_BY_ID_QUERY, data });
         },
       });
       this.setState({

@@ -1,10 +1,6 @@
 import React, { PureComponent } from 'react';
 import { SubmissionError } from 'redux-form';
-import {
-  UPDATE_CONFERENCE_MUTATION,
-  UPDATE_ADDRESS_MUTATION,
-  UPDATE_ORGANIZER_DETAIL_MUTATION,
-} from '../helpers';
+import { mutations } from '../helpers';
 import { connect } from 'react-redux';
 import { graphql, compose } from 'react-apollo';
 import InfoForm from './InfoForm';
@@ -84,8 +80,6 @@ const mapStateToProps = (state, ownProps) => {
   const conference = ownProps.conference;
   const organizer = conference.organizerDetail;
   const address = conference.address;
-  console.log(conference);
-  console.log(organizer.id);
   return {
     address_id: address.id,
     conference_id: conference.id,
@@ -115,13 +109,13 @@ const mapDispatchToProps = dispatch => {
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
-  graphql(UPDATE_CONFERENCE_MUTATION, {
+  graphql(mutations.UPDATE_CONFERENCE_MUTATION, {
     name: 'UPDATE_CONFERENCE_MUTATION',
   }),
-  graphql(UPDATE_ORGANIZER_DETAIL_MUTATION, {
+  graphql(mutations.UPDATE_ORGANIZER_DETAIL_MUTATION, {
     name: 'UPDATE_ORGANIZER_DETAIL_MUTATION',
   }),
-  graphql(UPDATE_ADDRESS_MUTATION, {
+  graphql(mutations.UPDATE_ADDRESS_MUTATION, {
     name: 'UPDATE_ADDRESS_MUTATION',
   }),
 )(ConferenceInfoForm);
