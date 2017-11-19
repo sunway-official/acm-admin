@@ -2,24 +2,24 @@ import React, { Component } from 'react';
 import { compose, withApollo } from 'react-apollo';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-// import { graphql, compose } from 'react-apollo';
+import DashboardMenu from './render/menu';
 import ListConferences from './render/listConferences';
 import style from './style.css';
 
 class Index extends Component {
   render() {
-    console.log(this.props.me);
-    const id = this.props.me.id;
+    const user_id = this.props.me.id;
     const firstName = this.props.me.firstname;
     let lastName = this.props.me.lastname;
     return (
       <div>
         <style dangerouslySetInnerHTML={{ __html: style }} />
+        <DashboardMenu />
         <div className="dashboard content">
           <div className="dashboard-title">
             Welcome {lastName + ' ' + firstName} !!
           </div>
-          <ListConferences id={id} />
+          <ListConferences user_id={user_id} />
         </div>
       </div>
     );

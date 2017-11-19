@@ -1,7 +1,67 @@
+//menu
+.navbar {
+  background-color: white !important;
+  align-items: center;
+  color: red !important;
+  position: fixed !important;
+  top: 0;
+
+  h1 {
+    display: none;
+  }
+
+  button {
+    display: none;
+  }
+  .space {
+    flex: 1 1 0% !important;
+  }
+  .logo {
+    height: 30px;
+    margin-left: 0 !important;
+  }
+}
+
+//card
 .content {
   height: 100%;
 }
 .conference-card {
-  padding-top: 70px;
-  width: 50%;
+  font-family: Roboto, sans-serif;
+  padding-top: 80px;
+  width: 40%;
+  padding-left: 20px;
+
+  .card-content {
+    font-size: 16px;
+  }
+  .conf-title {
+    background-color: orangered !important;
+    color: white;
+    padding: 16px;
+    font-size: 25px;
+    height: 40px;
+  }
+  .conf-des {
+    padding: 16px;
+    height: 40px;
+  }
+  .conf-date {
+    padding: 16px;
+    font-size: 13px;
+    // display: flex;
+  }
+  .conf-line {
+    color: grey;
+    padding: 0;
+  }
+
+  .switch-button {
+    color: orangered;
+    padding-left: 16px;
+    margin: 16px !important;
+  }
+}
+.conferences {
+  display: flex;
 }

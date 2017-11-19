@@ -70,8 +70,17 @@ class GetAllConfs extends React.Component {
     const { loading } = this.props.data;
 
     if (loading) return <div> loading... </div>;
-    const conferences = this.props.data.getConferenceByUserID;
 
+    console.log(this.props);
+    const conferences = this.props.data.getConferenceByUserID;
+    // const currentConfIndex = conferences.findIndex(x => x.id === this.props.id);
+    // console.log(currentConfIndex);
+    // console.log(conferences.id);
+    // conferences.filter(currentConfIndex);
+    // const listConferences = conferences.filter(conference => {
+    //   return conference.id !== this.props.id;
+    // });
+    // console.log(listConferences);
     return (
       <div>
         <style
@@ -158,6 +167,9 @@ export const ME_QUERY = gql`
   query Me {
     me {
       id
+      currentConference {
+        id
+      }
     }
   }
 `;
@@ -172,5 +184,8 @@ export default compose(
   }),
   graphql(SWITCH_CURRENT_CONFERENCE, {
     name: 'SWITCH_CURRENT_CONFERENCE',
+  }),
+  graphql(ME_QUERY, {
+    name: 'ME_QUERY',
   }),
 )(withRouterGetAllConfs);

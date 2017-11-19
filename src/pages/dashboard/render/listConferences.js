@@ -39,7 +39,7 @@ export default compose(
   graphql(queries.GET_ALL_CONFERENCES_BY_USER_ID_QUERY, {
     options: ownProps => ({
       variables: {
-        user_id: ownProps.id,
+        user_id: ownProps.user_id,
       },
     }),
   }),

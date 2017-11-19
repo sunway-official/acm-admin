@@ -1,17 +1,11 @@
 import React from 'react';
-import {
-  Card,
-  CardActions,
-  CardHeader,
-  CardMedia,
-  CardTitle,
-  CardText,
-} from 'material-ui/Card';
+import { Card } from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 import style from './../style.css';
 import { mutations, queries } from '../helpers';
 import { compose, graphql } from 'react-apollo';
 import { withRouter } from 'react-router-dom';
+import { ActionGrade } from 'material-ui/svg-icons';
 
 class ConferenceCard extends React.Component {
   constructor(props) {
@@ -38,21 +32,30 @@ class ConferenceCard extends React.Component {
     return (
       <div className="conference-card">
         <style dangerouslySetInnerHTML={{ __html: style }} />
-        <Card>
-          <CardHeader title="" />
-          <CardMedia overlay={<CardTitle title={conference.title} />} />
-          <CardText>{conference.description}</CardText>
-          <CardActions>
-            <FlatButton
-              className="switch-button"
-              label="Switch"
-              onClick={async () => {
-                await this.handleSwitch(conference.id);
-                await this.props.history.replace('/conference/info');
-                window.location.reload();
-              }}
-            />
-          </CardActions>
+        <Card className="card-content">
+          <div className="conf-title">{conference.title}</div>
+          <div className="conf-des">
+            <i>{conference.description}</i>
+          </div>
+          <div className="conf-date">
+            <div className="start-date">
+              <ActionGrade />
+              <i>{conference.start_date}</i>
+            </div>
+            <div className="end-date">
+              <ActionGrade />
+              <i>{conference.end_date}</i>
+            </div>
+          </div>
+          <FlatButton
+            className="switch-button"
+            label="Switch"
+            onClick={async () => {
+              await this.handleSwitch(conference.id);
+              await this.props.history.replace('/conference/info');
+              window.location.reload();
+            }}
+          />
         </Card>
       </div>
     );
@@ -66,7 +69,3 @@ export default compose(
     name: 'SWITCH_CURRENT_CONFERENCE',
   }),
 )(withRouterConferenceCard);
-
-// <Link to={`/conference/info`}>
-
-// </Link>
