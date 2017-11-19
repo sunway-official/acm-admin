@@ -23,6 +23,7 @@ import {
   editActivityFunc,
 } from './helpers';
 import { graphql, compose } from 'react-apollo';
+import './css/style.css';
 
 BigCalendar.momentLocalizer(moment);
 
@@ -105,7 +106,8 @@ class MyCalendar extends React.PureComponent {
 
     const events = functions.getEvents(getActivitiesByConferenceID);
     const allSchedules = functions.getAllSchedules(events);
-    const rooms = this.props.GET_ALL_ROOM_QUERY.getAllRooms;
+    console.log(this.props);
+    const rooms = this.props.GET_ROOMS_BY_STATUS_QUERY.getRoomsByStatus;
     const start_date = this.props.conference.start_date;
     const end_date = this.props.conference.end_date;
 
@@ -134,7 +136,9 @@ class MyCalendar extends React.PureComponent {
             defaultView="week"
             defaultDate={new Date()}
             onSelectEvent={event => {
-              this.handleEdit(event);
+              const checkDate = moment(event.start).isAfter(moment());
+
+              if (checkDate) this.handleEdit(event);
             }}
             min={
               new Date(
@@ -144,6 +148,9 @@ class MyCalendar extends React.PureComponent {
                 this.state.timeFormat,
               )
             }
+            components={{
+              event: functions.Event,
+            }}
           />
           <AddActivity
             onSubmit={this.addActivity}
@@ -200,9 +207,19 @@ const mapDispatchToProps = dispatch => {
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
-  graphql(queries.GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY),
-  graphql(queries.GET_ALL_ROOM_QUERY, {
-    name: 'GET_ALL_ROOM_QUERY',
+  graphql(queries.GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY, {
+    options: ownProps => ({
+      variables: { conference_id: ownProps.conference.id },
+    }),
+  }),
+  graphql(queries.GET_ALL_ROLES, {
+    name: 'GET_ALL_ROLES',
+  }),
+  graphql(queries.GET_ROOMS_BY_STATUS_QUERY, {
+    options: {
+      variables: { status: 'on' },
+    },
+    name: 'GET_ROOMS_BY_STATUS_QUERY',
   }),
   graphql(mutations.DELETE_SCHEDULE_MUTATION, {
     name: 'DELETE_SCHEDULE_MUTATION',

@@ -47,9 +47,9 @@ class ConferenceCard extends React.Component {
               className="switch-button"
               label="Switch"
               onClick={async () => {
-                // clg;
                 await this.handleSwitch(conference.id);
-                await this.props.history.push('/conference/info');
+                await this.props.history.replace('/conference/info');
+                window.location.reload();
               }}
             />
           </CardActions>

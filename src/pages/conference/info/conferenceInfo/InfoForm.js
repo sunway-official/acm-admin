@@ -67,7 +67,7 @@ const InfoForm = ({
               </div>
               <div className="d-flex date">
                 <div className="d-flex form-group">
-                  <label className="start">Conference Start From :</label>
+                  <label className="start">Start From :</label>
                   <Field
                     minDate={new Date()}
                     name="startDate"

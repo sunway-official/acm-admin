@@ -34,7 +34,7 @@ const validate = (values, props) => {
     if (schedules.length > 0 && schedules[length - 1].date) {
       checkError = functions.checkAllSchedules(allSchedules, schedules);
       if (checkError >= 0) {
-        scheduleErrors.room = 'This room is choosing';
+        scheduleErrors.room = 'This room was chosen';
         ArrayErrors[checkError] = scheduleErrors;
       }
     }
@@ -101,7 +101,7 @@ const validate = (values, props) => {
       ) {
         const checkError = functions.checkSchedules(values.schedules);
         if (checkError) {
-          scheduleErrors.room = 'This room is choosing';
+          scheduleErrors.room = 'This room was chosen';
           ArrayErrors[scheduleIndex] = scheduleErrors;
         }
       }

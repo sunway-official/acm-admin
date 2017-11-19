@@ -1,8 +1,5 @@
 import React from 'react';
 import Calendar from './calendar';
-
-// import { queries } from './helpers';
-import { compose } from 'react-apollo';
 import { connect } from 'react-redux';
 
 const Index = props => {
@@ -16,4 +13,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default compose(connect(mapStateToProps, undefined))(Index);
+export default connect(mapStateToProps, undefined)(Index);
