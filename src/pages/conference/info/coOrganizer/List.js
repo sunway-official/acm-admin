@@ -70,15 +70,11 @@ class CoOrganizerList extends PureComponent {
         variables: {
           id: this.state.coOrganizerId,
         },
-        update: (store, { data: { deleteCoOrganizerDetail } }) => {
-          const data = store.readQuery({
-            query: queries.GET_CONFERENCE_BY_ID_QUERY,
-          });
-          data.getConferenceByID.coOrganizerDetails = this.props.coOrganizerDetails.filter(
-            item => item.id !== this.state.coOrganizerId,
-          );
-          store.writeQuery({ query: queries.GET_CONFERENCE_BY_ID_QUERY, data });
-        },
+        refetchQueries: [
+          {
+            query: queries.GET_CURRENT_CONFERENCE,
+          },
+        ],
       });
       this.setState({
         isDeleting: false,

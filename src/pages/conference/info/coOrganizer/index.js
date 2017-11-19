@@ -3,7 +3,7 @@ import { graphql, compose } from 'react-apollo';
 import { connect } from 'react-redux';
 import { SubmissionError } from 'redux-form';
 import { bindActionCreators } from 'redux';
-import { mutations } from '../helpers';
+import { mutations, queries } from '../helpers';
 import CoOrganizerForm from './Form';
 import { conferenceCoOranizerActions } from 'store/ducks/conference/info/coOrganizer';
 import './style.css';
@@ -34,6 +34,11 @@ class CoOrganizerInfo extends PureComponent {
           website: coOrganizerWebsite,
           phone: coOrganizerPhone,
         },
+        refetchQueries: [
+          {
+            query: queries.GET_CURRENT_CONFERENCE,
+          },
+        ],
       });
       this.toggleExit();
     } catch (error) {
