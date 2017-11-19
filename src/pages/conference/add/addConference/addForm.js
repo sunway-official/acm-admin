@@ -4,7 +4,7 @@ import { RaisedButton } from 'material-ui';
 import validate, { renderTextField, renderDatePicker } from './../validate';
 import normalizePhone from './../helpers/normalizePhone';
 import { style } from './../style/style.css';
-// import AppMap from 'components/AppMap';
+import AppMap from 'components/AppMap';
 
 const AddConferenceForm = ({
   onClick,
@@ -17,148 +17,165 @@ const AddConferenceForm = ({
   onMapPositionChanged,
 }) => (
   <form className="form conference-add" onSubmit={handleSubmit}>
-    <style dangerouslySetInnerHTML={{ __html: style }} />
-    <center className="add-title">Conference Information</center>
-    <div name="conference">
-      <div className="d-flex form-group">
-        <label>Address ID</label>
-        <Field
-          name="address_id"
-          component={renderTextField}
-          fullWidth={true}
-          hintText="Address"
-        />
-        <br />
-      </div>
-      <div className="d-flex form-group">
-        <label>Title</label>
-        <Field
-          name="title"
-          component={renderTextField}
-          fullWidth={true}
-          hintText="Title"
-        />
-        <br />
-      </div>
-      <div className="d-flex form-group">
-        <label>Description</label>
-        <Field
-          name="description"
-          component={renderTextField}
-          multiLine
-          fullWidth={true}
-          hintText="Description"
-        />
-        <br />
-      </div>
-      <div className="d-flex date">
-        <div className="d-flex form-group">
-          <label className="start">
-            Time duration <label className="from"> From:{'  '}</label>
-          </label>
-          <Field
-            minDate={new Date()}
-            name="startDate"
-            component={renderDatePicker}
-            format={null}
-            textFieldStyle={{ width: '100%' }}
-            hintText="Start Date"
-          />
-        </div>
-        <div className="d-flex form-group">
-          <label className="end">To: </label>
-          <Field
-            name="endDate"
-            component={renderDatePicker}
-            minDate={new Date()}
-            format={null}
-            textFieldStyle={{ width: '100%' }}
-            hintText="End Date"
-          />
-        </div>
-      </div>
-      <div className="d-flex form-group">
-        <label>Background image</label>
-        <Field
-          name="bg_image"
-          component={renderTextField}
-          fullWidth={true}
-          hintText="background image"
-        />
-        <br />
-      </div>
-    </div>
-    <div name="conference">
-      <center className="add-title">Organizer Information</center>
+    <div>
+      <style dangerouslySetInnerHTML={{ __html: style }} />
       <div>
-        <div className="d-flex form-group">
-          <label>Address</label>
-          <Field
-            name="organizerAddress"
-            component={renderTextField}
-            fullWidth={true}
-            hintText="Address"
-          />
-          <br />
+        <center className="add-title">Conference Information</center>
+        <div name="conference">
+          <div className="d-flex form-group">
+            <label>Address ID</label>
+            <AppMap
+              onMapPositionChanged={onMapPositionChanged}
+              initalPosition={{
+                lat: '16.0598934',
+                long: '108.2076032',
+              }}
+              googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyDFNlwjsuntl-BmMpDKJPOiUvwxhAEyMEI"
+              loadingElement={<div style={{ height: `100%` }} />}
+              containerElement={<div style={{ height: `400px` }} />}
+              mapElement={
+                <div
+                  style={{
+                    height: `100%`,
+                    marginLeft: '-50%',
+                    marginRight: '-50%',
+                  }}
+                />
+              }
+            />
+            <br />
+          </div>
+          <div className="d-flex form-group">
+            <label>Title</label>
+            <Field
+              name="title"
+              component={renderTextField}
+              fullWidth={true}
+              hintText="Title"
+            />
+            <br />
+          </div>
+          <div className="d-flex form-group">
+            <label>Description</label>
+            <Field
+              name="description"
+              component={renderTextField}
+              multiLine
+              fullWidth={true}
+              hintText="Description"
+            />
+            <br />
+          </div>
+          <div className="d-flex date">
+            <div className="d-flex form-group">
+              <label className="start">
+                Time duration <label className="from"> From:{'  '}</label>
+              </label>
+              <Field
+                minDate={new Date()}
+                name="startDate"
+                component={renderDatePicker}
+                format={null}
+                textFieldStyle={{ width: '100%' }}
+                hintText="Start Date"
+              />
+            </div>
+            <div className="d-flex form-group">
+              <label className="end">To: </label>
+              <Field
+                name="endDate"
+                component={renderDatePicker}
+                minDate={new Date()}
+                format={null}
+                textFieldStyle={{ width: '100%' }}
+                hintText="End Date"
+              />
+            </div>
+          </div>
+          <div className="d-flex form-group">
+            <label>Background image</label>
+            <Field
+              name="bg_image"
+              component={renderTextField}
+              fullWidth={true}
+              hintText="background image"
+            />
+            <br />
+          </div>
         </div>
-      </div>
-      <div className="d-flex form-group">
-        <label>Name</label>
-        <Field
-          name="organizerName"
-          component={renderTextField}
-          fullWidth={true}
-          hintText="Organizer name"
-        />
-        <br />
-      </div>
-      <div className="d-flex form-group">
-        <label>Website</label>
-        <Field
-          name="organizerWebsite"
-          component={renderTextField}
-          fullWidth={true}
-          hintText="Organizer website"
-        />
-        <br />
-      </div>
-      <div className="d-flex form-group">
-        <label>Email</label>
-        <Field
-          name="organizerEmail"
-          component={renderTextField}
-          fullWidth={true}
-          hintText="Organizer email"
-        />
-        <br />
-      </div>
-      <div className="d-flex form-group">
-        <label>Phone Number </label>
-        <Field
-          name="organizerPhoneNumber"
-          component={renderTextField}
-          hintText="Organizer Phone Number"
-          fullWidth={true}
-          normalize={normalizePhone}
-        />
-      </div>
-      <div className="d-flex submit-btn btn-group">
-        <RaisedButton
-          className="btn"
-          label="Save"
-          primary={true}
-          type="submit"
-          disabled={pristine || submitting || invalid}
-          onClick={handleClose}
-        />
-        <RaisedButton
-          className="btn"
-          label="Reset"
-          primary={true}
-          type="reset"
-          disabled={pristine || submitting}
-          onClick={reset}
-        />
+        <div>
+          <center className="add-title">Organizer Information</center>
+          <div>
+            <div className="d-flex form-group">
+              <label>Address</label>
+              <Field
+                name="organizerAddress"
+                component={renderTextField}
+                fullWidth={true}
+                hintText="Address"
+              />
+              <br />
+            </div>
+          </div>
+          <div className="d-flex form-group">
+            <label>Name</label>
+            <Field
+              name="organizerName"
+              component={renderTextField}
+              fullWidth={true}
+              hintText="Organizer name"
+            />
+            <br />
+          </div>
+          <div className="d-flex form-group">
+            <label>Website</label>
+            <Field
+              name="organizerWebsite"
+              component={renderTextField}
+              fullWidth={true}
+              hintText="Organizer website"
+            />
+            <br />
+          </div>
+          <div className="d-flex form-group">
+            <label>Email</label>
+            <Field
+              name="organizerEmail"
+              component={renderTextField}
+              fullWidth={true}
+              hintText="Organizer email"
+            />
+            <br />
+          </div>
+          <div className="d-flex form-group">
+            <label>Phone Number </label>
+            <Field
+              name="organizerPhoneNumber"
+              component={renderTextField}
+              hintText="Organizer Phone Number"
+              fullWidth={true}
+              normalize={normalizePhone}
+            />
+          </div>
+          <div className="d-flex submit-btn btn-group">
+            <RaisedButton
+              className="btn"
+              label="Save"
+              primary={true}
+              type="submit"
+              disabled={pristine || submitting || invalid}
+              onClick={handleClose}
+            />
+            <RaisedButton
+              className="btn"
+              label="Reset"
+              primary={true}
+              type="reset"
+              disabled={pristine || submitting}
+              onClick={reset}
+            />
+          </div>
+        </div>
       </div>
     </div>
   </form>
