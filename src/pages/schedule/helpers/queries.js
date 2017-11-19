@@ -1,7 +1,7 @@
 import { gql } from 'react-apollo';
 export const GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY = gql`
-  query getActivitiesByConferenceID($conference_id: ID!) {
-    getActivitiesByConferenceID(conference_id: $conference_id) {
+  query getActivitiesByConferenceID {
+    getActivitiesByConferenceID {
       id
       title
       description

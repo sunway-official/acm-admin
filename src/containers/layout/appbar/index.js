@@ -16,6 +16,7 @@ export default class AppBarExampleIcon extends React.Component {
   }
 
   handleToggle = () => this.setState({ open: !this.state.open });
+
   handleTouchTap = event => {
     event.preventDefault();
 

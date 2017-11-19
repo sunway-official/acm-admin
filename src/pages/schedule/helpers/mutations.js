@@ -47,16 +47,8 @@ export const INSERT_SCHEDULE_MUTATION = gql`
 `;
 
 export const INSERT_ACTIVITY_MUTATION = gql`
-  mutation insertActivity(
-    $conference_id: ID!
-    $title: String!
-    $description: String!
-  ) {
-    insertActivity(
-      conference_id: $conference_id
-      title: $title
-      description: $description
-    ) {
+  mutation insertActivity($title: String!, $description: String!) {
+    insertActivity(title: $title, description: $description) {
       id
     }
   }
