@@ -4,7 +4,7 @@ import {
   INSERT_ORGANIZER_DETAIL_MUTATION,
   GET_ALL_CONFERENCES_BY_USER_ID_QUERY,
   ME_QUERY,
-} from './../helpers/mutation';
+} from './mutation';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import {
   Dialog,
@@ -29,14 +29,6 @@ class DialogInsertConf extends React.Component {
     super();
     this.handleClose = this.handleClose.bind(this);
     this.submit = this.submit.bind(this);
-
-    this.state = {
-      position: {
-        lat: '',
-        long: '',
-      },
-    };
-    this.onMapPositionChanged = this.onMapPositionChanged.bind(this);
   }
 
   handleOpen = () => {
@@ -47,26 +39,12 @@ class DialogInsertConf extends React.Component {
     this.setState({ open: false });
   };
 
-  onMapPositionChanged(position) {
-    this.props.getPosition(position);
-  }
-
   submit(values) {
     // console.log(values);
     const {
       INSERT_ORGANIZER_DETAIL_MUTATION,
       INSERT_CONFERENCE_MUTATION,
     } = this.props;
-
-    console.log(this.props.position);
-    const id = values.address.id;
-    this.props.UPDATE_ADDRESS_MUTATION({
-      variables: {
-        id: id,
-        lat: this.props.position.lat,
-        long: this.props.position.lng,
-      },
-    });
 
     const user_id = this.props.data.me.id;
     INSERT_ORGANIZER_DETAIL_MUTATION({

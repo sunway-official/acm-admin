@@ -1,10 +1,9 @@
 import React from 'react';
 import { reduxForm, Field, reset } from 'redux-form';
 import { RaisedButton } from 'material-ui';
-import validate, { renderTextField, renderDatePicker } from './../validate';
-import normalizePhone from './../helpers/normalizePhone';
-import { style } from './../style/style.css';
-import AppMap from 'components/AppMap';
+import validate, { renderTextField, renderDatePicker } from './validate';
+import normalizePhone from './normalizePhone';
+import { style } from './style.css';
 
 const AddConferenceForm = ({
   onClick,
@@ -14,7 +13,6 @@ const AddConferenceForm = ({
   pristine,
   invalid,
   handleClose = this.props.handleClose,
-  onMapPositionChanged,
 }) => (
   <form className="form conference-add" onSubmit={handleSubmit}>
     <div>
@@ -24,24 +22,11 @@ const AddConferenceForm = ({
         <div name="conference">
           <div className="d-flex form-group">
             <label>Address ID</label>
-            <AppMap
-              onMapPositionChanged={onMapPositionChanged}
-              initalPosition={{
-                lat: '16.0598934',
-                long: '108.2076032',
-              }}
-              googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyDFNlwjsuntl-BmMpDKJPOiUvwxhAEyMEI"
-              loadingElement={<div style={{ height: `100%` }} />}
-              containerElement={<div style={{ height: `400px` }} />}
-              mapElement={
-                <div
-                  style={{
-                    height: `100%`,
-                    marginLeft: '-50%',
-                    marginRight: '-50%',
-                  }}
-                />
-              }
+            <Field
+              name="address_id"
+              component={renderTextField}
+              fullWidth={true}
+              hintText="Address id"
             />
             <br />
           </div>
