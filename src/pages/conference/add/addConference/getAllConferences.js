@@ -13,7 +13,7 @@ import {
 import AddDialog from './addDialog';
 import { withRouter } from 'react-router-dom';
 // import style from '../../../containers/layout/appbar/style.css';
-import { style } from './../style/style.css';
+import style from '../style/style.css';
 
 const styles = {
   smallIcon: {
