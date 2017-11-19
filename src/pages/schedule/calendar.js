@@ -23,6 +23,7 @@ import {
   editActivityFunc,
 } from './helpers';
 import { graphql, compose } from 'react-apollo';
+import './css/style.css';
 
 BigCalendar.momentLocalizer(moment);
 
