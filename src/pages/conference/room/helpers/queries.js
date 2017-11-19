@@ -1,8 +1,8 @@
 import { gql } from 'react-apollo';
 
-export const GET_ALL_ROOMS_QUERY = gql`
-  query getAllRooms {
-    getAllRooms {
+export const GET_ROOMS_BY_CONFERENCE_ID_QUERY = gql`
+  query getRoomsByConferenceID($conference_id: ID!) {
+    getRoomsByConferenceID(conference_id: $conference_id) {
       id
       name
       seats
@@ -11,5 +11,5 @@ export const GET_ALL_ROOMS_QUERY = gql`
   }
 `;
 export default {
-  GET_ALL_ROOMS_QUERY,
+  GET_ROOMS_BY_CONFERENCE_ID_QUERY,
 };

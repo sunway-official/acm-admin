@@ -10,8 +10,7 @@ class Index extends Component {
   render() {
     const { loading } = this.props.data;
     if (loading) return <div>loading...</div>;
-
-    const listRoom = this.props.data.getAllRooms;
+    const listRoom = this.props.data.getRoomsByConferenceID;
     return (
       <div className="conference">
         <Subheader className="subheader"> Rooms Management</Subheader>
@@ -34,4 +33,8 @@ class Index extends Component {
     );
   }
 }
-export default graphql(queries.GET_ALL_ROOMS_QUERY)(Index);
+export default graphql(queries.GET_ROOMS_BY_CONFERENCE_ID_QUERY, {
+  options: ownProps => ({
+    variables: { conference_id: '1' },
+  }),
+})(Index);
