@@ -27,10 +27,8 @@ class BadgeExampleSimple extends Component {
     this.handleSignOut = this.handleSignOut.bind(this);
   }
 
-  handleToggleConference = () => {
+  handleToggleConference = () =>
     this.setState({ openListConf: !this.state.openListConf });
-    this.handleRequestClose();
-  };
 
   handleCloseConference = () => this.setState({ openListConf: false });
 
@@ -234,12 +232,12 @@ class BadgeExampleSimple extends Component {
         <Drawer
           open={this.state.openListConf}
           docked={false}
-          onRequestChange={openListConf => this.setState({ openListConf })}
+          onRequestChange={open => this.setState({ open })}
         >
           <AppBar
             title="ACM"
             className="sidebar"
-            onClick={this.handleCloseConference}
+            onClick={this.handleToggleConference}
           />
           <ConfMgtSidebar />
         </Drawer>
