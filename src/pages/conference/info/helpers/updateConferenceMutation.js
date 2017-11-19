@@ -1,7 +1,7 @@
 import { gql } from 'react-apollo';
 
 const UPDATE_CONFERENCE_MUTATION = gql`
-  mutation UpdateConference(
+  mutation updateConference(
     $id: ID!
     $title: String
     $description: String

@@ -1,14 +1,16 @@
 import React, { PureComponent } from 'react';
 import { SubmissionError } from 'redux-form';
-import UPDATE_CONFERENCE_MUTATION from '../helpers/updateConferenceMutation';
-import UPDATE_ADDRESS_MUTATION from '../helpers/updateAddressMutation';
-import UPDATE_ORGANIZER_DETAIL_MUTATION from '../helpers/updateOrganizerDetailMutation';
+import {
+  UPDATE_CONFERENCE_MUTATION,
+  UPDATE_ADDRESS_MUTATION,
+  UPDATE_ORGANIZER_DETAIL_MUTATION,
+} from '../helpers';
 import { connect } from 'react-redux';
 import { graphql, compose } from 'react-apollo';
 import InfoForm from './InfoForm';
 import { conferenceOperations } from 'store/ducks/conference';
 import './style.css';
-class ConferenceInfo extends PureComponent {
+class ConferenceInfoForm extends PureComponent {
   constructor(props) {
     super(props);
     this.handleUpdateConferenceInfo = this.handleUpdateConferenceInfo.bind(
@@ -34,34 +36,29 @@ class ConferenceInfo extends PureComponent {
     organizerPhoneNumber,
   }) {
     try {
-      await this.props
-        .UPDATE_CONFERENCE_MUTATION({
-          variables: {
-            id: this.props.conference_id,
-            title: title,
-            description: description,
-            start_date: startDate,
-            end_date: endDate,
-          },
-        })
-        .then(({ data }) => {
-          const id = data.updateConference.address.id;
-          this.props.UPDATE_ADDRESS_MUTATION({
-            variables: {
-              id: id,
-              lat: this.props.position.lat,
-              long: this.props.position.lng,
-            },
-          });
-        });
-
+      await this.props.UPDATE_CONFERENCE_MUTATION({
+        variables: {
+          id: this.props.conference_id,
+          title: title,
+          description: description,
+          start_date: startDate,
+          end_date: endDate,
+        },
+      });
       await this.props.UPDATE_ORGANIZER_DETAIL_MUTATION({
         variables: {
-          id: this.props.organizerDetail_id,
+          id: this.props.organizer_id,
           name: organizerName,
           email: organizerEmail,
           website: organizerWebsite,
           phone: organizerPhoneNumber,
+        },
+      });
+      await this.props.UPDATE_ADDRESS_MUTATION({
+        variables: {
+          id: this.props.address_id,
+          lat: this.props.position.lat,
+          long: this.props.position.lng,
         },
       });
     } catch (error) {
@@ -85,11 +82,14 @@ class ConferenceInfo extends PureComponent {
 
 const mapStateToProps = (state, ownProps) => {
   const conference = ownProps.conference;
-  console.log(conference.id);
-  const organizerDetail = conference.organizerDetail;
+  const organizer = conference.organizerDetail;
+  const address = conference.address;
+  console.log(conference);
+  console.log(organizer.id);
   return {
+    address_id: address.id,
     conference_id: conference.id,
-    organizerDetail_id: organizerDetail.id,
+    organizer_id: organizer.id,
     position: state.conference.position,
     initialValues: {
       title: conference.title,
@@ -98,10 +98,10 @@ const mapStateToProps = (state, ownProps) => {
       endDate: new Date(conference.end_date),
       lat: parseFloat(conference.address.lat),
       long: parseFloat(conference.address.long),
-      organizerName: organizerDetail.name,
-      organizerEmail: organizerDetail.email,
-      organizerWebsite: organizerDetail.website,
-      organizerPhoneNumber: organizerDetail.phone,
+      organizerName: organizer.name,
+      organizerEmail: organizer.email,
+      organizerWebsite: organizer.website,
+      organizerPhoneNumber: organizer.phone,
     },
   };
 };
@@ -124,4 +124,4 @@ export default compose(
   graphql(UPDATE_ADDRESS_MUTATION, {
     name: 'UPDATE_ADDRESS_MUTATION',
   }),
-)(ConferenceInfo);
+)(ConferenceInfoForm);

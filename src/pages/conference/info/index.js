@@ -9,7 +9,6 @@ import CoOrganizerList from './coOrganizer/coOrganizerList';
 class Index extends PureComponent {
   render() {
     const conference = this.props.currentConference;
-    console.log(conference);
     // khai bao conference dua tren query getConferenceByID
     const coOrganizerDetails = conference.coOrganizerDetails;
     // khai bao coOrganizerDetails dua tren query coOrganizerDetails bang getConferenceByID
