@@ -18,7 +18,7 @@ const validate = values => {
   ];
   requiredFields.forEach(field => {
     if (!values[field]) {
-      errors[field] = 'Required';
+      errors[field] = 'This field is required';
     }
   });
   if (values.organizerEmail && !regex.EMAIL_REGEX.test(values.organizerEmail)) {

@@ -1,6 +1,5 @@
 import React from 'react';
 import Calendar from './calendar';
-
 import { connect } from 'react-redux';
 
 const Index = props => {

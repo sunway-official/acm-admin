@@ -3,7 +3,6 @@ import {
   INSERT_CONFERENCE_MUTATION,
   INSERT_ORGANIZER_DETAIL_MUTATION,
   GET_ALL_CONFERENCES_BY_USER_ID_QUERY,
-  INSERT_ADDRESS_MUTATION,
   ME_QUERY,
 } from './../helpers/mutation';
 import ContentAdd from 'material-ui/svg-icons/content/add';

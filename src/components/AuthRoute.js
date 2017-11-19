@@ -110,6 +110,7 @@ const ME_QUERY = gql`
         start_date
         end_date
         address {
+          id
           lat
           long
         }

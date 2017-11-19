@@ -16,8 +16,8 @@ import {
 import { NavigationClose } from 'material-ui/svg-icons';
 
 import { conferenceCoOranizerActions } from 'store/ducks/conference/info/coOrganizer';
-import CoOrganizerInfo from './coOrganizerInfo';
-import GET_CONFERENCE_BY_ID_QUERY from '../helpers/getConferenceByIdQuery';
+import CoOrganizerInfo from '../coOrganizer';
+import { queries } from '../helpers';
 
 class CoOrganizerList extends PureComponent {
   constructor() {
@@ -70,15 +70,11 @@ class CoOrganizerList extends PureComponent {
         variables: {
           id: this.state.coOrganizerId,
         },
-        update: (store, { data: { deleteCoOrganizerDetail } }) => {
-          const data = store.readQuery({
-            query: GET_CONFERENCE_BY_ID_QUERY,
-          });
-          data.getConferenceByID.coOrganizerDetails = this.props.coOrganizerDetails.filter(
-            item => item.id !== this.state.coOrganizerId,
-          );
-          store.writeQuery({ query: GET_CONFERENCE_BY_ID_QUERY, data });
-        },
+        refetchQueries: [
+          {
+            query: queries.GET_CURRENT_CONFERENCE,
+          },
+        ],
       });
       this.setState({
         isDeleting: false,
@@ -99,7 +95,7 @@ class CoOrganizerList extends PureComponent {
         onClick={this.handleDelete}
         type="submit"
       />,
-      <RaisedButton label="Cancel" onClick={this.handleCloseDelete} />,
+      <RaisedButton label="No" onClick={this.handleCloseDelete} />,
     ];
     const actions = [
       <IconButton

@@ -11,12 +11,10 @@ import AppMap from 'components/AppMap';
 import normalizePhone from 'utils/normalizePhone';
 import validate from '../validate';
 
-const InfoForm = ({
+const ConferenceInfoForm = ({
   onSubmit,
   handleSubmit,
   submitting,
-  pristine,
-  invalid,
   initialValues,
   onMapPositionChanged,
 }) => {
@@ -152,4 +150,4 @@ const InfoForm = ({
 export default reduxForm({
   form: 'ConferenceInfoForm',
   validate,
-})(InfoForm);
+})(ConferenceInfoForm);
