@@ -17,7 +17,7 @@ import { graphql, compose } from 'react-apollo';
 import AddConferenceForm from './addForm';
 
 const customContentStyle = {
-  width: '90%',
+  width: '70%',
   maxWidth: 'none',
   maxHeight: '100%',
 };
@@ -32,7 +32,7 @@ class DialogInsertConf extends React.Component {
       open: false,
     };
 
-    // this.onMapPositionChanged = this.onMapPositionChanged.bind(this);
+    this.onMapPositionChanged = this.onMapPositionChanged.bind(this);
   }
 
   handleOpen = () => {
@@ -43,23 +43,23 @@ class DialogInsertConf extends React.Component {
     this.setState({ open: false });
   };
 
-  // onMapPositionChanged(position) {
-  //   this.props.getPosition(position);
-  // }
+  onMapPositionChanged(position) {
+    this.props.getPosition(position);
+  }
 
   async submit(values) {
     // console.log(values);
-    // try {
-    //   console.log(this.props.position);
-    //   await this.props.INSERT_ADDRESS_MUTATION({
-    //     variables: {
-    //       lat: this.props.position.lat,
-    //       long: this.props.position.long,
-    //     },
-    //   });
-    // } catch (error) {
-    //   console.log('There was an error sending the query', error);
-    // }
+    try {
+      console.log(this.props.position);
+      await this.props.INSERT_ADDRESS_MUTATION({
+        variables: {
+          lat: this.props.position.lat,
+          long: this.props.position.long,
+        },
+      });
+    } catch (error) {
+      console.log('There was an error sending the query', error);
+    }
 
     try {
       const user_id = this.props.data.me.id;
@@ -136,8 +136,8 @@ export default compose(
   graphql(INSERT_ORGANIZER_DETAIL_MUTATION, {
     name: 'INSERT_ORGANIZER_DETAIL_MUTATION',
   }),
-  // graphql(INSERT_ADDRESS_MUTATION, {
-  //   name: 'INSERT_ADDRESS_MUTATION',
-  // }),
+  graphql(INSERT_ADDRESS_MUTATION, {
+    name: 'INSERT_ADDRESS_MUTATION',
+  }),
   graphql(ME_QUERY),
 )(DialogInsertConf);
