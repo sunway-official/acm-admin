@@ -1,7 +1,7 @@
 import React from 'react';
-import { queries } from './../helpers';
+import { GET_ALL_CONFERENCES_BY_USER_ID_QUERY } from './../helpers/mutation';
 import { graphql, compose } from 'react-apollo';
-import ConferenceCard from './conferenceCard';
+import ConferenceCard from './conferenceInfor';
 
 // import style from '../../../containers/layout/appbar/style.css';
 import { style } from './../style.css';
@@ -36,7 +36,7 @@ class GetAllConfs extends React.Component {
 }
 
 export default compose(
-  graphql(queries.GET_ALL_CONFERENCES_BY_USER_ID_QUERY, {
+  graphql(GET_ALL_CONFERENCES_BY_USER_ID_QUERY, {
     options: ownProps => ({
       variables: {
         user_id: ownProps.id,

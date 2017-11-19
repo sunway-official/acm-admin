@@ -29,9 +29,6 @@ class AuthRoute extends PureComponent {
             twitter_id
             position
             organization
-            currentConference {
-              id
-            }
           }
         }
       `,
@@ -103,34 +100,6 @@ const ME_QUERY = gql`
       twitter_id
       position
       organization
-      currentConference {
-        id
-        title
-        description
-        start_date
-        end_date
-        address {
-          lat
-          long
-        }
-        organizerDetail {
-          id
-          name
-          email
-          website
-          phone
-        }
-        coOrganizerDetails {
-          id
-          name
-          email
-          website
-          phone
-          conference {
-            id
-          }
-        }
-      }
     }
   }
 `;

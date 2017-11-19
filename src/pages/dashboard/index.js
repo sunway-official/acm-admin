@@ -3,15 +3,15 @@ import { compose, withApollo } from 'react-apollo';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 // import { graphql, compose } from 'react-apollo';
-import ListConferences from './render/listConferences';
+import GetAllConfs from './render/getAllConference';
 import style from './style.css';
 
 class Index extends Component {
   render() {
     console.log(this.props.me);
-    const id = this.props.me.id;
-    const firstName = this.props.me.firstname;
-    let lastName = this.props.me.lastname;
+    var id = this.props.me.id;
+    var firstName = this.props.me.firstname;
+    var lastName = this.props.me.lastname;
     return (
       <div>
         <style dangerouslySetInnerHTML={{ __html: style }} />
@@ -19,7 +19,7 @@ class Index extends Component {
           <div className="dashboard-title">
             Welcome {lastName + ' ' + firstName} !!
           </div>
-          <ListConferences id={id} />
+          <GetAllConfs id={this.props.me.id} />
         </div>
       </div>
     );

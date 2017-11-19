@@ -89,7 +89,7 @@ class CoOrganizerList extends PureComponent {
   }
   render() {
     const coOrganizerDetails = this.props.coOrganizerDetails;
-    const conferenceId = this.props.conferenceId;
+    const conferenceId = coOrganizerDetails[0].conference.id;
     //khai bao conference_id dua ben index (coOrganizerDetails)
     // [0] la de khai bao mac dinh la o conference dau tien
     const actionDelete = [
