@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 
-import { gql, graphql, compose } from 'react-apollo';
+import { graphql, compose } from 'react-apollo';
 import { connect } from 'react-redux';
 import { SubmissionError } from 'redux-form';
 import { bindActionCreators } from 'redux';
@@ -76,7 +76,6 @@ class CoOrganizerInfo extends PureComponent {
 const mapStateToProps = (state, ownProps) => {
   const coOrganizerDetails = ownProps.coOrganizerDetails;
   const isAdd = ownProps.isAdd;
-  console.log(isAdd);
   return {
     coOrganizerId: coOrganizerDetails.id,
     initialValues: isAdd

@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import { Dialog, SelectField, MenuItem, IconButton } from 'material-ui';
 import { NavigationClose } from 'material-ui/svg-icons';
-
-// import { graphql, gql, compose } from 'react-apollo';
 import { connect } from 'react-redux';
 import { userActions } from 'store/ducks/user';
-import RoleInfo from '../rolesInfo';
 class AddDialog extends Component {
   constructor(props) {
     super(props);

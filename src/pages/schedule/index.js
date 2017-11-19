@@ -1,8 +1,8 @@
 import React from 'react';
 import Calendar from './calendar';
 
-import { queries } from './helpers';
-import { graphql, compose } from 'react-apollo';
+// import { queries } from './helpers';
+import { compose } from 'react-apollo';
 import { connect } from 'react-redux';
 
 const Index = props => {

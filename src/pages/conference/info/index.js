@@ -3,13 +3,13 @@ import { Subheader, IconButton, Tabs, Tab } from 'material-ui';
 import { Link } from 'react-router-dom';
 import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import ConferenceInfo from './conferenceInfo';
-import { graphql } from 'react-apollo';
 import { connect } from 'react-redux';
 import CoOrganizerList from './coOrganizer/coOrganizerList';
 
 class Index extends PureComponent {
   render() {
     const conference = this.props.currentConference;
+    console.log(conference);
     // khai bao conference dua tren query getConferenceByID
     const coOrganizerDetails = conference.coOrganizerDetails;
     // khai bao coOrganizerDetails dua tren query coOrganizerDetails bang getConferenceByID

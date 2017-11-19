@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { graphql, compose } from 'react-apollo';
-import { Toggle, ListItem } from 'material-ui';
-import {
-  GET_ALL_ROLES_ACTIVE_BY_USER_ID_QUERY,
-  UPDATE_USER_ROLE_STATUS,
-  GET_ALL_ROLES,
-} from './helpers';
+import { UPDATE_USER_ROLE_STATUS, GET_ALL_ROLES } from './helpers';
 
 import functions from './helpers/functions';
 import RoleItem from './roleItem';

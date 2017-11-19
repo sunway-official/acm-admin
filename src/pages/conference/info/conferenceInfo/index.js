@@ -45,7 +45,6 @@ class ConferenceInfo extends PureComponent {
           },
         })
         .then(({ data }) => {
-          console.log(this.props.position);
           const id = data.updateConference.address.id;
           this.props.UPDATE_ADDRESS_MUTATION({
             variables: {
@@ -86,6 +85,7 @@ class ConferenceInfo extends PureComponent {
 
 const mapStateToProps = (state, ownProps) => {
   const conference = ownProps.conference;
+  console.log(conference.id);
   const organizerDetail = conference.organizerDetail;
   return {
     conference_id: conference.id,
