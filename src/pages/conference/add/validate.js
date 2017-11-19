@@ -4,6 +4,7 @@ import { TextField, DatePicker } from 'material-ui';
 const validate = values => {
   const errors = {};
   const requiredFields = [
+    'address_id',
     'title',
     'description',
     'startDate',
@@ -26,6 +27,15 @@ const validate = values => {
     !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.organizerEmail)
   ) {
     errors.organizerEmail = 'Invalid email address';
+  }
+
+  if (
+    values.address_id &&
+    (isNaN(Number(values.address_id)) ||
+      values.address_id < 0 ||
+      values.address_id > 7)
+  ) {
+    errors.address_id = 'Invalid address id';
   }
 
   if (values.endDate < values.startDate) {

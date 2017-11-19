@@ -6,8 +6,6 @@ import { compose, withApollo } from 'react-apollo';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
-import { AppBar, Drawer } from 'material-ui';
-import ConfMgtSidebar from '../../../../pages/conference/add';
 
 import { images } from '../../../../theme';
 import style from './style.css';
@@ -22,15 +20,9 @@ class BadgeExampleSimple extends Component {
       openNotification: false,
       openMail: false,
       openCalendar: false,
-      openListConf: false,
     };
     this.handleSignOut = this.handleSignOut.bind(this);
   }
-
-  handleToggleConference = () =>
-    this.setState({ openListConf: !this.state.openListConf });
-
-  handleCloseConference = () => this.setState({ openListConf: false });
 
   handleTouchTapUser = event => {
     event.preventDefault();
@@ -221,26 +213,10 @@ class BadgeExampleSimple extends Component {
               <Link to="/user-profile">
                 <MenuItem primaryText="User Profile" />
               </Link>
-              <MenuItem
-                primaryText="Switch conference"
-                onClick={this.handleToggleConference}
-              />
               <MenuItem primaryText="Sign out" onClick={this.handleSignOut} />
             </Menu>
           </Popover>
         </div>
-        <Drawer
-          open={this.state.openListConf}
-          docked={false}
-          onRequestChange={open => this.setState({ open })}
-        >
-          <AppBar
-            title="ACM"
-            className="sidebar"
-            onClick={this.handleToggleConference}
-          />
-          <ConfMgtSidebar />
-        </Drawer>
       </div>
     );
   }
