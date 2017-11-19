@@ -2,18 +2,18 @@ import React from 'react';
 import Calendar from './calendar';
 
 import { queries } from './helpers';
-import { graphql, compose } from 'react-apollo';
-import { connect } from 'react-redux';
+import { graphql } from 'react-apollo';
 
 const Index = props => {
-  return <Calendar conference={props.conference} />;
+  const { loading, getConferenceByID } = props.data;
+
+  if (loading) return <div>loading</div>;
+  const conference = getConferenceByID;
+  return <Calendar conference={conference} />;
 };
 
-const mapStateToProps = state => {
-  console.log(state);
-  return {
-    conference: state.auth.currentUser.currentConference,
-  };
-};
-
-export default compose(connect(mapStateToProps, undefined))(Index);
+export default graphql(queries.GET_CONFERENCE_BY_ID, {
+  options: ownProps => ({
+    variables: { id: ownProps.match.params.id },
+  }),
+})(Index);

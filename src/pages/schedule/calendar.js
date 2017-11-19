@@ -99,7 +99,6 @@ class MyCalendar extends React.PureComponent {
 
   render() {
     const { loading, getActivitiesByConferenceID } = this.props.data;
-    console.log(getActivitiesByConferenceID);
 
     if (loading) return <div>loading</div>;
 
@@ -200,7 +199,11 @@ const mapDispatchToProps = dispatch => {
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
-  graphql(queries.GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY),
+  graphql(queries.GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY, {
+    options: ownProps => ({
+      variables: { conference_id: ownProps.conference.id },
+    }),
+  }),
   graphql(queries.GET_ALL_ROOM_QUERY, {
     name: 'GET_ALL_ROOM_QUERY',
   }),
