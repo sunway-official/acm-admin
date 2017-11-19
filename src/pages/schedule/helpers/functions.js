@@ -31,7 +31,6 @@ export const getEvents = array => {
       item.schedules.map(schedule => {
         const start = moment(schedule.start)._d;
         const end = moment(schedule.end)._d;
-
         const event = {
           id: item.id,
           title: item.title,
@@ -39,6 +38,7 @@ export const getEvents = array => {
           start: start,
           end: end,
           schedules: schedules,
+          room: schedule.room.name,
         };
         events.push(event);
       });
@@ -55,9 +55,35 @@ export const getDateTime = (date, time) => {
   return dateTime;
 };
 
+/**
+ * Event
+ * @param {*} event
+ */
 export const Event = ({ event }) => {
+  const checkDate = moment(event.start).isAfter(moment());
+
+  if (checkDate)
+    return (
+      <div
+        title={
+          moment(event.start).format('LT') +
+          ' - ' +
+          moment(event.end).format('LT') +
+          ': ' +
+          event.title +
+          ' Room - ' +
+          event.room
+        }
+      >
+        <span>
+          {event.title} <br />
+          Room - {event.room}
+        </span>
+      </div>
+    );
   return (
     <div
+      className="my-event"
       title={
         moment(event.start).format('LT') +
         ' - ' +
@@ -65,17 +91,21 @@ export const Event = ({ event }) => {
         ': ' +
         event.title +
         ' Room - ' +
-        event.room.name
+        event.room
       }
     >
       <span>
         {event.title} <br />
-        Room - {event.room.name}
+        Room - {event.room}
       </span>
     </div>
   );
 };
 
+/**
+ * EventAgenda
+ * @param {*} event
+ */
 export const EventAgenda = ({ event }) => {
   return (
     <span>
@@ -84,6 +114,10 @@ export const EventAgenda = ({ event }) => {
   );
 };
 
+/**
+ *
+ * @param {*} schedules
+ */
 export const checkSchedules = schedules => {
   let countRoom = 0;
   let countDate = 0;
@@ -120,10 +154,22 @@ export const checkSchedules = schedules => {
   return false;
 };
 
-export const compareDate = (date1, date2, strFormat) => {
+export const compareDate = (date1, date2, strFormat = 'YYYY MM DD') => {
   const str1 = date1.format(strFormat);
   const str2 = date2.format(strFormat);
   return str1 === str2;
+};
+
+/**
+ *
+ * @param {*} date1
+ * @param {*} date2
+ * @param {*} strFormat
+ */
+export const isBeforeDate = (date1, date2, strFormat = 'YYYY MM DD HH:mm') => {
+  date1.format(strFormat);
+  date2.format(strFormat);
+  return date1.isBefore(date2);
 };
 
 export const removeSchedulesExists = (allSchedules, schedules) => {
@@ -202,4 +248,6 @@ export default {
   getAllSchedules,
   checkAllSchedules,
   removeSchedulesExists,
+  compareDate,
+  isBeforeDate,
 };
