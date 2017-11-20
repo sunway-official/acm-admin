@@ -24,6 +24,7 @@ class AuthRoute extends PureComponent {
             email
             bio
             dob
+            avatar
             linkedin_id
             facebook_id
             twitter_id
@@ -31,6 +32,32 @@ class AuthRoute extends PureComponent {
             organization
             currentConference {
               id
+              title
+              description
+              start_date
+              end_date
+              address {
+                id
+                lat
+                long
+              }
+              organizerDetail {
+                id
+                name
+                email
+                website
+                phone
+              }
+              coOrganizerDetails {
+                id
+                name
+                email
+                website
+                phone
+                conference {
+                  id
+                }
+              }
             }
           }
         }
@@ -46,7 +73,7 @@ class AuthRoute extends PureComponent {
     if (nextProps.queryMe.error) {
       localStorage.clear();
     }
-    if (nextProps.queryMe.me) {
+    if (nextProps.queryMe.me !== this.props.queryMe.me) {
       this.props.setCurrentUser(nextProps.queryMe.me);
     }
   }
@@ -98,6 +125,7 @@ const ME_QUERY = gql`
       email
       bio
       dob
+      avatar
       linkedin_id
       facebook_id
       twitter_id
@@ -110,6 +138,7 @@ const ME_QUERY = gql`
         start_date
         end_date
         address {
+          id
           lat
           long
         }

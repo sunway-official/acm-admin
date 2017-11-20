@@ -2,7 +2,7 @@ import React from 'react';
 import { ME_QUERY } from './helpers/mutation';
 import { graphql, compose } from 'react-apollo';
 
-import GetAllConfs from './addConference/getAllConferences';
+// import GetAllConfs from './addConference/getAllConferences';
 
 class ConfMgtSidebar extends React.Component {
   constructor(props) {
@@ -32,13 +32,9 @@ class ConfMgtSidebar extends React.Component {
 
     if (loading) return <div>loading...</div>;
 
-    console.log(this.props.data.me.id);
+    // console.log(this.props.data.me.id);
 
-    return (
-      <div>
-        <GetAllConfs id={this.props.data.me.id} />
-      </div>
-    );
+    return <div />;
   }
 }
 

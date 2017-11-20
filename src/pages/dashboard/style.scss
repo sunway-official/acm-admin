@@ -22,6 +22,12 @@
   }
 }
 
+.dashboard {
+  .conferences {
+    display: flex;
+  }
+}
+
 //card
 .content {
   height: 100%;
@@ -31,10 +37,14 @@
   padding-top: 80px;
   width: 40%;
   padding-left: 20px;
+  float: left;
 
   .card-content {
     font-size: 16px;
   }
+  // .consf-switch {
+  //   background: linear-gradient(to bottom, orangered 0%,rgba(223, 215, 215, 0.3) 33%,rgba(0,0,0,0) 100%);
+  // }
   .conf-title {
     background-color: orangered !important;
     color: white;
@@ -43,13 +53,24 @@
     height: 40px;
   }
   .conf-des {
-    padding: 16px;
+    padding: 32px;
     height: 40px;
   }
   .conf-date {
-    padding: 16px;
+    padding: 4px;
     font-size: 13px;
-    // display: flex;
+    display: flex;
+  }
+
+  .end-date {
+    margin-left: 20px;
+  }
+
+  .conf-date-icon {
+    margin-top: -6px;
+    color: white !important;
+    height: 19px !important;
+    width: 22px !important;
   }
   .conf-line {
     color: grey;
@@ -61,7 +82,4 @@
     padding-left: 16px;
     margin: 16px !important;
   }
-}
-.conferences {
-  display: flex;
 }

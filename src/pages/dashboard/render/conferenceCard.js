@@ -5,8 +5,12 @@ import style from './../style.css';
 import { mutations, queries } from '../helpers';
 import { compose, graphql } from 'react-apollo';
 import { withRouter } from 'react-router-dom';
-import { ActionGrade } from 'material-ui/svg-icons';
+import { ActionSchedule } from 'material-ui/svg-icons';
 
+const subTitleString = (text, limit) => {
+  if (text.length > limit) return text.substring(0, limit);
+  return text;
+};
 class ConferenceCard extends React.Component {
   constructor(props) {
     super(props);
@@ -33,29 +37,35 @@ class ConferenceCard extends React.Component {
       <div className="conference-card">
         <style dangerouslySetInnerHTML={{ __html: style }} />
         <Card className="card-content">
-          <div className="conf-title">{conference.title}</div>
+          <div className="conf-title">
+            {conference.title}
+            <br />
+            <div className="conf-date">
+              <ActionSchedule className="conf-date-icon" />
+              <div className="start-date">
+                <i>{subTitleString(conference.start_date, 10)}</i>
+              </div>
+              <div className="end-date">
+                <i>{subTitleString(conference.end_date, 10)}</i>
+              </div>
+            </div>
+          </div>
+
           <div className="conf-des">
             <i>{conference.description}</i>
           </div>
-          <div className="conf-date">
-            <div className="start-date">
-              <ActionGrade />
-              <i>{conference.start_date}</i>
-            </div>
-            <div className="end-date">
-              <ActionGrade />
-              <i>{conference.end_date}</i>
-            </div>
+          <div className="consf-switch">
+            <hr />
+            <FlatButton
+              className="switch-button"
+              label="Switch"
+              onClick={async () => {
+                await this.handleSwitch(conference.id);
+                await this.props.history.replace('/conference/info');
+                window.location.reload();
+              }}
+            />
           </div>
-          <FlatButton
-            className="switch-button"
-            label="Switch"
-            onClick={async () => {
-              await this.handleSwitch(conference.id);
-              await this.props.history.replace('/conference/info');
-              window.location.reload();
-            }}
-          />
         </Card>
       </div>
     );

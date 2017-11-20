@@ -15,21 +15,15 @@ class GetAllConfs extends React.Component {
     const conferences = this.props.data.getConferenceByUserID;
     console.log(conferences);
     return (
-      <div>
+      <div name="conferences">
         <style
           dangerouslySetInnerHTML={{
             __html: style,
           }}
         />
-        <div name="conferences">
-          {conferences.map(conference => {
-            return (
-              <div key={conference.id}>
-                <ConferenceCard conference={conference} />
-              </div>
-            );
-          })}
-        </div>
+        {conferences.map(conference => {
+          return <ConferenceCard conference={conference} key={conference.id} />;
+        })}
       </div>
     );
   }

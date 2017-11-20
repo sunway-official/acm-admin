@@ -29,7 +29,7 @@ const UserProfile = ({ me }) => (
           <div className="left-div">
             <div className="card" id="left-form-container">
               <div className="card-content">
-                <EditUserAvatar />
+                <EditUserAvatar avatar={me.avatar} />
                 <GeneralInfo me={me} onSubmit="" />
               </div>
             </div>

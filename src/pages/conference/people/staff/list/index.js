@@ -1,16 +1,49 @@
 import React, { Component } from 'react';
-import { Subheader, IconButton } from 'material-ui';
+import {
+  Subheader,
+  IconButton,
+  CircularProgress,
+  RaisedButton,
+} from 'material-ui';
+import AddDialog from './insert/addDialog';
 import { Link } from 'react-router-dom';
 import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import List from './list';
-import { graphql, gql } from 'react-apollo';
+import { graphql, gql, compose } from 'react-apollo';
 
 class Index extends Component {
+  constructor(props) {
+    super(props);
+    this.handleOpenAddDialog = this.handleOpenAddDialog.bind(this);
+    this.handleCloseAddDialog = this.handleCloseAddDialog.bind(this);
+  }
+  state = {
+    openDialog: false,
+    userId: 0,
+  };
+  handleOpenAddDialog() {
+    this.setState({
+      openDialog: !this.state.openDialog,
+    });
+  }
+  handleCloseAddDialog() {
+    this.setState({
+      openDialog: !this.state.openDialog,
+    });
+  }
   render() {
-    const { loading } = this.props.data;
-    if (loading) return <div>Loading...</div>;
+    const { getAllUsers } = this.props.GET_ALL_USERS;
 
-    const allStaff = this.props.data.getAllStaffInConference;
+    const allUsers = getAllUsers;
+    const { loading } = this.props.data;
+    if (loading)
+      return (
+        <div>
+          <CircularProgress />
+        </div>
+      );
+
+    const staffs = this.props.data.getAllStaffInConference;
     return (
       <div className="conference">
         <Subheader className="subheader"> Staff List</Subheader>
@@ -30,9 +63,23 @@ class Index extends Component {
           </IconButton>
           <span>Staff</span>
         </div>
-        <div className="dashboard content d-flex">
-          <List allStaff={allStaff} />
+        <div className="dashboard content">
+          <List
+            staffs={staffs}
+            conference_id={this.props.match.params.conference_id}
+          />
+          <RaisedButton
+            onClick={() => this.handleOpenAddDialog()}
+            primary={true}
+            label="Add New Staff"
+          />
         </div>
+        <AddDialog
+          allUsers={allUsers}
+          id={this.state.userId}
+          open={this.state.openDialog}
+          handleClose={this.handleOpenAddDialog}
+        />
       </div>
     );
   }
@@ -45,11 +92,27 @@ export const GET_ALL_STAFF_IN_CONFERENCE = gql`
       firstname
       lastname
       email
+      dob
+      gender
     }
   }
 `;
-export default graphql(GET_ALL_STAFF_IN_CONFERENCE, {
-  options: ownProps => ({
-    variables: { conference_id: ownProps.match.params.conference_id },
+const GET_ALL_USERS = gql`
+  query getAllUsers {
+    getAllUsers {
+      id
+      firstname
+      lastname
+    }
+  }
+`;
+export default compose(
+  graphql(GET_ALL_STAFF_IN_CONFERENCE, {
+    options: ownProps => ({
+      variables: { conference_id: ownProps.match.params.conference_id },
+    }),
   }),
-})(Index);
+  graphql(GET_ALL_USERS, {
+    name: 'GET_ALL_USERS',
+  }),
+)(Index);

@@ -1,8 +1,5 @@
 .d-flex {
-  display: flex;
-}
-.d-flex {
-  display: flex;
+  display: flex !important;
 }
 .text-align-center {
   text-align: center;
@@ -19,7 +16,9 @@
 .position-fixed {
   position: fixed;
 }
-
+.m-auto {
+  margin: auto;
+}
 body {
   margin: 0 !important;
   background: #f5f5f5;
