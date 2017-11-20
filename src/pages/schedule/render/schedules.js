@@ -123,6 +123,7 @@ class renderSchedules extends React.Component {
 }
 
 const mapStateToProps = state => {
+  console.log(state.schedule.error);
   return {
     checkError: state.schedule.error,
   };

@@ -3,7 +3,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { Field, reduxForm } from 'redux-form';
 import CustomInput from 'components/CustomInput';
 import normalizePhone from 'utils/normalizePhone';
-import validate from '../validate';
+import validate from './validate';
 const CoOrganizerForm = ({
   onSubmit,
   handleSubmit,

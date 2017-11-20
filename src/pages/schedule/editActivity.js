@@ -115,7 +115,6 @@ class EditActivity extends React.PureComponent {
 
 const mapStateToProps = state => {
   const event = state.schedule.event;
-
   return {
     initialValues: {
       id: event.id,
