@@ -16,9 +16,9 @@ class Index extends Component {
         <style dangerouslySetInnerHTML={{ __html: style }} />
         <DashboardMenu />
         <div className="dashboard content">
-          <div className="dashboard-title">
+          {/* <div className="dashboard-title">
             Welcome {lastName + ' ' + firstName} !!
-          </div>
+          </div> */}
           <ListConferences user_id={user_id} />
         </div>
       </div>

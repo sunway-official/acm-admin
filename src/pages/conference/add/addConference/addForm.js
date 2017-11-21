@@ -21,14 +21,14 @@ const AddConferenceForm = ({
     <center className="add-title">Conference Information</center>
     <div name="conference">
       <div className="d-flex form-group">
-        <label>Address ID</label>
+        {/* <label>Address ID</label>
         <Field
           name="address_id"
           component={renderTextField}
           fullWidth={true}
           hintText="Address"
         />
-        <br />
+        <br /> */}
       </div>
       <div className="d-flex form-group">
         <label>Title</label>

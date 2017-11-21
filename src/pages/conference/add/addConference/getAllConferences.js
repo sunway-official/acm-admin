@@ -71,7 +71,7 @@ class GetAllConfs extends React.Component {
 
     if (loading) return <div> loading... </div>;
 
-    console.log(this.props);
+    console.log('conf', this.props);
     const conferences = this.props.data.getConferenceByUserID;
     // const currentConfIndex = conferences.findIndex(x => x.id === this.props.id);
     // console.log(currentConfIndex);

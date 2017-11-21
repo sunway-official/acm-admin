@@ -26,27 +26,36 @@
   .conferences {
     display: flex;
   }
+
 }
 
 //card
 .content {
-  height: 100%;
+  height: -webkit-fill-available !important;
+  background: linear-gradient(
+    rgba(241, 240, 240, 0.4),
+    rgba(241, 240, 240, 0.4)
+  ),
+  url('./../../images/background/backgroundimage.jpg') !important;
 }
 .conference-card {
   font-family: Roboto, sans-serif;
   padding-top: 80px;
+  margin-bottom: -30px;
   width: 40%;
-  padding-left: 20px;
+  padding-left: 7%;
   float: left;
 
   .card-content {
     font-size: 16px;
+    background-size: 30%, 20%, auto !important;
+    background: url(./../../images/background/imageconference.jpg) right bottom no-repeat, linear-gradient(to bottom, white 90%, white 10%) !important;
   }
   // .consf-switch {
   //   background: linear-gradient(to bottom, orangered 0%,rgba(223, 215, 215, 0.3) 33%,rgba(0,0,0,0) 100%);
   // }
   .conf-title {
-    background-color: orangered !important;
+    background-color: rgb(255, 87, 34) !important;
     color: white;
     padding: 16px;
     font-size: 25px;
@@ -78,8 +87,18 @@
   }
 
   .switch-button {
-    color: orangered;
+    // background-color: rgb(255, 87, 34) !important;
     padding-left: 16px;
     margin: 16px !important;
+  }
+
+  .btn {
+    float: right;
+    margin-top: 24px;
+  }
+
+  .consf-switch {
+    border-top: 1px solid grey;
+    height: 56px;
   }
 }
