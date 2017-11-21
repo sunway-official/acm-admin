@@ -102,7 +102,7 @@ class EditActivity extends React.PureComponent {
             />
             <RaisedButton label="Delete" onClick={this.toggleDelete} />
             <Dialog
-              title="Do you want to delete this schedule ?"
+              title="Do you want to delete this activity ?"
               open={this.state.openDelete}
               actions={actions}
             />

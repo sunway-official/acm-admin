@@ -11,16 +11,9 @@ import Footer from './section/footer';
 import { graphql, compose } from 'react-apollo';
 import { queries } from './helpers/index';
 import Home from './section/home';
-import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 class LandingPage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      id: this.props.conference_id,
-    };
-  }
   render() {
-    console.log(this.props.conference_id);
     const { loading, getLandingPageByConferenceId } = this.props.data;
     if (loading) return <div>loading</div>;
     const landingPage = getLandingPageByConferenceId[0];
@@ -36,7 +29,12 @@ class LandingPage extends Component {
                 </a>
                 <a href="">Speaker</a>
                 <a href="">Paper</a>
-                <a href="/landingpage/schedule">Schedule</a>
+                <Link
+                  to={`/landingpage/${this.props.data.variables
+                    .conference_id}/schedule`}
+                >
+                  Schedules
+                </Link>
                 <a href="">Contact Us</a>
                 <button className="btn get-ticket">Get Ticket</button>
               </nav>
@@ -58,16 +56,16 @@ class LandingPage extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    conference_id: state.conference.id,
-  };
-};
 export default compose(
-  connect(mapStateToProps, undefined),
   graphql(queries.GET_LANDING_PAGE_BY_CONFERENCE_ID_QUERY, {
     options: ownProps => ({
-      variables: { conference_id: ownProps.conference_id },
+      variables: {
+        conference_id: ownProps.match.params.conference_id,
+      },
     }),
   }),
 )(LandingPage);
+
+// !ownProps.data.variables.conference_id
+// ? ownProps.data.variables.conference_id
+// :

@@ -1,0 +1,83 @@
+.form {
+  &.conference-add {
+    @media (max-width: 650px) {
+      font-size: 20px !important;
+    }
+    width: 80%;
+    margin: auto;
+    justify-content: center;
+    .date,
+    .place {
+      justify-content: space-between;
+      margin-bottom: 30px;
+    }
+    .add-title {
+      @media (max-width: 650px) {
+        font-size: 20px !important;
+      }
+      font-size: 22px;
+      padding: 8px;
+    }
+
+    .btn-group {
+      justify-content: center;
+      &.remove-btn {
+        padding-top: 20px;
+      }
+      &.save-btn {
+        margin-top: 70px;
+      }
+    }
+
+    .form-group {
+      align-items: center;
+      label {
+        @media (max-width: 650px) {
+          font-size: 16px !important;
+        }
+        font-size: 18px;
+        width: 210px !important;
+        &.end {
+          width: 38px !important;
+        }
+      }
+    }
+    .btn {
+      margin: 5px;
+    }
+    .header {
+      &.title {
+        font-size: 2em !important;
+      }
+    }
+  }
+  .group {
+    &.remove-btn {
+      justify-content: space-around;
+      align-items: center;
+      padding-top: 40px;
+    }
+  }
+  .from {
+    margin-left: 18%;
+    margin-right: 7%;
+    position: relative;
+  }
+}
+.conference {
+  .content {
+    &.details {
+      width: 100%;
+    }
+  }
+  .header {
+    padding: 20px 0 20px 0 !important;
+  }
+}
+.list {
+  .list-item {
+    a .switch-text {
+      color: black !important;
+    }
+  }
+}

@@ -20,12 +20,17 @@ import LandingPage from '../landingPage';
 import LandingPageManagement from '../pages/landingPageManagement';
 import LandingPageSchedule from '../landingPage/schedule/index';
 import RoomsManagement from '../pages/conference/room';
+import TopicManagement from '../pages/conference/topic';
+import TopicDetail from '../pages/conference/topic/topicDetail';
 
 export default () => (
   <MuiThemeProvider muiTheme={muiTheme}>
     <Switch>
-      <AuthRoute path="/landingpage/schedule" component={LandingPageSchedule} />
-      <AuthRoute path="/landingpage" component={LandingPage} />
+      <AuthRoute
+        path="/landingpage/:conference_id/schedule"
+        component={LandingPageSchedule}
+      />
+      <AuthRoute path="/landingpage/:conference_id" component={LandingPage} />
       <AuthRoute needGuest path="/login" component={Login} />
       <AuthRoute needGuest path="/register" component={Register} />
       <AuthRoute needGuest path="/forgot" component={ForgotPassword} />
@@ -33,7 +38,7 @@ export default () => (
       <Wrapper>
         <Switch>
           <AuthRoute needAuth exact path="/" component={Dashboard} />
-          <AuthRoute path="/conference/:id/info" component={ConferenceInfo} />
+          <AuthRoute path="/conference/info" component={ConferenceInfo} />
           <AuthRoute
             path="/conference/:conference_id/people/staff"
             component={ConferenceStaffList}
@@ -53,14 +58,22 @@ export default () => (
           <AuthRoute
             needAuth
             exact
+            path="/conference/topics-management"
+            component={TopicManagement}
+          />
+          <AuthRoute
+            needAuth
+            exact
+            path="/conference/topics-management/topic-detail/:topic_id"
+            component={TopicDetail}
+          />
+          <AuthRoute
+            needAuth
+            exact
             path="/user-profile"
             component={UserProfile}
           />
-          <AuthRoute
-            exact
-            path="/conference/:id/schedules"
-            component={Schedule}
-          />
+          <AuthRoute exact path="/conference/activities" component={Schedule} />
           <AuthRoute path="/withThunk" component={WithThunk} />
           <AuthRoute component={NoMatch} />
         </Switch>

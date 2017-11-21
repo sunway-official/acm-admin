@@ -1,5 +1,14 @@
-#format-time {
-  position: absolute;
-  top: 33%;
-  right: 40%;
+@media only screen and (min-width: 957px) {
+  #format-time {
+    position: absolute;
+    top: 210px;
+    right: 40vw;
+  }
+}
+@media only screen and (min-width: 1200px) {
+  #format-time {
+    position: absolute;
+    top: 210px;
+    right: 32vw;
+  }
 }

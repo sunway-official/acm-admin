@@ -96,7 +96,7 @@ class Index extends Component {
 }
 const mapStateToProps = (state, ownProps) => {
   return {
-    conference_id: state.conference.id,
+    id: state.auth.currentUser.currentConference.id,
   };
 };
 export default compose(
@@ -106,7 +106,7 @@ export default compose(
   }),
   graphql(queries.GET_LANDING_PAGE_BY_CONFERENCE_ID_QUERY, {
     options: ownProps => ({
-      variables: { conference_id: ownProps.conference_id },
+      variables: { conference_id: ownProps.id },
     }),
   }),
   graphql(mutations.UPDATE_LANDING_PAGE_MUTATION, {

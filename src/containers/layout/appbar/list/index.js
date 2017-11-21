@@ -20,7 +20,6 @@ class ListExampleSimple extends React.Component {
     this.state = {
       open: false,
       openLanding: false,
-      conference_id: this.props.conference_id,
     };
   }
 
@@ -46,23 +45,26 @@ class ListExampleSimple extends React.Component {
       openLanding: false,
     });
   };
-
   render() {
+    var conference_id;
+    if (this.props.auth.currentUser) {
+      conference_id = this.props.auth.currentUser.currentConference.id;
+    }
     return (
       <div>
         <style dangerouslySetInnerHTML={{ __html: style }} />
         <List className="list">
-          <Link to="/conference/1/info">
+          <Link to="/conference/info">
             <ListItem
               className="item"
               primaryText={'Information'}
               leftIcon={<ActionInfoOutline />}
             />
           </Link>
-          <Link to="/conference/1/schedules">
+          <Link to="/conference/activities">
             <ListItem
               className="item"
-              primaryText={'Schedule'}
+              primaryText={'Activities management'}
               leftIcon={<NotificationEventAvailable />}
             />
           </Link>
@@ -121,7 +123,7 @@ class ListExampleSimple extends React.Component {
                     onClick={this.handleRequestClose}
                   />
                 </Link>
-                <Link to="/landingpage">
+                <Link to={`/landingpage/${conference_id}`}>
                   <MenuItem
                     className="item"
                     primaryText={'View'}
@@ -135,6 +137,13 @@ class ListExampleSimple extends React.Component {
             <ListItem
               className="item"
               primaryText={'Rooms'}
+              leftIcon={<NotificationEventAvailable />}
+            />
+          </Link>
+          <Link to="/conference/topics-management">
+            <ListItem
+              className="item"
+              primaryText={'Topics'}
               leftIcon={<NotificationEventAvailable />}
             />
           </Link>
@@ -162,7 +171,7 @@ class ListExampleSimple extends React.Component {
 }
 const mapStateToProps = (state, ownProps) => {
   return {
-    conference_id: state.conference.id,
+    auth: state.auth,
   };
 };
 export default connect(mapStateToProps, undefined)(ListExampleSimple);

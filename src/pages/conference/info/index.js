@@ -4,17 +4,12 @@ import { Link } from 'react-router-dom';
 import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import ConferenceInfo from './conferenceInfo';
 import { graphql } from 'react-apollo';
+import { connect } from 'react-redux';
 import CoOrganizerList from './coOrganizer/coOrganizerList';
-import GET_CONFERENCE_BY_ID_QUERY from './helpers/getConferenceByIdQuery';
 
 class Index extends Component {
   render() {
-    const { loading } = this.props.data;
-
-    if (loading) return <div>loading...</div>;
-
-    const conference = this.props.data.getConferenceByID;
-    console.log(conference);
+    const conference = this.props.currentConference;
     // khai bao conference dua tren query getConferenceByID
     const coOrganizerDetails = conference.coOrganizerDetails;
     // khai bao coOrganizerDetails dua tren query coOrganizerDetails bang getConferenceByID
@@ -42,7 +37,7 @@ class Index extends Component {
             </Tab>
             <Tab label="Co-Organizer">
               <CoOrganizerList
-                conferenceId={this.props.match.params.id}
+                conferenceId={conference.id}
                 coOrganizerDetails={coOrganizerDetails}
               />
             </Tab>
@@ -53,6 +48,10 @@ class Index extends Component {
   }
 }
 
-export default graphql(GET_CONFERENCE_BY_ID_QUERY, {
-  options: ownProps => ({ variables: { id: ownProps.match.params.id } }),
-})(Index);
+const mapStateToProps = state => {
+  return {
+    currentConference: state.auth.currentUser.currentConference,
+  };
+};
+
+export default connect(mapStateToProps, undefined)(Index);

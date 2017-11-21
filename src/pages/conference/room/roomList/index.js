@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import { gql, graphql } from 'react-apollo';
-import { connect } from 'react-redux';
-import { bindActionCreators, compose } from 'redux';
 import {
   Table,
   TableBody,
@@ -10,12 +7,7 @@ import {
   TableRow,
   TableRowColumn,
   RaisedButton,
-  Dialog,
-  IconButton,
 } from 'material-ui';
-import { NavigationClose } from 'material-ui/svg-icons';
-
-import { conferenceCoOranizerActions } from 'store/ducks/conference/info/coOrganizer';
 
 class RoomList extends Component {
   constructor() {
