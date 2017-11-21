@@ -1,17 +1,22 @@
 import React from 'react';
 import { reduxForm, Field } from 'redux-form';
-import { Subheader, RaisedButton } from 'material-ui';
+import { Subheader, RaisedButton, Dialog } from 'material-ui';
 import CustomInput from 'components/CustomInput';
 import CustomDatePicker from 'components/CustomDatePicker';
 import AppMap from 'components/AppMap';
 import normalizePhone from 'utils/normalizePhone';
 import validate from './validate';
-
 class ConferenceInfoForm extends React.Component {
+  state = {
+    openDialog: false,
+  };
+  handleSaved = () => {
+    this.setState({ openDialog: !this.state.openDialog });
+  };
   render() {
     const {
       handleSubmit,
-      submitting,
+      invalid,
       initialValues,
       onMapPositionChanged,
     } = this.props;
@@ -136,16 +141,20 @@ class ConferenceInfoForm extends React.Component {
                 label="Save"
                 primary={true}
                 type="submit"
-                disabled={submitting}
+                onClick={() => {
+                  if (!invalid) {
+                    alert('Saved');
+                  }
+                }}
               />
             </div>
+            <Dialog open={this.state.openDialog} />
           </div>
         </div>
       </form>
     );
   }
 }
-
 export default reduxForm({
   form: 'ConferenceInfoForm',
   validate,
