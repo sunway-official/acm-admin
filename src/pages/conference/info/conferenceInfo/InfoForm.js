@@ -6,7 +6,6 @@ import CustomDatePicker from 'components/CustomDatePicker';
 import AppMap from 'components/AppMap';
 import normalizePhone from 'utils/normalizePhone';
 import validate from './validate';
-
 class ConferenceInfoForm extends React.Component {
   state = {
     openDialog: false,
@@ -17,7 +16,6 @@ class ConferenceInfoForm extends React.Component {
   render() {
     const {
       handleSubmit,
-      // submitting,
       invalid,
       initialValues,
       onMapPositionChanged,
@@ -144,9 +142,8 @@ class ConferenceInfoForm extends React.Component {
                 primary={true}
                 type="submit"
                 onClick={() => {
-                  if (invalid) {
-                  } else {
-                    this.handleSaved();
+                  if (!invalid) {
+                    alert('Saved');
                   }
                 }}
               />
