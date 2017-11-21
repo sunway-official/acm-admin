@@ -71,16 +71,10 @@ class GetAllConfs extends React.Component {
 
     if (loading) return <div> loading... </div>;
 
-    console.log('conf', this.props);
+    console.log('conf', this.props.ME_QUERY.me.currentConference.id);
     const conferences = this.props.data.getConferenceByUserID;
-    // const currentConfIndex = conferences.findIndex(x => x.id === this.props.id);
-    // console.log(currentConfIndex);
-    // console.log(conferences.id);
-    // conferences.filter(currentConfIndex);
-    // const listConferences = conferences.filter(conference => {
-    //   return conference.id !== this.props.id;
-    // });
-    // console.log(listConferences);
+    const currentConferenceID = this.props.ME_QUERY.me.currentConference.id;
+
     return (
       <div>
         <style
@@ -108,37 +102,39 @@ class GetAllConfs extends React.Component {
           />
           <div name="conferences">
             {conferences.map(conference => {
-              return (
-                <List key={conference.id}>
-                  <ListItem
-                    onToggle={this.handleToggle}
-                    primaryText={conference.title}
-                    leftIcon={<ActionSupervisorAccount />}
-                    initiallyOpen={false}
-                    primaryTogglesNestedList={true}
-                    nestedItems={[
-                      <ListItem
-                        key={1}
-                        primaryText="Switch"
-                        className="switch-text"
-                        leftIcon={<ContentSend style={styles.smallIcon} />}
-                        containerElement={<Link to={`/conference/info`} />}
-                        onClick={async () => {
-                          // clg;
-                          await this.handleSwitch(conference.id);
-                          window.location.reload();
-                        }}
-                      />,
-                      <ListItem
-                        key={2}
-                        primaryText="Delete"
-                        leftIcon={<NavigationClose />}
-                        onClick={() => this.handleOpen(conference.id)}
-                      />,
-                    ]}
-                  />
-                </List>
-              );
+              if (currentConferenceID !== conference.id) {
+                return (
+                  <List key={conference.id}>
+                    <ListItem
+                      onToggle={this.handleToggle}
+                      primaryText={conference.title}
+                      leftIcon={<ActionSupervisorAccount />}
+                      initiallyOpen={false}
+                      primaryTogglesNestedList={true}
+                      nestedItems={[
+                        <ListItem
+                          key={1}
+                          primaryText="Switch"
+                          className="switch-text"
+                          leftIcon={<ContentSend style={styles.smallIcon} />}
+                          containerElement={<Link to={`/conference/info`} />}
+                          onClick={async () => {
+                            // clg;
+                            await this.handleSwitch(conference.id);
+                            window.location.reload();
+                          }}
+                        />,
+                        <ListItem
+                          key={2}
+                          primaryText="Delete"
+                          leftIcon={<NavigationClose />}
+                          onClick={() => this.handleOpen(conference.id)}
+                        />,
+                      ]}
+                    />
+                  </List>
+                );
+              }
             })}
           </div>
           <DeleteDialog

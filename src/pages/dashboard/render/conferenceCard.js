@@ -6,7 +6,6 @@ import { mutations, queries } from '../helpers';
 import { compose, graphql } from 'react-apollo';
 import { withRouter } from 'react-router-dom';
 import { ActionSchedule } from 'material-ui/svg-icons';
-import ContentSend from 'material-ui/svg-icons/content/send';
 
 const subTitleString = (text, limit) => {
   if (text.length > limit) return text.substring(0, limit);

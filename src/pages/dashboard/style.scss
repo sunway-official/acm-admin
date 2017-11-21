@@ -16,6 +16,7 @@
   .space {
     flex: 1 1 0% !important;
   }
+  // eslint-disable-next-line
   .logo {
     height: 30px;
     margin-left: 0 !important;
@@ -49,7 +50,7 @@
   .card-content {
     font-size: 16px;
     background-size: 30%, 20%, auto !important;
-    background: url(./../../images/background/imageconference.jpg) right bottom no-repeat, linear-gradient(to bottom, white 90%, white 10%) !important;
+    background:linear-gradient(to bottom, rgba(223, 215, 215, 0.5) 90%), url(./../../images/background/imageconference.jpg) right bottom no-repeat, linear-gradient(to bottom, white 90%, white 10%) !important;
   }
   // .consf-switch {
   //   background: linear-gradient(to bottom, orangered 0%,rgba(223, 215, 215, 0.3) 33%,rgba(0,0,0,0) 100%);
