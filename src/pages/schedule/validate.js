@@ -5,7 +5,7 @@ const validate = (values, props) => {
   const errors = {};
   const ArrayErrors = [];
   const requiredFields = [
-    'title',
+    'paper',
     'description',
     'date',
     'start',

@@ -4,11 +4,12 @@ import {
   IconButton,
   Dialog,
   FloatingActionButton,
+  MenuItem,
 } from 'material-ui';
 import { reduxForm, Field, FieldArray, reset } from 'redux-form';
 import { NavigationClose, ContentAdd } from 'material-ui/svg-icons';
 import validate from './validate';
-import { renderSchedules, renderTextField } from './render';
+import { renderSchedules, renderSelectField } from './render';
 import { connect } from 'react-redux';
 import { scheduleActions, scheduleOperations } from 'store/ducks/schedule';
 
@@ -28,7 +29,16 @@ class AddDialog extends React.PureComponent {
   state = {
     dialogTitle: 'Add New Activity',
   };
-
+  papers = [
+    {
+      id: 1,
+      name: 'Blockchain',
+    },
+    {
+      id: 2,
+      name: 'Big data',
+    },
+  ];
   render() {
     const { handleSubmit, submitting, pristine, rooms, error } = this.props;
     return (
@@ -50,21 +60,25 @@ class AddDialog extends React.PureComponent {
           <form className="form conference-info" onSubmit={handleSubmit}>
             {error && <div className="error">{error}</div>}
             <div className="d-flex form-group">
-              <label>Title :</label>
+              <label>Paper :</label>
               <Field
-                name="title"
-                component={renderTextField}
-                hintText="Activity Title"
-              />
+                name="paper"
+                component={renderSelectField}
+                hintText="Activity Paper"
+                fullWidth={true}
+              >
+                {this.papers.map(paper => {
+                  return (
+                    <MenuItem
+                      key={paper.id}
+                      value={paper.id}
+                      primaryText={paper.name}
+                    />
+                  );
+                })}
+              </Field>
             </div>
-            <div className="d-flex form-group">
-              <label>Description :</label>
-              <Field
-                name="description"
-                component={renderTextField}
-                hintText="Activity Description"
-              />
-            </div>
+
             <div className="d-flex form-group">
               <FieldArray
                 name="schedules"
