@@ -22,6 +22,7 @@ import LandingPageSchedule from '../landingPage/schedule/index';
 import RoomsManagement from '../pages/conference/room';
 import TopicManagement from '../pages/conference/topic';
 import TopicDetail from '../pages/conference/topic/topicDetail';
+import RoomDetail from '../pages/conference/room/roomDetail';
 
 export default () => (
   <MuiThemeProvider muiTheme={muiTheme}>
@@ -70,6 +71,12 @@ export default () => (
           <AuthRoute
             needAuth
             exact
+            path="/conference/rooms-management/room-detail/:room_id"
+            component={RoomDetail}
+          />
+          <AuthRoute
+            needAuth
+            exact
             path="/user-profile"
             component={UserProfile}
           />
@@ -81,3 +88,5 @@ export default () => (
     </Switch>
   </MuiThemeProvider>
 );
+
+// /conference/rooms-management/room-detail/${room.id}

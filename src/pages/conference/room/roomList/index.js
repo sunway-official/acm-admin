@@ -7,19 +7,65 @@ import {
   TableRow,
   TableRowColumn,
   RaisedButton,
+  Dialog,
 } from 'material-ui';
+import { Link } from 'react-router-dom';
+import { graphql, compose } from 'react-apollo';
+import { mutations, queries } from '../helpers';
+import { connect } from 'react-redux';
 
 class RoomList extends Component {
   constructor() {
     super();
-    this.state = {};
+    this.state = {
+      id: 0,
+      openDelete: false,
+    };
+    this.handleClose = this.handleClose.bind(this);
+    this.handleOpenDelete = this.handleOpenDelete.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+  }
+  handleOpenDelete(room_id) {
+    this.setState({ openDelete: true });
+    this.setState({
+      room_id: room_id,
+    });
+  }
+  handleClose() {
+    this.setState({ openDelete: false });
+  }
+  handleDelete() {
+    this.setState({ openDelete: false });
+    const { DELETE_ROOM_MUTATION } = this.props;
+    DELETE_ROOM_MUTATION({
+      variables: {
+        id: this.state.room_id,
+      },
+      refetchQueries: [
+        {
+          query: queries.GET_ROOMS_BY_CONFERENCE_ID_QUERY,
+          variables: {
+            conference_id: this.props.id,
+          },
+        },
+      ],
+    });
   }
   render() {
     const listRoom = this.props.listRoom;
+    const actionDelete = [
+      <RaisedButton
+        label="Submit"
+        primary={true}
+        onClick={this.handleDelete}
+        type="submit"
+      />,
+      <RaisedButton label="Cancel" onClick={this.handleClose} />,
+    ];
     return (
       <div className="d-flex">
         <div className="list staff">
-          <Table fixedHeader={true}>
+          <Table fixedHeader={true} selectable={false}>
             <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
               <TableRow>
                 <TableHeaderColumn>ID</TableHeaderColumn>
@@ -40,16 +86,32 @@ class RoomList extends Component {
                       {room.status === 'on' ? 'Available' : 'Not Available'}
                     </TableRowColumn>
                     <TableRowColumn>
-                      <RaisedButton label="Edit" primary={true} />
-                      <RaisedButton label="Delete" />
+                      <Link
+                        to={`/conference/rooms-management/room-detail/${room.id}`}
+                      >
+                        <RaisedButton label="Edit" primary={true} />
+                      </Link>
+                      <RaisedButton
+                        label="Delete"
+                        onClick={() => this.handleOpenDelete(room.id)}
+                      />
                     </TableRowColumn>
                   </TableRow>
                 );
               })}
             </TableBody>
           </Table>
+          <Dialog
+            title="Do you want to delete this color?"
+            modal={true}
+            onRequestClose={this.handleClose}
+            open={this.state.openDelete}
+            actions={actionDelete}
+          />
           <div className="d-flex btn-group">
-            <RaisedButton label="Add Room" primary={true} />
+            <Link to={`/conference/rooms-management/room-detail/0`}>
+              <RaisedButton label="Add Room" primary={true} />
+            </Link>
           </div>
         </div>
       </div>
@@ -57,4 +119,19 @@ class RoomList extends Component {
   }
 }
 
-export default RoomList;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    id: state.auth.currentUser.currentConference.id,
+  };
+};
+export default compose(
+  connect(mapStateToProps, undefined),
+  graphql(mutations.DELETE_ROOM_MUTATION, {
+    name: 'DELETE_ROOM_MUTATION',
+  }),
+  graphql(queries.GET_ROOMS_BY_CONFERENCE_ID_QUERY, {
+    options: ownProps => ({
+      variables: { conference_id: ownProps.id },
+    }),
+  }),
+)(RoomList);
