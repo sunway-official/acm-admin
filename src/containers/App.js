@@ -67,14 +67,14 @@ export default () => (
           <AuthRoute
             needAuth
             exact
-            path="/conference/topics-management/topic-detail/:topic_id"
-            component={TopicDetail}
+            path="/conference/topics-management/topic-detail/"
+            component={AddNewTopic}
           />
           <AuthRoute
             needAuth
             exact
-            path="/conference/topics-management/topic-detail/"
-            component={AddNewTopic}
+            path="/conference/topics-management/topic-detail/:topic_id"
+            component={TopicDetail}
           />
           <AuthRoute
             needAuth

@@ -34,6 +34,7 @@ class Index extends Component {
     if (loading) return <div>loading</div>;
     const topicDetail = getTopicByID;
     const colorsList = this.props.GET_ALL_COLORS_QUERY.getAllColors;
+    console.log(this.props);
     return (
       <div className="conference">
         <Subheader className="subheader"> Topic Detail</Subheader>

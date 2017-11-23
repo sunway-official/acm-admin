@@ -50,12 +50,12 @@ class TopicList extends Component {
     const listTopic = this.props.listTopic;
     const actionDelete = [
       <RaisedButton
-        label="Submit"
+        label="Yes"
         primary={true}
         onClick={this.handleDelete}
         type="submit"
       />,
-      <RaisedButton label="Cancel" onClick={this.handleClose} />,
+      <RaisedButton label="No" onClick={this.handleClose} />,
     ];
     return (
       <div>

@@ -55,12 +55,12 @@ class RoomList extends Component {
     const listRoom = this.props.listRoom;
     const actionDelete = [
       <RaisedButton
-        label="Submit"
+        label="Yes"
         primary={true}
         onClick={this.handleDelete}
         type="submit"
       />,
-      <RaisedButton label="Cancel" onClick={this.handleClose} />,
+      <RaisedButton label="No" onClick={this.handleClose} />,
     ];
     return (
       <div className="d-flex">
@@ -68,7 +68,9 @@ class RoomList extends Component {
           <Table fixedHeader={true} selectable={false}>
             <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
               <TableRow>
-                <TableHeaderColumn>ID</TableHeaderColumn>
+                <TableHeaderColumn className="index-column">
+                  ID
+                </TableHeaderColumn>
                 <TableHeaderColumn>Name</TableHeaderColumn>
                 <TableHeaderColumn>Seat</TableHeaderColumn>
                 <TableHeaderColumn>Status</TableHeaderColumn>
@@ -79,7 +81,9 @@ class RoomList extends Component {
               {listRoom.map((room, index) => {
                 return (
                   <TableRow key={room.id}>
-                    <TableRowColumn>{index + 1}</TableRowColumn>
+                    <TableRowColumn className="index-column">
+                      {index + 1}
+                    </TableRowColumn>
                     <TableRowColumn>{room.name}</TableRowColumn>
                     <TableRowColumn>{room.seats}</TableRowColumn>
                     <TableRowColumn>

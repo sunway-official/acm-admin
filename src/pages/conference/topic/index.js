@@ -14,6 +14,7 @@ class Index extends Component {
     };
   }
   render() {
+    console.log(this.props);
     const { loading, getTopicsOfConference } = this.props.data;
     if (loading) return <div>loading...</div>;
     const listTopic = getTopicsOfConference;
@@ -21,7 +22,7 @@ class Index extends Component {
       <div className="conference">
         <Subheader className="subheader"> Topics Management</Subheader>
         <div className="page-breadcrumb d-flex">
-          <Link className="d-flex" to="/">
+          <Link className="d-flex" to="/conference/info">
             <IconButton>
               <ActionHome />
             </IconButton>

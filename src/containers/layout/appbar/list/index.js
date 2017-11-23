@@ -9,6 +9,8 @@ import {
   // EditorShowChart,
   NotificationEventAvailable,
   HardwareKeyboardArrowRight,
+  SocialLocationCity,
+  EditorFormatListNumbered,
   AvWeb,
 } from 'material-ui/svg-icons';
 import style from './style.css';
@@ -140,14 +142,14 @@ class ListExampleSimple extends React.Component {
             <ListItem
               className="item"
               primaryText={'Rooms'}
-              leftIcon={<NotificationEventAvailable />}
+              leftIcon={<SocialLocationCity />}
             />
           </Link>
           <Link to="/conference/topics-management">
             <ListItem
               className="item"
               primaryText={'Topics'}
-              leftIcon={<NotificationEventAvailable />}
+              leftIcon={<EditorFormatListNumbered />}
             />
           </Link>
           {/*
