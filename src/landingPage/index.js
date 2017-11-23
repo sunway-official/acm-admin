@@ -12,8 +12,10 @@ import { graphql, compose } from 'react-apollo';
 import { queries } from './helpers/index';
 import Home from './section/home';
 import { Link } from 'react-router-dom';
+import Header from './section/header';
 class LandingPage extends Component {
   render() {
+    console.log(this.props);
     const { loading, getLandingPageByConferenceId } = this.props.data;
     if (loading) return <div>loading</div>;
     const landingPage = getLandingPageByConferenceId[0];
@@ -21,24 +23,7 @@ class LandingPage extends Component {
       <div className="landingpage-body">
         <div className="container">
           <div className="cbp-af-header">
-            <div className="cbp-af-inner">
-              <h2>ACM</h2>
-              <nav>
-                <a href="/landingpage" className="home">
-                  Home
-                </a>
-                <a href="">Speaker</a>
-                <a href="">Paper</a>
-                <Link
-                  to={`/landingpage/${this.props.data.variables
-                    .conference_id}/schedule`}
-                >
-                  Schedules
-                </Link>
-                <a href="">Contact Us</a>
-                <button className="btn get-ticket">Get Ticket</button>
-              </nav>
-            </div>
+            <Header conference_id={this.props.match.params.conference_id} />
           </div>
           <div className="main">
             <Home landingPage={landingPage} />
@@ -48,7 +33,7 @@ class LandingPage extends Component {
             <CountDownTimer landingPage={landingPage} />
             <Speaker landingPage={landingPage} />
             <Map landingPage={landingPage} />
-            <Footer landingPage={landingPage} />
+            <Footer conference_id={this.props.match.params.conference_id} />
           </div>
         </div>
       </div>
@@ -65,7 +50,3 @@ export default compose(
     }),
   }),
 )(LandingPage);
-
-// !ownProps.data.variables.conference_id
-// ? ownProps.data.variables.conference_id
-// :

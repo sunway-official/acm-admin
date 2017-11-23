@@ -109,7 +109,7 @@ class RoomList extends Component {
             actions={actionDelete}
           />
           <div className="d-flex btn-group">
-            <Link to={`/conference/rooms-management/room-detail/0`}>
+            <Link to={`/conference/rooms-management/room-detail`}>
               <RaisedButton label="Add Room" primary={true} />
             </Link>
           </div>

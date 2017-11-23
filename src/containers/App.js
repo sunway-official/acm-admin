@@ -71,7 +71,7 @@ export default () => (
           <AuthRoute
             needAuth
             exact
-            path="/conference/rooms-management/room-detail/:room_id"
+            path="/conference/rooms-management/room-detail/:room_id?"
             component={RoomDetail}
           />
           <AuthRoute

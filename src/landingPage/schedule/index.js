@@ -5,7 +5,9 @@ import { queries } from '../helpers';
 import * as moment from 'moment';
 import { functions } from '../helpers';
 import ScheduleForm from './scheduleForm';
-
+import Footer from '../section/footer';
+import { Link } from 'react-router-dom';
+import Header from '../section/header';
 class LandingPageSchedule extends Component {
   constructor(props) {
     super(props);
@@ -34,22 +36,11 @@ class LandingPageSchedule extends Component {
       <div className="landingpage-body">
         <div className="container">
           <div className="cbp-af-header">
-            <div className="cbp-af-inner">
-              <h2>ACM</h2>
-              <nav>
-                <a href="" className="home">
-                  Home
-                </a>
-                <a href="">Speaker</a>
-                <a href="">Paper</a>
-                <a href="/landingpage/schedule">Schedule</a>
-                <a href="">Contact Us</a>
-                <button className="btn get-ticket">Get Ticket</button>
-              </nav>
-            </div>
+            <Header conference_id={this.props.match.params.conference_id} />
           </div>
           <div className="main">
             <ScheduleForm events={events} />
+            <Footer conference_id={this.props.match.params.conference_id} />
           </div>
         </div>
       </div>
