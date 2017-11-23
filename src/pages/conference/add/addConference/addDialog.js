@@ -68,7 +68,7 @@ class DialogInsertConf extends React.Component {
             description: values.description,
             start_date: values.startDate,
             end_date: values.endDate,
-            bg_image: values.bg_image,
+            bg_image: 'Background image',
           },
           refetchQueries: [
             {

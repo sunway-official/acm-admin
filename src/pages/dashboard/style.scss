@@ -6,7 +6,7 @@
   margin-left: 2%;
   border: 1px solid rgb(197, 189, 189);
   background:  url('./../../images/conf-dashboard.png') no-repeat;
-  background-size: 100% 100%;
+  background-size: 100% auto;
 }
 
 .list-conf {
@@ -53,7 +53,7 @@
 
 }
 
-.list {
+.list-dashboard {
   margin-top: 5%;
   float: right;
   width: 30%;

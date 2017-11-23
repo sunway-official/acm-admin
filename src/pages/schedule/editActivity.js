@@ -1,11 +1,11 @@
 import React from 'react';
-import { RaisedButton, Dialog } from 'material-ui';
+import { RaisedButton, Dialog, MenuItem } from 'material-ui';
 import { reduxForm, Field, FieldArray, reset } from 'redux-form';
 import { connect } from 'react-redux';
 import { scheduleActions } from 'store/ducks/schedule';
 import { mutations, queries } from './helpers';
 import { compose, graphql } from 'react-apollo';
-import { renderSchedulesEdit, renderTextField } from './render';
+import { renderSchedulesEdit, renderSelectField } from './render';
 import { scheduleOperations } from 'store/ducks/schedule';
 
 import validate from './validate';
@@ -41,7 +41,16 @@ class EditActivity extends React.PureComponent {
     this.toggleDelete();
     this.props.toggleEdit();
   }
-
+  papers = [
+    {
+      id: 1,
+      name: 'Blockchain',
+    },
+    {
+      id: 2,
+      name: 'Big data',
+    },
+  ];
   render() {
     const actions = (
       <div>
@@ -67,21 +76,32 @@ class EditActivity extends React.PureComponent {
         {error && <div className="error">{error}</div>}
         <form className="form conference-info" onSubmit={handleSubmit}>
           <div className="d-flex form-group">
-            <label>Title :</label>
+            <label>Paper :</label>
             <Field
-              name="title"
-              component={renderTextField}
-              hintText="Activity Title"
-            />
+              name="paper"
+              component={renderSelectField}
+              hintText="Paper Title"
+              fullWidth={true}
+            >
+              {this.papers.map(paper => {
+                return (
+                  <MenuItem
+                    key={paper.id}
+                    value={paper.id}
+                    primaryText={paper.name}
+                  />
+                );
+              })}
+            </Field>
           </div>
-          <div className="d-flex form-group">
+          {/*<div className="d-flex form-group">
             <label>Description :</label>
             <Field
               name="description"
               component={renderTextField}
               hintText="Activity Description"
             />
-          </div>
+          </div>*/}
           <div className="d-flex form-group">
             <FieldArray
               name="schedules"

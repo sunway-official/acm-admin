@@ -43,7 +43,7 @@ class listCoferences extends React.Component {
     const conferences = this.props.data.getConferenceByUserID;
     console.log(conferences);
     return (
-      <div className="list">
+      <div className="list-dashboard">
         <style dangerouslySetInnerHTML={{ __html: style }} />
         <center className="list-conf">
           MY LIST CONFERENCES

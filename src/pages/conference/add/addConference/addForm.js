@@ -77,7 +77,7 @@ const AddConferenceForm = ({
           />
         </div>
       </div>
-      <div className="d-flex form-group">
+      {/* <div className="d-flex form-group">
         <label>Background image</label>
         <Field
           name="bg_image"
@@ -86,7 +86,7 @@ const AddConferenceForm = ({
           hintText="background image"
         />
         <br />
-      </div>
+      </div> */}
     </div>
     <div name="conference">
       <center className="add-title">Organizer Information</center>
