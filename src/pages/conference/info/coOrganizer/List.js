@@ -17,7 +17,7 @@ import { NavigationClose } from 'material-ui/svg-icons';
 
 import { conferenceCoOranizerActions } from 'store/ducks/conference/info/coOrganizer';
 import CoOrganizerInfo from '../coOrganizer';
-import { queries } from '../helpers';
+import { queries, mutations } from '../helpers';
 
 class CoOrganizerList extends PureComponent {
   constructor() {
@@ -183,21 +183,6 @@ class CoOrganizerList extends PureComponent {
   }
 }
 
-const DELETE_COORGANIZER = gql`
-  mutation deleteCoOrganizerDetail($id: ID!) {
-    deleteCoOrganizerDetail(id: $id) {
-      id
-      name
-      email
-      website
-      phone
-      conference {
-        id
-      }
-    }
-  }
-`;
-
 const mapStateToProps = state => ({
   openModalForm: state.conferenceCoOranizer.openCoOrganizerFormModal,
 });
@@ -210,7 +195,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default compose(
-  graphql(DELETE_COORGANIZER, {
+  graphql(mutations.DELETE_COORGANIZER, {
     name: 'DELETE_COORGANIZER',
   }),
   connect(mapStateToProps, mapDispatchToProps),

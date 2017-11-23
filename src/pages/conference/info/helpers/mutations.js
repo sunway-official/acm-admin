@@ -107,10 +107,26 @@ const INSERT_COORGANIZER = gql`
     }
   }
 `;
+const DELETE_COORGANIZER = gql`
+  mutation deleteCoOrganizerDetail($id: ID!) {
+    deleteCoOrganizerDetail(id: $id) {
+      id
+      name
+      email
+      website
+      phone
+      conference {
+        id
+      }
+    }
+  }
+`;
+
 export default {
   UPDATE_ADDRESS_MUTATION,
   UPDATE_CONFERENCE_MUTATION,
   UPDATE_ORGANIZER_DETAIL_MUTATION,
   INSERT_COORGANIZER,
   UPDATE_COORGANIZER_MUTATION,
+  DELETE_COORGANIZER,
 };
