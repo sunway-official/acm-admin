@@ -23,6 +23,8 @@ import RoomsManagement from '../pages/conference/room';
 import TopicManagement from '../pages/conference/topic';
 import TopicDetail from '../pages/conference/topic/topicDetail';
 import RoomDetail from '../pages/conference/room/roomDetail';
+import AddNewRoom from '../pages/conference/room/roomDetail/addRoom';
+import AddNewTopic from '../pages/conference/topic/topicDetail/addTopic';
 
 export default () => (
   <MuiThemeProvider muiTheme={muiTheme}>
@@ -31,7 +33,7 @@ export default () => (
         path="/landingpage/:conference_id/schedule"
         component={LandingPageSchedule}
       />
-      <AuthRoute path="/landingpage/:conference_id" component={LandingPage} />
+      <AuthRoute path="/landingpage/:conference_id?" component={LandingPage} />
       <AuthRoute needGuest path="/login" component={Login} />
       <AuthRoute needGuest path="/register" component={Register} />
       <AuthRoute needGuest path="/forgot" component={ForgotPassword} />
@@ -71,8 +73,20 @@ export default () => (
           <AuthRoute
             needAuth
             exact
-            path="/conference/rooms-management/room-detail/:room_id?"
+            path="/conference/topics-management/topic-detail/"
+            component={AddNewTopic}
+          />
+          <AuthRoute
+            needAuth
+            exact
+            path="/conference/rooms-management/room-detail/:room_id"
             component={RoomDetail}
+          />
+          <AuthRoute
+            needAuth
+            exact
+            path="/conference/rooms-management/room-detail"
+            component={AddNewRoom}
           />
           <AuthRoute
             needAuth

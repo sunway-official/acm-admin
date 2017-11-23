@@ -123,11 +123,14 @@ class ListExampleSimple extends React.Component {
                     onClick={this.handleRequestClose}
                   />
                 </Link>
-                <Link to={`/landingpage/${conference_id}`}>
+                <Link to={`/landingpage`}>
                   <MenuItem
                     className="item"
                     primaryText={'View'}
-                    onClick={this.handleRequestClose}
+                    onClick={() => {
+                      this.handleRequestClose();
+                      window.location.reload();
+                    }}
                   />
                 </Link>
               </Menu>

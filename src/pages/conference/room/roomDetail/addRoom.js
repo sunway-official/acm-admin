@@ -7,40 +7,36 @@ import { queries, mutations } from '../helpers';
 import RoomDetail from './roomDetail';
 import { connect } from 'react-redux';
 
-class Index extends Component {
+class AddNewRoom extends Component {
   constructor(props) {
     super(props);
     this.state = {
       id: 0,
     };
-    this.saveInformation = this.saveInformation.bind(this);
+    this.insertRoom = this.insertRoom.bind(this);
   }
-  saveInformation(values) {
-    const { UPDATE_ROOM_MUTATION } = this.props;
-    UPDATE_ROOM_MUTATION({
+  insertRoom(values) {
+    const { INSERT_ROOM_MUTATION } = this.props;
+    INSERT_ROOM_MUTATION({
       variables: {
-        id: values.id,
-        conference_id: this.props.data.getRoomByID.conference.id,
+        conference_id: this.props.id,
         name: values.name,
         seats: values.seats,
         status: values.status,
       },
       refetchQueries: [
         {
-          query: queries.GET_ROOM_BY_ID_QUERY,
-          variables: { id: this.props.match.params.room_id },
+          query: queries.GET_ROOMS_BY_CONFERENCE_ID_QUERY,
+          variables: { conference_id: this.props.id },
         },
       ],
     });
     window.alert('success');
   }
   render() {
-    const { loading, getRoomByID } = this.props.data;
-    if (loading) return <div>loading</div>;
-    const roomDetail = getRoomByID;
     return (
       <div className="conference">
-        <Subheader className="subheader">Room Detail</Subheader>
+        <Subheader className="subheader">Add New Room</Subheader>
         <div className="page-breadcrumb d-flex">
           <Link className="d-flex" to="/">
             <IconButton>
@@ -57,10 +53,10 @@ class Index extends Component {
           <IconButton>
             <HardwareKeyboardArrowRight />
           </IconButton>
-          <span>Room Detail</span>
+          <span>Add New Room</span>
         </div>
         <div className="dashboard content d-flex">
-          <RoomDetail roomDetail={roomDetail} onSubmit={this.saveInformation} />
+          <RoomDetail onSubmit={this.insertRoom} />
         </div>
       </div>
     );
@@ -73,12 +69,12 @@ const mapStateToProps = (state, ownProps) => {
 };
 export default compose(
   connect(mapStateToProps, undefined),
-  graphql(queries.GET_ROOM_BY_ID_QUERY, {
+  graphql(mutations.INSERT_ROOM_MUTATION, {
+    name: 'INSERT_ROOM_MUTATION',
+  }),
+  graphql(queries.GET_ROOMS_BY_CONFERENCE_ID_QUERY, {
     options: ownProps => ({
-      variables: { id: ownProps.match.params.room_id },
+      variables: { conference_id: ownProps.id },
     }),
   }),
-  graphql(mutations.UPDATE_ROOM_MUTATION, {
-    name: 'UPDATE_ROOM_MUTATION',
-  }),
-)(Index);
+)(AddNewRoom);

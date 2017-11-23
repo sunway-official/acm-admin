@@ -104,11 +104,7 @@ export default compose(
   graphql(mutations.INSERT_LANDING_PAGE_MUTATION, {
     name: 'INSERT_LANDING_PAGE_MUTATION',
   }),
-  graphql(queries.GET_LANDING_PAGE_BY_CONFERENCE_ID_QUERY, {
-    options: ownProps => ({
-      variables: { conference_id: ownProps.id },
-    }),
-  }),
+  graphql(queries.GET_LANDING_PAGE_BY_CONFERENCE_ID_QUERY, {}),
   graphql(mutations.UPDATE_LANDING_PAGE_MUTATION, {
     name: 'UPDATE_LANDING_PAGE_MUTATION',
   }),

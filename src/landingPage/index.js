@@ -11,11 +11,9 @@ import Footer from './section/footer';
 import { graphql, compose } from 'react-apollo';
 import { queries } from './helpers/index';
 import Home from './section/home';
-import { Link } from 'react-router-dom';
 import Header from './section/header';
 class LandingPage extends Component {
   render() {
-    console.log(this.props);
     const { loading, getLandingPageByConferenceId } = this.props.data;
     if (loading) return <div>loading</div>;
     const landingPage = getLandingPageByConferenceId[0];
