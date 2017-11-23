@@ -1,3 +1,26 @@
+//list conf
+.card-content-dashboard {
+  width: 60%;
+  margin-top: 5%;
+  margin-right: 2%;
+  margin-left: 2%;
+  border: 1px solid rgb(197, 189, 189);
+  background:  url('./../../images/conf-dashboard.png') no-repeat;
+  background-size: 100% 100%;
+}
+
+.list-conf {
+  background-color: rgb(197, 189, 189);
+  padding-bottom: 19px;
+  color: rgb(255, 87, 34);
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.data {
+  display: flex;
+}
+
 //menu
 .navbar {
   background-color: white !important;
@@ -30,14 +53,24 @@
 
 }
 
+.list {
+  margin-top: 5%;
+  float: right;
+  width: 30%;
+  // border: 1px solid gray;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+
 //card
 .content {
   height: -webkit-fill-available !important;
-  background: linear-gradient(
-    rgba(241, 240, 240, 0.4),
-    rgba(241, 240, 240, 0.4)
-  ),
-  url('./../../images/background/backgroundimage.jpg') !important;
+  // background: linear-gradient(
+  //   rgba(241, 240, 240, 0.4),
+  //   rgba(241, 240, 240, 0.4)
+  // ),
+  // url('./../../images/background/backgroundimage.jpg') !important;
 }
 .conference-card {
   font-family: Roboto, sans-serif;
@@ -47,14 +80,10 @@
   padding-left: 7%;
   float: left;
 
-  .card-content {
-    font-size: 16px;
-    background-size: 30%, 20%, auto !important;
-    background:linear-gradient(to bottom, rgba(223, 215, 215, 0.5) 90%), url(./../../images/background/imageconference.jpg) right bottom no-repeat, linear-gradient(to bottom, white 90%, white 10%) !important;
+  .data {
+    display: flex !important;
   }
-  // .consf-switch {
-  //   background: linear-gradient(to bottom, orangered 0%,rgba(223, 215, 215, 0.3) 33%,rgba(0,0,0,0) 100%);
-  // }
+
   .conf-title {
     background-color: rgb(255, 87, 34) !important;
     color: white;

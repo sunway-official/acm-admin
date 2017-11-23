@@ -100,7 +100,7 @@ class GetAllConfs extends React.Component {
               </span>
             }
           />
-          <div name="conferences">
+          <div name="conferences-sidebar">
             {conferences.map(conference => {
               if (currentConferenceID !== conference.id) {
                 return (
