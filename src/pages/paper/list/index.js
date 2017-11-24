@@ -34,7 +34,10 @@ class Index extends Component {
   render() {
     const { loading, getAllPapers } = this.props.data;
     if (loading) return <div>Loading..</div>;
-    const papers = getAllPapers;
+    let papers;
+    if (getAllPapers) {
+      papers = getAllPapers;
+    }
     return (
       <div>
         <Table fixedHeader={true}>

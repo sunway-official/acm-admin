@@ -32,9 +32,11 @@ class Index extends Component {
     });
   }
   render() {
+    let allUsers;
     const { getAllUsers } = this.props.GET_ALL_USERS;
-
-    const allUsers = getAllUsers;
+    if (getAllUsers) {
+      allUsers = getAllUsers;
+    } else return <div>Loading...</div>;
     const { loading } = this.props.data;
     if (loading)
       return (
