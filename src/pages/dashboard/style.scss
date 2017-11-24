@@ -12,10 +12,23 @@
 
 .list-conf {
   background-color: rgb(197, 189, 189);
-  padding-bottom: 19px;
-  color: rgb(255, 87, 34);
+  padding-bottom: 18px;
+  padding-top: 10px;
+  margin-bottom: -9px;
+  // color: rgb(255, 87, 34);
   font-weight: bold;
-  font-size: 18px;
+  font-size: 16px;
+
+  .icon-conference {
+    padding-right: 7px !important;
+  }
+}
+
+.listitem-conf {
+  border-top: 1px solid rgb(216, 213, 213)!important;
+  padding-top: 0px !important;
+  color: black !important;
+  padding-bottom: 10px;
 }
 
 .data {
@@ -64,4 +77,9 @@
   width: 30%;
   // border: 1px solid gray;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.paper-title {
+  padding-left: 20px !important;
+  width: 95% !important;
 }

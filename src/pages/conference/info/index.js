@@ -15,9 +15,12 @@ class Index extends PureComponent {
 
     return (
       <div className="conference">
-        <Subheader className="subheader"> Conference Information</Subheader>
+        <Subheader className="subheader conf-infor-title">
+          {' '}
+          Conference Information
+        </Subheader>
         <div className="page-breadcrumb d-flex">
-          <Link className="d-flex" to="/">
+          <Link className="d-flex" to="/conference/info">
             <IconButton>
               <ActionHome />
             </IconButton>

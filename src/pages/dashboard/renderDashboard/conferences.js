@@ -47,7 +47,11 @@ class listCoferences extends React.Component {
         <style dangerouslySetInnerHTML={{ __html: style }} />
         <center className="list-conf">
           MY LIST CONFERENCES
-          <Badge badgeContent={conferences.length} primary={true} />
+          <Badge
+            badgeContent={conferences.length}
+            primary={true}
+            className="icon-conference"
+          />
         </center>
         <List>
           {conferences.map(conference => {
@@ -55,9 +59,10 @@ class listCoferences extends React.Component {
               <ListItem
                 key={conference.id}
                 primaryText={conference.title}
+                className="listitem-conf"
                 secondaryText={
                   subTitleString(conference.start_date, 10) +
-                  ' To ' +
+                  '  To  ' +
                   subTitleString(conference.start_date, 10)
                 }
                 containerElement={<Link to={`/conference/info`} />}

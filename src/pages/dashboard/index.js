@@ -6,6 +6,9 @@ import DashboardMenu from './renderDashboard/menu';
 import Conferences from './renderDashboard/conferences';
 import style from './style.css';
 import { Card } from 'material-ui/Card';
+import { Subheader, IconButton } from 'material-ui';
+import { Link } from 'react-router-dom';
+import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 
 class Index extends Component {
   render() {
@@ -15,10 +18,16 @@ class Index extends Component {
     return (
       <div>
         <style dangerouslySetInnerHTML={{ __html: style }} />
-        <DashboardMenu />
-        <div className="dashboard-title">
-          Welcome {lastName + ' ' + firstName} !!
+        <Subheader className="subheader conf-infor-title"> Dashboard</Subheader>
+        <div className="page-breadcrumb d-flex">
+          <Link className="d-flex" to="/conference/info">
+            <IconButton>
+              <ActionHome />
+            </IconButton>
+            <span>Dashboard</span>
+          </Link>
         </div>
+        <DashboardMenu />
         <div className="dashboard content data">
           <Card className="card-content-dashboard" />
           <Conferences user_id={user_id} />
