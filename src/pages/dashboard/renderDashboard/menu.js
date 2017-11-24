@@ -18,8 +18,8 @@ class DashboardMenu extends Component {
     super(props);
     this.state = {
       openUser: false,
-      openNotification: false,
-      openMail: false,
+      // openNotification: false,
+      // openMail: false,
       openCalendar: false,
       openListConf: false,
     };

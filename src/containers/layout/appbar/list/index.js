@@ -17,6 +17,7 @@ class ListExampleSimple extends React.Component {
     this.state = {
       open: false,
     };
+    // this.handleRequestClose = this.handleRequestClose.bind(this);
   }
 
   handleTouchTap = event => {
@@ -26,6 +27,7 @@ class ListExampleSimple extends React.Component {
       open: true,
       anchorEl: event.currentTarget,
     });
+    // this.handleRequestClose();
   };
 
   handleRequestClose = () => {

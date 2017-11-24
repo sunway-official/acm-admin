@@ -7,6 +7,7 @@
   border: 1px solid rgb(197, 189, 189);
   background:  url('./../../images/conf-dashboard.png') no-repeat;
   background-size: 100% auto;
+  height: -webkit-fill-available;
 }
 
 .list-conf {
@@ -51,6 +52,10 @@
     display: flex;
   }
 
+  .content{
+    height: 100% !important;
+  }
+
 }
 
 .list-dashboard {
@@ -59,76 +64,4 @@
   width: 30%;
   // border: 1px solid gray;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-
-
-//card
-.content {
-  height: -webkit-fill-available !important;
-  // background: linear-gradient(
-  //   rgba(241, 240, 240, 0.4),
-  //   rgba(241, 240, 240, 0.4)
-  // ),
-  // url('./../../images/background/backgroundimage.jpg') !important;
-}
-.conference-card {
-  font-family: Roboto, sans-serif;
-  padding-top: 80px;
-  margin-bottom: -30px;
-  width: 40%;
-  padding-left: 7%;
-  float: left;
-
-  .data {
-    display: flex !important;
-  }
-
-  .conf-title {
-    background-color: rgb(255, 87, 34) !important;
-    color: white;
-    padding: 16px;
-    font-size: 25px;
-    height: 40px;
-  }
-  .conf-des {
-    padding: 32px;
-    height: 40px;
-  }
-  .conf-date {
-    padding: 4px;
-    font-size: 13px;
-    display: flex;
-  }
-
-  .end-date {
-    margin-left: 20px;
-  }
-
-  .conf-date-icon {
-    margin-top: -6px;
-    color: white !important;
-    height: 19px !important;
-    width: 22px !important;
-  }
-  .conf-line {
-    color: grey;
-    padding: 0;
-  }
-
-  .switch-button {
-    // background-color: rgb(255, 87, 34) !important;
-    padding-left: 16px;
-    margin: 16px !important;
-  }
-
-  .btn {
-    float: right;
-    margin-top: 24px;
-  }
-
-  .consf-switch {
-    border-top: 1px solid grey;
-    height: 56px;
-  }
 }

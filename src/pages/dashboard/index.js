@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { compose, withApollo } from 'react-apollo';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import DashboardMenu from './render/menu';
-import Conferences from './render/conferences';
+import DashboardMenu from './renderDashboard/menu';
+import Conferences from './renderDashboard/conferences';
 import style from './style.css';
 import { Card } from 'material-ui/Card';
 
@@ -20,12 +20,7 @@ class Index extends Component {
           Welcome {lastName + ' ' + firstName} !!
         </div>
         <div className="dashboard content data">
-          <Card className="card-content-dashboard">
-            {/* <img
-              src="./../../../images/conf-dashboard.png"
-              alt="conference image"
-            /> */}
-          </Card>
+          <Card className="card-content-dashboard" />
           <Conferences user_id={user_id} />
         </div>
       </div>
