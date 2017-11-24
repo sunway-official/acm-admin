@@ -27,7 +27,6 @@ class AddNewRoom extends Component {
       refetchQueries: [
         {
           query: queries.GET_ROOMS_BY_CONFERENCE_ID_QUERY,
-          variables: { conference_id: this.props.id },
         },
       ],
     });
@@ -72,9 +71,5 @@ export default compose(
   graphql(mutations.INSERT_ROOM_MUTATION, {
     name: 'INSERT_ROOM_MUTATION',
   }),
-  graphql(queries.GET_ROOMS_BY_CONFERENCE_ID_QUERY, {
-    options: ownProps => ({
-      variables: { conference_id: ownProps.id },
-    }),
-  }),
+  graphql(queries.GET_ROOMS_BY_CONFERENCE_ID_QUERY),
 )(AddNewRoom);

@@ -1,8 +1,8 @@
 import { gql } from 'react-apollo';
 
 export const UPDATE_ACTIVITY_MUTATION = gql`
-  mutation updateActivity($id: ID!, $title: String!, $description: String!) {
-    updateActivity(id: $id, title: $title, description: $description) {
+  mutation updateActivity($id: ID!, $paper_id: ID!) {
+    updateActivity(id: $id, paper_id: $paper_id) {
       id
     }
   }
@@ -47,8 +47,8 @@ export const INSERT_SCHEDULE_MUTATION = gql`
 `;
 
 export const INSERT_ACTIVITY_MUTATION = gql`
-  mutation insertActivity($title: String!, $description: String!) {
-    insertActivity(title: $title, description: $description) {
+  mutation insertActivity($paper_id: ID!) {
+    insertActivity(paper_id: $paper_id) {
       id
     }
   }
