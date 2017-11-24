@@ -8,7 +8,6 @@ import { style } from './../style.css';
 
 class GetAllConfs extends React.Component {
   render() {
-    console.log(this.props);
     const { loading } = this.props.data;
     if (loading) return <div>loading...</div>;
 

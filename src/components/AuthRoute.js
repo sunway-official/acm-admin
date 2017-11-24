@@ -166,6 +166,7 @@ const ME_QUERY = gql`
 
 const mapDispatchToProps = dispatch => ({
   setCurrentUser: bindActionCreators(authActions.setCurrentUser, dispatch),
+  // getId: id => dispatch(conferenceOperations.getIdOperation(id)),
 });
 
 export default compose(

@@ -15,7 +15,7 @@ class ContactInformation extends Component {
     this.handleCancel = this.handleCancel.bind(this);
   }
   handleCancel() {
-    this.props.history.replace('/');
+    this.props.history.replace('/conference/info');
   }
 
   render() {
