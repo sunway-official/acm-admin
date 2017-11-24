@@ -12,7 +12,6 @@ import UserProfile from '../pages/conference/people/userProfile/userProfile';
 import Dashboard from '../pages/dashboard';
 import NoMatch from '../pages/NoMatch';
 import Schedule from '../pages/schedule';
-import Paper from '../pages/paper/list';
 import WithThunk from '../pages/withThunk';
 
 import { muiTheme } from '../theme';
@@ -102,7 +101,6 @@ export default () => (
             path="/user-profile"
             component={UserProfile}
           />
-          <AuthRoute exact path="/conference/papers" component={Paper} />
           <AuthRoute exact path="/conference/activities" component={Schedule} />
           <AuthRoute path="/withThunk" component={WithThunk} />
           <AuthRoute component={NoMatch} />

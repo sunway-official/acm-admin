@@ -159,13 +159,6 @@ class ListExampleSimple extends React.Component {
               leftIcon={<EditorFormatListNumbered />}
             />
           </Link>
-          <Link to="/conference/papers">
-            <ListItem
-              className="item"
-              primaryText={'Papers management'}
-              leftIcon={<NotificationEventAvailable />}
-            />
-          </Link>
           {/*
           <ListItem
             className="item"

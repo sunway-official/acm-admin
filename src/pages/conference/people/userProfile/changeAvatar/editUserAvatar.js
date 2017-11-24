@@ -28,7 +28,7 @@ class EditUserAvatar extends React.PureComponent {
   }
   render() {
     return (
-      <div className="img">
+      <div className="user-profile-img">
         <div className="img_overlay">
           <IconButton
             tooltip="Choose your avatar"
