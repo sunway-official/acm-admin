@@ -64,7 +64,7 @@ class DashboardMenu extends Component {
             __html: style,
           }}
         />
-        <AppBar className="navbar">
+        <AppBar className="navbar menu-dashboard">
           <img className="logo" src={images.defaultLogo} alt="logo" />
           <div className="space" />
           <div className="badge user" onClick={this.handleTouchTapUser}>

@@ -36,12 +36,10 @@
 }
 
 //menu
+.menu-dashboard {
+  margin-left: -3% !important;
+}
 .navbar {
-  background-color: white !important;
-  align-items: center;
-  color: red !important;
-  position: fixed !important;
-  top: 0;
 
   h1 {
     display: none;
@@ -58,6 +56,7 @@
     height: 30px;
     margin-left: 0 !important;
   }
+
 }
 
 .dashboard {
