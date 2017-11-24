@@ -2,11 +2,11 @@ import functions from './functions';
 import queries from './queries';
 
 export const addActivityFunc = data => {
+  console.log(data);
   const { INSERT_ACTIVITY_MUTATION, values, INSERT_SCHEDULE_MUTATION } = data;
   INSERT_ACTIVITY_MUTATION({
     variables: {
-      title: values.title,
-      description: values.description,
+      paper_id: data.values.paper,
     },
   })
     .then(({ data }) => {
