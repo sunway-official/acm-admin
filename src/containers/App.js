@@ -12,45 +12,100 @@ import UserProfile from '../pages/conference/people/userProfile/userProfile';
 import Dashboard from '../pages/dashboard';
 import NoMatch from '../pages/NoMatch';
 import Schedule from '../pages/schedule';
-import Paper from '../pages/paper/list';
 import WithThunk from '../pages/withThunk';
 
 import { muiTheme } from '../theme';
 import Wrapper from './wrapper';
+import LandingPage from '../landingPage';
+import LandingPageManagement from '../pages/landingPageManagement';
+import LandingPageSchedule from '../landingPage/schedule/index';
+import RoomsManagement from '../pages/conference/room';
+import TopicManagement from '../pages/conference/topic';
+import TopicDetail from '../pages/conference/topic/topicDetail';
+import RoomDetail from '../pages/conference/room/roomDetail';
+import AddNewRoom from '../pages/conference/room/roomDetail/addRoom';
+import AddNewTopic from '../pages/conference/topic/topicDetail/addTopic';
+import AttendeeManagement from '../pages/conference/attendee';
 
 export default () => (
   <MuiThemeProvider muiTheme={muiTheme}>
-    <div>
-      <Switch>
-        <AuthRoute needGuest path="/login" component={Login} />
-        <AuthRoute needGuest path="/register" component={Register} />
-        <AuthRoute needGuest path="/forgot" component={ForgotPassword} />
-        <AuthRoute needGuest path="/resetPassword" component={ResetPassword} />
-        <Wrapper>
-          <Switch>
-            <AuthRoute needAuth exact path="/" component={Dashboard} />
-            <AuthRoute path="/conference/info" component={ConferenceInfo} />
-            <AuthRoute
-              path="/conference/:conference_id/people/staff"
-              component={ConferenceStaffList}
-            />
-            <AuthRoute
-              needAuth
-              exact
-              path="/user-profile"
-              component={UserProfile}
-            />
-            <AuthRoute
-              exact
-              path="/conference/activities"
-              component={Schedule}
-            />
-            <AuthRoute exact path="/conference/papers" component={Paper} />
-            <AuthRoute path="/withThunk" component={WithThunk} />
-            <AuthRoute component={NoMatch} />
-          </Switch>
-        </Wrapper>
-      </Switch>
-    </div>
+    <Switch>
+      <AuthRoute
+        path="/landingpage/:conference_id/schedule"
+        component={LandingPageSchedule}
+      />
+      <AuthRoute path="/landingpage/:conference_id?" component={LandingPage} />
+      <AuthRoute needGuest path="/login" component={Login} />
+      <AuthRoute needGuest path="/register" component={Register} />
+      <AuthRoute needGuest path="/forgot" component={ForgotPassword} />
+      <AuthRoute needGuest path="/resetPassword" component={ResetPassword} />
+      <Wrapper>
+        <Switch>
+          <AuthRoute needAuth exact path="/" component={Dashboard} />
+          <AuthRoute path="/conference/info" component={ConferenceInfo} />
+          <AuthRoute
+            path="/conference/:conference_id/people/staff"
+            component={ConferenceStaffList}
+          />
+          <AuthRoute
+            needAuth
+            exact
+            path="/conference/landing-page-management"
+            component={LandingPageManagement}
+          />
+          <AuthRoute
+            needAuth
+            exact
+            path="/conference/rooms-management"
+            component={RoomsManagement}
+          />
+          <AuthRoute
+            needAuth
+            exact
+            path="/conference/topics-management"
+            component={TopicManagement}
+          />
+          <AuthRoute
+            needAuth
+            exact
+            path="/conference/topics-management/topic-detail/"
+            component={AddNewTopic}
+          />
+          <AuthRoute
+            needAuth
+            exact
+            path="/conference/topics-management/topic-detail/:topic_id"
+            component={TopicDetail}
+          />
+          <AuthRoute
+            needAuth
+            exact
+            path="/conference/rooms-management/room-detail/:room_id"
+            component={RoomDetail}
+          />
+          <AuthRoute
+            needAuth
+            exact
+            path="/conference/rooms-management/room-detail"
+            component={AddNewRoom}
+          />
+          <AuthRoute
+            needAuth
+            exact
+            path="/conference/people/attendee-management"
+            component={AttendeeManagement}
+          />
+          <AuthRoute
+            needAuth
+            exact
+            path="/user-profile"
+            component={UserProfile}
+          />
+          <AuthRoute exact path="/conference/activities" component={Schedule} />
+          <AuthRoute path="/withThunk" component={WithThunk} />
+          <AuthRoute component={NoMatch} />
+        </Switch>
+      </Wrapper>
+    </Switch>
   </MuiThemeProvider>
 );

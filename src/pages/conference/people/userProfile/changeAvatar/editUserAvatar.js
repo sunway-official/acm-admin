@@ -28,7 +28,7 @@ class EditUserAvatar extends React.PureComponent {
   }
   render() {
     return (
-      <div className="img">
+      <div className="user-profile-img">
         <div className="img_overlay">
           <IconButton
             tooltip="Choose your avatar"
@@ -64,6 +64,16 @@ class EditUserAvatar extends React.PureComponent {
   }
 }
 
+// const EditUserAvatar = () => (
+//   <div className="img avatar">
+//     <div className="img_overlay">
+//       <IconButton tooltip="Choose your avatar" className="avatarButton">
+//         <ActionCameraEnhance className="avatarIcon" />
+//       </IconButton>
+//     </div>
+//     <img src={images.defaultAvatar} alt="avatar" id="avatar" />
+//   </div>
+// );
 const UPDATE_AVATAR_MUTATION = gql`
   mutation UpdateAvatarMutation($avatarUrl: String!) {
     updateAvatar(avatarUrl: $avatarUrl) {

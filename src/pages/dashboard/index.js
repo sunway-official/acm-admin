@@ -8,13 +8,13 @@ import style from './style.css';
 import { Card } from 'material-ui/Card';
 import { Subheader, IconButton } from 'material-ui';
 import { Link } from 'react-router-dom';
-import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
+import { ActionHome } from 'material-ui/svg-icons';
 
 class Index extends Component {
   render() {
     const user_id = this.props.me.id;
-    const firstName = this.props.me.firstname;
-    let lastName = this.props.me.lastname;
+    // const firstName = this.props.me.firstname;
+    // let lastName = this.props.me.lastname;
     return (
       <div>
         <style dangerouslySetInnerHTML={{ __html: style }} />
