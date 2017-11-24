@@ -26,6 +26,7 @@ import TopicDetail from '../pages/conference/topic/topicDetail';
 import RoomDetail from '../pages/conference/room/roomDetail';
 import AddNewRoom from '../pages/conference/room/roomDetail/addRoom';
 import AddNewTopic from '../pages/conference/topic/topicDetail/addTopic';
+import AttendeeManagement from '../pages/conference/attendee';
 
 export default () => (
   <MuiThemeProvider muiTheme={muiTheme}>
@@ -88,6 +89,12 @@ export default () => (
             exact
             path="/conference/rooms-management/room-detail"
             component={AddNewRoom}
+          />
+          <AuthRoute
+            needAuth
+            exact
+            path="/conference/people/attendee-management"
+            component={AttendeeManagement}
           />
           <AuthRoute
             needAuth
