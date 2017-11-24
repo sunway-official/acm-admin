@@ -9,23 +9,22 @@ const colors = {
 };
 const muiTheme = getMuiTheme({
   palette: {
-    primary1Color: colors.shark,
+    primary1Color: colors.sanJuan,
     accent1Color: grey300,
-    // accent2Color: deepOrange500,
   },
   appBar: {
-    color: colors.shark,
+    color: colors.sanJuan,
   },
   datePicker: {
-    color: colors.shark,
+    color: colors.sanJuan,
     selectColor: colors.sunglow,
-    headerColor: colors.shark,
+    headerColor: colors.sanJuan,
   },
   dialog: {
     titleFontSize: 30,
   },
   floatingActionButton: {
-    color: colors.shark,
+    color: colors.sanJuan,
   },
   listItem: {
     nestedLevelDepth: 1000,
@@ -40,14 +39,14 @@ const muiTheme = getMuiTheme({
     selectedTextColor: colors.milkPunch,
   },
   textField: {
-    textColor: colors.shark,
+    textColor: colors.sanJuan,
     errorColor: colors.outrageousOrange,
     focusColor: colors.sunglow,
   },
   timePicker: {
-    color: colors.shark,
+    color: colors.sanJuan,
     accentColor: colors.sunglow,
-    headerColor: colors.shark,
+    headerColor: colors.sanJuan,
     selectColor: colors.sunglow,
   },
   toggle: {

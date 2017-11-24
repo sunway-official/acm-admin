@@ -44,6 +44,7 @@ class DialogEdit extends React.Component {
 }
 
 const mapStateToProps = state => {
+  console.log(state.user.data);
   return {
     user: state.user.data,
   };

@@ -14,7 +14,6 @@ import {
   IconButton,
 } from 'material-ui';
 import { NavigationClose } from 'material-ui/svg-icons';
-
 import { conferenceCoOranizerActions } from 'store/ducks/conference/info/coOrganizer';
 import CoOrganizerInfo from '../coOrganizer';
 import { queries, mutations } from '../helpers';
