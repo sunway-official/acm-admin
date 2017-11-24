@@ -12,7 +12,7 @@ const UserProfile = ({ me }) => (
   <div className="conference">
     <Subheader className="subheader"> User Profile</Subheader>
     <div className="page-breadcrumb d-flex">
-      <Link className="d-flex" to="/">
+      <Link className="d-flex" to="/conference/info">
         <IconButton>
           <ActionHome />
         </IconButton>
@@ -28,10 +28,15 @@ const UserProfile = ({ me }) => (
         <div className="form-container">
           <div className="left-div">
             <div className="card" id="left-form-container">
-              <div className="card-content">
-                <EditUserAvatar avatar={me.avatar} />
-                <GeneralInfo me={me} onSubmit="" />
+              {/**
+              * <div className="card-content">
+                  <EditUserAvatar avatar={me.avatar} />
+                  <GeneralInfo me={me} onSubmit="" />
+                </div>
               </div>
+              */}
+              <EditUserAvatar avatar={me.avatar} />
+              <GeneralInfo me={me} onSubmit="" />
             </div>
           </div>
           <div className="right-div">
