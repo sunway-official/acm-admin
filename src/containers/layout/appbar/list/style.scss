@@ -3,6 +3,9 @@
   .item {
     padding: 15px !important;
     font-size: 18px !important;
+    &.landing-page{
+     line-height: 20px !important;
+    }
   }
   .people {
     width: 200px;

@@ -8,7 +8,7 @@ const validate = values => {
     }
     if (values[field] && !regex.passwordRegex.test(values[field])) {
       errors[field] =
-        'Password must contains at least 6 character include number and special character';
+        'Password must contains at least 6 character include number, capital and special character';
     }
   });
   if (

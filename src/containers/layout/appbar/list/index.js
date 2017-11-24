@@ -9,13 +9,19 @@ import {
   // EditorShowChart,
   NotificationEventAvailable,
   HardwareKeyboardArrowRight,
+  SocialLocationCity,
+  EditorFormatListNumbered,
+  AvWeb,
 } from 'material-ui/svg-icons';
 import style from './style.css';
+import { connect } from 'react-redux';
+
 class ListExampleSimple extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       open: false,
+      openLanding: false,
     };
   }
 
@@ -27,14 +33,25 @@ class ListExampleSimple extends React.Component {
       anchorEl: event.currentTarget,
     });
   };
+  handleLanding = event => {
+    event.preventDefault();
 
+    this.setState({
+      openLanding: true,
+      anchorLanding: event.currentTarget,
+    });
+  };
   handleRequestClose = () => {
     this.setState({
       open: false,
+      openLanding: false,
     });
   };
-
   render() {
+    var conference_id;
+    if (this.props.auth.currentUser) {
+      conference_id = this.props.auth.currentUser.currentConference.id;
+    }
     return (
       <div>
         <style dangerouslySetInnerHTML={{ __html: style }} />
@@ -85,6 +102,56 @@ class ListExampleSimple extends React.Component {
               </Menu>
             </Popover>
           </ListItem>
+          <ListItem
+            className="item landing-page"
+            primaryText={'Landing Page'}
+            leftIcon={<AvWeb />}
+            onClick={this.handleLanding}
+            rightIcon={<HardwareKeyboardArrowRight />}
+          >
+            <Popover
+              open={this.state.openLanding}
+              className="landing"
+              anchorEl={this.state.anchorLanding}
+              anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+              targetOrigin={{ horizontal: 'left', vertical: 'top' }}
+              onRequestClose={this.handleRequestClose}
+            >
+              <Menu style={{ color: 'black' }}>
+                <Link to="/conference/landing-page-management">
+                  <MenuItem
+                    className="item"
+                    primaryText={'Edit'}
+                    onClick={this.handleRequestClose}
+                  />
+                </Link>
+                <Link to={`/landingpage/${conference_id}`}>
+                  <MenuItem
+                    className="item"
+                    primaryText={'View'}
+                    onClick={() => {
+                      this.handleRequestClose();
+                      window.location.reload();
+                    }}
+                  />
+                </Link>
+              </Menu>
+            </Popover>
+          </ListItem>
+          <Link to="/conference/rooms-management">
+            <ListItem
+              className="item"
+              primaryText={'Rooms'}
+              leftIcon={<SocialLocationCity />}
+            />
+          </Link>
+          <Link to="/conference/topics-management">
+            <ListItem
+              className="item"
+              primaryText={'Topics'}
+              leftIcon={<EditorFormatListNumbered />}
+            />
+          </Link>
           <Link to="/conference/papers">
             <ListItem
               className="item"
@@ -114,5 +181,9 @@ class ListExampleSimple extends React.Component {
     );
   }
 }
-
-export default ListExampleSimple;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    auth: state.auth,
+  };
+};
+export default connect(mapStateToProps, undefined)(ListExampleSimple);
