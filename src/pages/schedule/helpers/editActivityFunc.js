@@ -14,8 +14,7 @@ export const editActivityFunc = data => {
   UPDATE_ACTIVITY_MUTATION({
     variables: {
       id: values.id,
-      title: values.title,
-      description: values.description,
+      paper_id: values.paper,
     },
   })
     .then(() => {

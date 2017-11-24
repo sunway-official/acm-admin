@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import { graphql, compose } from 'react-apollo';
 import { queries, mutations } from '../helpers';
+import { queries as scheduleQueries } from '../../../schedule/helpers';
 import RoomDetail from './roomDetail';
 import { connect } from 'react-redux';
 
@@ -27,8 +28,11 @@ class Index extends Component {
       },
       refetchQueries: [
         {
-          query: queries.GET_ROOM_BY_ID_QUERY,
-          variables: { id: this.props.match.params.room_id },
+          query: queries.GET_ROOMS_BY_CONFERENCE_ID_QUERY,
+        },
+        {
+          query: scheduleQueries.GET_ROOMS_BY_STATUS_QUERY,
+          variables: { status: 'on' },
         },
       ],
     });

@@ -29,18 +29,9 @@ class AddDialog extends React.PureComponent {
   state = {
     dialogTitle: 'Add New Activity',
   };
-  papers = [
-    {
-      id: 1,
-      name: 'Blockchain',
-    },
-    {
-      id: 2,
-      name: 'Big data',
-    },
-  ];
   render() {
     const { handleSubmit, submitting, pristine, rooms, error } = this.props;
+
     return (
       <div>
         <FloatingActionButton
@@ -67,12 +58,12 @@ class AddDialog extends React.PureComponent {
                 hintText="Activity Paper"
                 fullWidth={true}
               >
-                {this.papers.map(paper => {
+                {this.props.papers.map(paper => {
                   return (
                     <MenuItem
                       key={paper.id}
                       value={paper.id}
-                      primaryText={paper.name}
+                      primaryText={paper.title}
                     />
                   );
                 })}
