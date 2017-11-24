@@ -9,7 +9,7 @@ export const listField = [
   {
     id: 2,
     name: 'seats',
-    hintText: 'Seats',
+    hintText: '',
     primaryText: 'Seats',
     type: 'number',
   },
