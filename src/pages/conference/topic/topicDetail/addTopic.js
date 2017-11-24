@@ -5,6 +5,7 @@ import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import { graphql, compose } from 'react-apollo';
 import { queries, mutations } from '../helpers';
 import TopicDetail from './topicDetail';
+import { withRouter } from 'react-router';
 
 class AddTopic extends Component {
   constructor(props) {
@@ -26,6 +27,7 @@ class AddTopic extends Component {
       ],
     });
     window.alert('success');
+    this.props.history.replace('/conference/topics-management');
   }
   render() {
     const colorsList = this.props.GET_ALL_COLORS_QUERY.getAllColors;
@@ -59,6 +61,7 @@ class AddTopic extends Component {
 }
 
 export default compose(
+  withRouter,
   graphql(mutations.INSERT_TOPIC_MUTATION, {
     name: 'INSERT_TOPIC_MUTATION',
   }),

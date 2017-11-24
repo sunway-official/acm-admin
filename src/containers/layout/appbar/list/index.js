@@ -93,10 +93,10 @@ class ListExampleSimple extends React.Component {
                     onClick={this.handleRequestClose}
                   />
                 </Link>
-                <Link to="/conference/people/attendee-management">
+                <Link to="/conference/people/participant-management">
                   <MenuItem
                     className="item"
-                    primaryText={'Attendees'}
+                    primaryText={'Participant'}
                     onClick={this.handleRequestClose}
                   />
                 </Link>

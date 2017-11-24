@@ -6,6 +6,7 @@ import { graphql, compose } from 'react-apollo';
 import { queries, mutations } from '../helpers';
 import RoomDetail from './roomDetail';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 
 class AddNewRoom extends Component {
   constructor(props) {
@@ -32,6 +33,7 @@ class AddNewRoom extends Component {
       ],
     });
     window.alert('success');
+    this.props.history.replace('/conference/rooms-management');
   }
   render() {
     return (
@@ -68,6 +70,7 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 export default compose(
+  withRouter,
   connect(mapStateToProps, undefined),
   graphql(mutations.INSERT_ROOM_MUTATION, {
     name: 'INSERT_ROOM_MUTATION',

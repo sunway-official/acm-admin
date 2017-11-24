@@ -6,6 +6,7 @@ import { graphql, compose } from 'react-apollo';
 import { queries, mutations } from '../helpers';
 import RoomDetail from './roomDetail';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 
 class Index extends Component {
   constructor(props) {
@@ -33,6 +34,7 @@ class Index extends Component {
       ],
     });
     window.alert('success');
+    this.props.history.replace('/conference/rooms-management');
   }
   render() {
     const { loading, getRoomByID } = this.props.data;
@@ -72,7 +74,7 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 export default compose(
-  connect(mapStateToProps, undefined),
+  (withRouter, connect(mapStateToProps, undefined)),
   graphql(queries.GET_ROOM_BY_ID_QUERY, {
     options: ownProps => ({
       variables: { id: ownProps.match.params.room_id },

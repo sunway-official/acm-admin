@@ -5,6 +5,7 @@ import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import { graphql, compose } from 'react-apollo';
 import { queries, mutations } from '../helpers';
 import TopicDetail from './topicDetail';
+import { withRouter } from 'react-router';
 
 class Index extends Component {
   constructor(props) {
@@ -28,13 +29,13 @@ class Index extends Component {
       ],
     });
     window.alert('success');
+    this.props.history.replace('/conference/topics-management');
   }
   render() {
     const { loading, getTopicByID } = this.props.data;
     if (loading) return <div>loading</div>;
     const topicDetail = getTopicByID;
     const colorsList = this.props.GET_ALL_COLORS_QUERY.getAllColors;
-    console.log(this.props);
     return (
       <div className="conference">
         <Subheader className="subheader"> Topic Detail</Subheader>
@@ -68,6 +69,7 @@ class Index extends Component {
   }
 }
 export default compose(
+  withRouter,
   graphql(queries.GET_TOPIC_BY_ID_QUERY, {
     options: ownProps => ({
       variables: { id: ownProps.match.params.topic_id },
