@@ -165,6 +165,8 @@ class MyCalendar extends React.PureComponent {
         </div>
 
         <Dialog
+          className="abc"
+          style={{ top: '-130px' }}
           open={this.props.openEdit}
           title="Edit Activity Schedule Information"
           autoScrollBodyContent={true}

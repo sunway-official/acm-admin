@@ -2,12 +2,7 @@ import functions from './functions';
 import queries from './queries';
 
 export const addActivityFunc = data => {
-  const {
-    INSERT_ACTIVITY_MUTATION,
-    conferenceId,
-    values,
-    INSERT_SCHEDULE_MUTATION,
-  } = data;
+  const { INSERT_ACTIVITY_MUTATION, values, INSERT_SCHEDULE_MUTATION } = data;
   INSERT_ACTIVITY_MUTATION({
     variables: {
       title: values.title,

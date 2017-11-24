@@ -28,7 +28,8 @@
     .form-group {
       align-items: center;
 
-      label {
+      label,
+      .title-group {
         font-size: 18px;
         width: 200px !important;
         &.room {

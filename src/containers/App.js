@@ -1,7 +1,6 @@
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import React from 'react';
 import { Switch } from 'react-router-dom';
-
 import AuthRoute from '../components/AuthRoute';
 import ForgotPassword from '../pages/authentication/forgotPassword';
 import Login from '../pages/authentication/login';
@@ -13,7 +12,9 @@ import UserProfile from '../pages/conference/people/userProfile/userProfile';
 import Dashboard from '../pages/dashboard';
 import NoMatch from '../pages/NoMatch';
 import Schedule from '../pages/schedule';
+import Paper from '../pages/paper/list';
 import WithThunk from '../pages/withThunk';
+
 import { muiTheme } from '../theme';
 import Wrapper from './wrapper';
 import LandingPage from '../landingPage';
@@ -94,6 +95,7 @@ export default () => (
             path="/user-profile"
             component={UserProfile}
           />
+          <AuthRoute exact path="/conference/papers" component={Paper} />
           <AuthRoute exact path="/conference/activities" component={Schedule} />
           <AuthRoute path="/withThunk" component={WithThunk} />
           <AuthRoute component={NoMatch} />
@@ -102,5 +104,3 @@ export default () => (
     </Switch>
   </MuiThemeProvider>
 );
-
-// /conference/rooms-management/room-detail/${room.id}

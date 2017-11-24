@@ -5,7 +5,7 @@ const validate = (values, props) => {
   const errors = {};
   const ArrayErrors = [];
   const requiredFields = [
-    'title',
+    'paper',
     'description',
     'date',
     'start',
@@ -14,7 +14,7 @@ const validate = (values, props) => {
   ];
   requiredFields.forEach(field => {
     if (!values[field]) {
-      errors[field] = 'Required';
+      errors[field] = 'This field is required';
     }
   });
   if (values.end <= values.start) {
@@ -42,11 +42,11 @@ const validate = (values, props) => {
     values.schedules.forEach((schedule, scheduleIndex) => {
       scheduleErrors = {};
       if (!schedule || !schedule.date) {
-        scheduleErrors.date = 'Required';
+        scheduleErrors.date = 'This field is required';
         ArrayErrors[scheduleIndex] = scheduleErrors;
       }
       if (!schedule || !schedule.room) {
-        scheduleErrors.room = 'Required';
+        scheduleErrors.room = 'This field is required';
         ArrayErrors[scheduleIndex] = scheduleErrors;
       }
       if (!schedule || !schedule.start) {

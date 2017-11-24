@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
-import { graphql, gql } from 'react-apollo';
-import { GET_ALL_STAFF_IN_CONFERENCE } from './index';
+import DialogEdit from './dialogEdit';
+import GetRoles from './getRoles';
+import { userActions } from 'store/ducks/user';
+import { conferenceOperations } from 'store/ducks/conference';
+import { connect } from 'react-redux';
 
 import {
   Table,
@@ -10,60 +13,30 @@ import {
   TableRow,
   TableRowColumn,
   RaisedButton,
-  Dialog,
 } from 'material-ui';
 import { style } from './style.css';
-// import Add from './add';
 
-class Index extends Component {
-  constructor() {
-    super();
-    this.delete = this.delete.bind(this);
+class List extends Component {
+  constructor(props) {
+    super(props);
+    this.handleOpenDialog = this.handleOpenDialog.bind(this);
+    this.state = {
+      openDialog: false,
+      staffId: 0,
+    };
   }
-  state = {
-    openDelete: false,
-    staff: {},
-  };
-  handleOpenDelete = UserId => {
-    this.setState({ openDelete: true });
-    this.setState({
-      UserId: UserId,
-    });
-  };
+  handleOpenDialog(staff, staffId) {
+    this.setState({ openDialog: !this.state.openDialog, staffId: staffId });
+    this.props.setUser(staff);
+    this.props.getConferenceId(this.props.conference_id);
+  }
   handleClose = () => {
-    this.setState({ openDelete: false });
+    this.setState({ openDialog: !this.state.openDialog });
   };
-  delete() {
-    this.setState({ openDelete: false });
-    const { DELETE_USER } = this.props;
-    DELETE_USER({
-      variables: {
-        id: this.state.UserId,
-      },
-      update: (store, { data: { deleteUser } }) => {
-        const data = store.readQuery({
-          query: GET_ALL_STAFF_IN_CONFERENCE,
-        });
-        data.getAllStaffInConference = this.state.staff.filter(
-          item => item !== this.state.staff,
-        );
-        store.writeQuery({ query: GET_ALL_STAFF_IN_CONFERENCE, data });
-      },
-    });
-  }
+
   render() {
-    const allStaff = this.props.allStaff;
-    const staffRole = this.props.staffRole;
-    console.log(staffRole);
-    const actionDelete = [
-      <RaisedButton
-        label="Submit"
-        primary={true}
-        onClick={this.handleClose}
-        type="submit"
-      />,
-      <RaisedButton label="Cancel" onClick={this.handleClose} />,
-    ];
+    const conference_id = this.props.conference_id;
+    const staffs = this.props.staffs;
     return (
       <div className="d-flex">
         <style dangerouslySetInnerHTML={{ __html: style }} />
@@ -73,12 +46,13 @@ class Index extends Component {
               <TableRow>
                 <TableHeaderColumn>No.</TableHeaderColumn>
                 <TableHeaderColumn>Name</TableHeaderColumn>
-                <TableHeaderColumn>Status</TableHeaderColumn>
+                <TableHeaderColumn>Mail</TableHeaderColumn>
+                <TableHeaderColumn>Position</TableHeaderColumn>
                 <TableHeaderColumn>Action</TableHeaderColumn>
               </TableRow>
             </TableHeader>
             <TableBody displayRowCheckbox={false}>
-              {allStaff.map((staff, index) => (
+              {staffs.map((staff, index) => (
                 <TableRow key={staff.id}>
                   <TableRowColumn>{index + 1}</TableRowColumn>
                   <TableRowColumn>
@@ -86,34 +60,41 @@ class Index extends Component {
                   </TableRowColumn>
                   <TableRowColumn>{staff.email}</TableRowColumn>
                   <TableRowColumn>
+                    <GetRoles id={staff.id} conference_id={conference_id} />
+                  </TableRowColumn>
+                  <TableRowColumn>
                     <RaisedButton
-                      label="delete"
-                      onClick={() => this.handleOpenDelete(staff.id)}
+                      primary={true}
+                      label="edit"
+                      onClick={() => {
+                        this.handleOpenDialog(staff, staff.id);
+                      }}
                     />
                   </TableRowColumn>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
-          <Dialog
-            title="Do you want to delete this staff?"
-            modal={true}
-            onRequestClose={this.handleClose}
-            open={this.state.openDelete}
-            actions={actionDelete}
+          <DialogEdit
+            openDialog={this.state.openDialog}
+            handleClose={() => {
+              this.handleClose();
+            }}
+            staff_id={this.state.staffId}
+            conference_id={conference_id}
           />
         </div>
       </div>
     );
   }
 }
-const DELETE_USER = gql`
-  mutation deleteUser($id: ID!) {
-    deleteUser(id: $id) {
-      id
-    }
-  }
-`;
-export default graphql(DELETE_USER, {
-  name: 'DELETE_USER',
-})(Index);
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setUser: user => dispatch(userActions.setUser(user)),
+    getConferenceId: conference_id =>
+      dispatch(conferenceOperations.getIdOperation(conference_id)),
+  };
+};
+
+export default connect(undefined, mapDispatchToProps)(List);

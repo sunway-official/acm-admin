@@ -1,6 +1,7 @@
-import { regex } from '../../../utils';
+import { regex } from '../../../../utils';
 
 const validate = values => {
+  const ArrayErrors = [];
   const errors = {};
   const requiredFields = [
     'title',
@@ -11,27 +12,21 @@ const validate = values => {
     'organizerEmail',
     'organizerWebsite',
     'organizerPhoneNumber',
-    'coOrganizerName',
-    'coOrganizerEmail',
-    'coOrganizerWebsite',
-    'coOrganizerPhone',
   ];
   requiredFields.forEach(field => {
     if (!values[field]) {
-      errors[field] = 'Required';
+      errors[field] = 'This field is required';
+      ArrayErrors[0] = errors;
     }
   });
+
   if (values.organizerEmail && !regex.EMAIL_REGEX.test(values.organizerEmail)) {
     errors.organizerEmail = 'Invalid email address';
+    ArrayErrors[0] = errors;
   }
-  if (
-    values.coOrganizerEmail &&
-    !regex.EMAIL_REGEX.test(values.coOrganizerEmail)
-  ) {
-    errors.coOrganizerEmail = 'Invalid email address';
-  }
-  if (values.endDate < values.startDate) {
+  if (values.endDate <= values.startDate) {
     errors.endDate = 'End date of conference must be greater than start date';
+    ArrayErrors[0] = errors;
   }
   return errors;
 };
