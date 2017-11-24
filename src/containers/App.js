@@ -7,6 +7,7 @@ import Login from '../pages/authentication/login';
 import Register from '../pages/authentication/register';
 import ResetPassword from '../pages/authentication/resetPassword';
 import ConferenceInfo from '../pages/conference/info';
+import Paper from '../pages/paper';
 import ConferenceStaffList from '../pages/conference/people/staff/list';
 import UserProfile from '../pages/conference/people/userProfile/userProfile';
 import Dashboard from '../pages/dashboard';
@@ -94,6 +95,12 @@ export default () => (
             exact
             path="/conference/people/attendee-management"
             component={AttendeeManagement}
+          />
+          <AuthRoute
+            needAuth
+            exact
+            path="/conference/papers"
+            component={Paper}
           />
           <AuthRoute
             needAuth
