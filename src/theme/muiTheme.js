@@ -1,5 +1,5 @@
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import { deepOrange500, grey300 } from 'material-ui/styles/colors';
+import { grey300 } from 'material-ui/styles/colors';
 const colors = {
   shark: '#2f3440',
   sanJuan: '#3E5566',
@@ -10,10 +10,8 @@ const colors = {
 const muiTheme = getMuiTheme({
   palette: {
     primary1Color: colors.shark,
-    primary2Color: deepOrange500,
     accent1Color: grey300,
-    accent2Color: deepOrange500,
-    pickerHeaderColor: deepOrange500,
+    // accent2Color: deepOrange500,
   },
   appBar: {
     color: colors.shark,
@@ -25,6 +23,12 @@ const muiTheme = getMuiTheme({
   },
   dialog: {
     titleFontSize: 30,
+  },
+  floatingActionButton: {
+    color: colors.shark,
+  },
+  listItem: {
+    nestedLevelDepth: 1000,
   },
   raisedButton: {
     color: colors.outrageousOrange,
@@ -45,6 +49,10 @@ const muiTheme = getMuiTheme({
     accentColor: colors.sunglow,
     headerColor: colors.shark,
     selectColor: colors.sunglow,
+  },
+  toggle: {
+    thumbOnColor: colors.sunglow,
+    trackOnColor: colors.sunglow,
   },
 });
 
