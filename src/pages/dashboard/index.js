@@ -37,8 +37,11 @@ class Index extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  me: state.auth.currentUser,
-});
+const mapStateToProps = state => {
+  if (state.auth.currentUser)
+    return {
+      me: state.auth.currentUser,
+    };
+};
 
 export default compose(withRouter, withApollo, connect(mapStateToProps))(Index);

@@ -71,6 +71,7 @@ class GetAllConfs extends React.Component {
 
     if (loading) return <div> loading... </div>;
 
+    console.log(this.props.data.getConferenceByUserID);
     const conferences = this.props.data.getConferenceByUserID;
     let currentConferenceID = 0;
     if (this.props.ME_QUERY.me && this.props.ME_QUERY.me.currentConference)
@@ -103,39 +104,42 @@ class GetAllConfs extends React.Component {
           />
           <div name="conferences-sidebar">
             {conferences.map(conference => {
-              if (currentConferenceID !== conference.id) {
-                return (
-                  <List key={conference.id}>
-                    <ListItem
-                      onToggle={this.handleToggle}
-                      primaryText={conference.title}
-                      leftIcon={<ActionSupervisorAccount />}
-                      initiallyOpen={false}
-                      primaryTogglesNestedList={true}
-                      nestedItems={[
-                        <ListItem
-                          key={1}
-                          primaryText="Switch"
-                          className="switch-text"
-                          leftIcon={<ContentSend style={styles.smallIcon} />}
-                          containerElement={<Link to={`/conference/info`} />}
-                          onClick={async () => {
-                            // clg;
-                            await this.handleSwitch(conference.id);
-                            window.location.reload();
-                          }}
-                        />,
-                        <ListItem
-                          key={2}
-                          primaryText="Delete"
-                          leftIcon={<NavigationClose />}
-                          onClick={() => this.handleOpen(conference.id)}
-                        />,
-                      ]}
-                    />
-                  </List>
-                );
+              {
+                /* {conferences.forEach(conference => { */
               }
+              // if (currentConferenceID !== conference.id) {
+              return (
+                <List key={conference.id}>
+                  <ListItem
+                    onToggle={this.handleToggle}
+                    primaryText={conference.title}
+                    leftIcon={<ActionSupervisorAccount />}
+                    initiallyOpen={false}
+                    primaryTogglesNestedList={true}
+                    nestedItems={[
+                      <ListItem
+                        key={1}
+                        primaryText="Switch"
+                        className="switch-text"
+                        leftIcon={<ContentSend style={styles.smallIcon} />}
+                        containerElement={<Link to={`/conference/info`} />}
+                        onClick={async () => {
+                          // clg;
+                          await this.handleSwitch(conference.id);
+                          window.location.reload();
+                        }}
+                      />,
+                      <ListItem
+                        key={2}
+                        primaryText="Delete"
+                        className="switch-text"
+                        leftIcon={<NavigationClose style={styles.smallIcon} />}
+                        onClick={() => this.handleOpen(conference.id)}
+                      />,
+                    ]}
+                  />
+                </List>
+              );
             })}
           </div>
           <DeleteDialog
