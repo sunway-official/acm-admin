@@ -14,8 +14,10 @@ class Index extends Component {
     };
   }
   render() {
-    console.log(this.props);
-    const { loading, getTopicsOfConference } = this.props.data;
+    const {
+      loading,
+      getTopicsOfConference,
+    } = this.props.GET_TOPICS_OF_CONFERENCE_QUERY;
     if (loading) return <div>loading...</div>;
     const listTopic = getTopicsOfConference;
     return (
@@ -41,4 +43,6 @@ class Index extends Component {
   }
 }
 
-export default graphql(queries.GET_TOPICS_OF_CONFERENCE_QUERY)(Index);
+export default graphql(queries.GET_TOPICS_OF_CONFERENCE_QUERY, {
+  name: 'GET_TOPICS_OF_CONFERENCE_QUERY',
+})(Index);

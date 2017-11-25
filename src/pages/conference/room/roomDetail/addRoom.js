@@ -72,9 +72,4 @@ export default compose(
   graphql(mutations.INSERT_ROOM_MUTATION, {
     name: 'INSERT_ROOM_MUTATION',
   }),
-  graphql(queries.GET_ROOMS_BY_CONFERENCE_ID_QUERY, {
-    options: ownProps => ({
-      variables: { conference_id: ownProps.id },
-    }),
-  }),
 )(AddNewRoom);

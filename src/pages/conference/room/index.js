@@ -15,9 +15,12 @@ class Index extends Component {
     };
   }
   render() {
-    const { loading } = this.props.data;
+    const {
+      loading,
+      getRoomsByConferenceID,
+    } = this.props.GET_ROOMS_BY_CONFERENCE_ID_QUERY;
     if (loading) return <div>loading...</div>;
-    const listRoom = this.props.data.getRoomsByConferenceID;
+    const listRoom = getRoomsByConferenceID;
     return (
       <div className="conference">
         <Subheader className="subheader"> Rooms Management</Subheader>
@@ -42,9 +45,11 @@ class Index extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  return {
-    id: state.auth.currentUser.currentConference.id,
-  };
+  if (state.auth.currentUser && state.auth.currentUser.currentConference) {
+    return {
+      id: state.auth.currentUser.currentConference.id,
+    };
+  }
 };
 
 export default compose(
@@ -53,5 +58,6 @@ export default compose(
     options: ownProps => ({
       variables: { conference_id: ownProps.id },
     }),
+    name: 'GET_ROOMS_BY_CONFERENCE_ID_QUERY',
   }),
 )(Index);

@@ -52,6 +52,8 @@ class RoomList extends Component {
     });
   }
   render() {
+    const { loading } = this.props.GET_ROOMS_BY_CONFERENCE_ID_QUERY;
+    if (loading) return <div>loading...</div>;
     const listRoom = this.props.listRoom;
     const actionDelete = [
       <RaisedButton
@@ -124,9 +126,11 @@ class RoomList extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  return {
-    id: state.auth.currentUser.currentConference.id,
-  };
+  if (state.auth.currentUser && state.auth.currentUser.currentConference) {
+    return {
+      id: state.auth.currentUser.currentConference.id,
+    };
+  }
 };
 export default compose(
   connect(mapStateToProps, undefined),
@@ -137,5 +141,6 @@ export default compose(
     options: ownProps => ({
       variables: { conference_id: ownProps.id },
     }),
+    name: 'GET_ROOMS_BY_CONFERENCE_ID_QUERY',
   }),
 )(RoomList);
