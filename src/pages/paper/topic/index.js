@@ -6,7 +6,10 @@ class Index extends Component {
   render() {
     const { loading, getTopicsByPaperID } = this.props.data;
     if (loading) return <div>Loading...</div>;
-    const topics = getTopicsByPaperID;
+    let topics;
+    if (getTopicsByPaperID) {
+      topics = getTopicsByPaperID;
+    } else return <div>Loading</div>;
     return (
       <div>
         {topics.map((data, index) => {

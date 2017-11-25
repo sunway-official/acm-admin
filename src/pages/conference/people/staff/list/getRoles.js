@@ -15,7 +15,10 @@ class GetRoles extends Component {
     if (error) {
       return <div>error</div>;
     }
-    const roles = this.props.data.getAllRolesActiveByUserID;
+    let roles;
+    if (this.props.data.getAllRolesActiveByUserID) {
+      roles = this.props.data.getAllRolesActiveByUserID;
+    }
     return (
       <div>
         {roles.map(data => {
