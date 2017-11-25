@@ -11,7 +11,7 @@ import {
 } from 'material-ui';
 import './style.css';
 import { Link } from 'react-router-dom';
-import { graphql, compose } from 'react-apollo';
+import { graphql } from 'react-apollo';
 import { mutations, queries } from '../helpers';
 class TopicList extends Component {
   constructor() {
@@ -114,9 +114,6 @@ class TopicList extends Component {
   }
 }
 
-export default compose(
-  graphql(mutations.DELETE_TOPIC_MUTATION, {
-    name: 'DELETE_TOPIC_MUTATION',
-  }),
-  graphql(queries.GET_TOPICS_OF_CONFERENCE_QUERY, {}),
-)(TopicList);
+export default graphql(mutations.DELETE_TOPIC_MUTATION, {
+  name: 'DELETE_TOPIC_MUTATION',
+})(TopicList);

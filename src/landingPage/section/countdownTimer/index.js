@@ -36,14 +36,13 @@ class CountDownTimer extends Component {
     }
   }
   componentWillMount() {
-    var timer;
-    var compareDate = new Date();
-    var now = moment(new Date()); //todays date
-    var end = moment(this.props.landingPage.conference.start_date); // another date
-    var duration = moment.duration(end.diff(now));
-    var days = duration.asDays();
+    let compareDate = new Date();
+    let now = moment(new Date()); //todays date
+    let end = moment(this.props.landingPage.conference.start_date); // another date
+    let duration = moment.duration(end.diff(now));
+    let days = duration.asDays();
     compareDate.setDate(compareDate.getDate() + days); // this is just a demo for 100 day
-    timer = setInterval(
+    let timer = setInterval(
       function() {
         this.timeBetweenDates(compareDate, timer);
       }.bind(this),

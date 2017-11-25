@@ -6,7 +6,6 @@ import * as moment from 'moment';
 import { functions } from '../helpers';
 import ScheduleForm from './scheduleForm';
 import Footer from '../section/footer';
-import { Link } from 'react-router-dom';
 import Header from '../section/header';
 class LandingPageSchedule extends Component {
   constructor(props) {
@@ -28,7 +27,10 @@ class LandingPageSchedule extends Component {
     }
   }
   render() {
-    const { loading, getActivitiesByConferenceID } = this.props.data;
+    const {
+      loading,
+      getActivitiesByConferenceID,
+    } = this.props.GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY;
     if (loading) return <div>loading</div>;
     const events = functions.getEvents(getActivitiesByConferenceID);
     this.sortActivities(events);
@@ -52,5 +54,6 @@ export default compose(
     options: ownProps => ({
       variables: { conference_id: ownProps.match.params.conference_id },
     }),
+    name: 'GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY',
   }),
 )(LandingPageSchedule);
