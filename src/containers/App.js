@@ -98,6 +98,12 @@ export default () => (
           <AuthRoute
             needAuth
             exact
+            path="/conference/papers"
+            component={Paper}
+          />
+          <AuthRoute
+            needAuth
+            exact
             path="/user-profile"
             component={UserProfile}
           />
