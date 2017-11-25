@@ -12,7 +12,6 @@ import UserProfile from '../pages/conference/people/userProfile/userProfile';
 import Dashboard from '../pages/dashboard';
 import NoMatch from '../pages/NoMatch';
 import Schedule from '../pages/schedule';
-import Paper from '../pages/paper';
 import WithThunk from '../pages/withThunk';
 
 import { muiTheme } from '../theme';
@@ -95,6 +94,12 @@ export default () => (
             exact
             path="/conference/people/attendee-management"
             component={AttendeeManagement}
+          />
+          <AuthRoute
+            needAuth
+            exact
+            path="/conference/papers"
+            component={Paper}
           />
           <AuthRoute
             needAuth

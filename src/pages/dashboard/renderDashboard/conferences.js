@@ -3,7 +3,6 @@ import { queries } from './../helpers';
 import { graphql, compose, gql } from 'react-apollo';
 import { Link } from 'react-router-dom';
 import { List, ListItem } from 'material-ui/List';
-import Divider from 'material-ui/Divider';
 import Badge from 'material-ui/Badge';
 import style from './../style.css';
 
