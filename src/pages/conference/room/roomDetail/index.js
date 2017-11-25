@@ -21,7 +21,7 @@ class Index extends Component {
     UPDATE_ROOM_MUTATION({
       variables: {
         id: values.id,
-        conference_id: this.props.data.getRoomByID.conference.id,
+        conference_id: this.props.id,
         name: values.name,
         seats: values.seats,
         status: values.status,
