@@ -111,7 +111,7 @@ class RoomList extends Component {
             </TableBody>
           </Table>
           <Dialog
-            title="Do you want to delete this color?"
+            title="Do you want to delete this room?"
             modal={true}
             onRequestClose={this.handleClose}
             open={this.state.openDelete}
@@ -138,7 +138,7 @@ export default compose(
   }),
   graphql(queries.GET_ROOMS_BY_CONFERENCE_ID_QUERY, {
     options: ownProps => ({
-      variables: { conference_id: 1 },
+      variables: { conference_id: ownProps.id },
     }),
     name: 'GET_ROOMS_BY_CONFERENCE_ID_QUERY',
   }),
