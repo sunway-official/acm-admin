@@ -25,6 +25,11 @@ export const GET_ALL_CONFERENCES_BY_USER_ID_QUERY = gql`
           lastname
         }
       }
+      user {
+        currentConference {
+          id
+        }
+      }
     }
   }
 `;

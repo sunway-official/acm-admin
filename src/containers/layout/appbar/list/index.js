@@ -23,6 +23,7 @@ class ListExampleSimple extends React.Component {
       open: false,
       openLanding: false,
     };
+    // this.handleRequestClose = this.handleRequestClose.bind(this);
   }
 
   handleTouchTap = event => {
@@ -32,6 +33,7 @@ class ListExampleSimple extends React.Component {
       open: true,
       anchorEl: event.currentTarget,
     });
+    // this.handleRequestClose();
   };
   handleLanding = event => {
     event.preventDefault();

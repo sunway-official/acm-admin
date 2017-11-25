@@ -116,9 +116,11 @@ class MyCalendar extends React.PureComponent {
 
     return (
       <div className="conference">
-        <Subheader className="subheader">Activity Schedule</Subheader>
+        <Subheader className="subheader paper-title">
+          Activity Schedule
+        </Subheader>
         <div className="page-breadcrumb d-flex">
-          <Link className="d-flex" to="/">
+          <Link className="d-flex" to="/conference/info">
             <IconButton>
               <ActionHome />
             </IconButton>

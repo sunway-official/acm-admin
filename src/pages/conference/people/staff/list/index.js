@@ -48,7 +48,7 @@ class Index extends Component {
       <div className="conference">
         <Subheader className="subheader"> Staff List</Subheader>
         <div className="page-breadcrumb d-flex">
-          <Link className="d-flex" to="/">
+          <Link className="d-flex" to="/conference/info">
             <IconButton>
               <ActionHome />
             </IconButton>

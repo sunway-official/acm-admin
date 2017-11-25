@@ -1,7 +1,85 @@
-.content {
-  height: 100%;
+//list conf
+.card-content-dashboard {
+  width: 60%;
+  margin-top: 5%;
+  margin-right: 2%;
+  margin-left: 2%;
+  border: 1px solid rgb(197, 189, 189);
+  background:  url('./../../images/conf-dashboard.png') no-repeat;
+  background-size: 100% auto;
+  height: -webkit-fill-available;
 }
-.conference-card {
-  padding-top: 70px;
-  width: 50%;
+
+.list-conf {
+  background-color: rgb(197, 189, 189);
+  padding-bottom: 18px;
+  padding-top: 10px;
+  margin-bottom: -9px;
+  // color: rgb(255, 87, 34);
+  font-weight: bold;
+  font-size: 16px;
+
+  .icon-conference {
+    padding-right: 7px !important;
+  }
+}
+
+.listitem-conf {
+  border-top: 1px solid rgb(216, 213, 213)!important;
+  padding-top: 0px !important;
+  color: black !important;
+  padding-bottom: 10px;
+}
+
+.data {
+  display: flex;
+}
+
+//menu
+.navbar {
+  background-color: white !important;
+  align-items: center;
+  color: red !important;
+  position: fixed !important;
+  top: 0;
+
+  h1 {
+    display: none;
+  }
+
+  button {
+    display: none;
+  }
+  .space {
+    flex: 1 1 0% !important;
+  }
+  // eslint-disable-next-line
+  .logo {
+    height: 30px;
+    margin-left: 0 !important;
+  }
+}
+
+.dashboard {
+  .conferences {
+    display: flex;
+  }
+
+  .content{
+    height: 100% !important;
+  }
+
+}
+
+.list-dashboard {
+  margin-top: 5%;
+  float: right;
+  width: 30%;
+  // border: 1px solid gray;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.paper-title {
+  padding-left: 20px !important;
+  width: 95% !important;
 }
