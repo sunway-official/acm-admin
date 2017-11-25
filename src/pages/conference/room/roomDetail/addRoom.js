@@ -27,7 +27,6 @@ class AddNewRoom extends Component {
       refetchQueries: [
         {
           query: queries.GET_ROOMS_BY_CONFERENCE_ID_QUERY,
-          variables: { conference_id: this.props.id },
         },
       ],
     });
@@ -63,9 +62,11 @@ class AddNewRoom extends Component {
   }
 }
 const mapStateToProps = (state, ownProps) => {
-  return {
-    id: state.auth.currentUser.currentConference.id,
-  };
+  if (state.auth.currentUser && state.auth.currentUser.currentConference) {
+    return {
+      id: state.auth.currentUser.currentConference.id,
+    };
+  }
 };
 export default compose(
   connect(mapStateToProps, undefined),

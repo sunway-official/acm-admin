@@ -5,6 +5,9 @@ export const GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY = gql`
       id
       title
       description
+      paper {
+        id
+      }
       conference {
         start_date
         end_date
@@ -50,9 +53,19 @@ export const GET_ALL_ROLES = gql`
   }
 `;
 
+export const GET_PAPER_BY_CONFERENCE_ID = gql`
+  query getPapersByConferenceID {
+    getPapersByConferenceID {
+      id
+      title
+    }
+  }
+`;
+
 export default {
   GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY,
   GET_ROOMS_BY_STATUS_QUERY,
   GET_CONFERENCE_BY_ID,
   GET_ALL_ROLES,
+  GET_PAPER_BY_CONFERENCE_ID,
 };

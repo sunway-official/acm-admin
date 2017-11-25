@@ -23,6 +23,7 @@ class ListExampleSimple extends React.Component {
       open: false,
       openLanding: false,
     };
+    // this.handleRequestClose = this.handleRequestClose.bind(this);
   }
 
   handleTouchTap = event => {
@@ -32,6 +33,7 @@ class ListExampleSimple extends React.Component {
       open: true,
       anchorEl: event.currentTarget,
     });
+    // this.handleRequestClose();
   };
   handleLanding = event => {
     event.preventDefault();
@@ -48,9 +50,14 @@ class ListExampleSimple extends React.Component {
     });
   };
   render() {
-    var conference_id;
-    if (this.props.auth.currentUser) {
+    let conference_id;
+    if (
+      this.props.auth.currentUser &&
+      this.props.auth.currentUser.currentConference
+    ) {
       conference_id = this.props.auth.currentUser.currentConference.id;
+    } else {
+      conference_id = 0;
     }
     return (
       <div>
@@ -66,7 +73,7 @@ class ListExampleSimple extends React.Component {
           <Link to="/conference/activities">
             <ListItem
               className="item"
-              primaryText={'Activities management'}
+              primaryText={'Schedules'}
               leftIcon={<NotificationEventAvailable />}
             />
           </Link>

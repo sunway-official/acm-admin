@@ -14,7 +14,10 @@ import Home from './section/home';
 import Header from './section/header';
 class LandingPage extends Component {
   render() {
-    const { loading, getLandingPageByConferenceId } = this.props.data;
+    const {
+      loading,
+      getLandingPageByConferenceId,
+    } = this.props.GET_LANDING_PAGE_BY_CONFERENCE_ID_QUERY;
     if (loading) return <div>loading</div>;
     const landingPage = getLandingPageByConferenceId[0];
     return (
@@ -46,5 +49,6 @@ export default compose(
         conference_id: ownProps.match.params.conference_id,
       },
     }),
+    name: 'GET_LANDING_PAGE_BY_CONFERENCE_ID_QUERY',
   }),
 )(LandingPage);

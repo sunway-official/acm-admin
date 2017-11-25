@@ -37,7 +37,7 @@ class Index extends Component {
           <span>Rooms Management</span>
         </div>
         <div className="dashboard content d-flex">
-          <RoomList listRoom={listRoom} />
+          <RoomList id={this.props.id} listRoom={listRoom} />
         </div>
       </div>
     );

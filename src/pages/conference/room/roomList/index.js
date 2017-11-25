@@ -18,7 +18,6 @@ class RoomList extends Component {
   constructor() {
     super();
     this.state = {
-      id: 0,
       openDelete: false,
     };
     this.handleClose = this.handleClose.bind(this);
@@ -52,9 +51,13 @@ class RoomList extends Component {
     });
   }
   render() {
-    const { loading } = this.props.GET_ROOMS_BY_CONFERENCE_ID_QUERY;
+    const {
+      loading,
+      getRoomsByConferenceID,
+    } = this.props.GET_ROOMS_BY_CONFERENCE_ID_QUERY;
+
     if (loading) return <div>loading...</div>;
-    const listRoom = this.props.listRoom;
+    const listRoom = getRoomsByConferenceID;
     const actionDelete = [
       <RaisedButton
         label="Yes"
@@ -126,11 +129,7 @@ class RoomList extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  if (state.auth.currentUser && state.auth.currentUser.currentConference) {
-    return {
-      id: state.auth.currentUser.currentConference.id,
-    };
-  }
+  return {};
 };
 export default compose(
   connect(mapStateToProps, undefined),
@@ -139,7 +138,7 @@ export default compose(
   }),
   graphql(queries.GET_ROOMS_BY_CONFERENCE_ID_QUERY, {
     options: ownProps => ({
-      variables: { conference_id: ownProps.id },
+      variables: { conference_id: 1 },
     }),
     name: 'GET_ROOMS_BY_CONFERENCE_ID_QUERY',
   }),
