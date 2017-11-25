@@ -16,7 +16,10 @@ class DialogEdit extends React.Component {
     if (error) {
       return <div />;
     }
-    const roles = getAllRolesActiveByUserID;
+    let roles;
+    if (getAllRolesActiveByUserID) {
+      roles = getAllRolesActiveByUserID;
+    } else return <div>Loading...</div>;
     const actions = (
       <div>
         <IconButton
@@ -44,6 +47,7 @@ class DialogEdit extends React.Component {
 }
 
 const mapStateToProps = state => {
+  console.log(state.user.data);
   return {
     user: state.user.data,
   };

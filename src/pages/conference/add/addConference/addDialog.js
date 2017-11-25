@@ -30,8 +30,6 @@ class DialogInsertConf extends React.Component {
     this.state = {
       open: false,
     };
-
-    // this.onMapPositionChanged = this.onMapPositionChanged.bind(this);
   }
 
   handleOpen = () => {
@@ -42,61 +40,48 @@ class DialogInsertConf extends React.Component {
     this.setState({ open: false });
   };
 
-  // onMapPositionChanged(position) {
-  //   this.props.getPosition(position);
-  // }
-
-  async submit(values) {
+  submit(values) {
     // console.log(values);
-    // try {
-    //   console.log(this.props.position);
-    //   await this.props.INSERT_ADDRESS_MUTATION({
-    //     variables: {
-    //       lat: this.props.position.lat,
-    //       long: this.props.position.long,
-    //     },
-    //   });
-    // } catch (error) {
-    //   console.log('There was an error sending the query', error);
-    // }
+    const {
+      INSERT_ORGANIZER_DETAIL_MUTATION,
+      INSERT_CONFERENCE_MUTATION,
+    } = this.props;
 
-    try {
-      const user_id = this.props.data.me.id;
-      await this.props
-        .INSERT_ORGANIZER_DETAIL_MUTATION({
+    const user_id = this.props.data.me.id;
+    INSERT_ORGANIZER_DETAIL_MUTATION({
+      variables: {
+        user_id: user_id,
+        name: values.organizerName,
+        email: values.organizerEmail,
+        website: values.organizerWebsite,
+        address: values.organizerAddress,
+        phone: values.organizerPhoneNumber,
+      },
+    })
+      .then(({ data }) => {
+        // eslint-disable-next-line array-callback-return
+        INSERT_CONFERENCE_MUTATION({
           variables: {
-            user_id: user_id,
-            name: values.organizerName,
-            email: values.organizerEmail,
-            website: values.organizerWebsite,
-            address: values.organizerAddress,
-            phone: values.organizerPhoneNumber,
+            organizer_detail_id: data.insertOrganizerDetail.id,
+            address_id: 1,
+            title: values.title,
+            description: values.description,
+            start_date: values.startDate,
+            end_date: values.endDate,
+            bg_image: 'Background image',
           },
-        })
-        .then(({ data }) => {
-          // eslint-disable-next-line array-callback-return
-          INSERT_CONFERENCE_MUTATION({
-            variables: {
-              organizer_detail_id: data.insertOrganizerDetail.id,
-              address_id: values.address_id,
-              title: values.title,
-              description: values.description,
-              start_date: values.startDate,
-              end_date: values.endDate,
-              bg_image: values.bg_image,
+          refetchQueries: [
+            {
+              query: GET_ALL_CONFERENCES_BY_USER_ID_QUERY,
+              variables: { user_id: user_id },
             },
-            refetchQueries: [
-              {
-                query: GET_ALL_CONFERENCES_BY_USER_ID_QUERY,
-                variables: { user_id: user_id },
-              },
-            ],
-          });
-          // console.log(data);
+          ],
         });
-    } catch (error) {
-      console.log('There was an error sending the query', error);
-    }
+        // console.log(data);
+      })
+      .catch(error => {
+        console.log('There was an error sending the query', error);
+      });
     // console.log(values);
   }
 

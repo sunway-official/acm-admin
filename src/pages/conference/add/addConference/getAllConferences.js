@@ -70,7 +70,12 @@ class GetAllConfs extends React.Component {
     const { loading } = this.props.data;
 
     if (loading) return <div> loading... </div>;
+
+    console.log(this.props.data.getConferenceByUserID);
     const conferences = this.props.data.getConferenceByUserID;
+    let currentConferenceID = 0;
+    if (this.props.ME_QUERY.me && this.props.ME_QUERY.me.currentConference)
+      currentConferenceID = this.props.ME_QUERY.me.currentConference.id;
 
     return (
       <div>
@@ -97,8 +102,12 @@ class GetAllConfs extends React.Component {
               </span>
             }
           />
-          <div name="conferences">
+          <div name="conferences-sidebar">
             {conferences.map(conference => {
+              {
+                /* {conferences.forEach(conference => { */
+              }
+              // if (currentConferenceID !== conference.id) {
               return (
                 <List key={conference.id}>
                   <ListItem
@@ -123,7 +132,8 @@ class GetAllConfs extends React.Component {
                       <ListItem
                         key={2}
                         primaryText="Delete"
-                        leftIcon={<NavigationClose />}
+                        className="switch-text"
+                        leftIcon={<NavigationClose style={styles.smallIcon} />}
                         onClick={() => this.handleOpen(conference.id)}
                       />,
                     ]}
@@ -158,6 +168,9 @@ export const ME_QUERY = gql`
   query Me {
     me {
       id
+      currentConference {
+        id
+      }
     }
   }
 `;
@@ -172,5 +185,8 @@ export default compose(
   }),
   graphql(SWITCH_CURRENT_CONFERENCE, {
     name: 'SWITCH_CURRENT_CONFERENCE',
+  }),
+  graphql(ME_QUERY, {
+    name: 'ME_QUERY',
   }),
 )(withRouterGetAllConfs);

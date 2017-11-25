@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { gql, graphql } from 'react-apollo';
+import { graphql } from 'react-apollo';
 import { connect } from 'react-redux';
 import { bindActionCreators, compose } from 'redux';
 import {
@@ -14,10 +14,9 @@ import {
   IconButton,
 } from 'material-ui';
 import { NavigationClose } from 'material-ui/svg-icons';
-
 import { conferenceCoOranizerActions } from 'store/ducks/conference/info/coOrganizer';
 import CoOrganizerInfo from '../coOrganizer';
-import { queries } from '../helpers';
+import { queries, mutations } from '../helpers';
 
 class CoOrganizerList extends PureComponent {
   constructor() {
@@ -38,6 +37,11 @@ class CoOrganizerList extends PureComponent {
     this.handleOpenEdit = this.handleOpenEdit.bind(this);
     this.handleClose = this.handleClose.bind(this);
   }
+
+  styles = {
+    margin: 10,
+  };
+
   handleOpenAdding() {
     this.setState({ isAdding: true, title: 'Add new Co-Organizer' }, () => {
       this.props.toggleModalForm();
@@ -95,7 +99,11 @@ class CoOrganizerList extends PureComponent {
         onClick={this.handleDelete}
         type="submit"
       />,
-      <RaisedButton label="No" onClick={this.handleCloseDelete} />,
+      <RaisedButton
+        label="No"
+        onClick={this.handleCloseDelete}
+        style={this.styles}
+      />,
     ];
     const actions = [
       <IconButton
@@ -108,7 +116,7 @@ class CoOrganizerList extends PureComponent {
     ];
     return (
       <div className="d-flex">
-        <div className="list staff">
+        <div className="list staff" style={{ marginTop: '20px' }}>
           <Table fixedHeader={true}>
             <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
               <TableRow>
@@ -130,6 +138,7 @@ class CoOrganizerList extends PureComponent {
                     <TableRowColumn>
                       <RaisedButton
                         label="Edit"
+                        style={this.styles}
                         primary={true}
                         onClick={() => this.handleOpenEdit(coOrganizer)}
                       />
@@ -183,21 +192,6 @@ class CoOrganizerList extends PureComponent {
   }
 }
 
-const DELETE_COORGANIZER = gql`
-  mutation deleteCoOrganizerDetail($id: ID!) {
-    deleteCoOrganizerDetail(id: $id) {
-      id
-      name
-      email
-      website
-      phone
-      conference {
-        id
-      }
-    }
-  }
-`;
-
 const mapStateToProps = state => ({
   openModalForm: state.conferenceCoOranizer.openCoOrganizerFormModal,
 });
@@ -210,7 +204,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default compose(
-  graphql(DELETE_COORGANIZER, {
+  graphql(mutations.DELETE_COORGANIZER, {
     name: 'DELETE_COORGANIZER',
   }),
   connect(mapStateToProps, mapDispatchToProps),
