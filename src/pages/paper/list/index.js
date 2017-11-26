@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { graphql, compose } from 'react-apollo';
 import { queries } from '../helpers';
 import { paperActions } from 'store/ducks/paper';
+import { Link } from 'react-router-dom';
+
 import {
   Table,
   TableRow,
@@ -12,6 +14,7 @@ import {
   TableRowColumn,
   RaisedButton,
 } from 'material-ui';
+import { ActionNoteAdd } from 'material-ui/svg-icons';
 import Topic from '../topic';
 import DeletePaper from './deletePaper';
 class Index extends Component {
@@ -73,6 +76,13 @@ class Index extends Component {
           </TableBody>
         </Table>
         <DeletePaper id={this.state.paper_id} />
+        <Link to="/conference/paper/add">
+          <RaisedButton
+            icon={<ActionNoteAdd />}
+            primary={true}
+            label={'Add New Paper'}
+          />
+        </Link>
       </div>
     );
   }

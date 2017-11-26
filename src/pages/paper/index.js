@@ -7,7 +7,7 @@ class Index extends Component {
   render() {
     return (
       <div className="conference">
-        <Subheader className="subheader"> Conference Information</Subheader>
+        <Subheader className="subheader">Papers Management</Subheader>
         <div className="page-breadcrumb d-flex">
           <Link className="d-flex" to="/">
             <IconButton>
@@ -18,7 +18,7 @@ class Index extends Component {
           <IconButton>
             <HardwareKeyboardArrowRight />
           </IconButton>
-          <span>Papers Management</span>
+          <span>Papers List</span>
         </div>
         <div className="dashboard content d-flex">
           <List />

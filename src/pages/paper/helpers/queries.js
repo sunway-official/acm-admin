@@ -17,4 +17,12 @@ const GET_TOPICS_BY_PAPER_ID = gql`
     }
   }
 `;
-export default { GET_ALL_PAPERS, GET_TOPICS_BY_PAPER_ID };
+const GET_ALL_TOPICS = gql`
+  query getAllTopics {
+    getAllTopics {
+      id
+      name
+    }
+  }
+`;
+export default { GET_ALL_PAPERS, GET_TOPICS_BY_PAPER_ID, GET_ALL_TOPICS };

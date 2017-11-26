@@ -7,5 +7,11 @@ const DELETE_PAPER = gql`
     }
   }
 `;
-
-export default { DELETE_PAPER };
+const INSERT_PAPER = gql`
+  mutation insertPaper($title: String!, $abstract: String!) {
+    insertPaper(title: $title, abstract: $abstract) {
+      id
+    }
+  }
+`;
+export default { DELETE_PAPER, INSERT_PAPER };
