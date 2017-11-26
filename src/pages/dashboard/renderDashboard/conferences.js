@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import { List, ListItem } from 'material-ui/List';
 import Badge from 'material-ui/Badge';
 import style from './../style.css';
+import ContentAdd from 'material-ui/svg-icons/content/add';
+import { FloatingActionButton } from 'material-ui';
 
 const subTitleString = (text, limit) => {
   if (text.length > limit) return text.substring(0, limit);
@@ -73,6 +75,23 @@ class listCoferences extends React.Component {
               />
             );
           })}
+          <ListItem
+            primaryText="Add new conference"
+            className="listitem-add-conf"
+            rightIcon={
+              <span
+                className="add-btn"
+                style={{
+                  margin: '4px 12px 24px',
+                }}
+              >
+                <FloatingActionButton mini={true} onClick={this.handleOpen}>
+                  <ContentAdd />
+                </FloatingActionButton>
+              </span>
+            }
+            containerElement={<Link to={`/conference/add`} />}
+          />
         </List>
       </div>
     );
