@@ -54,9 +54,10 @@ class Index extends Component {
 }
 
 const mapStateToProps = state => {
-  return {
-    currentConference: state.auth.currentUser.currentConference,
-  };
+  if (state.auth.currentUser && state.auth.currentUser.currentConference)
+    return {
+      currentConference: state.auth.currentUser.currentConference,
+    };
 };
 
 export default connect(mapStateToProps, undefined)(Index);

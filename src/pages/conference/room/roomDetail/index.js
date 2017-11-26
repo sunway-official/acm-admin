@@ -21,7 +21,7 @@ class Index extends Component {
     UPDATE_ROOM_MUTATION({
       variables: {
         id: values.id,
-        conference_id: this.props.data.getRoomByID.conference.id,
+        conference_id: this.props.id,
         name: values.name,
         seats: values.seats,
         status: values.status,
@@ -39,7 +39,7 @@ class Index extends Component {
     window.alert('success');
   }
   render() {
-    const { loading, getRoomByID } = this.props.data;
+    const { loading, getRoomByID } = this.props.GET_ROOM_BY_ID_QUERY;
     if (loading) return <div>loading</div>;
     const roomDetail = getRoomByID;
     return (
@@ -71,9 +71,11 @@ class Index extends Component {
   }
 }
 const mapStateToProps = (state, ownProps) => {
-  return {
-    id: state.auth.currentUser.currentConference.id,
-  };
+  if (state.auth.currentUser && state.auth.currentUser.currentConference) {
+    return {
+      id: state.auth.currentUser.currentConference.id,
+    };
+  }
 };
 export default compose(
   connect(mapStateToProps, undefined),
@@ -81,6 +83,7 @@ export default compose(
     options: ownProps => ({
       variables: { id: ownProps.match.params.room_id },
     }),
+    name: 'GET_ROOM_BY_ID_QUERY',
   }),
   graphql(mutations.UPDATE_ROOM_MUTATION, {
     name: 'UPDATE_ROOM_MUTATION',

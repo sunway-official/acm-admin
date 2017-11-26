@@ -64,7 +64,10 @@ class Index extends Component {
     window.alert('success');
   }
   render() {
-    const { loading, getLandingPageByConferenceId } = this.props.data;
+    const {
+      loading,
+      getLandingPageByConferenceId,
+    } = this.props.GET_LANDING_PAGE_BY_CONFERENCE_ID_QUERY;
     if (loading) return <div>loading</div>;
     const landingPage = getLandingPageByConferenceId[0];
     return (
@@ -104,7 +107,9 @@ export default compose(
   graphql(mutations.INSERT_LANDING_PAGE_MUTATION, {
     name: 'INSERT_LANDING_PAGE_MUTATION',
   }),
-  graphql(queries.GET_LANDING_PAGE_BY_CONFERENCE_ID_QUERY, {}),
+  graphql(queries.GET_LANDING_PAGE_BY_CONFERENCE_ID_QUERY, {
+    name: 'GET_LANDING_PAGE_BY_CONFERENCE_ID_QUERY',
+  }),
   graphql(mutations.UPDATE_LANDING_PAGE_MUTATION, {
     name: 'UPDATE_LANDING_PAGE_MUTATION',
   }),
