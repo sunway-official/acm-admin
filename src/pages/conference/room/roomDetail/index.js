@@ -18,10 +18,7 @@ class Index extends Component {
     this.saveInformation = this.saveInformation.bind(this);
   }
   async saveInformation({ id, name, seats, status }) {
-    const {
-      UPDATE_ROOM_IN_CONFERENCE_MUTATION,
-      GET_ROOM_BY_ID_QUERY,
-    } = this.props;
+    const { UPDATE_ROOM_IN_CONFERENCE_MUTATION } = this.props;
     try {
       await UPDATE_ROOM_IN_CONFERENCE_MUTATION({
         variables: {

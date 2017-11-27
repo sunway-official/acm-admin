@@ -78,6 +78,7 @@ class ListExampleSimple extends React.Component {
           primaryText={'View'}
           onClick={() => {
             this.handleRequestClose();
+            window.location.reload();
           }}
         />
       </Link>
