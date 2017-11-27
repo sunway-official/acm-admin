@@ -30,7 +30,9 @@ class AddTopic extends Component {
     this.props.history.replace('/conference/topics-management');
   }
   render() {
-    const colorsList = this.props.GET_ALL_COLORS_QUERY.getAllColors;
+    const { loading, getAllColors } = this.props.GET_ALL_COLORS_QUERY;
+    if (loading) return <div>loading</div>;
+    const colorsList = getAllColors;
     return (
       <div className="conference">
         <Subheader className="subheader">Add New Topic</Subheader>

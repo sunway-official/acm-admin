@@ -18,7 +18,6 @@ class RoomList extends Component {
   constructor() {
     super();
     this.state = {
-      id: 0,
       openDelete: false,
     };
     this.handleClose = this.handleClose.bind(this);
@@ -52,7 +51,13 @@ class RoomList extends Component {
     });
   }
   render() {
-    const listRoom = this.props.listRoom;
+    const {
+      loading,
+      getRoomsByConferenceID,
+    } = this.props.GET_ROOMS_BY_CONFERENCE_ID_QUERY;
+
+    if (loading) return <div>loading...</div>;
+    const listRoom = getRoomsByConferenceID;
     const actionDelete = [
       <RaisedButton
         label="Yes"
@@ -106,7 +111,7 @@ class RoomList extends Component {
             </TableBody>
           </Table>
           <Dialog
-            title="Do you want to delete this color?"
+            title="Do you want to delete this room?"
             modal={true}
             onRequestClose={this.handleClose}
             open={this.state.openDelete}
@@ -124,9 +129,7 @@ class RoomList extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  return {
-    id: state.auth.currentUser.currentConference.id,
-  };
+  return {};
 };
 export default compose(
   connect(mapStateToProps, undefined),
@@ -137,5 +140,6 @@ export default compose(
     options: ownProps => ({
       variables: { conference_id: ownProps.id },
     }),
+    name: 'GET_ROOMS_BY_CONFERENCE_ID_QUERY',
   }),
 )(RoomList);

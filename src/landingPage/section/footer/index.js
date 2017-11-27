@@ -7,7 +7,6 @@ import { queries } from '../../helpers';
 
 class Footer extends Component {
   render() {
-    console.log(this.props);
     const { loading, getLandingPageByConferenceId } = this.props.data;
     if (loading) return <div>loading</div>;
     const landingPage = getLandingPageByConferenceId[0];

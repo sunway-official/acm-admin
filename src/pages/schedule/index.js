@@ -7,7 +7,6 @@ const Index = props => {
 };
 
 const mapStateToProps = state => {
-  console.log(state);
   return {
     conference: state.auth.currentUser.currentConference,
   };

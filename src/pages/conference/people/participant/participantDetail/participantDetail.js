@@ -9,7 +9,6 @@ import { listField } from './listField';
 
 class ParticipantDetail extends Component {
   render() {
-    console.log(this.props);
     const ListFields = listField.map(field => (
       <div key={field.id}>
         <Row around="xs" className={field.className}>

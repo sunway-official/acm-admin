@@ -64,7 +64,6 @@ class MyCalendar extends React.PureComponent {
     const { INSERT_ACTIVITY_MUTATION, INSERT_SCHEDULE_MUTATION } = this.props;
 
     const conferenceId = this.props.conference.id;
-    console.log(values);
     const data = {
       INSERT_ACTIVITY_MUTATION,
       INSERT_SCHEDULE_MUTATION,
@@ -100,14 +99,17 @@ class MyCalendar extends React.PureComponent {
 
   render() {
     const { loading, getActivitiesByConferenceID } = this.props.data;
-    console.log(getActivitiesByConferenceID);
+    console.log(this.props);
 
     if (loading) return <div>loading</div>;
-
+    console.log(getActivitiesByConferenceID);
+    const papers = this.props.GET_PAPER_BY_CONFERENCE_ID
+      .getPapersByConferenceID;
     const events = functions.getEvents(getActivitiesByConferenceID);
+    console.log(events);
     const allSchedules = functions.getAllSchedules(events);
-    console.log(this.props);
-    const rooms = this.props.GET_ROOMS_BY_STATUS_QUERY.getRoomsByStatus;
+    const rooms = this.props.GET_ROOMS_BY_STATUS_IN_CONFERENCE_QUERY
+      .getRoomsByStatus;
     const start_date = this.props.conference.start_date;
     const end_date = this.props.conference.end_date;
 
@@ -115,9 +117,11 @@ class MyCalendar extends React.PureComponent {
 
     return (
       <div className="conference">
-        <Subheader className="subheader">Activity Schedule</Subheader>
+        <Subheader className="subheader paper-title">
+          Activity Schedule
+        </Subheader>
         <div className="page-breadcrumb d-flex">
-          <Link className="d-flex" to="/">
+          <Link className="d-flex" to="/conference/info">
             <IconButton>
               <ActionHome />
             </IconButton>
@@ -158,6 +162,7 @@ class MyCalendar extends React.PureComponent {
             start_date={start_date}
             end_date={end_date}
             allSchedules={allSchedules}
+            papers={papers}
           />
           <div id="format-time">
             <Toggle label="24h" onToggle={this.handleTimeFormat} />
@@ -165,7 +170,6 @@ class MyCalendar extends React.PureComponent {
         </div>
 
         <Dialog
-          className="abc"
           style={{ top: '-130px' }}
           open={this.props.openEdit}
           title="Edit Activity Schedule Information"
@@ -178,6 +182,7 @@ class MyCalendar extends React.PureComponent {
             conferenceId={this.props.conference.id}
             start_date={start_date}
             end_date={end_date}
+            papers={papers}
           />
           <IconButton
             tooltip="Close"
@@ -209,19 +214,15 @@ const mapDispatchToProps = dispatch => {
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
-  graphql(queries.GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY, {
-    options: ownProps => ({
-      variables: { conference_id: ownProps.conference.id },
-    }),
-  }),
+  graphql(queries.GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY),
   graphql(queries.GET_ALL_ROLES, {
     name: 'GET_ALL_ROLES',
   }),
-  graphql(queries.GET_ROOMS_BY_STATUS_QUERY, {
+  graphql(queries.GET_ROOMS_BY_STATUS_IN_CONFERENCE_QUERY, {
     options: {
       variables: { status: 'on' },
     },
-    name: 'GET_ROOMS_BY_STATUS_QUERY',
+    name: 'GET_ROOMS_BY_STATUS_IN_CONFERENCE_QUERY',
   }),
   graphql(mutations.DELETE_SCHEDULE_MUTATION, {
     name: 'DELETE_SCHEDULE_MUTATION',
@@ -237,5 +238,8 @@ export default compose(
   }),
   graphql(mutations.UPDATE_SCHEDULE_MUTATION, {
     name: 'UPDATE_SCHEDULE_MUTATION',
+  }),
+  graphql(queries.GET_PAPER_BY_CONFERENCE_ID, {
+    name: 'GET_PAPER_BY_CONFERENCE_ID',
   }),
 )(MyCalendar);

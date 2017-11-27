@@ -21,14 +21,14 @@ const AddConferenceForm = ({
     <center className="add-title">Conference Information</center>
     <div name="conference">
       <div className="d-flex form-group">
-        <label>Address ID</label>
+        {/* <label>Address ID</label>
         <Field
           name="address_id"
           component={renderTextField}
           fullWidth={true}
           hintText="Address"
         />
-        <br />
+        <br /> */}
       </div>
       <div className="d-flex form-group">
         <label>Title</label>
@@ -77,7 +77,7 @@ const AddConferenceForm = ({
           />
         </div>
       </div>
-      <div className="d-flex form-group">
+      {/* <div className="d-flex form-group">
         <label>Background image</label>
         <Field
           name="bg_image"
@@ -86,7 +86,7 @@ const AddConferenceForm = ({
           hintText="background image"
         />
         <br />
-      </div>
+      </div> */}
     </div>
     <div name="conference">
       <center className="add-title">Organizer Information</center>

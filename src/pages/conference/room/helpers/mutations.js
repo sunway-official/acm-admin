@@ -1,16 +1,14 @@
 import { gql } from 'react-apollo';
 
-const UPDATE_ROOM_MUTATION = gql`
-  mutation updateRoom(
+const UPDATE_ROOM_IN_CONFERENCE_MUTATION = gql`
+  mutation updateRoomInConference(
     $id: ID!
-    $conference_id: ID!
     $name: String
     $seats: Int
     $status: Status
   ) {
-    updateRoom(
+    updateRoomInConference(
       id: $id
-      conference_id: $conference_id
       name: $name
       seats: $seats
       status: $status
@@ -22,26 +20,17 @@ const UPDATE_ROOM_MUTATION = gql`
     }
   }
 `;
-const INSERT_ROOM_MUTATION = gql`
-  mutation insertRoom(
-    $conference_id: ID!
+const INSERT_ROOM_IN_CONFERENCE_MUTATION = gql`
+  mutation insertRoomInConference(
     $name: String!
     $seats: Int!
     $status: Status
   ) {
-    insertRoom(
-      conference_id: $conference_id
-      name: $name
-      seats: $seats
-      status: $status
-    ) {
+    insertRoomInConference(name: $name, seats: $seats, status: $status) {
       id
       name
       seats
       status
-      conference {
-        id
-      }
     }
   }
 `;
@@ -55,7 +44,7 @@ const DELETE_ROOM_MUTATION = gql`
 `;
 
 export default {
-  UPDATE_ROOM_MUTATION,
-  INSERT_ROOM_MUTATION,
+  UPDATE_ROOM_IN_CONFERENCE_MUTATION,
+  INSERT_ROOM_IN_CONFERENCE_MUTATION,
   DELETE_ROOM_MUTATION,
 };

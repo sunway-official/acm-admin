@@ -11,9 +11,10 @@ import {
 } from 'material-ui';
 import * as moment from 'moment';
 import ParticipantDetail from '../participantDetail';
+import { ActionVisibility } from 'material-ui/svg-icons';
 
 const customTitleStyle = {
-  background: 'rgb(255, 87, 34)',
+  background: 'rgb(62, 85, 102)',
   color: '#FFFFFF',
 };
 class ParticipantList extends Component {
@@ -77,6 +78,8 @@ class ParticipantList extends Component {
                         label="View Detail"
                         primary={true}
                         onClick={() => this.handleOpenDelete(participantDetail)}
+                        icon={<ActionVisibility />}
+                        labelPosition="before"
                       />
                     </TableRowColumn>
                   </TableRow>

@@ -16,68 +16,67 @@ class AddNewRoom extends Component {
     };
     this.insertRoom = this.insertRoom.bind(this);
   }
-  insertRoom(values) {
-    const { INSERT_ROOM_MUTATION } = this.props;
-    INSERT_ROOM_MUTATION({
-      variables: {
-        conference_id: this.props.id,
-        name: values.name,
-        seats: values.seats,
-        status: values.status,
-      },
-      refetchQueries: [
-        {
-          query: queries.GET_ROOMS_BY_CONFERENCE_ID_QUERY,
-          variables: { conference_id: this.props.id },
+  async insertRoom({ name, seats, status }) {
+    const { INSERT_ROOM_IN_CONFERENCE_MUTATION } = this.props;
+    try {
+      await INSERT_ROOM_IN_CONFERENCE_MUTATION({
+        variables: {
+          name: name,
+          seats: seats,
+          status: status,
         },
-      ],
-    });
-    window.alert('success');
-    this.props.history.replace('/conference/rooms-management');
+        refetchQueries: [
+          {
+            query: queries.GET_ROOMS_BY_CONFERENCE_ID_QUERY,
+          },
+        ],
+      });
+      alert('Success!');
+      this.props.history.replace('/conference/rooms-management');
+    } catch (error) {
+      throw alert('This room name is exist! Please choose another name!');
+    }
   }
   render() {
     return (
       <div className="conference">
-        <Subheader className="subheader">Add New Room</Subheader>
+        <Subheader className="subheader"> Add New Room </Subheader>{' '}
         <div className="page-breadcrumb d-flex">
           <Link className="d-flex" to="/">
             <IconButton>
               <ActionHome />
-            </IconButton>
-            <span>Home</span>
-          </Link>
+            </IconButton>{' '}
+            <span> Home </span>{' '}
+          </Link>{' '}
           <IconButton>
             <HardwareKeyboardArrowRight />
-          </IconButton>
+          </IconButton>{' '}
           <Link className="d-flex" to="/conference/rooms-management">
-            <span>Rooms Management</span>
-          </Link>
+            <span> Rooms Management </span>{' '}
+          </Link>{' '}
           <IconButton>
             <HardwareKeyboardArrowRight />
-          </IconButton>
-          <span>Add New Room</span>
-        </div>
+          </IconButton>{' '}
+          <span> Add New Room </span>{' '}
+        </div>{' '}
         <div className="dashboard content d-flex">
-          <RoomDetail onSubmit={this.insertRoom} />
-        </div>
+          <RoomDetail onSubmit={this.insertRoom} />{' '}
+        </div>{' '}
       </div>
     );
   }
 }
 const mapStateToProps = (state, ownProps) => {
-  return {
-    id: state.auth.currentUser.currentConference.id,
-  };
+  if (state.auth.currentUser && state.auth.currentUser.currentConference) {
+    return {
+      id: state.auth.currentUser.currentConference.id,
+    };
+  }
 };
 export default compose(
   withRouter,
   connect(mapStateToProps, undefined),
-  graphql(mutations.INSERT_ROOM_MUTATION, {
-    name: 'INSERT_ROOM_MUTATION',
-  }),
-  graphql(queries.GET_ROOMS_BY_CONFERENCE_ID_QUERY, {
-    options: ownProps => ({
-      variables: { conference_id: ownProps.id },
-    }),
+  graphql(mutations.INSERT_ROOM_IN_CONFERENCE_MUTATION, {
+    name: 'INSERT_ROOM_IN_CONFERENCE_MUTATION',
   }),
 )(AddNewRoom);

@@ -32,10 +32,13 @@ class Index extends Component {
     this.props.history.replace('/conference/topics-management');
   }
   render() {
-    const { loading, getTopicByID } = this.props.data;
-    if (loading) return <div>loading</div>;
+    const loadingTopic = this.props.GET_TOPIC_BY_ID_QUERY.loading;
+    const loadingColor = this.props.GET_ALL_COLORS_QUERY.loading;
+    if (loadingTopic || loadingColor) return <div> loading</div>;
+    const { getTopicByID } = this.props.GET_TOPIC_BY_ID_QUERY;
+    const { getAllColors } = this.props.GET_ALL_COLORS_QUERY;
+    const colorsList = getAllColors;
     const topicDetail = getTopicByID;
-    const colorsList = this.props.GET_ALL_COLORS_QUERY.getAllColors;
     return (
       <div className="conference">
         <Subheader className="subheader"> Topic Detail</Subheader>
@@ -74,6 +77,7 @@ export default compose(
     options: ownProps => ({
       variables: { id: ownProps.match.params.topic_id },
     }),
+    name: 'GET_TOPIC_BY_ID_QUERY',
   }),
   graphql(mutations.UPDATE_TOPIC_MUTATION, {
     name: 'UPDATE_TOPIC_MUTATION',

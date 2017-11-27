@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import { graphql, compose } from 'react-apollo';
 import { queries, mutations } from '../helpers';
+import { queries as scheduleQueries } from '../../../schedule/helpers';
 import RoomDetail from './roomDetail';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
@@ -16,28 +17,34 @@ class Index extends Component {
     };
     this.saveInformation = this.saveInformation.bind(this);
   }
-  saveInformation(values) {
-    const { UPDATE_ROOM_MUTATION } = this.props;
-    UPDATE_ROOM_MUTATION({
-      variables: {
-        id: values.id,
-        conference_id: this.props.data.getRoomByID.conference.id,
-        name: values.name,
-        seats: values.seats,
-        status: values.status,
-      },
-      refetchQueries: [
-        {
-          query: queries.GET_ROOM_BY_ID_QUERY,
-          variables: { id: this.props.match.params.room_id },
+  async saveInformation({ id, name, seats, status }) {
+    const { UPDATE_ROOM_IN_CONFERENCE_MUTATION } = this.props;
+    try {
+      await UPDATE_ROOM_IN_CONFERENCE_MUTATION({
+        variables: {
+          id: id,
+          name: name,
+          seats: seats,
+          status: status,
         },
-      ],
-    });
-    window.alert('success');
-    this.props.history.replace('/conference/rooms-management');
+        refetchQueries: [
+          {
+            query: queries.GET_ROOMS_BY_CONFERENCE_ID_QUERY,
+          },
+          {
+            query: scheduleQueries.GET_ROOMS_BY_STATUS_IN_CONFERENCE_QUERY,
+            variables: { status: 'on' },
+          },
+        ],
+      });
+      window.alert('success');
+      this.props.history.replace('/conference/rooms-management');
+    } catch (error) {
+      alert('This room name is exist! Please choose another name!');
+    }
   }
   render() {
-    const { loading, getRoomByID } = this.props.data;
+    const { loading, getRoomByID } = this.props.GET_ROOM_BY_ID_QUERY;
     if (loading) return <div>loading</div>;
     const roomDetail = getRoomByID;
     return (
@@ -69,9 +76,11 @@ class Index extends Component {
   }
 }
 const mapStateToProps = (state, ownProps) => {
-  return {
-    id: state.auth.currentUser.currentConference.id,
-  };
+  if (state.auth.currentUser && state.auth.currentUser.currentConference) {
+    return {
+      id: state.auth.currentUser.currentConference.id,
+    };
+  }
 };
 export default compose(
   (withRouter, connect(mapStateToProps, undefined)),
@@ -79,8 +88,9 @@ export default compose(
     options: ownProps => ({
       variables: { id: ownProps.match.params.room_id },
     }),
+    name: 'GET_ROOM_BY_ID_QUERY',
   }),
-  graphql(mutations.UPDATE_ROOM_MUTATION, {
-    name: 'UPDATE_ROOM_MUTATION',
+  graphql(mutations.UPDATE_ROOM_IN_CONFERENCE_MUTATION, {
+    name: 'UPDATE_ROOM_IN_CONFERENCE_MUTATION',
   }),
 )(Index);

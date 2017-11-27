@@ -15,7 +15,10 @@ class Index extends Component {
     };
   }
   render() {
-    const { loading, getAllParticipantsInConference } = this.props.data;
+    const {
+      loading,
+      getAllParticipantsInConference,
+    } = this.props.GET_ALL_PARTICIPANTS_IN_CONFERENCE_QUERY;
     if (loading) return <div>loading...</div>;
     const listParticipant = getAllParticipantsInConference;
     return (
@@ -41,9 +44,11 @@ class Index extends Component {
   }
 }
 const mapStateToProps = (state, ownProps) => {
-  return {
-    id: state.auth.currentUser.currentConference.id,
-  };
+  if (state.auth.currentUser && state.auth.currentUser.currentConference) {
+    return {
+      id: state.auth.currentUser.currentConference.id,
+    };
+  }
 };
 export default compose(
   connect(mapStateToProps, undefined),
@@ -51,5 +56,6 @@ export default compose(
     options: ownProps => ({
       variables: { conference_id: ownProps.id },
     }),
+    name: 'GET_ALL_PARTICIPANTS_IN_CONFERENCE_QUERY',
   }),
 )(Index);
