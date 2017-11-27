@@ -102,16 +102,16 @@ class MyCalendar extends React.PureComponent {
     console.log(this.props);
 
     if (loading) return <div>loading</div>;
-    console.log(getActivitiesByConferenceID);
     const papers = this.props.GET_PAPER_BY_CONFERENCE_ID
       .getPapersByConferenceID;
     const events = functions.getEvents(getActivitiesByConferenceID);
-    console.log(events);
     const allSchedules = functions.getAllSchedules(events);
     const rooms = this.props.GET_ROOMS_BY_STATUS_IN_CONFERENCE_QUERY
-      .getRoomsByStatus;
-    const start_date = this.props.conference.start_date;
-    const end_date = this.props.conference.end_date;
+      .getRoomsByStatusInConference;
+    const conference = this.props.conference;
+    if (!conference) return <div>Loading</div>;
+    const start_date = conference.start_date;
+    const end_date = conference.end_date;
 
     const today = new Date();
 

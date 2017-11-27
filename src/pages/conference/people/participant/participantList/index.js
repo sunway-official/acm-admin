@@ -79,7 +79,6 @@ class ParticipantList extends Component {
                         primary={true}
                         onClick={() => this.handleOpenDelete(participantDetail)}
                         icon={<ActionVisibility />}
-                        labelPosition="before"
                       />
                     </TableRowColumn>
                   </TableRow>

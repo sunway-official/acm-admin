@@ -70,7 +70,20 @@ class ListExampleSimple extends React.Component {
     } else {
       conference_id = 0;
     }
-    console.log(disableView);
+    let view;
+    view = !disableView ? (
+      <Link to={`/landingpage/${conference_id}`}>
+        <MenuItem
+          className="item"
+          primaryText={'View'}
+          onClick={() => {
+            this.handleRequestClose();
+          }}
+        />
+      </Link>
+    ) : (
+      ''
+    );
     return (
       <div>
         <style dangerouslySetInnerHTML={{ __html: style }} />
@@ -158,23 +171,7 @@ class ListExampleSimple extends React.Component {
                     onClick={this.handleRequestClose}
                   />
                 </Link>
-                <Link
-                  to={
-                    disableView
-                      ? '/conference/landing-page-management'
-                      : `/landingpage/${conference_id}`
-                  }
-                >
-                  <MenuItem
-                    className="item"
-                    primaryText={'View'}
-                    onClick={() => {
-                      this.handleRequestClose();
-                      window.location.reload();
-                    }}
-                    disabled={disableView}
-                  />
-                </Link>
+                {view}
               </Menu>
             </Popover>
           </ListItem>
