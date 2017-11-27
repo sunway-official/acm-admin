@@ -28,6 +28,8 @@ import AddNewRoom from '../pages/conference/room/roomDetail/addRoom';
 import AddNewTopic from '../pages/conference/topic/topicDetail/addTopic';
 import AttendeeManagement from '../pages/conference/attendee';
 
+import ReactTable from '../pages/react-table';
+
 export default () => (
   <MuiThemeProvider muiTheme={muiTheme}>
     <Switch>
@@ -54,6 +56,7 @@ export default () => (
             path="/conference/landing-page-management"
             component={LandingPageManagement}
           />
+          <AuthRoute needAuth path="/react-table" component={ReactTable} />
           <AuthRoute
             needAuth
             exact
