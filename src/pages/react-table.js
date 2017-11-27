@@ -3,32 +3,51 @@ import React from 'react';
 import 'react-table/react-table.css';
 import RaisedButton from 'material-ui/RaisedButton';
 import { gql, graphql } from 'react-apollo';
-import { Subheader, IconButton } from 'material-ui';
+import { Subheader } from 'material-ui';
 
 const style = {
-  margin: 12,
+  textAlign: 'center',
+  lineHeight: '200%',
+};
+
+const styleBtn = {
+  margin: '0px 10px',
 };
 const columns = [
   {
     Header: 'ID',
     accessor: 'id', // String-based value accessors!
+    minWidth: 100,
+    Cell: props => <div style={style}>{props.value}</div>, // Custom cell components!
+    Footer: () => <div style={style}>ID</div>,
   },
   {
     Header: 'Name',
     accessor: 'name', // String-based value accessors!
+    maxWidth: 600,
+    minWidth: 400,
+    Cell: props => <div style={style}>{props.value}</div>, // Custom cell components!
+    Footer: () => <div style={style}>Name</div>,
   },
   {
     Header: 'Color code',
     accessor: 'color_code',
-    Cell: props => <span className="number">{props.value}</span>, // Custom cell components!
+    maxWidth: 400,
+    minWidth: 300,
+    Footer: () => <div style={style}>Color code</div>,
+    Cell: props => <div style={style}>{props.value}</div>, // Custom cell components!
   },
   {
     Header: 'Action',
+    maxWidth: 600,
+    minWidth: 400,
+    filterable: false,
+    Footer: () => <div style={style}>Action</div>,
     accessor: 'action', // String-based value accessors!
     Cell: row => (
-      <div>
-        <RaisedButton label="Primary" primary={true} style={style} />
-        <RaisedButton label="Secondary" secondary={true} style={style} />
+      <div style={style}>
+        <RaisedButton label="Primary" primary={true} style={styleBtn} />
+        <RaisedButton label="Secondary" secondary={true} style={styleBtn} />
       </div>
     ),
   },
@@ -59,7 +78,16 @@ const Index = props => {
         <span>Conference Information</span>
       </div>
       <div className="dashboard content d-flex">
-        <ReactTable data={topics} columns={columns} defaultSorted={sorted} />
+        <ReactTable
+          filterable
+          data={topics}
+          columns={columns}
+          defaultSorted={sorted}
+          defaultPageSize={10}
+          className="-striped -highlight"
+          showPaginationTop
+          showPaginationBottom
+        />
       </div>
     </div>
   );
