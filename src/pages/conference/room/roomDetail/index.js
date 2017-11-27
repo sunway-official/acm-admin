@@ -18,7 +18,10 @@ class Index extends Component {
     this.saveInformation = this.saveInformation.bind(this);
   }
   async saveInformation({ id, name, seats, status }) {
-    const { UPDATE_ROOM_IN_CONFERENCE_MUTATION } = this.props;
+    const {
+      UPDATE_ROOM_IN_CONFERENCE_MUTATION,
+      GET_ROOM_BY_ID_QUERY,
+    } = this.props;
     try {
       await UPDATE_ROOM_IN_CONFERENCE_MUTATION({
         variables: {
@@ -40,7 +43,8 @@ class Index extends Component {
       window.alert('success');
       this.props.history.replace('/conference/rooms-management');
     } catch (error) {
-      alert('This room name is exist! Please choose another name!');
+      let temp = error.graphQLErrors[0].message;
+      alert(temp.substring(7, temp.length));
     }
   }
   render() {
