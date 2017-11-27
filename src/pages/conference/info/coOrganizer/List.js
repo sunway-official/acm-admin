@@ -12,6 +12,7 @@ import {
   RaisedButton,
   Dialog,
   IconButton,
+  AppBar,
 } from 'material-ui';
 import { NavigationClose } from 'material-ui/svg-icons';
 import { conferenceCoOranizerActions } from 'store/ducks/conference/info/coOrganizer';
@@ -105,15 +106,6 @@ class CoOrganizerList extends PureComponent {
         style={this.styles}
       />,
     ];
-    const actions = [
-      <IconButton
-        tooltip="No"
-        className="cancel-btn dialog"
-        onClick={this.handleClose}
-      >
-        <NavigationClose />
-      </IconButton>,
-    ];
     return (
       <div className="d-flex">
         <div className="list staff" style={{ marginTop: '20px' }}>
@@ -165,12 +157,22 @@ class CoOrganizerList extends PureComponent {
           />
 
           <Dialog
-            title={this.state.title}
-            actions={actions}
             modal={true}
             open={this.props.openModalForm}
             onRequestClose={this.handleClose}
           >
+            <AppBar
+              iconElementLeft={
+                <IconButton
+                  tooltip="Close"
+                  className="cancel-btn dialog"
+                  onClick={this.handleClose}
+                >
+                  <NavigationClose />
+                </IconButton>
+              }
+              title={this.state.title}
+            />
             <CoOrganizerInfo
               coOrganizerDetails={this.state.coOrganizer}
               onSubmit={this.handleClose}

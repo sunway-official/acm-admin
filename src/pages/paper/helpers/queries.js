@@ -17,12 +17,16 @@ const GET_TOPICS_BY_PAPER_ID = gql`
     }
   }
 `;
-const GET_ALL_TOPICS = gql`
-  query getAllTopics {
-    getAllTopics {
+const GET_TOPICS_OF_CONFERENCE = gql`
+  query getTopicsOfConference {
+    getTopicsOfConference {
       id
       name
     }
   }
 `;
-export default { GET_ALL_PAPERS, GET_TOPICS_BY_PAPER_ID, GET_ALL_TOPICS };
+export default {
+  GET_ALL_PAPERS,
+  GET_TOPICS_BY_PAPER_ID,
+  GET_TOPICS_OF_CONFERENCE,
+};

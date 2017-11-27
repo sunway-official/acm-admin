@@ -2,9 +2,17 @@ import React, { Component } from 'react';
 import CustomInput from 'components/CustomInput';
 import { reduxForm, Field } from 'redux-form';
 import validate from './validate';
-import { RaisedButton } from 'material-ui';
+import { RaisedButton, Checkbox } from 'material-ui';
 class AddPaperForm extends Component {
   render() {
+    const topics = this.props.topics;
+    const renderCheckbox = ({ input, label }) => (
+      <Checkbox
+        label={label}
+        // checked={input.value ? true : false}
+        onCheck={input.onChange}
+      />
+    );
     const { handleSubmit, invalid } = this.props;
     return (
       <form className="form conference-info" onSubmit={handleSubmit}>
@@ -28,6 +36,19 @@ class AddPaperForm extends Component {
             hintText="Paper Abstract"
           />
         </div>
+        <div>
+          {topics.map(topic => {
+            return (
+              <Field
+                key={topic.id}
+                name={`topics[${topic.id}]`}
+                component={renderCheckbox}
+                label={topic.name}
+              />
+            );
+          })}
+        </div>
+
         <div className="d-flex save-btn btn-group">
           <RaisedButton
             label="Save"
