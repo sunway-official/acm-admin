@@ -66,6 +66,7 @@ export const INSERT_ORGANIZER_DETAIL_MUTATION = gql`
     ) {
       id
       name
+      address
       email
       website
       phone

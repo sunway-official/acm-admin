@@ -111,6 +111,15 @@ const AddConferenceForm = ({
                 />
               </div>
               <div className="d-flex form-group">
+                <label>Address :</label>
+                <Field
+                  name="organizerAddress"
+                  component={CustomInput}
+                  hintText="Organizer Address"
+                  fullWidth={true}
+                />
+              </div>
+              <div className="d-flex form-group">
                 <label>Website :</label>
                 <Field
                   name="organizerWebsite"

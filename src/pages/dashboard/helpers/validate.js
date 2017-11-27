@@ -10,6 +10,7 @@ const validate = values => {
     'endDate',
     'organizerName',
     'organizerEmail',
+    'organizerAddress',
     'organizerWebsite',
     'organizerPhoneNumber',
   ];
@@ -24,7 +25,7 @@ const validate = values => {
     errors.organizerEmail = 'Invalid email address';
     ArrayErrors[0] = errors;
   }
-  if (values.endDate <= values.startDate) {
+  if (values.endDate < values.startDate) {
     errors.endDate = 'End date of conference must be greater than start date';
     ArrayErrors[0] = errors;
   }

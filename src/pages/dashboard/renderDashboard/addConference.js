@@ -26,33 +26,36 @@ class ConferenceAddForm extends PureComponent {
   }
 
   async handleAddConference(values) {
-    console.log('data', values);
-    console.log('props', this.props);
     const user_id = this.props.data.me.id;
 
     try {
-      await this.propsINSERT_ADDRESS_MUTATION({
+      const addressData = await this.props.INSERT_ADDRESS_MUTATION({
         variables: {
           street: '',
           city: '',
           country: '',
-          lat: 16.0598934,
-          long: 108.2076032,
+          lat: this.props.position.lat,
+          long: this.props.position.lng,
         },
       });
-      await this.props.INSERT_ORGANIZER_DETAIL_MUTATION({
-        variables: {
-          user_id: user_id,
-          name: values.organizerName,
-          email: values.organizerEmail,
-          website: values.organizerWebsite,
-          phone: values.organizerPhoneNumber,
+      console.log(addressData);
+      const organizeDetailData = await this.props.INSERT_ORGANIZER_DETAIL_MUTATION(
+        {
+          variables: {
+            user_id: user_id,
+            name: values.organizerName,
+            email: values.organizerEmail,
+            address: values.organizerAddress,
+            website: values.organizerWebsite,
+            phone: values.organizerPhoneNumber,
+          },
         },
-      });
+      );
+      console.log(organizeDetailData);
       await this.props.INSERT_CONFERENCE_MUTATION({
         variables: {
-          organizer_detail_id: this.props.data.insertOrganizerDetail.id,
-          address_id: this.props.data.insertOrganizerDetail.id,
+          organizer_detail_id: organizeDetailData.data.insertOrganizerDetail.id,
+          address_id: addressData.data.insertAddress.id,
           title: values.title,
           description: values.description,
           start_date: values.startDate,
@@ -67,7 +70,6 @@ class ConferenceAddForm extends PureComponent {
 
   onMapPositionChanged(position) {
     this.props.getPosition(position);
-
     console.log(this.props);
   }
 
@@ -75,21 +77,28 @@ class ConferenceAddForm extends PureComponent {
     return (
       <AddForm
         onSubmit={this.handleAddConference}
-        handleClose={this.handleClose}
         onMapPositionChanged={this.onMapPositionChanged}
       />
     );
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  getPosition(new_position) {
-    dispatch(conferenceOperations.getPositionOperation(new_position));
-  },
-});
+const mapStateToProps = (state, ownProps) => {
+  const conference = ownProps.conference;
+  return {
+    position: state.conference.position,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getPosition: position =>
+      dispatch(conferenceOperations.getPositionOperation(position)),
+  };
+};
 
 export default compose(
-  connect(undefined, mapDispatchToProps),
+  connect(mapStateToProps, mapDispatchToProps),
   graphql(INSERT_CONFERENCE_MUTATION, {
     name: 'INSERT_CONFERENCE_MUTATION',
   }),
