@@ -12,24 +12,29 @@ class Index extends Component {
     super(props);
     this.saveInformation = this.saveInformation.bind(this);
   }
-  saveInformation(values) {
-    const { UPDATE_TOPIC_MUTATION } = this.props;
-    UPDATE_TOPIC_MUTATION({
-      variables: {
-        id: values.id,
-        name: values.name,
-        description: values.description,
-        color_id: values.color_id,
-      },
-      refetchQueries: [
-        {
-          query: queries.GET_TOPIC_BY_ID_QUERY,
-          variables: { id: this.props.match.params.topic_id },
+  async saveInformation(values) {
+    const { UPDATE_TOPIC_IN_CONFERENCE_MUTATION } = this.props;
+    try {
+      await UPDATE_TOPIC_IN_CONFERENCE_MUTATION({
+        variables: {
+          id: values.id,
+          name: values.name,
+          description: values.description,
+          color_id: values.color_id,
         },
-      ],
-    });
-    window.alert('success');
-    this.props.history.replace('/conference/topics-management');
+        refetchQueries: [
+          {
+            query: queries.GET_TOPIC_BY_ID_QUERY,
+            variables: { id: this.props.match.params.topic_id },
+          },
+        ],
+      });
+      window.alert('success');
+      this.props.history.replace('/conference/topics-management');
+    } catch (error) {
+      let temp = error.graphQLErrors[0].message;
+      alert(temp.substring(7, temp.length));
+    }
   }
   render() {
     const loadingTopic = this.props.GET_TOPIC_BY_ID_QUERY.loading;
@@ -79,11 +84,8 @@ export default compose(
     }),
     name: 'GET_TOPIC_BY_ID_QUERY',
   }),
-  graphql(mutations.UPDATE_TOPIC_MUTATION, {
-    name: 'UPDATE_TOPIC_MUTATION',
-  }),
-  graphql(mutations.INSERT_TOPIC_MUTATION, {
-    name: 'INSERT_TOPIC_MUTATION',
+  graphql(mutations.UPDATE_TOPIC_IN_CONFERENCE_MUTATION, {
+    name: 'UPDATE_TOPIC_IN_CONFERENCE_MUTATION',
   }),
   graphql(queries.GET_ALL_COLORS_QUERY, {
     name: 'GET_ALL_COLORS_QUERY',

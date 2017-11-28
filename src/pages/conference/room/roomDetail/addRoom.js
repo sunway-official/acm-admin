@@ -34,7 +34,8 @@ class AddNewRoom extends Component {
       alert('Success!');
       this.props.history.replace('/conference/rooms-management');
     } catch (error) {
-      throw alert('This room name is exist! Please choose another name!');
+      let temp = error.graphQLErrors[0].message;
+      alert(temp.substring(7, temp.length));
     }
   }
   render() {

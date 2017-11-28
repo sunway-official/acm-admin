@@ -12,22 +12,27 @@ class AddTopic extends Component {
     super(props);
     this.insertTopic = this.insertTopic.bind(this);
   }
-  insertTopic(values) {
-    const { INSERT_TOPIC_MUTATION } = this.props;
-    INSERT_TOPIC_MUTATION({
-      variables: {
-        name: values.name,
-        description: values.description,
-        color_id: values.color_id,
-      },
-      refetchQueries: [
-        {
-          query: queries.GET_TOPICS_OF_CONFERENCE_QUERY,
+  async insertTopic(values) {
+    const { INSERT_TOPIC_IN_CONFERENCE_MUTATION } = this.props;
+    try {
+      await INSERT_TOPIC_IN_CONFERENCE_MUTATION({
+        variables: {
+          name: values.name,
+          description: values.description,
+          color_id: values.color_id,
         },
-      ],
-    });
-    window.alert('success');
-    this.props.history.replace('/conference/topics-management');
+        refetchQueries: [
+          {
+            query: queries.GET_TOPICS_OF_CONFERENCE_QUERY,
+          },
+        ],
+      });
+      window.alert('success');
+      this.props.history.replace('/conference/topics-management');
+    } catch (error) {
+      let temp = error.graphQLErrors[0].message;
+      alert(temp.substring(7, temp.length));
+    }
   }
   render() {
     const { loading, getAllColors } = this.props.GET_ALL_COLORS_QUERY;
@@ -64,8 +69,8 @@ class AddTopic extends Component {
 
 export default compose(
   withRouter,
-  graphql(mutations.INSERT_TOPIC_MUTATION, {
-    name: 'INSERT_TOPIC_MUTATION',
+  graphql(mutations.INSERT_TOPIC_IN_CONFERENCE_MUTATION, {
+    name: 'INSERT_TOPIC_IN_CONFERENCE_MUTATION',
   }),
   graphql(queries.GET_ALL_COLORS_QUERY, {
     name: 'GET_ALL_COLORS_QUERY',
