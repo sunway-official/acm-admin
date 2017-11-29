@@ -16,7 +16,7 @@ const style = {
 const sorted = [
   {
     id: 'name',
-    desc: true,
+    desc: false,
   },
 ];
 class TopicList extends Component {

@@ -1,18 +1,23 @@
 import React, { Component } from 'react';
-import {
-  Table,
-  TableBody,
-  TableHeader,
-  TableHeaderColumn,
-  TableRow,
-  TableRowColumn,
-  RaisedButton,
-  Dialog,
-} from 'material-ui';
+import { RaisedButton, Dialog } from 'material-ui';
 import * as moment from 'moment';
 import ParticipantDetail from '../participantDetail';
 import { ActionVisibility } from 'material-ui/svg-icons';
+import ReactTable from 'react-table';
+import 'react-table/react-table.css';
 
+const style = {
+  textAlign: 'left',
+  lineHeight: '200%',
+  paddingLeft: '1vw',
+};
+
+const sorted = [
+  {
+    id: 'name',
+    desc: false,
+  },
+];
 const customTitleStyle = {
   background: 'rgb(62, 85, 102)',
   color: '#FFFFFF',
@@ -37,6 +42,63 @@ class ParticipantList extends Component {
     this.setState({ openDelete: false });
   }
   render() {
+    const columns = [
+      {
+        Header: 'ID',
+        accessor: 'id', // String-based value accessors!
+        minWidth: 100,
+        filterable: false,
+        Cell: props => <div className="id-column">{props.value}</div>, // Custom cell components!
+      },
+      {
+        Header: 'Name',
+        accessor: '', // String-based value accessors!
+        maxWidth: 400,
+        minWidth: 300,
+        Cell: props => (
+          <div style={style}>
+            {props.value.lastname} {props.value.firstname}
+          </div> // Custom cell components!
+        ),
+      },
+      {
+        Header: 'Email',
+        accessor: 'email',
+        maxWidth: 400,
+        minWidth: 300,
+        Cell: props => <div style={style}>{props.value}</div>, // Custom cell components!
+      },
+      {
+        Header: 'Date Of Birth',
+        accessor: 'dob',
+        maxWidth: 370,
+        minWidth: 270,
+        Cell: props => (
+          <div style={style}>
+            {!props.value
+              ? 'undefine'
+              : moment(props.value).format('DD-MM-YYYY')}
+          </div> // Custom cell components!
+        ),
+      },
+      {
+        Header: 'Action',
+        maxWidth: 400,
+        minWidth: 300,
+        filterable: false,
+        accessor: '', // String-based value accessors!
+        Cell: props => (
+          <div className="action-column">
+            <RaisedButton
+              label="View Detail"
+              primary={true}
+              onClick={() => this.handleOpenDelete(props.value)}
+              icon={<ActionVisibility />}
+            />
+          </div>
+        ),
+      },
+    ];
     const listParticipant = this.props.listParticipant;
     const closeDialog = [
       <RaisedButton label="Close" onClick={this.handleClose} />,
@@ -44,48 +106,16 @@ class ParticipantList extends Component {
     return (
       <div className="d-flex">
         <div className="list staff">
-          <Table fixedHeader={true} selectable={false}>
-            <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
-              <TableRow>
-                <TableHeaderColumn className="index-column">
-                  ID
-                </TableHeaderColumn>
-                <TableHeaderColumn>Name</TableHeaderColumn>
-                <TableHeaderColumn>Email</TableHeaderColumn>
-                <TableHeaderColumn>Date Of Birth</TableHeaderColumn>
-                <TableHeaderColumn>Actions</TableHeaderColumn>
-              </TableRow>
-            </TableHeader>
-            <TableBody displayRowCheckbox={false}>
-              {listParticipant.map((participant, index) => {
-                const participantDetail = participant;
-                return (
-                  <TableRow key={participant.id}>
-                    <TableRowColumn className="index-column">
-                      {index + 1}
-                    </TableRowColumn>
-                    <TableRowColumn>
-                      {participant.lastname} {participant.firstname}
-                    </TableRowColumn>
-                    <TableRowColumn>{participant.email}</TableRowColumn>
-                    <TableRowColumn>
-                      {!participant.dob
-                        ? 'undefine'
-                        : moment(participant.dob).format('DD-MM-YYYY')}
-                    </TableRowColumn>
-                    <TableRowColumn>
-                      <RaisedButton
-                        label="View Detail"
-                        primary={true}
-                        onClick={() => this.handleOpenDelete(participantDetail)}
-                        icon={<ActionVisibility />}
-                      />
-                    </TableRowColumn>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
+          <ReactTable
+            noDataText="Please add new participant!"
+            filterable
+            resizable={false}
+            data={listParticipant}
+            columns={columns}
+            defaultSorted={sorted}
+            defaultPageSize={5}
+            //className="-striped -highlight"
+          />
           <Dialog
             title="Participant Information"
             modal={true}

@@ -16,7 +16,7 @@ const style = {
 const sorted = [
   {
     id: 'name',
-    desc: true,
+    desc: false,
   },
 ];
 class RoomList extends Component {
@@ -172,44 +172,3 @@ export default compose(
     name: 'GET_ROOMS_BY_CONFERENCE_ID_QUERY',
   }),
 )(RoomList);
-
-// <Table fixedHeader={true} selectable={false}>
-// <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
-//   <TableRow>
-//     <TableHeaderColumn className="index-column">
-//       ID
-//     </TableHeaderColumn>
-//     <TableHeaderColumn>Name</TableHeaderColumn>
-//     <TableHeaderColumn>Seat</TableHeaderColumn>
-//     <TableHeaderColumn>Status</TableHeaderColumn>
-//     <TableHeaderColumn>Actions</TableHeaderColumn>
-//   </TableRow>
-// </TableHeader>
-// <TableBody displayRowCheckbox={false}>
-//   {listRoom.map((room, index) => {
-//     return (
-//       <TableRow key={room.id}>
-//         <TableRowColumn className="index-column">
-//           {index + 1}
-//         </TableRowColumn>
-//         <TableRowColumn>{room.name}</TableRowColumn>
-//         <TableRowColumn>{room.seats}</TableRowColumn>
-//         <TableRowColumn>
-//           {room.status === 'on' ? 'Available' : 'Not Available'}
-//         </TableRowColumn>
-//         <TableRowColumn>
-//           <Link
-//             to={`/conference/rooms-management/room-detail/${room.id}`}
-//           >
-//             <RaisedButton label="Edit" primary={true} />
-//           </Link>
-//           <RaisedButton
-//             label="Delete"
-//             onClick={() => this.handleOpenDelete(room.id)}
-//           />
-//         </TableRowColumn>
-//       </TableRow>
-//     );
-//   })}
-// </TableBody>
-// </Table>

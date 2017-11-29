@@ -27,6 +27,7 @@ const renderSelectField = ({
     onChange={(event, index, value) => input.onChange(value)}
     children={children}
     {...custom}
+    maxHeight={200}
   />
 );
 class TopicDetail extends Component {
