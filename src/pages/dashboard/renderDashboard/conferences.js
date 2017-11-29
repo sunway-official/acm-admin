@@ -70,7 +70,7 @@ class listCoferences extends React.Component {
                 onClick={async () => {
                   // clg;
                   await this.handleSwitch(conference.id);
-                  // window.location.reload();
+                  window.location.reload();
                 }}
               />
             );

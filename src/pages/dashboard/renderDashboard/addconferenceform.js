@@ -6,11 +6,13 @@ import CustomDatePicker from 'components/CustomDatePicker';
 import AppMap from 'components/AppMap';
 import normalizePhone from 'utils/normalizePhone';
 import validate from '../helpers/validate';
+import { Link } from 'react-router-dom';
 
 const AddConferenceForm = ({
   handleSubmit,
   invalid,
   onMapPositionChanged,
+  handleSwitch,
   reset,
   submitting,
   pristine,
@@ -148,11 +150,6 @@ const AddConferenceForm = ({
             primary={true}
             type="submit"
             disabled={pristine || submitting || invalid}
-            onClick={() => {
-              if (!invalid) {
-                alert('Saved');
-              }
-            }}
           />
           <RaisedButton
             className="btn"
