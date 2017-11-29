@@ -62,14 +62,15 @@ class AddNewRoom extends Component {
   }
 }
 const mapStateToProps = (state, ownProps) => {
-  return {
-    id: state.auth.currentUser.currentConference.id,
-  };
+  if (state.auth.currentUser && state.auth.currentUser.currentConference) {
+    return {
+      id: state.auth.currentUser.currentConference.id,
+    };
+  }
 };
 export default compose(
   connect(mapStateToProps, undefined),
   graphql(mutations.INSERT_ROOM_MUTATION, {
     name: 'INSERT_ROOM_MUTATION',
   }),
-  graphql(queries.GET_ROOMS_BY_CONFERENCE_ID_QUERY),
 )(AddNewRoom);

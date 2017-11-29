@@ -23,6 +23,7 @@ class ListExampleSimple extends React.Component {
       open: false,
       openLanding: false,
     };
+    // this.handleRequestClose = this.handleRequestClose.bind(this);
   }
 
   handleTouchTap = event => {
@@ -32,6 +33,7 @@ class ListExampleSimple extends React.Component {
       open: true,
       anchorEl: event.currentTarget,
     });
+    // this.handleRequestClose();
   };
   handleLanding = event => {
     event.preventDefault();
@@ -114,6 +116,13 @@ class ListExampleSimple extends React.Component {
               </Menu>
             </Popover>
           </ListItem>
+          <Link to="/conference/papers">
+            <ListItem
+              className="item"
+              primaryText={'Papers'}
+              leftIcon={<SocialLocationCity />}
+            />
+          </Link>
           <ListItem
             className="item landing-page"
             primaryText={'Landing Page'}

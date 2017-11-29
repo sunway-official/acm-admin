@@ -8,16 +8,22 @@ import CoOrganizerList from './coOrganizer/List';
 
 class Index extends Component {
   render() {
-    const conference = this.props.currentConference;
+    let conference;
+    if (this.props.currentConference) {
+      conference = this.props.currentConference;
+    } else return <div>Loading</div>;
     // khai bao conference dua tren query getConferenceByID
     const coOrganizerDetails = conference.coOrganizerDetails;
     // khai bao coOrganizerDetails dua tren query coOrganizerDetails bang getConferenceByID
 
     return (
       <div className="conference">
-        <Subheader className="subheader"> Conference Information</Subheader>
+        <Subheader className="subheader conf-infor-title">
+          {' '}
+          Conference Information
+        </Subheader>
         <div className="page-breadcrumb d-flex">
-          <Link className="d-flex" to="/">
+          <Link className="d-flex" to="/conference/info">
             <IconButton>
               <ActionHome />
             </IconButton>
@@ -48,9 +54,10 @@ class Index extends Component {
 }
 
 const mapStateToProps = state => {
-  return {
-    currentConference: state.auth.currentUser.currentConference,
-  };
+  if (state.auth.currentUser && state.auth.currentUser.currentConference)
+    return {
+      currentConference: state.auth.currentUser.currentConference,
+    };
 };
 
 export default connect(mapStateToProps, undefined)(Index);

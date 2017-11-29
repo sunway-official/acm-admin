@@ -9,6 +9,7 @@ import RoleItem from './roleItem';
 class RolesInfo extends Component {
   render() {
     const { loading, error, getAllRoles } = this.props.GET_ALL_ROLES;
+
     if (loading) {
       return <div>Loading...</div>;
     }

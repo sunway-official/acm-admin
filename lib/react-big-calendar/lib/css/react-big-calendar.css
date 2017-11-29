@@ -185,12 +185,12 @@ button.rbc-input::-moz-focus-inner {
 .rbc-event {
   cursor: pointer;
   padding: 2px 5px;
-  background-color: #ff5722;
+  background-color: #f9cb3e;
   border-radius: 5px;
-  color: #fff;
+  color: #2f3440;
 }
 .rbc-event.rbc-selected {
-  background-color: #265985;
+  background-color: #ec5f3e;
 }
 .rbc-event-label {
   font-size: 80%;
@@ -454,7 +454,7 @@ button.rbc-input::-moz-focus-inner {
   position: relative;
 }
 .rbc-day-slot .rbc-event {
-  border: 1px solid #e55427;
+  border: 1px solid #f9cb3e;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
