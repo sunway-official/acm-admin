@@ -37,7 +37,7 @@ export const GET_CONFERENCE_BY_ID = gql`
 
 export const GET_ROOMS_BY_STATUS_IN_CONFERENCE_QUERY = gql`
   query getRoomsByStatusInConference($status: Status!) {
-    getRoomsByStatus(status: $status) {
+    getRoomsByStatusInConference(status: $status) {
       id
       name
     }
