@@ -35,7 +35,7 @@ class TopicDetail extends Component {
     this.handleCancel = this.handleCancel.bind(this);
   }
   handleCancel() {
-    this.props.history.replace('/conference/info');
+    this.props.history.replace('/conference/topics-management');
   }
   render() {
     const { handleSubmit, submitting } = this.props;
@@ -63,6 +63,7 @@ class TopicDetail extends Component {
                 rows={field.rows}
                 rowsMax={field.rowsMax}
                 fullWidth={true}
+                autoFocus={field.autoFocus}
               />
             </Row>
           </Col>
@@ -103,7 +104,7 @@ class TopicDetail extends Component {
                           value={color.id}
                           primaryText={color.name}
                           key={color.id}
-                          style={{ color: color.code }}
+                          rightIcon={<div style={{ background: color.code }} />}
                         />
                       ))}
                     </Field>

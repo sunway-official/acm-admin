@@ -1,18 +1,24 @@
 import React, { Component } from 'react';
-import {
-  Table,
-  TableBody,
-  TableHeader,
-  TableHeaderColumn,
-  TableRow,
-  TableRowColumn,
-  RaisedButton,
-  Dialog,
-} from 'material-ui';
+import ReactTable from 'react-table';
+import 'react-table/react-table.css';
+import { RaisedButton, Dialog } from 'material-ui';
 import './style.css';
 import { Link } from 'react-router-dom';
 import { graphql } from 'react-apollo';
 import { mutations, queries } from '../helpers';
+
+const style = {
+  textAlign: 'left',
+  lineHeight: '200%',
+  paddingLeft: '1vw',
+};
+
+const sorted = [
+  {
+    id: 'name',
+    desc: true,
+  },
+];
 class TopicList extends Component {
   constructor() {
     super();
@@ -47,6 +53,56 @@ class TopicList extends Component {
     });
   }
   render() {
+    const columns = [
+      {
+        Header: 'ID',
+        accessor: 'id', // String-based value accessors!
+        minWidth: 100,
+        filterable: false,
+        Cell: props => <div className="id-column">{props.value}</div>, // Custom cell components!
+      },
+      {
+        Header: 'Name',
+        accessor: 'name', // String-based value accessors!
+        maxWidth: 600,
+        minWidth: 400,
+        Cell: props => <div style={style}>{props.value}</div>, // Custom cell components!
+      },
+      {
+        Header: 'Color',
+        accessor: 'color_code',
+        maxWidth: 400,
+        minWidth: 300,
+        filterable: false,
+        Cell: props => (
+          <div style={{ background: props.value, height: '100%' }} />
+        ), // Custom cell components!
+      },
+      {
+        Header: 'Action',
+        maxWidth: 600,
+        minWidth: 400,
+        filterable: false,
+        accessor: 'id', // String-based value accessors!
+        Cell: props => (
+          <div className="action-column">
+            <Link
+              to={`/conference/topics-management/topic-detail/${props.value}`}
+            >
+              <RaisedButton
+                label="Edit"
+                primary={true}
+                className="list-btn-action"
+              />
+            </Link>
+            <RaisedButton
+              label="Delete"
+              onClick={() => this.handleOpenDelete(props.value)}
+            />
+          </div>
+        ),
+      },
+    ];
     const listTopic = this.props.listTopic;
     const actionDelete = [
       <RaisedButton
@@ -58,56 +114,28 @@ class TopicList extends Component {
       <RaisedButton label="No" onClick={this.handleClose} />,
     ];
     return (
-      <div>
-        <div>
-          <Table fixedHeader={true} selectable={false}>
-            <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
-              <TableRow>
-                <TableHeaderColumn className="index-column">
-                  ID
-                </TableHeaderColumn>
-                <TableHeaderColumn>Name</TableHeaderColumn>
-                <TableHeaderColumn>Topic Color</TableHeaderColumn>
-                <TableHeaderColumn>Actions</TableHeaderColumn>
-              </TableRow>
-            </TableHeader>
-            <TableBody displayRowCheckbox={false}>
-              {listTopic.map((topic, index) => {
-                return (
-                  <TableRow key={topic.id}>
-                    <TableRowColumn className="index-column">
-                      {index + 1}
-                    </TableRowColumn>
-                    <TableRowColumn>{topic.name}</TableRowColumn>
-                    <TableRowColumn style={{ background: topic.color_code }} />
-                    <TableRowColumn>
-                      <Link
-                        to={`/conference/topics-management/topic-detail/${topic.id}`}
-                      >
-                        <RaisedButton label="Edit" primary={true} />
-                      </Link>
-                      <RaisedButton
-                        label="Delete"
-                        onClick={() => this.handleOpenDelete(topic.id)}
-                      />
-                    </TableRowColumn>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-          <Dialog
-            title="Do you want to delete this color?"
-            modal={true}
-            onRequestClose={this.handleClose}
-            open={this.state.openDelete}
-            actions={actionDelete}
-          />
-          <div className="d-flex btn-group">
-            <Link to={`/conference/topics-management/topic-detail`}>
-              <RaisedButton label="Add Topic" primary={true} />
-            </Link>
-          </div>
+      <div className="list-topic">
+        <ReactTable
+          noDataText="Please add new topic!"
+          filterable
+          resizable={false}
+          data={listTopic}
+          columns={columns}
+          defaultSorted={sorted}
+          defaultPageSize={5}
+          //className="-striped -highlight"
+        />
+        <Dialog
+          title="Do you want to delete this color?"
+          modal={true}
+          onRequestClose={this.handleClose}
+          open={this.state.openDelete}
+          actions={actionDelete}
+        />
+        <div className="d-flex btn-group list-btn-add">
+          <Link to={`/conference/topics-management/topic-detail`}>
+            <RaisedButton label="Add Topic" primary={true} />
+          </Link>
         </div>
       </div>
     );
