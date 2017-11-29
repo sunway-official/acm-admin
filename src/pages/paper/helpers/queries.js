@@ -25,8 +25,18 @@ const GET_TOPICS_OF_CONFERENCE = gql`
     }
   }
 `;
+const GET_PAPER_BY_ID = gql`
+  query getPaperByID($id: ID!) {
+    getPaperByID(id: $id) {
+      id
+      title
+      abstract
+    }
+  }
+`;
 export default {
   GET_ALL_PAPERS,
   GET_TOPICS_BY_PAPER_ID,
   GET_TOPICS_OF_CONFERENCE,
+  GET_PAPER_BY_ID,
 };

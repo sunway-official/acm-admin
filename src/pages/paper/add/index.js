@@ -56,7 +56,7 @@ class Index extends Component {
     if (loading) return <div>Loading...</div>;
     return (
       <div className="conference">
-        <Subheader className="subheader">Papers Management</Subheader>
+        <Subheader className="subheader">Paper Management</Subheader>
         <div className="page-breadcrumb d-flex">
           <Link className="d-flex" to="/">
             <IconButton>
@@ -73,7 +73,7 @@ class Index extends Component {
           <IconButton>
             <HardwareKeyboardArrowRight />
           </IconButton>
-          <span>Add New Paper</span>
+          <span>Paper Management</span>
         </div>
         <div className="dashboard content d-flex">
           <Form onSubmit={this.handleAdd} topics={topics} />

@@ -34,6 +34,9 @@ const muiTheme = getMuiTheme({
     textColor: colors.milkPunch,
     primaryColor: colors.sunglow,
   },
+  subheader: {
+    color: colors.sanJuan,
+  },
   tabs: {
     backgroundColor: colors.sanJuan,
     selectedTextColor: colors.milkPunch,

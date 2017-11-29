@@ -35,7 +35,7 @@ class Index extends Component {
   }
 
   render() {
-    const { loading, getAllPapers } = this.props.data;
+    const { loading, getAllPapers } = this.props.GET_ALL_PAPERS;
     if (loading) return <div>Loading..</div>;
     let papers;
     if (getAllPapers) {
@@ -61,11 +61,13 @@ class Index extends Component {
                   <Topic paper={paper} />
                 </TableRowColumn>
                 <TableRowColumn>
-                  <RaisedButton
-                    label="Edit"
-                    style={this.styles}
-                    primary={true}
-                  />
+                  <Link to="/conference/paper/edit">
+                    <RaisedButton
+                      label="Edit"
+                      style={this.styles}
+                      primary={true}
+                    />
+                  </Link>
                   <RaisedButton
                     label="Delete"
                     onClick={() => this.handleDialog(paper, paper.id)}
@@ -95,5 +97,5 @@ const mapDispatchToProps = dispatch => {
 };
 export default compose(
   connect(undefined, mapDispatchToProps),
-  graphql(queries.GET_ALL_PAPERS),
+  graphql(queries.GET_ALL_PAPERS, { name: 'GET_ALL_PAPERS' }),
 )(Index);

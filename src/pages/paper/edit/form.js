@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import CustomInput from 'components/CustomInput';
 import { reduxForm, Field } from 'redux-form';
+import { connect } from 'react-redux';
 import validate from '../validate';
 import { RaisedButton, Checkbox, Subheader, Divider } from 'material-ui';
-class AddPaperForm extends Component {
+class EditPaperForm extends Component {
   render() {
-    const topics = this.props.topics;
     const renderCheckbox = ({ input, label }) => (
       <Checkbox
         label={label}
@@ -23,7 +23,7 @@ class AddPaperForm extends Component {
             name="title"
             component={CustomInput}
             fullWidth={true}
-            hintText="Paper Title"
+            hintText={'Paper Title'}
           />
         </div>
         <div className="d-flex form-group">
@@ -40,7 +40,7 @@ class AddPaperForm extends Component {
         <Subheader style={{ fontSize: '25px' }}>Topic</Subheader>
         <Divider />
         <div className="d-flex flex-wrap" style={{ marginTop: '20px' }}>
-          {topics.map(topic => {
+          {/* {topics.map(topic => {
             return (
               <div key={topic.id} style={{ width: '50%' }}>
                 <Field
@@ -51,6 +51,7 @@ class AddPaperForm extends Component {
               </div>
             );
           })}
+          */}
         </div>
 
         <div className="d-flex save-btn btn-group">
@@ -71,6 +72,6 @@ class AddPaperForm extends Component {
 }
 
 export default reduxForm({
-  form: 'AddPaperForm',
+  form: 'EditPaperForm',
   validate,
-})(AddPaperForm);
+})(EditPaperForm);
