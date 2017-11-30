@@ -37,7 +37,7 @@ class AddPaperForm extends Component {
             hintText="Paper Abstract"
           />
         </div>
-        <Subheader style={{ fontSize: '25px' }}>Topic</Subheader>
+        <Subheader style={{ fontSize: '20px' }}>Topic</Subheader>
         <Divider />
         <div className="d-flex flex-wrap" style={{ marginTop: '20px' }}>
           {topics.map(topic => {

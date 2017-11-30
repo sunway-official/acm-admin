@@ -113,7 +113,7 @@ export default () => (
           <AuthRoute
             needAuth
             exact
-            path="/conference/paper/edit"
+            path="/conference/paper/edit/:id"
             component={PaperEdit}
           />
           <AuthRoute

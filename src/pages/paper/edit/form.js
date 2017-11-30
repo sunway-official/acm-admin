@@ -3,16 +3,12 @@ import CustomInput from 'components/CustomInput';
 import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
 import validate from '../validate';
-import { RaisedButton, Checkbox, Subheader, Divider } from 'material-ui';
+import { RaisedButton, Subheader, Divider } from 'material-ui';
+import { renderField } from '../../../utils';
+import { compose } from 'react-apollo';
+
 class EditPaperForm extends Component {
   render() {
-    const renderCheckbox = ({ input, label }) => (
-      <Checkbox
-        label={label}
-        // checked={input.value ? true : false}
-        onCheck={input.onChange}
-      />
-    );
     const { handleSubmit, invalid } = this.props;
     return (
       <form className="form conference-info" onSubmit={handleSubmit}>
@@ -29,31 +25,18 @@ class EditPaperForm extends Component {
         <div className="d-flex form-group">
           <label>Abstract :</label>
           <Field
+            id="text-field-default"
             name="abstract"
+            type="text"
             component={CustomInput}
             fullWidth={true}
             multiLine
             rows={1}
-            hintText="Paper Abstract"
+            hintText="Paper abc"
           />
         </div>
-        <Subheader style={{ fontSize: '25px' }}>Topic</Subheader>
+        <Subheader style={{ fontSize: '20px' }}>Topic</Subheader>
         <Divider />
-        <div className="d-flex flex-wrap" style={{ marginTop: '20px' }}>
-          {/* {topics.map(topic => {
-            return (
-              <div key={topic.id} style={{ width: '50%' }}>
-                <Field
-                  name={`topics[${topic.id}]`}
-                  component={renderCheckbox}
-                  label={topic.name}
-                />
-              </div>
-            );
-          })}
-          */}
-        </div>
-
         <div className="d-flex save-btn btn-group">
           <RaisedButton
             label="Save"
@@ -70,8 +53,20 @@ class EditPaperForm extends Component {
     );
   }
 }
+const mapStateToProps = (state, ownProps) => {
+  const paper = ownProps.paper;
+  console.log(paper);
+  return {
+    initialValues: {
+      id: paper.id,
+      title: paper.title,
+      abstract: paper.abstract,
+    },
+  };
+};
 
-export default reduxForm({
+EditPaperForm = connect(mapStateToProps, undefined)(EditPaperForm);
+export default (EditPaperForm = reduxForm({
   form: 'EditPaperForm',
   validate,
-})(EditPaperForm);
+})(EditPaperForm));

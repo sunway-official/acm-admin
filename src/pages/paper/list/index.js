@@ -21,6 +21,7 @@ class Index extends Component {
   constructor(props) {
     super(props);
     this.handleDialog = this.handleDialog.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
   }
   state = {
     paper_id: 0,
@@ -33,7 +34,9 @@ class Index extends Component {
     this.props.setPaper(paper);
     this.props.setToggle();
   }
-
+  handleEdit(paper) {
+    this.props.setPaper(paper);
+  }
   render() {
     const { loading, getAllPapers } = this.props.GET_ALL_PAPERS;
     if (loading) return <div>Loading..</div>;
@@ -61,7 +64,7 @@ class Index extends Component {
                   <Topic paper={paper} />
                 </TableRowColumn>
                 <TableRowColumn>
-                  <Link to="/conference/paper/edit">
+                  <Link to={`/conference/paper/edit/${paper.id}`}>
                     <RaisedButton
                       label="Edit"
                       style={this.styles}
