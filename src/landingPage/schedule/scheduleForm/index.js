@@ -6,7 +6,6 @@ import './style.css';
 class ScheduleForm extends Component {
   render() {
     const events = this.props.events;
-    console.log(events);
     const content = events.map((event, index) => (
       <tr key={index} className="event-detail landing-page-tr">
         <th className="event-time landing-page-th">
