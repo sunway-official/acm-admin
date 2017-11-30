@@ -7,6 +7,7 @@ import { queries, mutations } from '../helpers';
 import { queries as scheduleQueries } from '../../../schedule/helpers';
 import RoomDetail from './roomDetail';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 
 class Index extends Component {
   constructor(props) {
@@ -16,27 +17,32 @@ class Index extends Component {
     };
     this.saveInformation = this.saveInformation.bind(this);
   }
-  saveInformation(values) {
-    const { UPDATE_ROOM_MUTATION } = this.props;
-    UPDATE_ROOM_MUTATION({
-      variables: {
-        id: values.id,
-        conference_id: this.props.id,
-        name: values.name,
-        seats: values.seats,
-        status: values.status,
-      },
-      refetchQueries: [
-        {
-          query: queries.GET_ROOMS_BY_CONFERENCE_ID_QUERY,
+  async saveInformation({ id, name, seats, status }) {
+    const { UPDATE_ROOM_IN_CONFERENCE_MUTATION } = this.props;
+    try {
+      await UPDATE_ROOM_IN_CONFERENCE_MUTATION({
+        variables: {
+          id: id,
+          name: name,
+          seats: seats,
+          status: status,
         },
-        {
-          query: scheduleQueries.GET_ROOMS_BY_STATUS_QUERY,
-          variables: { status: 'on' },
-        },
-      ],
-    });
-    window.alert('success');
+        refetchQueries: [
+          {
+            query: queries.GET_ROOMS_BY_CONFERENCE_ID_QUERY,
+          },
+          {
+            query: scheduleQueries.GET_ROOMS_BY_STATUS_IN_CONFERENCE_QUERY,
+            variables: { status: 'on' },
+          },
+        ],
+      });
+      window.alert('success');
+      this.props.history.replace('/conference/rooms-management');
+    } catch (error) {
+      let temp = error.graphQLErrors[0].message;
+      alert(temp.substring(7, temp.length));
+    }
   }
   render() {
     const { loading, getRoomByID } = this.props.GET_ROOM_BY_ID_QUERY;
@@ -78,14 +84,14 @@ const mapStateToProps = (state, ownProps) => {
   }
 };
 export default compose(
-  connect(mapStateToProps, undefined),
+  (withRouter, connect(mapStateToProps, undefined)),
   graphql(queries.GET_ROOM_BY_ID_QUERY, {
     options: ownProps => ({
       variables: { id: ownProps.match.params.room_id },
     }),
     name: 'GET_ROOM_BY_ID_QUERY',
   }),
-  graphql(mutations.UPDATE_ROOM_MUTATION, {
-    name: 'UPDATE_ROOM_MUTATION',
+  graphql(mutations.UPDATE_ROOM_IN_CONFERENCE_MUTATION, {
+    name: 'UPDATE_ROOM_IN_CONFERENCE_MUTATION',
   }),
 )(Index);

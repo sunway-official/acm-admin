@@ -7,6 +7,7 @@ export const listField = [
     rowsMax: 1,
     multiLine: false,
     primaryText: 'Topic Name',
+    autoFocus: true,
   },
   {
     id: 2,

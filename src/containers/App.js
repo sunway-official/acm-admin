@@ -26,8 +26,8 @@ import TopicDetail from '../pages/conference/topic/topicDetail';
 import RoomDetail from '../pages/conference/room/roomDetail';
 import AddNewRoom from '../pages/conference/room/roomDetail/addRoom';
 import AddNewTopic from '../pages/conference/topic/topicDetail/addTopic';
-import AttendeeManagement from '../pages/conference/attendee';
 import Addconference from '../pages/dashboard/renderDashboard/addConference';
+import ParticipantManagement from '../pages/conference/people/participant';
 
 export default () => (
   <MuiThemeProvider muiTheme={muiTheme}>
@@ -95,8 +95,8 @@ export default () => (
           <AuthRoute
             needAuth
             exact
-            path="/conference/people/attendee-management"
-            component={AttendeeManagement}
+            path="/conference/people/participant-management"
+            component={ParticipantManagement}
           />
           <AuthRoute
             needAuth

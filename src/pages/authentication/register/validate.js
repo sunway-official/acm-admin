@@ -2,8 +2,8 @@ import { regex } from '../../../utils';
 const validate = values => {
   const errors = {};
   const requiredFields = [
-    'firstName',
-    'lastName',
+    'firstname',
+    'lastname',
     'email',
     'password',
     'confirmPassword',
