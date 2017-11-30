@@ -32,6 +32,8 @@ class ParticipantDetail extends Component {
                 fullWidth={true}
                 disabled={true}
                 underlineShow={false}
+                rowsMax={field.rowsMax}
+                multiLine={field.multiLine}
               />
             </Row>
           </Col>

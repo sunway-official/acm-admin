@@ -32,14 +32,16 @@ export const listField = [
   {
     id: 6,
     name: 'phone_number',
-    hintText: 'Phone Number',
-    primaryText: 'Phone Number',
+    hintText: 'Phone',
+    primaryText: 'Phone',
   },
   {
     id: 7,
     name: 'bio',
     hintText: 'Bio',
     primaryText: 'Bio',
+    rowsMax: 2,
+    multiLine: true,
   },
   {
     id: 8,
