@@ -8,8 +8,8 @@ const DELETE_PAPER = gql`
   }
 `;
 const INSERT_PAPER = gql`
-  mutation insertPaper($title: String!, $abstract: String!) {
-    insertPaper(title: $title, abstract: $abstract) {
+  mutation insertPaper($title: String!, $abstract: String!, $keywords: String) {
+    insertPaper(title: $title, abstract: $abstract, keywords: $keywords) {
       id
     }
   }
@@ -22,4 +22,5 @@ const INSERT_PAPER_TOPIC = gql`
     }
   }
 `;
+
 export default { DELETE_PAPER, INSERT_PAPER, INSERT_PAPER_TOPIC };

@@ -31,6 +31,7 @@ const GET_PAPER_BY_ID = gql`
       id
       title
       abstract
+      keywords
     }
   }
 `;

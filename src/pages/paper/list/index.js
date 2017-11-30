@@ -81,13 +81,15 @@ class Index extends Component {
           </TableBody>
         </Table>
         <DeletePaper id={this.state.paper_id} />
-        <Link to="/conference/paper/add">
-          <RaisedButton
-            icon={<ActionNoteAdd />}
-            primary={true}
-            label={'Add New Paper'}
-          />
-        </Link>
+        <div className="d-flex save-btn btn-group">
+          <Link to="/conference/paper/add">
+            <RaisedButton
+              icon={<ActionNoteAdd />}
+              primary={true}
+              label={'Add New Paper'}
+            />
+          </Link>
+        </div>
       </div>
     );
   }

@@ -22,6 +22,7 @@ class Index extends Component {
         variables: {
           title: values.title,
           abstract: values.abstract,
+          keywords: values.keywords,
         },
       });
       arrTopic.forEach(function(topic_id) {

@@ -11,14 +11,17 @@ class Index extends Component {
     const { loading, getPaperByID } = this.props.data;
     if (loading) return <div>Loading...</div>;
     let paper;
+    let initialValues;
     if (getPaperByID) {
       paper = getPaperByID;
+      initialValues = {
+        id: paper.id,
+        title: paper.title,
+        abstract: paper.abstract,
+        keywords: paper.keywords,
+      };
     }
-    const initialValues = {
-      id: paper.id,
-      title: paper.title,
-      abstract: paper.abstract,
-    };
+    console.log(paper);
     return (
       <div className="conference">
         <Subheader className="subheader">Paper Management</Subheader>

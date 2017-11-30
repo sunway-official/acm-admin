@@ -3,6 +3,7 @@ import CustomInput from 'components/CustomInput';
 import { reduxForm, Field } from 'redux-form';
 import validate from '../validate';
 import { RaisedButton, Checkbox, Subheader, Divider } from 'material-ui';
+import { Link } from 'react-router-dom';
 class AddPaperForm extends Component {
   render() {
     const topics = this.props.topics;
@@ -37,6 +38,17 @@ class AddPaperForm extends Component {
             hintText="Paper Abstract"
           />
         </div>
+        <div className="d-flex form-group">
+          <label>Keywords :</label>
+          <Field
+            name="keywords"
+            component={CustomInput}
+            fullWidth={true}
+            multiLine
+            rows={1}
+            hintText="Paper Abstract"
+          />
+        </div>
         <Subheader style={{ fontSize: '20px' }}>Topic</Subheader>
         <Divider />
         <div className="d-flex flex-wrap" style={{ marginTop: '20px' }}>
@@ -52,8 +64,10 @@ class AddPaperForm extends Component {
             );
           })}
         </div>
-
-        <div className="d-flex save-btn btn-group">
+        <div
+          style={{ marginBottom: '20px' }}
+          className="d-flex save-btn btn-group"
+        >
           <RaisedButton
             label="Save"
             primary={true}
@@ -63,6 +77,11 @@ class AddPaperForm extends Component {
                 alert('Saved');
               }
             }}
+          />
+          <RaisedButton
+            label="Cancel"
+            style={{ marginLeft: '10px' }}
+            containerElement={<Link to="/conference/papers" />}
           />
         </div>
       </form>
