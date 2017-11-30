@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import { Subheader, IconButton } from 'material-ui';
 import { Link } from 'react-router-dom';
-import { graphql } from 'react-apollo';
+import { graphql, compose } from 'react-apollo';
 import { queries } from '../helpers';
 import Form from './form';
 class Index extends Component {
@@ -14,6 +14,11 @@ class Index extends Component {
     if (getPaperByID) {
       paper = getPaperByID;
     }
+    const initialValues = {
+      id: paper.id,
+      title: paper.title,
+      abstract: paper.abstract,
+    };
     return (
       <div className="conference">
         <Subheader className="subheader">Paper Management</Subheader>
@@ -36,18 +41,20 @@ class Index extends Component {
           <span>Paper Management</span>
         </div>
         <div className="dashboard content d-flex">
-          <Form paper={paper} />
+          <Form initialValues={initialValues} />
         </div>
       </div>
     );
   }
 }
 
-export default graphql(queries.GET_PAPER_BY_ID, {
-  options: ownProps => ({
-    name: 'GET_PAPER_BY_ID',
-    variables: {
-      id: ownProps.match.params.id,
-    },
+export default compose(
+  graphql(queries.GET_PAPER_BY_ID, {
+    options: ownProps => ({
+      name: 'GET_PAPER_BY_ID',
+      variables: {
+        id: ownProps.match.params.id,
+      },
+    }),
   }),
-})(Index);
+)(Index);

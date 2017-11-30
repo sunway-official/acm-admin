@@ -4,8 +4,6 @@ import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
 import validate from '../validate';
 import { RaisedButton, Subheader, Divider } from 'material-ui';
-import { renderField } from '../../../utils';
-import { compose } from 'react-apollo';
 
 class EditPaperForm extends Component {
   render() {
@@ -19,15 +17,13 @@ class EditPaperForm extends Component {
             name="title"
             component={CustomInput}
             fullWidth={true}
-            hintText={'Paper Title'}
+            hintText="Paper Title"
           />
         </div>
         <div className="d-flex form-group">
           <label>Abstract :</label>
           <Field
-            id="text-field-default"
             name="abstract"
-            type="text"
             component={CustomInput}
             fullWidth={true}
             multiLine
@@ -53,20 +49,8 @@ class EditPaperForm extends Component {
     );
   }
 }
-const mapStateToProps = (state, ownProps) => {
-  const paper = ownProps.paper;
-  console.log(paper);
-  return {
-    initialValues: {
-      id: paper.id,
-      title: paper.title,
-      abstract: paper.abstract,
-    },
-  };
-};
 
-EditPaperForm = connect(mapStateToProps, undefined)(EditPaperForm);
-export default (EditPaperForm = reduxForm({
+export default reduxForm({
   form: 'EditPaperForm',
   validate,
-})(EditPaperForm));
+})(EditPaperForm);
