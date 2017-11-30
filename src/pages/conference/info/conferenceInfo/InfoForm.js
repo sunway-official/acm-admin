@@ -41,8 +41,8 @@ class ConferenceInfoForm extends React.Component {
                     <div
                       style={{
                         height: `100%`,
-                        marginLeft: '-25%',
-                        marginRight: '-39%',
+                        marginLeft: '-5%',
+                        marginRight: '-25%',
                       }}
                     />
                   }

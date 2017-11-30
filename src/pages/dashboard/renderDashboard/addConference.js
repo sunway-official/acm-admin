@@ -86,11 +86,13 @@ class ConferenceAddForm extends PureComponent {
 
   render() {
     return (
-      <AddForm
-        onSubmit={this.handleAddConference}
-        onMapPositionChanged={this.onMapPositionChanged}
-        handleSwitch={this.handleSwitch}
-      />
+      <div>
+        <AddForm
+          onSubmit={this.handleAddConference}
+          onMapPositionChanged={this.onMapPositionChanged}
+          handleSwitch={this.handleSwitch}
+        />
+      </div>
     );
   }
 }
