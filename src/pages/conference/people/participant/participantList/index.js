@@ -44,16 +44,9 @@ class ParticipantList extends Component {
   render() {
     const columns = [
       {
-        Header: 'ID',
-        accessor: 'id', // String-based value accessors!
-        minWidth: 50,
-        filterable: false,
-        Cell: props => <div className="id-column">{props.value}</div>, // Custom cell components!
-      },
-      {
         Header: 'Name',
         accessor: '', // String-based value accessors!
-        //minWidth: 200,
+        minWidth: 100,
         Cell: props => (
           <div style={style}>
             {props.value.lastname} {props.value.firstname}
@@ -71,7 +64,7 @@ class ParticipantList extends Component {
         accessor: 'dob',
         minWidth: 100,
         Cell: props => (
-          <div style={style}>
+          <div className="center-column">
             {!props.value
               ? 'undefine'
               : moment(props.value).format('DD-MM-YYYY')}

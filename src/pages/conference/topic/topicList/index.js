@@ -55,13 +55,6 @@ class TopicList extends Component {
   render() {
     const columns = [
       {
-        Header: 'ID',
-        accessor: 'id', // String-based value accessors!
-        minWidth: 50,
-        filterable: false,
-        Cell: props => <div className="id-column">{props.value}</div>, // Custom cell components!
-      },
-      {
         Header: 'Name',
         accessor: 'name', // String-based value accessors!
         minWidth: 100,

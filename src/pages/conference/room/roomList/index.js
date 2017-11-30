@@ -58,13 +58,6 @@ class RoomList extends Component {
   render() {
     const columns = [
       {
-        Header: 'ID',
-        accessor: 'id', // String-based value accessors!
-        minWidth: 50,
-        filterable: false,
-        Cell: props => <div className="id-column">{props.value}</div>, // Custom cell components!
-      },
-      {
         Header: 'Name',
         accessor: 'name', // String-based value accessors!
         minWidth: 100,
@@ -74,13 +67,13 @@ class RoomList extends Component {
         Header: 'Seats',
         accessor: 'seats',
         minWidth: 100,
-        Cell: props => <div style={style}>{props.value}</div>, // Custom cell components!
+        Cell: props => <div className="center-column">{props.value}</div>, // Custom cell components!
       },
       {
         Header: 'Status',
         accessor: 'status',
         minWidth: 100,
-        Cell: props => <div style={style}>{props.value}</div>, // Custom cell components!
+        Cell: props => <div className="center-column">{props.value}</div>, // Custom cell components!
       },
       {
         Header: 'Action',
