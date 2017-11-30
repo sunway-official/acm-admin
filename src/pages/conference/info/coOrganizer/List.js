@@ -12,16 +12,11 @@ import {
   RaisedButton,
   Dialog,
   IconButton,
-  AppBar,
 } from 'material-ui';
 import { NavigationClose } from 'material-ui/svg-icons';
 import { conferenceCoOranizerActions } from 'store/ducks/conference/info/coOrganizer';
 import CoOrganizerInfo from '../coOrganizer';
 import { queries, mutations } from '../helpers';
-
-const customDialogStyle = {
-  padding: '100px',
-};
 
 class CoOrganizerList extends PureComponent {
   constructor() {
@@ -110,6 +105,15 @@ class CoOrganizerList extends PureComponent {
         style={this.styles}
       />,
     ];
+    const actions = [
+      <IconButton
+        tooltip="No"
+        className="cancel-btn dialog"
+        onClick={this.handleClose}
+      >
+        <NavigationClose />
+      </IconButton>,
+    ];
     return (
       <div className="d-flex">
         <div className="list staff" style={{ marginTop: '20px' }}>
@@ -159,33 +163,22 @@ class CoOrganizerList extends PureComponent {
             open={this.state.isDeleting}
             actions={actionDelete}
           />
-          <div>
-            <Dialog
-              modal={true}
-              open={this.props.openModalForm}
-              onRequestClose={this.handleClose}
-            >
-              <AppBar
-                iconElementLeft={
-                  <IconButton
-                    tooltip="Close"
-                    className="cancel-btn dialog"
-                    onClick={this.handleClose}
-                  >
-                    <NavigationClose />
-                  </IconButton>
-                }
-                title={this.state.title}
-              />
-              <CoOrganizerInfo
-                coOrganizerDetails={this.state.coOrganizer}
-                onSubmit={this.handleClose}
-                isAdd={this.state.isAdding}
-                conferenceId={conferenceId}
-                //truyen conference_id qua ben conference info de cho xu ly conference dang dung dua tren id
-              />
-            </Dialog>
-          </div>
+
+          <Dialog
+            title={this.state.title}
+            actions={actions}
+            modal={true}
+            open={this.props.openModalForm}
+            onRequestClose={this.handleClose}
+          >
+            <CoOrganizerInfo
+              coOrganizerDetails={this.state.coOrganizer}
+              onSubmit={this.handleClose}
+              isAdd={this.state.isAdding}
+              conferenceId={conferenceId}
+              //truyen conference_id qua ben conference info de cho xu ly conference dang dung dua tren id
+            />
+          </Dialog>
           <div className="d-flex btn-group">
             <RaisedButton
               label="Add Co-Organizer"
