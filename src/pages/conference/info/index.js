@@ -5,7 +5,7 @@ import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import ConferenceInfo from './conferenceInfo';
 import { connect } from 'react-redux';
 import CoOrganizerList from './coOrganizer/List';
-
+import CoOrganizerListReactTable from './coOrganizer/react-table';
 class Index extends Component {
   render() {
     let conference;
@@ -41,7 +41,11 @@ class Index extends Component {
               {/* truyen conference qua conferenceInfo  */}
             </Tab>
             <Tab label="Co-Organizer">
-              <CoOrganizerList
+              {/*<CoOrganizerList
+                conferenceId={conference.id}
+                coOrganizerDetails={coOrganizerDetails}
+              />*/}
+              <CoOrganizerListReactTable
                 conferenceId={conference.id}
                 coOrganizerDetails={coOrganizerDetails}
               />
