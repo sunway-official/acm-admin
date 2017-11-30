@@ -1,9 +1,9 @@
 //list conf
 .card-content-dashboard {
   width: 60%;
-  margin-top: 5%;
+  margin-top: 4%;
   margin-right: 2%;
-  margin-left: 2%;
+  margin-left: 1%;
   border: 1px solid rgb(197, 189, 189);
   background: url('./../../images/conf-dashboard.png') no-repeat;
   background-size: 100% auto;
@@ -11,16 +11,18 @@
 }
 
 .list-conf {
-  background-color: rgb(197, 189, 189);
+  background-color: rgb(62, 85, 102);
   padding-bottom: 18px;
   padding-top: 10px;
   margin-bottom: -9px;
   // color: rgb(255, 87, 34);
   font-weight: bold;
   font-size: 16px;
+  color: white;
 
   .icon-conference {
     padding-right: 7px !important;
+
   }
 }
 
@@ -29,6 +31,22 @@
   padding-top: 0px !important;
   color: black !important;
   padding-bottom: 10px;
+}
+
+.listitem-add-conf {
+  background-color: rgb(62, 85, 102) !important;
+  color: white !important;
+  height: 48px !important;
+  text-transform: uppercase;
+  font-weight: bold !important;
+  text-align: center;
+  padding-left: 8% !important;
+
+  div {
+    div {
+      padding: 0 auto !important;
+    }
+  }
 }
 
 .data {
@@ -58,6 +76,8 @@
 }
 
 .dashboard {
+  padding-left: 0% !important;
+  padding-right: 7% !important;
   .conferences {
     display: flex;
   }
@@ -69,9 +89,9 @@
 }
 
 .list-dashboard {
-  margin-top: 5%;
+  margin-top: 4%;
   float: right;
-  width: 30%;
+  width: 36%;
   // border: 1px solid gray;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
@@ -80,3 +100,22 @@
   padding-left: 20px !important;
   width: 95% !important;
 }
+
+#content {
+  width: 102%;
+}
+
+.organizer-inf {
+  text-align: center !important;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.add-form-bg {
+  background-color: white !important;
+}
+
+.btn {
+  margin-right: 20px;
+}
+

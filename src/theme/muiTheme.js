@@ -15,6 +15,12 @@ const muiTheme = getMuiTheme({
   appBar: {
     color: colors.sanJuan,
   },
+  badge: {
+    color: colors.sunglow,
+    textColor: colors.sanJuan,
+    primaryColor: colors.sunglow,
+    primaryTextColor: colors.sanJuan,
+  },
   datePicker: {
     color: colors.sanJuan,
     selectColor: colors.sunglow,
