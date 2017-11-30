@@ -35,7 +35,7 @@ class RoomDetail extends Component {
     this.handleCancel = this.handleCancel.bind(this);
   }
   handleCancel() {
-    this.props.history.replace('/conference/info');
+    this.props.history.replace('/conference/rooms-management');
   }
   render() {
     const { handleSubmit, submitting } = this.props;
@@ -60,6 +60,7 @@ class RoomDetail extends Component {
                 hintText={field.hintText}
                 component={renderField}
                 fullWidth={true}
+                autoFocus={field.autoFocus}
               />
             </Row>
           </Col>

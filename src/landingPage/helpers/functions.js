@@ -13,7 +13,7 @@ export const getSchedules = array => {
       date: date,
       start: start,
       end: end,
-      room: item.room,
+      room_name: item.room_name,
     };
     schedules.push(schedule);
   });

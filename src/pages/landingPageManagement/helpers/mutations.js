@@ -41,7 +41,6 @@ const UPDATE_LANDING_PAGE_MUTATION = gql`
 
 const INSERT_LANDING_PAGE_MUTATION = gql`
   mutation insertLandingPage(
-    $conference_id: ID!
     $slogan: String!
     $register_description: String!
     $call_paper_description: String!
@@ -53,7 +52,6 @@ const INSERT_LANDING_PAGE_MUTATION = gql`
     $linkedin_id: String!
   ) {
     insertLandingPage(
-      conference_id: $conference_id
       slogan: $slogan
       register_description: $register_description
       call_paper_description: $call_paper_description

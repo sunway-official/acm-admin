@@ -20,7 +20,6 @@ class Index extends Component {
     const { INSERT_LANDING_PAGE_MUTATION } = this.props;
     INSERT_LANDING_PAGE_MUTATION({
       variables: {
-        conference_id: this.props.conference_id,
         slogan: values.slogan,
         register_description: values.register_description,
         call_paper_description: values.call_paper_description,

@@ -15,6 +15,9 @@ import {
 } from 'material-ui/svg-icons';
 import style from './style.css';
 import { connect } from 'react-redux';
+import { graphql, compose } from 'react-apollo';
+import { queries } from '../helpers';
+import { withRouter } from 'react-router';
 
 class ListExampleSimple extends React.Component {
   constructor(props) {
@@ -22,6 +25,7 @@ class ListExampleSimple extends React.Component {
     this.state = {
       open: false,
       openLanding: false,
+      conference_id: 0,
     };
     // this.handleRequestClose = this.handleRequestClose.bind(this);
   }
@@ -50,15 +54,37 @@ class ListExampleSimple extends React.Component {
     });
   };
   render() {
+    const {
+      loading,
+      getLandingPageByConferenceId,
+    } = this.props.GET_LANDING_PAGE_BY_CONFERENCE_ID_QUERY;
+    if (loading) return <div>loading...</div>;
     let conference_id;
+    let disableView = true;
     if (
       this.props.auth.currentUser &&
       this.props.auth.currentUser.currentConference
     ) {
       conference_id = this.props.auth.currentUser.currentConference.id;
+      if (getLandingPageByConferenceId[0]) disableView = false;
     } else {
       conference_id = 0;
     }
+    let view;
+    view = !disableView ? (
+      <Link to={`/landingpage/${conference_id}`}>
+        <MenuItem
+          className="item"
+          primaryText={'View'}
+          onClick={() => {
+            this.handleRequestClose();
+            window.location.reload();
+          }}
+        />
+      </Link>
+    ) : (
+      ''
+    );
     return (
       <div>
         <style dangerouslySetInnerHTML={{ __html: style }} />
@@ -100,10 +126,10 @@ class ListExampleSimple extends React.Component {
                     onClick={this.handleRequestClose}
                   />
                 </Link>
-                <Link to="/conference/people/attendee-management">
+                <Link to="/conference/people/participant-management">
                   <MenuItem
                     className="item"
-                    primaryText={'Attendees'}
+                    primaryText={'Participant'}
                     onClick={this.handleRequestClose}
                   />
                 </Link>
@@ -146,16 +172,7 @@ class ListExampleSimple extends React.Component {
                     onClick={this.handleRequestClose}
                   />
                 </Link>
-                <Link to={`/landingpage/${conference_id}`}>
-                  <MenuItem
-                    className="item"
-                    primaryText={'View'}
-                    onClick={() => {
-                      this.handleRequestClose();
-                      window.location.reload();
-                    }}
-                  />
-                </Link>
+                {view}
               </Menu>
             </Popover>
           </ListItem>
@@ -196,8 +213,17 @@ class ListExampleSimple extends React.Component {
   }
 }
 const mapStateToProps = (state, ownProps) => {
-  return {
-    auth: state.auth,
-  };
+  if (state.auth) {
+    return {
+      auth: state.auth,
+    };
+  }
 };
-export default connect(mapStateToProps, undefined)(ListExampleSimple);
+
+export default compose(
+  withRouter,
+  connect(mapStateToProps, undefined),
+  graphql(queries.GET_LANDING_PAGE_BY_CONFERENCE_ID_QUERY, {
+    name: 'GET_LANDING_PAGE_BY_CONFERENCE_ID_QUERY',
+  }),
+)(ListExampleSimple);
