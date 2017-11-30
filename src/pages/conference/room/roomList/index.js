@@ -60,35 +60,31 @@ class RoomList extends Component {
       {
         Header: 'ID',
         accessor: 'id', // String-based value accessors!
-        minWidth: 100,
+        minWidth: 50,
         filterable: false,
         Cell: props => <div className="id-column">{props.value}</div>, // Custom cell components!
       },
       {
         Header: 'Name',
         accessor: 'name', // String-based value accessors!
-        maxWidth: 400,
-        minWidth: 300,
+        minWidth: 100,
         Cell: props => <div style={style}>{props.value}</div>, // Custom cell components!
       },
       {
         Header: 'Seats',
         accessor: 'seats',
-        maxWidth: 400,
-        minWidth: 300,
+        minWidth: 100,
         Cell: props => <div style={style}>{props.value}</div>, // Custom cell components!
       },
       {
         Header: 'Status',
         accessor: 'status',
-        maxWidth: 370,
-        minWidth: 270,
+        minWidth: 100,
         Cell: props => <div style={style}>{props.value}</div>, // Custom cell components!
       },
       {
         Header: 'Action',
-        maxWidth: 400,
-        minWidth: 300,
+        minWidth: 100,
         filterable: false,
         accessor: 'id', // String-based value accessors!
         Cell: props => (
@@ -127,30 +123,28 @@ class RoomList extends Component {
       <RaisedButton label="No" onClick={this.handleClose} />,
     ];
     return (
-      <div className="d-flex">
-        <div className="list staff">
-          <ReactTable
-            noDataText="Please add new room!"
-            filterable
-            resizable={false}
-            data={listRoom}
-            columns={columns}
-            defaultSorted={sorted}
-            defaultPageSize={5}
-            //className="-striped -highlight"
-          />
-          <Dialog
-            title="Do you want to delete this room?"
-            modal={true}
-            onRequestClose={this.handleClose}
-            open={this.state.openDelete}
-            actions={actionDelete}
-          />
-          <div className="d-flex btn-group list-btn-add">
-            <Link to={`/conference/rooms-management/room-detail`}>
-              <RaisedButton label="Add Room" primary={true} />
-            </Link>
-          </div>
+      <div className="react-table">
+        <ReactTable
+          noDataText="Please add new room!"
+          filterable
+          resizable={false}
+          data={listRoom}
+          columns={columns}
+          defaultSorted={sorted}
+          defaultPageSize={5}
+          className="-striped -highlight"
+        />
+        <Dialog
+          title="Do you want to delete this room?"
+          modal={true}
+          onRequestClose={this.handleClose}
+          open={this.state.openDelete}
+          actions={actionDelete}
+        />
+        <div className="d-flex btn-group list-btn-add">
+          <Link to={`/conference/rooms-management/room-detail`}>
+            <RaisedButton label="Add Room" primary={true} />
+          </Link>
         </div>
       </div>
     );

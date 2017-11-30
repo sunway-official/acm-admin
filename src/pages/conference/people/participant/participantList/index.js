@@ -46,15 +46,14 @@ class ParticipantList extends Component {
       {
         Header: 'ID',
         accessor: 'id', // String-based value accessors!
-        minWidth: 100,
+        minWidth: 50,
         filterable: false,
         Cell: props => <div className="id-column">{props.value}</div>, // Custom cell components!
       },
       {
         Header: 'Name',
         accessor: '', // String-based value accessors!
-        maxWidth: 400,
-        minWidth: 300,
+        //minWidth: 200,
         Cell: props => (
           <div style={style}>
             {props.value.lastname} {props.value.firstname}
@@ -64,15 +63,13 @@ class ParticipantList extends Component {
       {
         Header: 'Email',
         accessor: 'email',
-        maxWidth: 400,
-        minWidth: 300,
+        minWidth: 100,
         Cell: props => <div style={style}>{props.value}</div>, // Custom cell components!
       },
       {
         Header: 'Date Of Birth',
         accessor: 'dob',
-        maxWidth: 370,
-        minWidth: 270,
+        minWidth: 100,
         Cell: props => (
           <div style={style}>
             {!props.value
@@ -83,8 +80,7 @@ class ParticipantList extends Component {
       },
       {
         Header: 'Action',
-        maxWidth: 400,
-        minWidth: 300,
+        minWidth: 100,
         filterable: false,
         accessor: '', // String-based value accessors!
         Cell: props => (
@@ -104,32 +100,29 @@ class ParticipantList extends Component {
       <RaisedButton label="Close" onClick={this.handleClose} />,
     ];
     return (
-      <div className="d-flex">
-        <div className="list staff">
-          <ReactTable
-            noDataText="Please add new participant!"
-            filterable
-            resizable={false}
-            data={listParticipant}
-            columns={columns}
-            defaultSorted={sorted}
-            defaultPageSize={5}
-            //className="-striped -highlight"
-          />
-          <Dialog
-            title="Participant Information"
-            modal={true}
-            onRequestClose={this.handleClose}
-            open={this.state.openDelete}
-            actions={closeDialog}
-            autoScrollBodyContent={true}
-            titleStyle={customTitleStyle}
-          >
-            <ParticipantDetail
-              participantDetail={this.state.participantDetail}
-            />
-          </Dialog>
-        </div>
+      <div className="react-table">
+        <ReactTable
+          noDataText="Please add new participant!"
+          filterable
+          resizable={false}
+          data={listParticipant}
+          columns={columns}
+          defaultSorted={sorted}
+          defaultPageSize={5}
+          showPaginationTop
+          className="-striped -highlight"
+        />
+        <Dialog
+          title="Participant Information"
+          modal={true}
+          onRequestClose={this.handleClose}
+          open={this.state.openDelete}
+          actions={closeDialog}
+          autoScrollBodyContent={true}
+          titleStyle={customTitleStyle}
+        >
+          <ParticipantDetail participantDetail={this.state.participantDetail} />
+        </Dialog>
       </div>
     );
   }

@@ -57,22 +57,20 @@ class TopicList extends Component {
       {
         Header: 'ID',
         accessor: 'id', // String-based value accessors!
-        minWidth: 100,
+        minWidth: 50,
         filterable: false,
         Cell: props => <div className="id-column">{props.value}</div>, // Custom cell components!
       },
       {
         Header: 'Name',
         accessor: 'name', // String-based value accessors!
-        maxWidth: 600,
-        minWidth: 400,
+        minWidth: 100,
         Cell: props => <div style={style}>{props.value}</div>, // Custom cell components!
       },
       {
         Header: 'Color',
         accessor: 'color_code',
-        maxWidth: 400,
-        minWidth: 300,
+        minWidth: 100,
         filterable: false,
         Cell: props => (
           <div style={{ background: props.value, height: '100%' }} />
@@ -80,8 +78,7 @@ class TopicList extends Component {
       },
       {
         Header: 'Action',
-        maxWidth: 600,
-        minWidth: 400,
+        minWidth: 100,
         filterable: false,
         accessor: 'id', // String-based value accessors!
         Cell: props => (
@@ -114,7 +111,7 @@ class TopicList extends Component {
       <RaisedButton label="No" onClick={this.handleClose} />,
     ];
     return (
-      <div className="list-topic">
+      <div className="react-table">
         <ReactTable
           noDataText="Please add new topic!"
           filterable
@@ -123,7 +120,7 @@ class TopicList extends Component {
           columns={columns}
           defaultSorted={sorted}
           defaultPageSize={5}
-          //className="-striped -highlight"
+          className="-striped -highlight"
         />
         <Dialog
           title="Do you want to delete this color?"
