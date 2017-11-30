@@ -11,6 +11,11 @@ import { conferenceOperations } from 'store/ducks/conference';
 import { connect } from 'react-redux';
 import { graphql, compose, gql } from 'react-apollo';
 import '../style.scss';
+import { Link } from 'react-router-dom';
+import { IconButton } from 'material-ui';
+import { ActionHome } from 'material-ui/svg-icons';
+import { Subheader } from 'material-ui';
+import DashboardMenu from './menu';
 class ConferenceAddForm extends PureComponent {
   constructor(props) {
     super(props);
@@ -87,11 +92,25 @@ class ConferenceAddForm extends PureComponent {
   render() {
     return (
       <div>
-        <AddForm
-          onSubmit={this.handleAddConference}
-          onMapPositionChanged={this.onMapPositionChanged}
-          handleSwitch={this.handleSwitch}
-        />
+        <DashboardMenu />
+        <Subheader className="subheader conf-infor-title">
+          Create Conference
+        </Subheader>
+        <div className="page-breadcrumb d-flex">
+          <Link className="d-flex" to="/">
+            <IconButton>
+              <ActionHome />
+            </IconButton>
+            <span>Home</span>
+          </Link>
+        </div>
+        <div className="add-form-bg">
+          <AddForm
+            onSubmit={this.handleAddConference}
+            onMapPositionChanged={this.onMapPositionChanged}
+            handleSwitch={this.handleSwitch}
+          />
+        </div>
       </div>
     );
   }

@@ -5,7 +5,6 @@ import React from 'react';
 import { compose, withApollo } from 'react-apollo';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { Link } from 'react-router-dom';
 import { AppBar } from 'material-ui';
 // import { ActionReorder } from 'material-ui/svg-icons';
 import { images } from './../../../theme';
@@ -87,9 +86,6 @@ class DashboardMenu extends Component {
               onRequestClose={this.handleRequestClose}
             >
               <Menu>
-                <Link to="/user-profile">
-                  <MenuItem primaryText="User Profile" />
-                </Link>
                 <MenuItem primaryText="Sign out" onClick={this.handleSignOut} />
               </Menu>
             </Popover>

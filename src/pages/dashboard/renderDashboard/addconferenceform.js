@@ -16,11 +16,13 @@ const AddConferenceForm = ({
   submitting,
   pristine,
 }) => (
-  <form className="form conference-info" onSubmit={handleSubmit}>
+  <form className="form conference-info " onSubmit={handleSubmit}>
     <div>
       <div>
         <div className="form-body">
-          <Subheader className="header title">Basic Information</Subheader>
+          <Subheader className="header title organizer-inf">
+            Conference Information
+          </Subheader>
           <div className="map">
             <AppMap
               onMapPositionChanged={onMapPositionChanged}
@@ -35,8 +37,8 @@ const AddConferenceForm = ({
                 <div
                   style={{
                     height: `100%`,
-                    marginLeft: '-25%',
-                    marginRight: '-39%',
+                    marginLeft: '-5%',
+                    marginRight: '-25%',
                   }}
                 />
               }
@@ -89,7 +91,7 @@ const AddConferenceForm = ({
             </div>
           </div>
           <div>
-            <Subheader className="header title">
+            <Subheader className="header title organizer-inf">
               Organizer Information
             </Subheader>
             <div>
