@@ -1,19 +1,24 @@
 import React, { Component } from 'react';
-import {
-  Table,
-  TableBody,
-  TableHeader,
-  TableHeaderColumn,
-  TableRow,
-  TableRowColumn,
-  RaisedButton,
-  Dialog,
-} from 'material-ui';
+import { RaisedButton, Dialog } from 'material-ui';
 import { Link } from 'react-router-dom';
 import { graphql, compose } from 'react-apollo';
 import { mutations, queries } from '../helpers';
 import { connect } from 'react-redux';
+import ReactTable from 'react-table';
+import 'react-table/react-table.css';
 
+const style = {
+  textAlign: 'left',
+  lineHeight: '200%',
+  paddingLeft: '1vw',
+};
+
+const sorted = [
+  {
+    id: 'name',
+    desc: false,
+  },
+];
 class RoomList extends Component {
   constructor() {
     super();
@@ -51,6 +56,49 @@ class RoomList extends Component {
     });
   }
   render() {
+    const columns = [
+      {
+        Header: 'Name',
+        accessor: 'name', // String-based value accessors!
+        minWidth: 100,
+        Cell: props => <div style={style}>{props.value}</div>, // Custom cell components!
+      },
+      {
+        Header: 'Seats',
+        accessor: 'seats',
+        minWidth: 100,
+        Cell: props => <div className="center-column">{props.value}</div>, // Custom cell components!
+      },
+      {
+        Header: 'Status',
+        accessor: 'status',
+        minWidth: 100,
+        Cell: props => <div className="center-column">{props.value}</div>, // Custom cell components!
+      },
+      {
+        Header: 'Action',
+        minWidth: 100,
+        filterable: false,
+        accessor: 'id', // String-based value accessors!
+        Cell: props => (
+          <div className="action-column">
+            <Link
+              to={`/conference/rooms-management/room-detail/${props.value}`}
+            >
+              <RaisedButton
+                label="Edit"
+                primary={true}
+                className="list-btn-action"
+              />
+            </Link>
+            <RaisedButton
+              label="Delete"
+              onClick={() => this.handleOpenDelete(props.value)}
+            />
+          </div>
+        ),
+      },
+    ];
     const {
       loading,
       getRoomsByConferenceID,
@@ -68,60 +116,28 @@ class RoomList extends Component {
       <RaisedButton label="No" onClick={this.handleClose} />,
     ];
     return (
-      <div className="d-flex">
-        <div className="list staff">
-          <Table fixedHeader={true} selectable={false}>
-            <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
-              <TableRow>
-                <TableHeaderColumn className="index-column">
-                  ID
-                </TableHeaderColumn>
-                <TableHeaderColumn>Name</TableHeaderColumn>
-                <TableHeaderColumn>Seat</TableHeaderColumn>
-                <TableHeaderColumn>Status</TableHeaderColumn>
-                <TableHeaderColumn>Actions</TableHeaderColumn>
-              </TableRow>
-            </TableHeader>
-            <TableBody displayRowCheckbox={false}>
-              {listRoom.map((room, index) => {
-                return (
-                  <TableRow key={room.id}>
-                    <TableRowColumn className="index-column">
-                      {index + 1}
-                    </TableRowColumn>
-                    <TableRowColumn>{room.name}</TableRowColumn>
-                    <TableRowColumn>{room.seats}</TableRowColumn>
-                    <TableRowColumn>
-                      {room.status === 'on' ? 'Available' : 'Not Available'}
-                    </TableRowColumn>
-                    <TableRowColumn>
-                      <Link
-                        to={`/conference/rooms-management/room-detail/${room.id}`}
-                      >
-                        <RaisedButton label="Edit" primary={true} />
-                      </Link>
-                      <RaisedButton
-                        label="Delete"
-                        onClick={() => this.handleOpenDelete(room.id)}
-                      />
-                    </TableRowColumn>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-          <Dialog
-            title="Do you want to delete this room?"
-            modal={true}
-            onRequestClose={this.handleClose}
-            open={this.state.openDelete}
-            actions={actionDelete}
-          />
-          <div className="d-flex btn-group">
-            <Link to={`/conference/rooms-management/room-detail`}>
-              <RaisedButton label="Add Room" primary={true} />
-            </Link>
-          </div>
+      <div className="react-table">
+        <ReactTable
+          noDataText="Please add new room!"
+          filterable
+          resizable={false}
+          data={listRoom}
+          columns={columns}
+          defaultSorted={sorted}
+          defaultPageSize={5}
+          className="-striped -highlight"
+        />
+        <Dialog
+          title="Do you want to delete this room?"
+          modal={true}
+          onRequestClose={this.handleClose}
+          open={this.state.openDelete}
+          actions={actionDelete}
+        />
+        <div className="d-flex btn-group list-btn-add">
+          <Link to={`/conference/rooms-management/room-detail`}>
+            <RaisedButton label="Add Room" primary={true} />
+          </Link>
         </div>
       </div>
     );

@@ -1,13 +1,13 @@
 import { gql } from 'react-apollo';
 
-const UPDATE_TOPIC_MUTATION = gql`
-  mutation updateTopic(
+const UPDATE_TOPIC_IN_CONFERENCE_MUTATION = gql`
+  mutation updateTopicInConference(
     $id: ID!
     $name: String
     $description: String
     $color_id: ID
   ) {
-    updateTopic(
+    updateTopicInConference(
       id: $id
       name: $name
       description: $description
@@ -20,9 +20,17 @@ const UPDATE_TOPIC_MUTATION = gql`
     }
   }
 `;
-const INSERT_TOPIC_MUTATION = gql`
-  mutation insertTopic($name: String!, $description: String!, $color_id: ID!) {
-    insertTopic(name: $name, description: $description, color_id: $color_id) {
+const INSERT_TOPIC_IN_CONFERENCE_MUTATION = gql`
+  mutation insertTopicInConference(
+    $name: String!
+    $description: String!
+    $color_id: ID!
+  ) {
+    insertTopicInConference(
+      name: $name
+      description: $description
+      color_id: $color_id
+    ) {
       id
       name
       description
@@ -40,7 +48,7 @@ const DELETE_TOPIC_MUTATION = gql`
 `;
 
 export default {
-  UPDATE_TOPIC_MUTATION,
-  INSERT_TOPIC_MUTATION,
+  UPDATE_TOPIC_IN_CONFERENCE_MUTATION,
+  INSERT_TOPIC_IN_CONFERENCE_MUTATION,
   DELETE_TOPIC_MUTATION,
 };
