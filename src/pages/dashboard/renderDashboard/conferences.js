@@ -63,7 +63,7 @@ class listCoferences extends React.Component {
                 secondaryText={
                   subTitleString(conference.start_date, 10) +
                   '  To  ' +
-                  subTitleString(conference.start_date, 10)
+                  subTitleString(conference.end_date, 10)
                 }
                 containerElement={<Link to={`/conference/info`} />}
                 onClick={async () => {
