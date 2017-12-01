@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import CustomInput from 'components/CustomInput';
 import { reduxForm, Field } from 'redux-form';
-import { connect } from 'react-redux';
 import validate from '../validate';
-import { RaisedButton, Subheader, Divider } from 'material-ui';
+import { RaisedButton, Subheader } from 'material-ui';
 import { Link } from 'react-router-dom';
 
 class EditPaperForm extends Component {

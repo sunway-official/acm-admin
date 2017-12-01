@@ -107,7 +107,7 @@ class CoOrganizerList extends PureComponent {
     ];
     const actions = [
       <IconButton
-        tooltip="No"
+        tooltip="Close"
         className="cancel-btn dialog"
         onClick={this.handleClose}
       >
