@@ -77,7 +77,7 @@ class CoOrganizerInfo extends PureComponent {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  console.log(state);
+  console.log(ownProps);
   const coOrganizerDetails = ownProps.coOrganizerDetails;
   const isAdd = ownProps.isAdd;
   return {
