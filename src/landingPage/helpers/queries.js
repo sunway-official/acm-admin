@@ -37,6 +37,7 @@ export const GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY = gql`
       schedules {
         start
         end
+        room_name
       }
     }
   }

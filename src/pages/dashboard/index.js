@@ -18,13 +18,13 @@ class Index extends Component {
     return (
       <div>
         <style dangerouslySetInnerHTML={{ __html: style }} />
-        <Subheader className="subheader conf-infor-title"> Dashboard</Subheader>
+        <Subheader className="subheader conf-infor-title"> Home</Subheader>
         <div className="page-breadcrumb d-flex">
-          <Link className="d-flex" to="/conference/info">
+          <Link className="d-flex" to="/">
             <IconButton>
               <ActionHome />
             </IconButton>
-            <span>Dashboard</span>
+            <span>Home</span>
           </Link>
         </div>
         <DashboardMenu />

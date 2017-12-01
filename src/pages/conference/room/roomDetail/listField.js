@@ -5,6 +5,7 @@ export const listField = [
     hintText: 'Room Name',
     primaryText: 'Room Name',
     type: 'text',
+    autoFocus: true,
   },
   {
     id: 2,

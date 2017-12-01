@@ -9,11 +9,14 @@ class ScheduleForm extends Component {
     const content = events.map((event, index) => (
       <tr key={index} className="event-detail landing-page-tr">
         <th className="event-time landing-page-th">
-          {moment(event.start).format('h:mm a')}
-          <span> - </span>
-          {moment(event.end).format('h:mm a')}
-          <br />
-          {moment(event.start).format('DD-MM-YYYY')}
+          <div>
+            {moment(event.start).format('h:mm a')}
+            <span> - </span>
+            {moment(event.end).format('h:mm a')}
+            <br />
+            {moment(event.start).format('DD-MM-YYYY')}
+          </div>
+          <div>{event.schedules[0].room_name}</div>
         </th>
         <th className="landing-page-th">
           <h3 className="event-title">{event.title}</h3>

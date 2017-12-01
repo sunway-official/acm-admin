@@ -8,8 +8,9 @@
   font-weight: inherit;
   height: 52px !important;
 }
-.personal-info-button{
+.personal-info-button {
   display: flex;
+  margin-bottom: 16px !important;
   .btn {
     &.save-change {
       width: 150px !important;
@@ -21,23 +22,23 @@
     }
   }
 }
-.editField{
+.editField {
   height: 44px !important;
   padding-left: 0px !important;
 }
-.landing-page-form{
+.landing-page-form {
   width: 100%;
 }
-.landing-page-app-bar{
+.landing-page-app-bar {
   position: initial !important;
 }
-.landing-page-redux-form{
+.landing-page-redux-form {
   width: 100%;
 }
-.multi-row{
+.multi-row {
   margin-bottom: 1vw !important;
 }
-.landing-page-grid{
+.landing-page-grid {
   margin-top: 2vw;
   width: 85%;
 }

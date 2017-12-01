@@ -28,7 +28,8 @@ import TopicDetail from '../pages/conference/topic/topicDetail';
 import RoomDetail from '../pages/conference/room/roomDetail';
 import AddNewRoom from '../pages/conference/room/roomDetail/addRoom';
 import AddNewTopic from '../pages/conference/topic/topicDetail/addTopic';
-import AttendeeManagement from '../pages/conference/attendee';
+import Addconference from '../pages/dashboard/renderDashboard/addConference';
+import ParticipantManagement from '../pages/conference/people/participant';
 
 import ReactTable from '../pages/react-table';
 
@@ -48,6 +49,7 @@ export default () => (
         <Switch>
           <AuthRoute needAuth exact path="/" component={Dashboard} />
           <AuthRoute path="/conference/info" component={ConferenceInfo} />
+          <AuthRoute path="/conference/add" component={Addconference} />
           <AuthRoute
             path="/conference/:conference_id/people/staff"
             component={ConferenceStaffList}
@@ -98,8 +100,8 @@ export default () => (
           <AuthRoute
             needAuth
             exact
-            path="/conference/people/attendee-management"
-            component={AttendeeManagement}
+            path="/conference/people/participant-management"
+            component={ParticipantManagement}
           />
           <AuthRoute
             needAuth
