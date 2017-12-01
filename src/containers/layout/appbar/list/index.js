@@ -5,7 +5,7 @@ import {
   ActionInfoOutline,
   ActionSupervisorAccount,
   // ActionChromeReaderMode,
-  // AvLibraryBooks,
+  AvLibraryBooks,
   // EditorShowChart,
   NotificationEventAvailable,
   HardwareKeyboardArrowRight,
@@ -146,7 +146,7 @@ class ListExampleSimple extends React.Component {
             <ListItem
               className="item"
               primaryText={'Papers'}
-              leftIcon={<SocialLocationCity />}
+              leftIcon={<AvLibraryBooks />}
             />
           </Link>
           <ListItem
