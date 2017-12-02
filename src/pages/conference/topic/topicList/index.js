@@ -38,19 +38,24 @@ class TopicList extends Component {
   handleClose() {
     this.setState({ openDelete: false });
   }
-  handleDelete() {
+  async handleDelete() {
     this.setState({ openDelete: false });
     const { DELETE_TOPIC_MUTATION } = this.props;
-    DELETE_TOPIC_MUTATION({
-      variables: {
-        id: this.state.topic_id,
-      },
-      refetchQueries: [
-        {
-          query: queries.GET_TOPICS_OF_CONFERENCE_QUERY,
+    try {
+      DELETE_TOPIC_MUTATION({
+        variables: {
+          id: this.state.topic_id,
         },
-      ],
-    });
+        refetchQueries: [
+          {
+            query: queries.GET_TOPICS_OF_CONFERENCE_QUERY,
+          },
+        ],
+      });
+    } catch (error) {
+      let temp = error.graphQLErrors[0].message;
+      alert(temp.substring(7, temp.length));
+    }
   }
   render() {
     const columns = [

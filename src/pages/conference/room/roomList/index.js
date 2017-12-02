@@ -38,22 +38,27 @@ class RoomList extends Component {
   handleClose() {
     this.setState({ openDelete: false });
   }
-  handleDelete() {
+  async handleDelete() {
     this.setState({ openDelete: false });
     const { DELETE_ROOM_MUTATION } = this.props;
-    DELETE_ROOM_MUTATION({
-      variables: {
-        id: this.state.room_id,
-      },
-      refetchQueries: [
-        {
-          query: queries.GET_ROOMS_BY_CONFERENCE_ID_QUERY,
-          variables: {
-            conference_id: this.props.id,
-          },
+    try {
+      await DELETE_ROOM_MUTATION({
+        variables: {
+          id: this.state.room_id,
         },
-      ],
-    });
+        refetchQueries: [
+          {
+            query: queries.GET_ROOMS_BY_CONFERENCE_ID_QUERY,
+            variables: {
+              conference_id: this.props.id,
+            },
+          },
+        ],
+      });
+    } catch (error) {
+      let temp = error.graphQLErrors[0].message;
+      alert(temp.substring(7, temp.length));
+    }
   }
   render() {
     const columns = [
