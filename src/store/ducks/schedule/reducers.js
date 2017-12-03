@@ -3,6 +3,7 @@ import types from './types';
 const initalState = {
   openEditFormModalWithPaper: false,
   openAddFormModalWithPaper: false,
+  openAddFormModalWithTitle: false,
   openEditFormModalWithTitle: false,
 };
 
@@ -23,13 +24,13 @@ const reducer = (state = initalState, action) => {
     case types.TOGGLE_ADD_ACTIVITY_TITLE_FORM_MODAL:
       const addActivityTitle = {
         ...state,
-        openEditFormModalWithTitle: !state.openEditFormModalWithTitle,
+        openAddFormModalWithTitle: !state.openAddFormModalWithTitle,
       };
       return addActivityTitle;
     case types.TOGGLE_EDIT_ACTIVITY_TITLE_FORM_MODAL:
       const editActivityTitle = {
         ...state,
-        openEditFormModalWithPaper: !state.openEditFormModalWithPaper,
+        openEditFormModalWithTitle: !state.openEditFormModalWithTitle,
       };
       return editActivityTitle;
     case types.SET_EVENT_SUCCESS: {

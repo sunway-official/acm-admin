@@ -21,10 +21,10 @@ export const addActivityFunc = data => {
           schedule.start,
         );
         const newEndTime = functions.getDateTime(schedule.date, schedule.end);
-
+        console.log(data.insertAco);
         INSERT_SCHEDULE_MUTATION({
           variables: {
-            activity_id: data.insertActivity.id,
+            activity_id: data.insertActivityWithPaperID.id,
             room_id: schedule.room,
             start: newStarTime,
             end: newEndTime,

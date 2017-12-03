@@ -4,14 +4,7 @@ import moment from 'moment';
 const validate = (values, props) => {
   const errors = {};
   const ArrayErrors = [];
-  const requiredFields = [
-    'paper',
-    'description',
-    'date',
-    'start',
-    'end',
-    'room',
-  ];
+  const requiredFields = ['date', 'start', 'end', 'room'];
   requiredFields.forEach(field => {
     if (!values[field]) {
       errors[field] = 'This field is required';

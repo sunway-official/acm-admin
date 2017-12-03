@@ -11,7 +11,7 @@ import {
 import { reduxForm, Field, FieldArray, reset } from 'redux-form';
 import { NavigationClose, ContentAdd } from 'material-ui/svg-icons';
 import validate from './validate';
-import { renderSchedules, renderSelectField } from './render';
+import { renderSchedules, renderSelectField, renderTextField } from './render';
 import { connect } from 'react-redux';
 import { scheduleActions, scheduleOperations } from 'store/ducks/schedule';
 
@@ -54,7 +54,6 @@ class AddDialog extends React.PureComponent {
     if (this.props) {
       papers = this.props.papers;
     } else return <div>Loading</div>;
-    console.log(this.props);
     return (
       <div>
         <FloatingActionButton
@@ -81,8 +80,6 @@ class AddDialog extends React.PureComponent {
               primaryText="Add activity with title"
               onClick={this.props.toggleAddActivityTitle}
             />
-            <MenuItem primaryText="Settings" />
-            <MenuItem primaryText="Sign out" />
           </Menu>
         </Popover>
         <Dialog
@@ -112,7 +109,6 @@ class AddDialog extends React.PureComponent {
                 })}
               </Field>
             </div>
-
             <div className="d-flex form-group">
               <FieldArray
                 name="schedules"
@@ -143,6 +139,64 @@ class AddDialog extends React.PureComponent {
             </div>
           </form>
         </Dialog>
+        <Dialog
+          title={this.state.dialogTitle}
+          modal={true}
+          autoScrollBodyContent={true}
+          open={this.props.openAddFormModalWithTitle}
+        >
+          <form className="form conference-info" onSubmit={handleSubmit}>
+            {error && <div className="error">{error}</div>}
+            <div className="d-flex form-group">
+              <label>Title :</label>
+              <Field
+                name="title"
+                component={renderTextField}
+                hintText="Activity Title"
+                fullWidth={true}
+              />
+            </div>
+            <div className="d-flex form-group">
+              <label>Description :</label>
+              <Field
+                name="description"
+                component={renderTextField}
+                hintText="Activity Description"
+                fullWidth={true}
+                multiLine
+                rows={1}
+              />
+            </div>
+            <div className="d-flex form-group">
+              <FieldArray
+                name="schedules"
+                component={renderSchedules}
+                rooms={rooms}
+              />
+            </div>
+            <div className="d-flex form-group">
+              <Field name="error" component="label" />
+            </div>
+            <div className="d-flex justify-content-flex-end">
+              <RaisedButton
+                label="Save"
+                primary={true}
+                type="submit"
+                disabled={pristine || submitting}
+              />
+              <IconButton
+                tooltip="Close"
+                className="cancel-btn dialog"
+                onClick={() => {
+                  this.props.toggleAddActivityTitle();
+                  this.props.reset();
+                }}
+              >
+                <NavigationClose />
+              </IconButton>
+            </div>
+          </form>
+        </Dialog>
       </div>
     );
   }
@@ -155,9 +209,9 @@ AddDialog = reduxForm({
 })(AddDialog);
 
 const mapStateToProps = state => {
-  console.log(state);
   return {
     openAddFormModalWithPaper: state.schedule.openAddFormModalWithPaper,
+    openAddFormModalWithTitle: state.schedule.openAddFormModalWithTitle,
   };
 };
 
