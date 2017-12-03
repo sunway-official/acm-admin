@@ -1,24 +1,37 @@
 import types from './types';
 
 const initalState = {
-  openEditFormModal: false,
-  openAddFormModal: false,
+  openEditFormModalWithPaper: false,
+  openAddFormModalWithPaper: false,
+  openEditFormModalWithTitle: false,
 };
 
 const reducer = (state = initalState, action) => {
   switch (action.type) {
-    case types.TOGGLE_ADD_ACTIVITY_FORM_MODAL:
-      const add = {
+    case types.TOGGLE_ADD_ACTIVITY_PAPER_FORM_MODAL:
+      const addActivityPaper = {
         ...state,
-        openAddFormModal: !state.openAddFormModal,
+        openAddFormModalWithPaper: !state.openAddFormModalWithPaper,
       };
-      return add;
-    case types.TOGGLE_EDIT_ACTIVITY_FORM_MODAL:
-      const edit = {
+      return addActivityPaper;
+    case types.TOGGLE_EDIT_ACTIVITY_PAPER_FORM_MODAL:
+      const editActivityPaper = {
         ...state,
-        openEditFormModal: !state.openEditFormModal,
+        openEditFormModalWithPaper: !state.openEditFormModalWithPaper,
       };
-      return edit;
+      return editActivityPaper;
+    case types.TOGGLE_ADD_ACTIVITY_TITLE_FORM_MODAL:
+      const addActivityTitle = {
+        ...state,
+        openEditFormModalWithTitle: !state.openEditFormModalWithTitle,
+      };
+      return addActivityTitle;
+    case types.TOGGLE_EDIT_ACTIVITY_TITLE_FORM_MODAL:
+      const editActivityTitle = {
+        ...state,
+        openEditFormModalWithPaper: !state.openEditFormModalWithPaper,
+      };
+      return editActivityTitle;
     case types.SET_EVENT_SUCCESS: {
       const newState = Object.assign({}, state, {
         event: action.payload.event,

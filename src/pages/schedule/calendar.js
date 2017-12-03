@@ -198,15 +198,17 @@ class MyCalendar extends React.PureComponent {
 
 const mapStateToProps = state => {
   return {
-    openEdit: state.schedule.openEditFormModal,
+    openEdit: state.schedule.openEditFormModalWithPaper,
     deleteIds: state.schedule.deleteIds,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    toggleAdd: () => dispatch(scheduleActions.toggleAddActivityFormModal()),
-    toggleEdit: () => dispatch(scheduleActions.toggleEditActivityFormModal()),
+    toggleAdd: () =>
+      dispatch(scheduleActions.toggleAddActivityPaperFormModal()),
+    toggleEdit: () =>
+      dispatch(scheduleActions.toggleEditActivityPaperFormModal()),
     setEvent: event => dispatch(scheduleOperations.setEventOperation(event)),
   };
 };

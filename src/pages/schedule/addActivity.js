@@ -5,6 +5,8 @@ import {
   Dialog,
   FloatingActionButton,
   MenuItem,
+  Menu,
+  Popover,
 } from 'material-ui';
 import { reduxForm, Field, FieldArray, reset } from 'redux-form';
 import { NavigationClose, ContentAdd } from 'material-ui/svg-icons';
@@ -28,8 +30,25 @@ const style = {
 class AddDialog extends React.PureComponent {
   state = {
     dialogTitle: 'Add New Activity',
+    openAdd: false,
   };
+  handleTouchTap = event => {
+    event.preventDefault();
+    this.setState({
+      openAdd: true,
+      anchorEl: event.currentTarget,
+    });
+  };
+  handleRequestClose = () => {
+    this.setState({
+      openAdd: false,
+    });
+  };
+
   render() {
+    // const render = ({}) =>(
+    //   <div></div>
+    // )
     const { handleSubmit, submitting, pristine, rooms, error } = this.props;
     let papers;
     if (this.props) {
@@ -41,16 +60,36 @@ class AddDialog extends React.PureComponent {
         <FloatingActionButton
           style={style}
           className="position-fixed"
-          onClick={this.props.toggleAdd}
+          onClick={this.handleTouchTap}
           mini={true}
         >
           <ContentAdd />
         </FloatingActionButton>
+        <Popover
+          open={this.state.openAdd}
+          anchorEl={this.state.anchorEl}
+          anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+          targetOrigin={{ horizontal: 'left', vertical: 'top' }}
+          onRequestClose={this.handleRequestClose}
+        >
+          <Menu>
+            <MenuItem
+              primaryText="Add activity with paper"
+              onClick={this.props.toggleAddActivityPaper}
+            />
+            <MenuItem
+              primaryText="Add activity with title"
+              onClick={this.props.toggleAddActivityTitle}
+            />
+            <MenuItem primaryText="Settings" />
+            <MenuItem primaryText="Sign out" />
+          </Menu>
+        </Popover>
         <Dialog
           title={this.state.dialogTitle}
           modal={true}
           autoScrollBodyContent={true}
-          open={this.props.openAdd}
+          open={this.props.openAddFormModalWithPaper}
         >
           <form className="form conference-info" onSubmit={handleSubmit}>
             {error && <div className="error">{error}</div>}
@@ -95,7 +134,7 @@ class AddDialog extends React.PureComponent {
                 tooltip="Close"
                 className="cancel-btn dialog"
                 onClick={() => {
-                  this.props.toggleAdd();
+                  this.props.toggleAddActivityPaper();
                   this.props.reset();
                 }}
               >
@@ -116,14 +155,18 @@ AddDialog = reduxForm({
 })(AddDialog);
 
 const mapStateToProps = state => {
+  console.log(state);
   return {
-    openAdd: state.schedule.openAddFormModal,
+    openAddFormModalWithPaper: state.schedule.openAddFormModalWithPaper,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    toggleAdd: () => dispatch(scheduleActions.toggleAddActivityFormModal()),
+    toggleAddActivityPaper: () =>
+      dispatch(scheduleActions.toggleAddActivityPaperFormModal()),
+    toggleAddActivityTitle: () =>
+      dispatch(scheduleActions.toggleAddActivityTitleFormModal()),
     checkError: error => {
       dispatch(scheduleOperations.checkErrorOperation(error));
     },
