@@ -8,6 +8,12 @@ import ContactInformation from '../contactInformation';
 import '../style.css';
 import { queries, mutations } from '../helpers';
 import { compose, graphql } from 'react-apollo';
+import {
+  alertOptions,
+  MyExclamationTriangle,
+  MyFaCheck,
+} from '../../../../../theme/alert';
+import AlertContainer from 'react-alert';
 
 const styles = {
   headline: {
@@ -30,41 +36,67 @@ class InfoTabs extends React.Component {
     this.saveInformation = this.saveInformation.bind(this);
     this.savePassword = this.savePassword.bind(this);
   }
+  showAlertError = text => {
+    this.msg.error(text, {
+      type: 'error', // type of alert
+      icon: <MyExclamationTriangle />,
+    });
+  };
+  showAlertSuccess = () => {
+    this.msg.success('Saved!', {
+      type: 'success',
+      icon: <MyFaCheck />,
+    });
+  };
   handleChange = value => {
     this.setState({
       slideIndex: value,
     });
   };
-  saveInformation(values) {
+  async saveInformation(values) {
     const { UPDATE_ME_MUTATION } = this.props;
-    UPDATE_ME_MUTATION({
-      variables: {
-        firstname: values.firstname,
-        lastname: values.lastname,
-        gender: values.gender,
-        dob: values.dob,
-        bio: values.bio,
-        position: values.position,
-        organization: values.organization,
-        linkedin_id: values.linkedin_id,
-        facebook_id: values.facebook_id,
-        twitter_id: values.twitter_id,
-      },
-      refetchQueries: [
-        {
-          query: queries.ME_QUERY,
+    try {
+      await UPDATE_ME_MUTATION({
+        variables: {
+          firstname: values.firstname,
+          lastname: values.lastname,
+          gender: values.gender,
+          dob: values.dob,
+          bio: values.bio,
+          position: values.position,
+          organization: values.organization,
+          linkedin_id: values.linkedin_id,
+          facebook_id: values.facebook_id,
+          twitter_id: values.twitter_id,
         },
-      ],
-    });
+        refetchQueries: [
+          {
+            query: queries.ME_QUERY,
+          },
+        ],
+      });
+      this.showAlertSuccess();
+    } catch (error) {
+      let temp = error.graphQLErrors[0].message;
+      this.showAlertError(temp.substring(7, temp.length));
+    }
   }
-  savePassword(values) {
+  async savePassword(values) {
     const { UPDATE_PASSWORD_MUTATION } = this.props;
-    UPDATE_PASSWORD_MUTATION({
-      variables: {
-        oldPassword: values.oldPassword,
-        newPassword: values.newPassword,
-      },
-    });
+    try {
+      await UPDATE_PASSWORD_MUTATION({
+        variables: {
+          oldPassword: values.oldPassword,
+          newPassword: values.newPassword,
+        },
+      });
+      this.showAlertSuccess();
+    } catch (error) {
+      //console.log('abc');
+      let temp = error.graphQLErrors[0].message;
+      this.showAlertError(temp.substring(7, temp.length));
+      console.log(error.graphQLErrors[0].message);
+    }
   }
   render() {
     const me = this.props.me;
@@ -88,6 +120,7 @@ class InfoTabs extends React.Component {
           <div style={styles.slide}>
             <ChangePassword onSubmit={this.savePassword} />
           </div>
+          <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />
         </SwipeableViews>
       </div>
     );

@@ -6,6 +6,12 @@ import { mutations, queries } from '../helpers';
 import { connect } from 'react-redux';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
+import {
+  alertOptions,
+  MyExclamationTriangle,
+  MyFaCheck,
+} from '../../../../theme/alert';
+import AlertContainer from 'react-alert';
 
 const style = {
   textAlign: 'left',
@@ -29,6 +35,18 @@ class RoomList extends Component {
     this.handleOpenDelete = this.handleOpenDelete.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
   }
+  showAlertError = text => {
+    this.msg.error(text, {
+      type: 'error', // type of alert
+      icon: <MyExclamationTriangle />,
+    });
+  };
+  showAlertSuccess = () => {
+    this.msg.success('Saved!', {
+      type: 'success',
+      icon: <MyFaCheck />,
+    });
+  };
   handleOpenDelete(room_id) {
     this.setState({ openDelete: true });
     this.setState({
@@ -55,9 +73,10 @@ class RoomList extends Component {
           },
         ],
       });
+      this.showAlertSuccess();
     } catch (error) {
       let temp = error.graphQLErrors[0].message;
-      alert(temp.substring(7, temp.length));
+      this.showAlertError(temp.substring(7, temp.length));
     }
   }
   render() {
@@ -144,6 +163,7 @@ class RoomList extends Component {
             <RaisedButton label="Add Room" primary={true} />
           </Link>
         </div>
+        <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />
       </div>
     );
   }

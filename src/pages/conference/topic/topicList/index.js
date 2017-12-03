@@ -6,6 +6,12 @@ import './style.css';
 import { Link } from 'react-router-dom';
 import { graphql } from 'react-apollo';
 import { mutations, queries } from '../helpers';
+import AlertContainer from 'react-alert';
+import {
+  alertOptions,
+  MyExclamationTriangle,
+  MyFaCheck,
+} from '../../../../theme/alert';
 
 const style = {
   textAlign: 'left',
@@ -29,6 +35,18 @@ class TopicList extends Component {
     this.handleOpenDelete = this.handleOpenDelete.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
   }
+  showAlertError = text => {
+    this.msg.error(text, {
+      type: 'error', // type of alert
+      icon: <MyExclamationTriangle />,
+    });
+  };
+  showAlertSuccess = () => {
+    this.msg.success('Saved!', {
+      type: 'success',
+      icon: <MyFaCheck />,
+    });
+  };
   handleOpenDelete(topic_id) {
     this.setState({ openDelete: true });
     this.setState({
@@ -42,7 +60,7 @@ class TopicList extends Component {
     this.setState({ openDelete: false });
     const { DELETE_TOPIC_MUTATION } = this.props;
     try {
-      DELETE_TOPIC_MUTATION({
+      await DELETE_TOPIC_MUTATION({
         variables: {
           id: this.state.topic_id,
         },
@@ -52,9 +70,10 @@ class TopicList extends Component {
           },
         ],
       });
+      this.showAlertSuccess();
     } catch (error) {
       let temp = error.graphQLErrors[0].message;
-      alert(temp.substring(7, temp.length));
+      this.showAlertError(temp.substring(7, temp.length));
     }
   }
   render() {
@@ -132,6 +151,7 @@ class TopicList extends Component {
             <RaisedButton label="Add Topic" primary={true} />
           </Link>
         </div>
+        <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />
       </div>
     );
   }

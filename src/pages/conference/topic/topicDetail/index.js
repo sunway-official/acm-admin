@@ -7,42 +7,32 @@ import { queries, mutations } from '../helpers';
 import TopicDetail from './topicDetail';
 import { withRouter } from 'react-router';
 import AlertContainer from 'react-alert';
-import ExclamationTriangle from 'react-icons/lib/fa/exclamation-triangle';
-import FaThumbsOUp from 'react-icons/lib/fa/thumbs-o-up';
-
-const styles = {
-  smallIcon: {
-    width: 16,
-    height: 16,
-  },
-};
+import {
+  alertOptions,
+  MyExclamationTriangle,
+  MyFaCheck,
+} from '../../../../theme/alert';
 
 class Index extends Component {
   constructor(props) {
     super(props);
     this.saveInformation = this.saveInformation.bind(this);
-    this.showAlertSuccess = this.showAlertSuccess.bind(this);
   }
-  alertOptions = {
-    offset: 14,
-    position: 'top right',
-    theme: 'dark',
-    time: 2000, // set time for all alert
-    transition: 'scale',
-  };
-
   showAlertError = text => {
     this.msg.error(text, {
       type: 'error', // type of alert
-      icon: <ExclamationTriangle style={styles.smallIcon} />,
+      icon: <MyExclamationTriangle />,
     });
   };
-  async showAlertSuccess() {
-    await this.msg.success('Saved!', {
+  showAlertSuccess = () => {
+    this.msg.success('Saved!', {
       type: 'success',
-      icon: <FaThumbsOUp style={styles.smallIcon} />,
+      icon: <MyFaCheck />,
+      onClose: () => {
+        this.props.history.replace('/conference/topics-management');
+      },
     });
-  }
+  };
   async saveInformation(values) {
     const { UPDATE_TOPIC_IN_CONFERENCE_MUTATION } = this.props;
     try {
@@ -60,11 +50,9 @@ class Index extends Component {
           },
         ],
       });
-      window.alert('success');
-      this.props.history.replace('/conference/topics-management');
-      // this.showAlertSuccess().then(
-      //   this.props.history.replace('/conference/topics-management');
-      // );
+      // window.alert('success');
+      // this.props.history.replace('/conference/topics-management');
+      this.showAlertSuccess();
     } catch (error) {
       let temp = error.graphQLErrors[0].message;
       this.showAlertError(temp.substring(7, temp.length));
@@ -106,7 +94,7 @@ class Index extends Component {
             colorsList={colorsList}
             onSubmit={this.saveInformation}
           />
-          <AlertContainer ref={a => (this.msg = a)} {...this.alertOptions} />
+          <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />
         </div>
       </div>
     );
