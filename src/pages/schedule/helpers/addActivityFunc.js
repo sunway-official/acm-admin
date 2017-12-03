@@ -3,8 +3,12 @@ import queries from './queries';
 
 export const addActivityFunc = data => {
   console.log(data);
-  const { INSERT_ACTIVITY_MUTATION, values, INSERT_SCHEDULE_MUTATION } = data;
-  INSERT_ACTIVITY_MUTATION({
+  const {
+    INSERT_ACTIVITY_WITH_PAPER_ID_MUTATION,
+    values,
+    INSERT_SCHEDULE_MUTATION,
+  } = data;
+  INSERT_ACTIVITY_WITH_PAPER_ID_MUTATION({
     variables: {
       paper_id: data.values.paper,
     },

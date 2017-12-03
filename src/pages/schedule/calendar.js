@@ -61,11 +61,14 @@ class MyCalendar extends React.PureComponent {
 
   addActivity(values) {
     this.props.toggleAdd();
-    const { INSERT_ACTIVITY_MUTATION, INSERT_SCHEDULE_MUTATION } = this.props;
+    const {
+      INSERT_ACTIVITY_WITH_PAPER_ID_MUTATION,
+      INSERT_SCHEDULE_MUTATION,
+    } = this.props;
 
     const conferenceId = this.props.conference.id;
     const data = {
-      INSERT_ACTIVITY_MUTATION,
+      INSERT_ACTIVITY_WITH_PAPER_ID_MUTATION,
       INSERT_SCHEDULE_MUTATION,
       conferenceId,
       values,
@@ -75,7 +78,7 @@ class MyCalendar extends React.PureComponent {
   // deleteIds
   editActivity(values) {
     const {
-      UPDATE_ACTIVITY_MUTATION,
+      UPDATE_ACTIVITY_WITH_PAPER_IDMUTATION,
       UPDATE_SCHEDULE_MUTATION,
       DELETE_SCHEDULE_MUTATION,
       INSERT_SCHEDULE_MUTATION,
@@ -85,7 +88,7 @@ class MyCalendar extends React.PureComponent {
     const deleteIds = this.props.deleteIds;
 
     const data = {
-      UPDATE_ACTIVITY_MUTATION,
+      UPDATE_ACTIVITY_WITH_PAPER_IDMUTATION,
       conferenceId,
       values,
       DELETE_SCHEDULE_MUTATION,
@@ -226,14 +229,14 @@ export default compose(
   graphql(mutations.DELETE_SCHEDULE_MUTATION, {
     name: 'DELETE_SCHEDULE_MUTATION',
   }),
-  graphql(mutations.INSERT_ACTIVITY_MUTATION, {
-    name: 'INSERT_ACTIVITY_MUTATION',
+  graphql(mutations.INSERT_ACTIVITY_WITH_PAPER_ID_MUTATION, {
+    name: 'INSERT_ACTIVITY_WITH_PAPER_ID_MUTATION',
   }),
   graphql(mutations.INSERT_SCHEDULE_MUTATION, {
     name: 'INSERT_SCHEDULE_MUTATION',
   }),
-  graphql(mutations.UPDATE_ACTIVITY_MUTATION, {
-    name: 'UPDATE_ACTIVITY_MUTATION',
+  graphql(mutations.UPDATE_ACTIVITY_WITH_PAPER_IDMUTATION, {
+    name: 'UPDATE_ACTIVITY_WITH_PAPER_IDMUTATION',
   }),
   graphql(mutations.UPDATE_SCHEDULE_MUTATION, {
     name: 'UPDATE_SCHEDULE_MUTATION',
