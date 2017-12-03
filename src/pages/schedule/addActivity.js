@@ -14,7 +14,7 @@ import validate from './validate';
 import { renderSchedules, renderSelectField, renderTextField } from './render';
 import { connect } from 'react-redux';
 import { scheduleActions, scheduleOperations } from 'store/ducks/schedule';
-
+import { Link } from 'react-router-dom';
 const style = {
   marginTop: '20px',
   smallIcon: {
@@ -72,10 +72,9 @@ class AddDialog extends React.PureComponent {
           onRequestClose={this.handleRequestClose}
         >
           <Menu>
-            <MenuItem
-              primaryText="Add activity with paper"
-              onClick={this.props.toggleAddActivityPaper}
-            />
+            <Link to="/conference/activities/addActivityPaper">
+              <MenuItem primaryText="Add activity with paper" />
+            </Link>
             <MenuItem
               primaryText="Add activity with title"
               onClick={this.props.toggleAddActivityTitle}

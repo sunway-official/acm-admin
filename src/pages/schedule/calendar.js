@@ -8,7 +8,6 @@ import { Dialog, IconButton, Subheader, Toggle } from 'material-ui';
 import { Link } from 'react-router-dom';
 import { scheduleActions, scheduleOperations } from 'store/ducks/schedule';
 import { connect } from 'react-redux';
-
 import {
   NavigationClose,
   HardwareKeyboardArrowRight,
