@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import CustomInput from 'components/CustomInput';
 import { reduxForm, Field } from 'redux-form';
 import validate from '../validate';
-import { RaisedButton, Checkbox, Subheader, Divider } from 'material-ui';
+import { RaisedButton, Checkbox, Subheader } from 'material-ui';
 import { Link } from 'react-router-dom';
 class AddPaperForm extends Component {
   render() {
@@ -10,7 +10,7 @@ class AddPaperForm extends Component {
     const renderCheckbox = ({ input, label }) => (
       <Checkbox
         label={label}
-        // checked={input.value ? true : false}
+        checked={input.value ? true : false}
         onCheck={input.onChange}
       />
     );
@@ -50,7 +50,6 @@ class AddPaperForm extends Component {
           />
         </div>
         <Subheader style={{ fontSize: '20px' }}>Topic</Subheader>
-        <Divider />
         <div className="d-flex flex-wrap" style={{ marginTop: '20px' }}>
           {topics.map(topic => {
             return (

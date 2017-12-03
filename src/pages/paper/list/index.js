@@ -44,26 +44,25 @@ class Index extends Component {
   }
   handleEdit(paper) {
     this.props.setPaper(paper);
-    console.log('Onclicked');
   }
   render() {
-    const { loading, getAllPapers } = this.props.GET_ALL_PAPERS;
+    const { loading, getPapersByConferenceID } = this.props.data;
     if (loading) return <div>Loading..</div>;
     let papers;
-    if (getAllPapers) {
-      papers = getAllPapers;
+    if (getPapersByConferenceID) {
+      papers = getPapersByConferenceID;
     }
     const columns = [
       {
         Header: 'Title',
         accessor: 'title',
-        minWidth: 200,
+        minWidth: 400,
         Cell: props => <div style={style}>{props.value}</div>,
       },
 
       {
         Header: 'Topic',
-        minWidth: 120,
+        minWidth: 200,
         accessor: '',
         Cell: props => (
           <div style={style}>
@@ -100,7 +99,7 @@ class Index extends Component {
       },
     ];
     return (
-      <div>
+      <div className="react-table">
         <ReactTable
           filterable
           data={papers}
@@ -133,5 +132,16 @@ const mapDispatchToProps = dispatch => {
 };
 export default compose(
   connect(undefined, mapDispatchToProps),
-  graphql(queries.GET_ALL_PAPERS, { name: 'GET_ALL_PAPERS' }),
+  graphql(queries.GET_PAPERS_BY_CONFERENCE_ID, {
+    options: ownProps => ({
+      name: 'GET_PAPERS_BY_CONFERENCE_ID',
+      if(ownProps) {
+        return {
+          variables: {
+            conference_id: ownProps.conference_id,
+          },
+        };
+      },
+    }),
+  }),
 )(Index);

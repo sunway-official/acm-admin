@@ -13,6 +13,7 @@ class Index extends Component {
     } else return <div>Loading</div>;
     // khai bao conference dua tren query getConferenceByID
     const coOrganizerDetails = conference.coOrganizerDetails;
+    console.log(this.props.currentConference);
     // khai bao coOrganizerDetails dua tren query coOrganizerDetails bang getConferenceByID
 
     return (

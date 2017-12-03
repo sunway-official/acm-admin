@@ -22,5 +22,21 @@ const INSERT_PAPER_TOPIC = gql`
     }
   }
 `;
-
-export default { DELETE_PAPER, INSERT_PAPER, INSERT_PAPER_TOPIC };
+const UPDATE_PAPER = gql`
+  mutation updatePaper(
+    $id: ID!
+    $title: String
+    $abstract: String
+    $keywords: String
+  ) {
+    updatePaper(
+      id: $id
+      title: $title
+      abstract: $abstract
+      keywords: $keywords
+    ) {
+      id
+    }
+  }
+`;
+export default { DELETE_PAPER, INSERT_PAPER, INSERT_PAPER_TOPIC, UPDATE_PAPER };

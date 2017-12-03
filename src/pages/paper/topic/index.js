@@ -27,7 +27,6 @@ class Index extends Component {
 export default graphql(queries.GET_TOPICS_BY_PAPER_ID, {
   options: ownProps => {
     if (ownProps.paper) {
-      console.log(ownProps.paper);
       return {
         variables: {
           paper_id: ownProps.paper.id,
