@@ -103,6 +103,7 @@ class MyCalendar extends React.PureComponent {
     const { loading, getActivitiesByConferenceID } = this.props.data;
 
     if (loading) return <div>loading</div>;
+
     const papers = this.props.GET_PAPER_BY_CONFERENCE_ID
       .getPapersByConferenceID;
     const events = functions.getEvents(getActivitiesByConferenceID);

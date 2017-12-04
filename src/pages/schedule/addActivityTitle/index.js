@@ -5,6 +5,7 @@ import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import AddActivityTitle from './addActivityTitle';
 import { queries } from '../helpers';
 import { graphql, compose } from 'react-apollo';
+import { withRouter } from 'react-router';
 
 class Index extends Component {
   render() {
@@ -42,14 +43,29 @@ class Index extends Component {
           <span>Add Activity</span>
         </div>
         <div className="dashboard  content d-flex">
-          <AddActivityTitle rooms={rooms} />
+          <AddActivityTitle
+            rooms={rooms}
+            start_date={start_date}
+            end_date={end_date}
+          />
         </div>
       </div>
     );
   }
 }
 
+const mapStateToProps = state => {
+  if (state.auth.currentUser.currentConference) {
+    return {
+      conference: state.auth.currentUser.currentConference,
+    };
+  }
+};
+
 export default compose(
+  withRouter,
+
+  connect(mapStateToProps, undefined),
   graphql(queries.GET_ROOMS_BY_STATUS_IN_CONFERENCE_QUERY, {
     options: {
       variables: { status: 'on' },

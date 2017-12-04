@@ -13,7 +13,9 @@ class Index extends Component {
     super();
     this.handleAdd = this.handleAdd.bind(this);
   }
+
   handleAdd(values) {
+    console.log(values);
     const {
       INSERT_ACTIVITY_WITH_PAPER_ID_MUTATION,
       INSERT_SCHEDULE_MUTATION,
