@@ -15,15 +15,15 @@
 }
 .fa{
   color: rgb(117, 117, 117);
-  padding-top: 4px !important;
+  //padding-top: 4px !important;
   &.fa-facebook-square{
-    color: #4267b2;
+    color: #4267b2 !important;
   }
   &.fa-twitter-square{
-    color: #1da1f2;
+    color: #1da1f2 !important;
   }
   &.fa-linkedin-square{
-    color: #008498;
+    color: #008498 !important;
   }
 }
 .contact-information-button{
