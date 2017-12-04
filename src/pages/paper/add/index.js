@@ -14,10 +14,7 @@ class Index extends Component {
   }
   async handleAdd(values) {
     const arrActiveTopics = [];
-    console.log(values.topics);
     values.topics.forEach(function(value, index) {
-      console.log(value);
-      console.log(index);
       if (value === true) {
         arrActiveTopics.push(index);
       }
@@ -30,7 +27,8 @@ class Index extends Component {
           keywords: values.keywords,
         },
       });
-      arrActiveTopics.forEach(function(topic_id) {
+      // eslint-disable-next-line array-callback-return
+      arrActiveTopics.map(topic_id => {
         this.props.INSERT_PAPER_TOPIC({
           variables: {
             paper_id: paper.data.insertPaper.id,
@@ -45,7 +43,7 @@ class Index extends Component {
             },
           ],
         });
-      }, this);
+      });
       this.props.history.replace('/conference/papers');
     } catch (error) {
       throw error;
