@@ -1,16 +1,16 @@
-import FaCheck from 'react-icons/lib/fa/check';
+import FaCheckCircleO from 'react-icons/lib/fa/check-circle-o';
 import React from 'react';
 import ExclamationTriangle from 'react-icons/lib/fa/exclamation-triangle';
 
 export const alertOptions = {
   offset: 14,
-  position: 'top right',
+  position: 'bottom right',
   theme: 'dark',
   time: 2000, // set time for all alert
   transition: 'scale',
 };
 export const styles = {
-  faCheck: {
+  faCheckCircleO: {
     width: 16,
     height: 16,
     color: 'rgb(76, 175, 80)',
@@ -21,7 +21,7 @@ export const styles = {
     color: 'rgb(255, 235, 59)',
   },
 };
-export const MyFaCheck = () => <FaCheck style={styles.faCheck} />;
+export const MyFaCheck = () => <FaCheckCircleO style={styles.faCheckCircleO} />;
 export const MyExclamationTriangle = () => (
   <ExclamationTriangle style={styles.faTriangle} />
 );
