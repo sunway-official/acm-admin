@@ -31,7 +31,11 @@ class AddDialog extends React.PureComponent {
   };
   render() {
     const { handleSubmit, submitting, pristine, rooms, error } = this.props;
-
+    let papers;
+    if (this.props) {
+      papers = this.props.papers;
+    } else return <div>Loading</div>;
+    console.log(this.props);
     return (
       <div>
         <FloatingActionButton
@@ -58,7 +62,7 @@ class AddDialog extends React.PureComponent {
                 hintText="Activity Paper"
                 fullWidth={true}
               >
-                {this.props.papers.map(paper => {
+                {papers.map(paper => {
                   return (
                     <MenuItem
                       key={paper.id}
