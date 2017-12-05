@@ -132,13 +132,13 @@ export default () => (
           <AuthRoute
             needAuth
             exact
-            path="/conference/activities/addActivityPaper"
+            path="/conference/activities/add-paper"
             component={AddActivityPaper}
           />{' '}
           <AuthRoute
             needAuth
             exact
-            path="/conference/activities/addActivityTitle"
+            path="/conference/activities/add"
             component={AddActivityTitle}
           />
           <AuthRoute exact path="/conference/activities" component={Schedule} />

@@ -2,11 +2,10 @@ import functions from './functions';
 import queries from './queries';
 
 export const addActivityFunc = data => {
-  console.log(data);
   const {
     INSERT_ACTIVITY_WITH_PAPER_ID_MUTATION,
-    values,
     INSERT_SCHEDULE_MUTATION,
+    values,
   } = data;
   INSERT_ACTIVITY_WITH_PAPER_ID_MUTATION({
     variables: {
@@ -21,7 +20,6 @@ export const addActivityFunc = data => {
           schedule.start,
         );
         const newEndTime = functions.getDateTime(schedule.date, schedule.end);
-        console.log(data.insertAco);
         INSERT_SCHEDULE_MUTATION({
           variables: {
             activity_id: data.insertActivityWithPaperID.id,

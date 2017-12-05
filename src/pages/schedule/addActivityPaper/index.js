@@ -20,45 +20,50 @@ class Index extends Component {
       INSERT_ACTIVITY_WITH_PAPER_ID_MUTATION,
       INSERT_SCHEDULE_MUTATION,
     } = this.props;
-    const conferenceId = this.props.conference.id;
-    console.log(conferenceId);
     const data = {
       INSERT_ACTIVITY_WITH_PAPER_ID_MUTATION,
       INSERT_SCHEDULE_MUTATION,
-      conferenceId,
       values,
     };
     console.log('done');
     this.props.history.replace('/conference/activities');
     addActivityFunc(data);
   }
+
   render() {
-    const { getActivitiesByConferenceID } = this.props.data;
+    // loading
     const loadingPapers = this.props.GET_PAPER_BY_CONFERENCE_ID.loading;
     const loadingRooms = this.props.GET_ROOMS_BY_STATUS_IN_CONFERENCE_QUERY
       .loading;
     console.log(this.props);
+    const loadingActivities = this.props.GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY
+      .loading;
+
+    // get data
     const { getPapersByConferenceID } = this.props.GET_PAPER_BY_CONFERENCE_ID;
+    const {
+      getActivitiesByConferenceID,
+    } = this.props.GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY;
     const {
       getRoomsByStatusInConference,
     } = this.props.GET_ROOMS_BY_STATUS_IN_CONFERENCE_QUERY;
-    if (loadingPapers || loadingRooms) {
+
+    console.log(loadingPapers);
+    console.log(loadingRooms);
+    console.log(loadingActivities);
+    // check loading
+    if (loadingPapers || loadingRooms || loadingActivities) {
       return <div>Loading...</div>;
     }
-    let papers;
-    if (getPapersByConferenceID) {
-      papers = getPapersByConferenceID;
-    }
-    let rooms;
-    if (getRoomsByStatusInConference) {
-      rooms = getRoomsByStatusInConference;
-    }
+    const papers = getPapersByConferenceID;
+    const rooms = getRoomsByStatusInConference;
     const events = functions.getEvents(getActivitiesByConferenceID);
     const allSchedules = functions.getAllSchedules(events);
+
     const conference = this.props.conference;
-    if (!conference) return <div>Loading</div>;
     const start_date = conference.start_date;
     const end_date = conference.end_date;
+    console.log(conference);
     return (
       <div className="conference">
         <Subheader className="subheader"> Activity Management</Subheader>
@@ -105,10 +110,12 @@ export default compose(
   withRouter,
 
   connect(mapStateToProps, undefined),
+  graphql(queries.GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY, {
+    name: 'GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY',
+  }),
   graphql(queries.GET_PAPER_BY_CONFERENCE_ID, {
     name: 'GET_PAPER_BY_CONFERENCE_ID',
   }),
-  graphql(queries.GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY),
 
   graphql(mutations.INSERT_ACTIVITY_WITH_PAPER_ID_MUTATION, {
     name: 'INSERT_ACTIVITY_WITH_PAPER_ID_MUTATION',

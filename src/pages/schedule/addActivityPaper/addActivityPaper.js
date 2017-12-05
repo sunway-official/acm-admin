@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { reduxForm, Field, FieldArray } from 'redux-form';
 import { RaisedButton, MenuItem, Subheader } from 'material-ui';
 import { renderSchedules, renderSelectField } from '../render';
-// import validate from './validate';
+import validate from './validate';
+import { connect } from 'react-redux';
+import { scheduleOperations } from 'store/ducks/schedule';
 
 class AddActivityPaper extends Component {
   render() {
@@ -61,7 +63,16 @@ class AddActivityPaper extends Component {
 }
 AddActivityPaper = reduxForm({
   form: 'addActivityPaper',
-  // validate,
+  validate,
   //bo validate vao bi loi
 })(AddActivityPaper);
-export default AddActivityPaper;
+
+const mapDispatchToProps = dispatch => {
+  return {
+    checkError: error => {
+      dispatch(scheduleOperations.checkErrorOperation(error));
+    },
+  };
+};
+
+export default connect(undefined, mapDispatchToProps)(AddActivityPaper);
