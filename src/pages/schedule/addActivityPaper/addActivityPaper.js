@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { reduxForm, Field, FieldArray } from 'redux-form';
 import { RaisedButton, MenuItem, Subheader } from 'material-ui';
 import { renderSchedules, renderSelectField } from '../render';
-import validate from './validate';
+import validate from '../validate';
 import { connect } from 'react-redux';
 import { scheduleOperations } from 'store/ducks/schedule';
 
@@ -64,7 +64,6 @@ class AddActivityPaper extends Component {
 AddActivityPaper = reduxForm({
   form: 'addActivityPaper',
   validate,
-  //bo validate vao bi loi
 })(AddActivityPaper);
 
 const mapDispatchToProps = dispatch => {

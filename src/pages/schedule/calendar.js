@@ -3,24 +3,16 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 import AddActivity from './addActivity';
-import EditActivity from './editActivity';
+// import EditActivity from './editActivity';
 import { Dialog, IconButton, Subheader, Toggle } from 'material-ui';
 import { Link } from 'react-router-dom';
-import { scheduleActions, scheduleOperations } from 'store/ducks/schedule';
-import { connect } from 'react-redux';
 import {
-  NavigationClose,
+  // NavigationClose,
   HardwareKeyboardArrowRight,
   ActionHome,
 } from 'material-ui/svg-icons';
 
-import {
-  functions,
-  queries,
-  mutations,
-  addActivityFunc,
-  editActivityFunc,
-} from './helpers';
+import { functions, queries } from './helpers';
 import { graphql, compose } from 'react-apollo';
 import './css/style.css';
 
@@ -58,61 +50,12 @@ class MyCalendar extends React.PureComponent {
         });
   }
 
-  // addActivity(values) {
-  //   this.props.toggleAdd();
-  //   const {
-  //     INSERT_ACTIVITY_WITH_PAPER_ID_MUTATION,
-  //     INSERT_SCHEDULE_MUTATION,
-  //   } = this.props;
-
-  //   const conferenceId = this.props.conference.id;
-  //   const data = {
-  //     INSERT_ACTIVITY_WITH_PAPER_ID_MUTATION,
-  //     INSERT_SCHEDULE_MUTATION,
-  //     conferenceId,
-  //     values,
-  //   };
-  //   addActivityFunc(data);
-  // }
-  // // deleteIds
-  // editActivity(values) {
-  //   const {
-  //     UPDATE_ACTIVITY_WITH_PAPER_IDMUTATION,
-  //     UPDATE_SCHEDULE_MUTATION,
-  //     DELETE_SCHEDULE_MUTATION,
-  //     INSERT_SCHEDULE_MUTATION,
-  //   } = this.props;
-  //   const conferenceId = this.props.conference.id;
-  //   this.props.toggleEdit();
-  //   const deleteIds = this.props.deleteIds;
-
-  //   const data = {
-  //     UPDATE_ACTIVITY_WITH_PAPER_IDMUTATION,
-  //     conferenceId,
-  //     values,
-  //     DELETE_SCHEDULE_MUTATION,
-  //     UPDATE_SCHEDULE_MUTATION,
-  //     INSERT_SCHEDULE_MUTATION,
-  //     deleteIds,
-  //   };
-
-  //   editActivityFunc(data);
-  // }
-
   render() {
     const { loading, getActivitiesByConferenceID } = this.props.data;
 
     if (loading) return <div>loading</div>;
 
     const events = functions.getEvents(getActivitiesByConferenceID);
-    // const allSchedules = functions.getAllSchedules(events);
-    // const rooms = this.props.GET_ROOMS_BY_STATUS_IN_CONFERENCE_QUERY
-    //   .getRoomsByStatusInConference;
-    // const conference = this.props.conference;
-    // if (!conference) return <div>Loading</div>;
-    // const start_date = conference.start_date;
-    // const end_date = conference.end_date;
-
     const today = new Date();
 
     return (
@@ -166,33 +109,9 @@ class MyCalendar extends React.PureComponent {
   }
 }
 
-export default compose(
-  graphql(queries.GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY),
-  // graphql(queries.GET_ROOMS_BY_STATUS_IN_CONFERENCE_QUERY, {
-  //   options: {
-  //     variables: { status: 'on' },
-  //   },
-  //   name: 'GET_ROOMS_BY_STATUS_IN_CONFERENCE_QUERY',
-  // }),
-  // graphql(mutations.DELETE_SCHEDULE_MUTATION, {
-  //   name: 'DELETE_SCHEDULE_MUTATION',
-  // }),
-  // graphql(mutations.INSERT_ACTIVITY_WITH_PAPER_ID_MUTATION, {
-  //   name: 'INSERT_ACTIVITY_WITH_PAPER_ID_MUTATION',
-  // }),
-  // graphql(mutations.INSERT_SCHEDULE_MUTATION, {
-  //   name: 'INSERT_SCHEDULE_MUTATION',
-  // }),
-  // graphql(mutations.UPDATE_ACTIVITY_WITH_PAPER_IDMUTATION, {
-  //   name: 'UPDATE_ACTIVITY_WITH_PAPER_IDMUTATION',
-  // }),
-  // graphql(mutations.UPDATE_SCHEDULE_MUTATION, {
-  //   name: 'UPDATE_SCHEDULE_MUTATION',
-  // }),
-  // graphql(queries.GET_PAPER_BY_CONFERENCE_ID, {
-  //   name: 'GET_PAPER_BY_CONFERENCE_ID',
-  // }),
-)(MyCalendar);
+export default compose(graphql(queries.GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY))(
+  MyCalendar,
+);
 
 // <Dialog
 // style={{ top: '-130px' }}

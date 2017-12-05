@@ -3,7 +3,7 @@ import { Subheader, IconButton } from 'material-ui';
 import { Link } from 'react-router-dom';
 import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import AddActivityTitle from './addActivityTitle';
-import { queries } from '../helpers';
+import { queries, functions, addActivityFunc, mutations } from '../helpers';
 import { graphql, compose } from 'react-apollo';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
@@ -16,21 +16,14 @@ class Index extends Component {
 
   handleAdd(values) {
     console.log(values);
-    // const {
-    //   INSERT_ACTIVITY_WITH_PAPER_ID_MUTATION,
-    //   INSERT_SCHEDULE_MUTATION,
-    // } = this.props;
-    // const conferenceId = this.props.conference.id;
-    // console.log(conferenceId);
-    // const data = {
-    //   INSERT_ACTIVITY_WITH_PAPER_ID_MUTATION,
-    //   INSERT_SCHEDULE_MUTATION,
-    //   conferenceId,
-    //   values,
-    // };
-    // console.log('done');
-    // this.props.history.replace('/conference/activities');
-    // addActivityFunc(data);
+    const { INSERT_ACTIVITY_MUTATION, INSERT_SCHEDULE_MUTATION } = this.props;
+    const data = {
+      INSERT_ACTIVITY_MUTATION,
+      INSERT_SCHEDULE_MUTATION,
+      values,
+    };
+    this.props.history.replace('/conference/activities');
+    addActivityFunc(data);
   }
 
   render() {
@@ -39,15 +32,19 @@ class Index extends Component {
     } = this.props.GET_ROOMS_BY_STATUS_IN_CONFERENCE_QUERY;
     const loadingRooms = this.props.GET_ROOMS_BY_STATUS_IN_CONFERENCE_QUERY
       .loading;
-    if (loadingRooms) {
+    const loadingActivities = this.props.GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY
+      .loading;
+    if (loadingRooms || loadingActivities) {
       return <div>Loading...</div>;
     }
-    let rooms;
-    if (getRoomsByStatusInConference) {
-      rooms = getRoomsByStatusInConference;
-    }
+    const {
+      getActivitiesByConferenceID,
+    } = this.props.GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY;
+
+    const rooms = getRoomsByStatusInConference;
+    const events = functions.getEvents(getActivitiesByConferenceID);
+    const allSchedules = functions.getAllSchedules(events);
     const conference = this.props.conference;
-    if (!conference) return <div>Loading</div>;
     const start_date = conference.start_date;
     const end_date = conference.end_date;
     return (
@@ -76,7 +73,8 @@ class Index extends Component {
             rooms={rooms}
             start_date={start_date}
             end_date={end_date}
-            // allSchedules={allSchedules}
+            allSchedules={allSchedules}
+            status="without-paper"
             onSubmit={this.handleAdd}
           />
         </div>
@@ -102,5 +100,14 @@ export default compose(
       variables: { status: 'on' },
     },
     name: 'GET_ROOMS_BY_STATUS_IN_CONFERENCE_QUERY',
+  }),
+  graphql(queries.GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY, {
+    name: 'GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY',
+  }),
+  graphql(mutations.INSERT_ACTIVITY_MUTATION, {
+    name: 'INSERT_ACTIVITY_MUTATION',
+  }),
+  graphql(mutations.INSERT_SCHEDULE_MUTATION, {
+    name: 'INSERT_SCHEDULE_MUTATION',
   }),
 )(Index);

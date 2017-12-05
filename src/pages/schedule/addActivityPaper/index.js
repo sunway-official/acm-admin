@@ -3,7 +3,12 @@ import { Subheader, IconButton } from 'material-ui';
 import { Link } from 'react-router-dom';
 import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import AddActivityPaper from './addActivityPaper';
-import { queries, mutations, addActivityFunc, functions } from '../helpers';
+import {
+  queries,
+  mutations,
+  addActivityWithPaperFunc,
+  functions,
+} from '../helpers';
 import { graphql, compose } from 'react-apollo';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
@@ -15,7 +20,6 @@ class Index extends Component {
   }
 
   handleAdd(values) {
-    console.log(values);
     const {
       INSERT_ACTIVITY_WITH_PAPER_ID_MUTATION,
       INSERT_SCHEDULE_MUTATION,
@@ -25,9 +29,8 @@ class Index extends Component {
       INSERT_SCHEDULE_MUTATION,
       values,
     };
-    console.log('done');
     this.props.history.replace('/conference/activities');
-    addActivityFunc(data);
+    addActivityWithPaperFunc(data);
   }
 
   render() {
@@ -35,7 +38,6 @@ class Index extends Component {
     const loadingPapers = this.props.GET_PAPER_BY_CONFERENCE_ID.loading;
     const loadingRooms = this.props.GET_ROOMS_BY_STATUS_IN_CONFERENCE_QUERY
       .loading;
-    console.log(this.props);
     const loadingActivities = this.props.GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY
       .loading;
 
@@ -48,9 +50,6 @@ class Index extends Component {
       getRoomsByStatusInConference,
     } = this.props.GET_ROOMS_BY_STATUS_IN_CONFERENCE_QUERY;
 
-    console.log(loadingPapers);
-    console.log(loadingRooms);
-    console.log(loadingActivities);
     // check loading
     if (loadingPapers || loadingRooms || loadingActivities) {
       return <div>Loading...</div>;
@@ -63,7 +62,6 @@ class Index extends Component {
     const conference = this.props.conference;
     const start_date = conference.start_date;
     const end_date = conference.end_date;
-    console.log(conference);
     return (
       <div className="conference">
         <Subheader className="subheader"> Activity Management</Subheader>
@@ -83,7 +81,7 @@ class Index extends Component {
           <IconButton>
             <HardwareKeyboardArrowRight />
           </IconButton>
-          <span>Add Activity</span>
+          <span>Add Activity with Paper</span>
         </div>
         <div className="dashboard  content d-flex">
           <AddActivityPaper
@@ -93,6 +91,7 @@ class Index extends Component {
             end_date={end_date}
             allSchedules={allSchedules}
             onSubmit={this.handleAdd}
+            status="with-paper"
           />
         </div>
       </div>
