@@ -5,7 +5,6 @@ import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import ConferenceInfo from './conferenceInfo';
 import { connect } from 'react-redux';
 import CoOrganizerList from './coOrganizer/List';
-
 class Index extends Component {
   render() {
     let conference;
@@ -14,12 +13,12 @@ class Index extends Component {
     } else return <div>Loading</div>;
     // khai bao conference dua tren query getConferenceByID
     const coOrganizerDetails = conference.coOrganizerDetails;
+    console.log(this.props.currentConference);
     // khai bao coOrganizerDetails dua tren query coOrganizerDetails bang getConferenceByID
 
     return (
       <div className="conference">
         <Subheader className="subheader conf-infor-title">
-          {' '}
           Conference Information
         </Subheader>
         <div className="page-breadcrumb d-flex">

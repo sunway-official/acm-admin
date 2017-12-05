@@ -41,6 +41,8 @@ class RoleItem extends Component {
   render() {
     const role = this.props.role;
     const rolesActive = this.props.rolesActive;
+    console.log(rolesActive);
+    console.log(role);
     // const roles = this.props.roles;
     return (
       <ListItem

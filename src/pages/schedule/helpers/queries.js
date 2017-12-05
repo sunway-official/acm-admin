@@ -5,9 +5,6 @@ export const GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY = gql`
       id
       title
       description
-      paper {
-        id
-      }
       conference {
         start_date
         end_date

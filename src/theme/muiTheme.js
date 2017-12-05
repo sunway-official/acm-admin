@@ -28,6 +28,7 @@ const muiTheme = getMuiTheme({
   },
   dialog: {
     titleFontSize: 30,
+    padding: 0,
   },
   floatingActionButton: {
     color: colors.sanJuan,
@@ -39,6 +40,9 @@ const muiTheme = getMuiTheme({
     color: colors.outrageousOrange,
     textColor: colors.milkPunch,
     primaryColor: colors.sunglow,
+  },
+  subheader: {
+    color: colors.sanJuan,
   },
   tabs: {
     backgroundColor: colors.sanJuan,
