@@ -13,6 +13,7 @@ const GET_PAPERS_BY_CONFERENCE_ID = gql`
 const GET_TOPICS_BY_PAPER_ID = gql`
   query getTopicsByPaperID($paper_id: ID!) {
     getTopicsByPaperID(paper_id: $paper_id) {
+      id
       topic {
         id
         name

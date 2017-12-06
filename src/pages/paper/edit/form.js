@@ -1,26 +1,33 @@
 import React, { Component } from 'react';
 import CustomInput from 'components/CustomInput';
 import { reduxForm, Field } from 'redux-form';
-import validate from '../validate';
+// import validate from '../validate';
 import { RaisedButton, Subheader, Checkbox } from 'material-ui';
 import { Link } from 'react-router-dom';
 
 class EditPaperForm extends Component {
   render() {
     const { handleSubmit, invalid } = this.props;
-    const renderCheckbox = ({ input, label }) => (
+
+    const allTopics = this.props.allTopics;
+    let paperTopicsActive;
+    const arrPaperTopicsActive = [];
+    if (this.props) {
+      paperTopicsActive = this.props.paperTopicsActive;
+    }
+    // eslint-disable-next-line array-callback-return
+    paperTopicsActive.map(topic => {
+      arrPaperTopicsActive.push(topic.topic.id);
+    });
+
+    const renderCheckbox = ({ input, label, defaultChecked }) => (
       <Checkbox
         label={label}
-        checked={input.value ? true : false}
         onCheck={input.onChange}
+        defaultChecked={defaultChecked}
+        // checked={input.value ? true : false}
       />
     );
-    const allTopics = this.props.allTopics;
-    let paperTopics;
-    if (this.props) {
-      paperTopics = this.props.paperTopics;
-    }
-
     return (
       <form className="form conference-info" onSubmit={handleSubmit}>
         <Subheader className="subheader">Paper Information</Subheader>
@@ -62,7 +69,9 @@ class EditPaperForm extends Component {
                   name={`topics[${topic.id}]`}
                   component={renderCheckbox}
                   label={topic.name}
-                  checked={paperTopics.includes(topic.name) ? true : false}
+                  defaultChecked={
+                    arrPaperTopicsActive.includes(topic.id) ? true : false
+                  }
                 />
               </div>
             );
@@ -95,5 +104,5 @@ class EditPaperForm extends Component {
 
 export default reduxForm({
   form: 'EditPaperForm',
-  validate,
+  // validate,
 })(EditPaperForm);
