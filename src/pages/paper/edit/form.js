@@ -1,26 +1,24 @@
 import React, { Component } from 'react';
 import CustomInput from 'components/CustomInput';
+import { renderSelectField } from 'components/render';
 import { reduxForm, Field } from 'redux-form';
 import validate from '../validate';
-import { RaisedButton, Subheader, Checkbox } from 'material-ui';
+import { RaisedButton, Checkbox, Subheader, MenuItem } from 'material-ui';
 import { Link } from 'react-router-dom';
+import { topicsActions } from 'store/ducks/topics';
+import { connect } from 'react-redux';
 
 class EditPaperForm extends Component {
+  constructor() {
+    super();
+    this.handleClick = this.handleClick.bind(this);
+  }
+  handleClick(topic) {
+    this.props.setTopic(topic);
+  }
   render() {
+    const topics = this.props.topics;
     const { handleSubmit, invalid } = this.props;
-    const renderCheckbox = ({ input, label }) => (
-      <Checkbox
-        label={label}
-        checked={input.value ? true : false}
-        onCheck={input.onChange}
-      />
-    );
-    const allTopics = this.props.allTopics;
-    let paperTopics;
-    if (this.props) {
-      paperTopics = this.props.paperTopics;
-    }
-
     return (
       <form className="form conference-info" onSubmit={handleSubmit}>
         <Subheader className="subheader">Paper Information</Subheader>
@@ -41,7 +39,7 @@ class EditPaperForm extends Component {
             fullWidth={true}
             multiLine
             rows={1}
-            hintText="Paper abc"
+            hintText="Paper Abstract"
           />
         </div>
         <div className="d-flex form-group">
@@ -50,23 +48,32 @@ class EditPaperForm extends Component {
             name="keywords"
             component={CustomInput}
             fullWidth={true}
-            hintText="Paper Keywords"
+            multiLine
+            rows={1}
+            hintText="Paper Abstract"
           />
         </div>
-        <Subheader style={{ fontSize: '20px' }}>Topic</Subheader>
-        <div className="d-flex flex-wrap" style={{ marginTop: '20px' }}>
-          {allTopics.map(topic => {
-            return (
-              <div key={topic.id} style={{ width: '50%' }}>
-                <Field
-                  name={`topics[${topic.id}]`}
-                  component={renderCheckbox}
-                  label={topic.name}
-                  checked={paperTopics.includes(topic.name) ? true : false}
+        <div className="d-flex form-group">
+          <label>Topic :</label>
+          <Field
+            name="topic"
+            component={renderSelectField}
+            hintText="Paper Topic"
+            fullWidth={true}
+          >
+            {topics.map(topic => {
+              return (
+                <MenuItem
+                  key={topic.id}
+                  value={topic.id}
+                  primaryText={topic.name}
+                  onClick={() => {
+                    this.handleClick(topic);
+                  }}
                 />
-              </div>
-            );
-          })}
+              );
+            })}
+          </Field>
         </div>
         <div
           style={{ marginBottom: '20px' }}
@@ -92,7 +99,12 @@ class EditPaperForm extends Component {
     );
   }
 }
-
+const mapDispatchToProps = dispatch => {
+  return {
+    setTopic: topic => dispatch(topicsActions.setTopics(topic)),
+  };
+};
+EditPaperForm = connect(undefined, mapDispatchToProps)(EditPaperForm);
 export default reduxForm({
   form: 'EditPaperForm',
   validate,
