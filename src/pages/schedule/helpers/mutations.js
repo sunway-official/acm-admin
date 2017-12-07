@@ -1,5 +1,21 @@
 import { gql } from 'react-apollo';
 
+export const INSERT_ACTIVITY_WITH_PAPER_ID_MUTATION = gql`
+  mutation insertActivityWithPaperID($paper_id: ID!) {
+    insertActivityWithPaperID(paper_id: $paper_id) {
+      id
+    }
+  }
+`;
+
+export const INSERT_ACTIVITY_MUTATION = gql`
+  mutation insertActivity($title: String!, $description: String!) {
+    insertActivity(title: $title, description: $description) {
+      id
+    }
+  }
+`;
+
 export const UPDATE_ACTIVITY_WITH_PAPER_IDMUTATION = gql`
   mutation updateActivityWithPaperID($id: ID!, $paper_id: ID!) {
     updateActivityWithPaperID(id: $id, paper_id: $paper_id) {
@@ -46,14 +62,6 @@ export const INSERT_SCHEDULE_MUTATION = gql`
   }
 `;
 
-export const INSERT_ACTIVITY_WITH_PAPER_ID_MUTATION = gql`
-  mutation insertActivityWithPaperID($paper_id: ID!) {
-    insertActivityWithPaperID(paper_id: $paper_id) {
-      id
-    }
-  }
-`;
-
 export const DELETE_SCHEDULE_MUTATION = gql`
   mutation deleteSchedule($id: ID!) {
     deleteSchedule(id: $id) {
@@ -70,10 +78,11 @@ export const DELETE_ACTIVITY_MUTATION = gql`
 `;
 
 export default {
-  UPDATE_ACTIVITY_WITH_PAPER_IDMUTATION,
-  UPDATE_SCHEDULE_MUTATION,
   INSERT_SCHEDULE_MUTATION,
   INSERT_ACTIVITY_WITH_PAPER_ID_MUTATION,
+  INSERT_ACTIVITY_MUTATION,
+  UPDATE_ACTIVITY_WITH_PAPER_IDMUTATION,
+  UPDATE_SCHEDULE_MUTATION,
   DELETE_SCHEDULE_MUTATION,
   DELETE_ACTIVITY_MUTATION,
 };

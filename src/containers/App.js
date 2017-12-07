@@ -8,6 +8,8 @@ import Register from '../pages/authentication/register';
 import ResetPassword from '../pages/authentication/resetPassword';
 import ConferenceInfo from '../pages/conference/info';
 import Paper from '../pages/paper';
+import PaperAdd from '../pages/paper/add';
+import PaperEdit from '../pages/paper/edit';
 import ConferenceStaffList from '../pages/conference/people/staff/list';
 import UserProfile from '../pages/conference/people/userProfile/userProfile';
 import Dashboard from '../pages/dashboard';
@@ -28,6 +30,10 @@ import AddNewRoom from '../pages/conference/room/roomDetail/addRoom';
 import AddNewTopic from '../pages/conference/topic/topicDetail/addTopic';
 import Addconference from '../pages/dashboard/renderDashboard/addConference';
 import ParticipantManagement from '../pages/conference/people/participant';
+import AddActivityPaper from '../pages/schedule/addActivityPaper';
+import AddActivityTitle from '../pages/schedule/addActivityTitle';
+
+import ReactTable from '../pages/react-table';
 
 export default () => (
   <MuiThemeProvider muiTheme={muiTheme}>
@@ -56,6 +62,7 @@ export default () => (
             path="/conference/landing-page-management"
             component={LandingPageManagement}
           />
+          <AuthRoute needAuth path="/react-table" component={ReactTable} />
           <AuthRoute
             needAuth
             exact
@@ -107,8 +114,32 @@ export default () => (
           <AuthRoute
             needAuth
             exact
+            path="/conference/paper/add"
+            component={PaperAdd}
+          />
+          <AuthRoute
+            needAuth
+            exact
+            path="/conference/paper/edit/:id"
+            component={PaperEdit}
+          />
+          <AuthRoute
+            needAuth
+            exact
             path="/user-profile"
             component={UserProfile}
+          />
+          <AuthRoute
+            needAuth
+            exact
+            path="/conference/activities/add-paper"
+            component={AddActivityPaper}
+          />{' '}
+          <AuthRoute
+            needAuth
+            exact
+            path="/conference/activities/add"
+            component={AddActivityTitle}
           />
           <AuthRoute exact path="/conference/activities" component={Schedule} />
           <AuthRoute path="/withThunk" component={WithThunk} />

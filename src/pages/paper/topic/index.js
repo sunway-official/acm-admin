@@ -25,7 +25,13 @@ class Index extends Component {
 }
 
 export default graphql(queries.GET_TOPICS_BY_PAPER_ID, {
-  options: ownProps => ({
-    variables: { paper_id: ownProps.paper.id },
-  }),
+  options: ownProps => {
+    if (ownProps.paper) {
+      return {
+        variables: {
+          paper_id: ownProps.paper.id,
+        },
+      };
+    }
+  },
 })(Index);

@@ -7,6 +7,7 @@
 .justify-content-space-around {
   justify-content: space-around;
 }
+
 .justify-content-flex-end {
   justify-content: flex-end;
 }
@@ -15,6 +16,9 @@
 }
 .position-fixed {
   position: fixed;
+}
+.flex-wrap {
+  flex-wrap: wrap;
 }
 .m-auto {
   margin: auto;
@@ -34,6 +38,7 @@ body {
     &.content {
       padding: 0 !important;
       background: white;
+      padding: 0 !important;
     }
   }
   font-family: 'Roboto', sans-serif;
