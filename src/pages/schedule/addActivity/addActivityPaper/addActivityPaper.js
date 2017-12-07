@@ -10,16 +10,36 @@ import validate from '../../validate';
 class AddActivityPaper extends Component {
   render() {
     const { handleSubmit, submitting, pristine, error } = this.props;
-    let papers, rooms;
+    let papers, rooms, topics;
     if (this.props) {
       papers = this.props.papers;
       rooms = this.props.rooms;
+      topics = this.props.topics;
     }
     return (
       <form className="form conference-info " onSubmit={handleSubmit}>
         <Subheader className="subheader">Add Activity</Subheader>
 
         {error && <div className="error">{error}</div>}
+        <div className="d-flex form-group">
+          <label>Topic :</label>
+          <Field
+            name="topic"
+            component={renderSelectField}
+            hintText="Activity Topic"
+            fullWidth={true}
+          >
+            {topics.map(topic => {
+              return (
+                <MenuItem
+                  key={topic.id}
+                  value={topic.id}
+                  primaryText={topic.name}
+                />
+              );
+            })}
+          </Field>
+        </div>
         <div className="d-flex form-group">
           <label>Paper :</label>
           <Field

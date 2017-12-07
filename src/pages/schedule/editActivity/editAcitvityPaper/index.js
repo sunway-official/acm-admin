@@ -13,20 +13,26 @@ class Index extends Component {
     const loadingPapers = this.props.GET_PAPER_BY_CONFERENCE_ID.loading;
     const loadingRooms = this.props.GET_ROOMS_BY_STATUS_IN_CONFERENCE_QUERY
       .loading;
+    const loadingTopics = this.props.GET_TOPICS_OF_CONFERENCE.loading;
+
     const { getPapersByConferenceID } = this.props.GET_PAPER_BY_CONFERENCE_ID;
     const {
       getRoomsByStatusInConference,
     } = this.props.GET_ROOMS_BY_STATUS_IN_CONFERENCE_QUERY;
-    if (loadingPapers || loadingRooms) {
+    const { getTopicsOfConference } = this.props.GET_TOPICS_OF_CONFERENCE;
+
+    if (loadingPapers || loadingRooms || loadingTopics) {
       return <div>Loading...</div>;
     }
-    let papers;
+    let papers, rooms, topics;
     if (getPapersByConferenceID) {
       papers = getPapersByConferenceID;
     }
-    let rooms;
     if (getRoomsByStatusInConference) {
       rooms = getRoomsByStatusInConference;
+    }
+    if (getTopicsOfConference) {
+      topics = getTopicsOfConference;
     }
     return (
       <div className="conference">
@@ -50,7 +56,7 @@ class Index extends Component {
           <span>Edit Activity</span>
         </div>
         <div className="dashboard  content d-flex">
-          <EditActivityPaper papers={papers} rooms={rooms} />
+          <EditActivityPaper papers={papers} rooms={rooms} topics={topics} />
         </div>
       </div>
     );
@@ -60,7 +66,9 @@ export default compose(
   graphql(queries.GET_PAPER_BY_CONFERENCE_ID, {
     name: 'GET_PAPER_BY_CONFERENCE_ID',
   }),
-
+  graphql(queries.GET_TOPICS_OF_CONFERENCE, {
+    name: 'GET_TOPICS_OF_CONFERENCE',
+  }),
   graphql(queries.GET_ROOMS_BY_STATUS_IN_CONFERENCE_QUERY, {
     options: {
       variables: { status: 'on' },

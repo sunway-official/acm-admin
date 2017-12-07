@@ -51,6 +51,15 @@ export const GET_ALL_ROLES = gql`
   }
 `;
 
+export const GET_TOPICS_OF_CONFERENCE = gql`
+  query getTopicsOfConference {
+    getTopicsOfConference {
+      id
+      name
+    }
+  }
+`;
+
 export const GET_PAPER_BY_CONFERENCE_ID = gql`
   query getPapersByConferenceID {
     getPapersByConferenceID {
@@ -66,4 +75,5 @@ export default {
   GET_CONFERENCE_BY_ID,
   GET_ALL_ROLES,
   GET_PAPER_BY_CONFERENCE_ID,
+  GET_TOPICS_OF_CONFERENCE,
 };
