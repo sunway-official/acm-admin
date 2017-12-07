@@ -13,12 +13,6 @@ class Index extends Component {
     this.handleAdd = this.handleAdd.bind(this);
   }
   async handleAdd(values) {
-    const arrActiveTopics = [];
-    values.topics.forEach(function(value, index) {
-      if (value === true) {
-        arrActiveTopics.push(index);
-      }
-    });
     try {
       const paper = await this.props.INSERT_PAPER({
         variables: {
@@ -27,22 +21,19 @@ class Index extends Component {
           keywords: values.keywords,
         },
       });
-      // eslint-disable-next-line array-callback-return
-      arrActiveTopics.map(topic_id => {
-        this.props.INSERT_PAPER_TOPIC({
-          variables: {
-            paper_id: paper.data.insertPaper.id,
-            topic_id: topic_id,
-          },
-          refetchQueries: [
-            {
-              query: queries.GET_PAPERS_BY_CONFERENCE_ID,
-              variables: {
-                conference_id: this.props.conference_id,
-              },
+      await this.props.INSERT_PAPER_TOPIC({
+        variables: {
+          paper_id: paper.data.insertPaper.id,
+          topic_id: this.props.topic.id,
+        },
+        refetchQueries: [
+          {
+            query: queries.GET_PAPERS_BY_CONFERENCE_ID,
+            variables: {
+              conference_id: this.props.conference_id,
             },
-          ],
-        });
+          },
+        ],
       });
       this.props.history.replace('/conference/papers');
     } catch (error) {
@@ -50,6 +41,7 @@ class Index extends Component {
     }
   }
   render() {
+    console.log(this.props.topic);
     const {
       loading,
       getTopicsOfConference,

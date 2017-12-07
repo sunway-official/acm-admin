@@ -14,26 +14,8 @@ class Index extends Component {
     this.handleSave = this.handleSave.bind(this);
   }
   async handleSave(values) {
-    console.log(values.topics);
-    const arrActiveTopics = [],
-      arrAdjectiveTopics = [];
     const { UPDATE_PAPER } = this.props;
-    if (values.topics) {
-      values.topics.forEach(function(value, index) {
-        if (value === true) {
-          arrActiveTopics.push(index);
-        }
-      });
-    }
-    if (values.topics) {
-      values.topics.forEach(function(value, index) {
-        if (value === false) {
-          arrAdjectiveTopics.push(index);
-        }
-      });
-    }
-    console.log('FALSE', arrAdjectiveTopics);
-    console.log('TRUE', arrActiveTopics);
+    console.log(values);
     try {
       await UPDATE_PAPER({
         variables: {
@@ -42,32 +24,14 @@ class Index extends Component {
           abstract: values.abstract,
           keywords: values.keywords,
         },
-      });
-      // eslint-disable-next-line array-callback-return
-      arrActiveTopics.map(topic_id => {
-        this.props.INSERT_PAPER_TOPIC({
-          variables: {
-            paper_id: values.id,
-            topic_id: topic_id,
-          },
-        });
-      });
-      // eslint-disable-next-line array-callback-return
-      arrAdjectiveTopics.map(topic_id => {
-        this.props.DELETE_PAPER_TOPIC({
-          variables: {
-            paper_id: values.id,
-            topic_id: topic_id,
-          },
-          refetchQueries: [
-            {
-              query: queries.GET_PAPERS_BY_CONFERENCE_ID,
-              variables: {
-                conference_id: this.props.conference_id,
-              },
+        refetchQueries: [
+          {
+            query: queries.GET_PAPERS_BY_CONFERENCE_ID,
+            variables: {
+              conference_id: this.props.conference_id,
             },
-          ],
-        });
+          },
+        ],
       });
       this.props.history.replace('/conference/papers');
     } catch (error) {
@@ -83,24 +47,23 @@ class Index extends Component {
     const { getTopicsByPaperID } = this.props.GET_TOPICS_BY_PAPER_ID;
     if (loadingPaper || loadingTopics || loadingPaperTopics)
       return <div>Loading...</div>;
-    let paper;
-    let allTopics;
-    let paperTopicsActive;
-    let initialValues;
+    let paper, topics, paperTopicsActive, initialValues;
+    if (getTopicsByPaperID) {
+      paperTopicsActive = getTopicsByPaperID;
+    }
+    if (getTopicsOfConference) {
+      topics = getTopicsOfConference;
+    }
     if (getPaperByID) {
       paper = getPaperByID;
+      console.log(paperTopicsActive[0].topic.name);
       initialValues = {
         id: paper.id,
         title: paper.title,
         abstract: paper.abstract,
         keywords: paper.keywords,
+        topic: paperTopicsActive[0].topic.name,
       };
-    }
-    if (getTopicsOfConference) {
-      allTopics = getTopicsOfConference;
-    }
-    if (getTopicsByPaperID) {
-      paperTopicsActive = getTopicsByPaperID;
     }
     return (
       <div className="conference">
@@ -127,8 +90,8 @@ class Index extends Component {
           <Form
             initialValues={initialValues}
             onSubmit={this.handleSave}
-            allTopics={allTopics}
-            paperTopicsActive={paperTopicsActive}
+            topics={topics}
+            paperTopicsActive={paperTopicsActive[0].topic.name}
           />
         </div>
       </div>
@@ -164,11 +127,5 @@ export default compose(
   }),
   graphql(mutations.UPDATE_PAPER, {
     name: 'UPDATE_PAPER',
-  }),
-  graphql(mutations.INSERT_PAPER_TOPIC, {
-    name: 'INSERT_PAPER_TOPIC',
-  }),
-  graphql(mutations.DELETE_PAPER_TOPIC, {
-    name: 'DELETE_PAPER_TOPIC',
   }),
 )(Index);
