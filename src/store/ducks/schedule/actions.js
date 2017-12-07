@@ -1,13 +1,21 @@
 import types from './types';
 
 // TOGGLE ADD
-const toggleAddActivityFormModal = () => ({
-  type: types.TOGGLE_ADD_ACTIVITY_FORM_MODAL,
+const toggleAddActivityPaperFormModal = () => ({
+  type: types.TOGGLE_ADD_ACTIVITY_PAPER_FORM_MODAL,
 });
 
 // TOGGLE EDIT
-const toggleEditActivityFormModal = () => ({
-  type: types.TOGGLE_EDIT_ACTIVITY_FORM_MODAL,
+const toggleEditActivityPaperFormModal = () => ({
+  type: types.TOGGLE_EDIT_ACTIVITY_PAPER_FORM_MODAL,
+});
+
+const toggleAddActivityTitleFormModal = () => ({
+  type: types.TOGGLE_ADD_ACTIVITY_TITLE_FORM_MODAL,
+});
+
+const toggleEditActivityTitleFormModal = () => ({
+  type: types.TOGGLE_EDIT_ACTIVITY_TITLE_FORM_MODAL,
 });
 
 // SET EVENT
@@ -59,8 +67,10 @@ const checkErrorFailure = () => ({
 });
 
 export default {
-  toggleAddActivityFormModal,
-  toggleEditActivityFormModal,
+  toggleAddActivityPaperFormModal,
+  toggleEditActivityPaperFormModal,
+  toggleAddActivityTitleFormModal,
+  toggleEditActivityTitleFormModal,
   setEventRequested,
   setEventSuccess,
   setEventFailure,

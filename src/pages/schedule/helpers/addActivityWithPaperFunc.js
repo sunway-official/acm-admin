@@ -1,12 +1,15 @@
 import functions from './functions';
 import queries from './queries';
 
-export const addActivityFunc = data => {
-  const { INSERT_ACTIVITY_MUTATION, INSERT_SCHEDULE_MUTATION, values } = data;
-  INSERT_ACTIVITY_MUTATION({
+export const addActivityWithPaperFunc = data => {
+  const {
+    INSERT_ACTIVITY_WITH_PAPER_ID_MUTATION,
+    INSERT_SCHEDULE_MUTATION,
+    values,
+  } = data;
+  INSERT_ACTIVITY_WITH_PAPER_ID_MUTATION({
     variables: {
-      title: data.values.title,
-      description: data.values.description,
+      paper_id: data.values.paper,
     },
   })
     .then(({ data }) => {
@@ -19,7 +22,7 @@ export const addActivityFunc = data => {
         const newEndTime = functions.getDateTime(schedule.date, schedule.end);
         INSERT_SCHEDULE_MUTATION({
           variables: {
-            activity_id: data.insertActivity.id,
+            activity_id: data.insertActivityWithPaperID.id,
             room_id: schedule.room,
             start: newStarTime,
             end: newEndTime,
@@ -37,4 +40,4 @@ export const addActivityFunc = data => {
     });
 };
 
-export default addActivityFunc;
+export default addActivityWithPaperFunc;

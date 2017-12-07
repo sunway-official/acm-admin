@@ -6,6 +6,12 @@ import { mutations, queries } from '../helpers';
 import { connect } from 'react-redux';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
+import {
+  alertOptions,
+  MyExclamationTriangle,
+  MyFaCheck,
+} from '../../../../theme/alert';
+import AlertContainer from 'react-alert';
 
 const style = {
   textAlign: 'left',
@@ -29,6 +35,18 @@ class RoomList extends Component {
     this.handleOpenDelete = this.handleOpenDelete.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
   }
+  showAlertError = text => {
+    this.msg.error(text, {
+      type: 'error', // type of alert
+      icon: <MyExclamationTriangle />,
+    });
+  };
+  showAlertSuccess = () => {
+    this.msg.success('Saved!', {
+      type: 'success',
+      icon: <MyFaCheck />,
+    });
+  };
   handleOpenDelete(room_id) {
     this.setState({ openDelete: true });
     this.setState({
@@ -38,22 +56,28 @@ class RoomList extends Component {
   handleClose() {
     this.setState({ openDelete: false });
   }
-  handleDelete() {
+  async handleDelete() {
     this.setState({ openDelete: false });
     const { DELETE_ROOM_MUTATION } = this.props;
-    DELETE_ROOM_MUTATION({
-      variables: {
-        id: this.state.room_id,
-      },
-      refetchQueries: [
-        {
-          query: queries.GET_ROOMS_BY_CONFERENCE_ID_QUERY,
-          variables: {
-            conference_id: this.props.id,
-          },
+    try {
+      await DELETE_ROOM_MUTATION({
+        variables: {
+          id: this.state.room_id,
         },
-      ],
-    });
+        refetchQueries: [
+          {
+            query: queries.GET_ROOMS_BY_CONFERENCE_ID_QUERY,
+            variables: {
+              conference_id: this.props.id,
+            },
+          },
+        ],
+      });
+      this.showAlertSuccess();
+    } catch (error) {
+      let temp = error.graphQLErrors[0].message;
+      this.showAlertError(temp.substring(7, temp.length));
+    }
   }
   render() {
     const columns = [
@@ -139,6 +163,7 @@ class RoomList extends Component {
             <RaisedButton label="Add Room" primary={true} />
           </Link>
         </div>
+        <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />
       </div>
     );
   }

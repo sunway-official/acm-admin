@@ -3,7 +3,7 @@ import queries from './queries';
 
 export const editActivityFunc = data => {
   const {
-    UPDATE_ACTIVITY_MUTATION,
+    UPDATE_ACTIVITY_WITH_PAPER_IDMUTATION,
     conferenceId,
     values,
     DELETE_SCHEDULE_MUTATION,
@@ -11,7 +11,7 @@ export const editActivityFunc = data => {
     INSERT_SCHEDULE_MUTATION,
     deleteIds,
   } = data;
-  UPDATE_ACTIVITY_MUTATION({
+  UPDATE_ACTIVITY_WITH_PAPER_IDMUTATION({
     variables: {
       id: values.id,
       paper_id: values.paper,

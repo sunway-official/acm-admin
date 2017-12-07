@@ -4,14 +4,13 @@ import moment from 'moment';
 const validate = (values, props) => {
   const errors = {};
   const ArrayErrors = [];
-  const requiredFields = [
-    'paper',
-    'description',
-    'date',
-    'start',
-    'end',
-    'room',
-  ];
+  let requiredFields;
+  if (props.status === 'with-paper') {
+    requiredFields = ['paper', 'date', 'start', 'end', 'room'];
+  } else {
+    requiredFields = ['title', 'description', 'date', 'start', 'end', 'room'];
+  }
+
   requiredFields.forEach(field => {
     if (!values[field]) {
       errors[field] = 'This field is required';
@@ -93,8 +92,20 @@ const validate = (values, props) => {
         ArrayErrors[scheduleIndex] = scheduleErrors;
       }
 
-      // check allschedules
+      // check current date
+      if (schedule.date && schedule.start && schedule.end) {
+        const currentDate = moment();
+        const newStarTime = functions.getDateTime(
+          schedule.date,
+          schedule.start,
+        );
+        if (newStarTime.isBefore(currentDate)) {
+          scheduleErrors.start = 'This time is passed';
+          ArrayErrors[scheduleIndex] = scheduleErrors;
+        }
+      }
 
+      // check allschedules
       if (
         scheduleIndex === values.schedules.length - 1 &&
         values.schedules.length !== 1

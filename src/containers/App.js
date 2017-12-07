@@ -30,6 +30,8 @@ import AddNewRoom from '../pages/conference/room/roomDetail/addRoom';
 import AddNewTopic from '../pages/conference/topic/topicDetail/addTopic';
 import Addconference from '../pages/dashboard/renderDashboard/addConference';
 import ParticipantManagement from '../pages/conference/people/participant';
+import AddActivityPaper from '../pages/schedule/addActivityPaper';
+import AddActivityTitle from '../pages/schedule/addActivityTitle';
 
 import ReactTable from '../pages/react-table';
 
@@ -126,6 +128,18 @@ export default () => (
             exact
             path="/user-profile"
             component={UserProfile}
+          />
+          <AuthRoute
+            needAuth
+            exact
+            path="/conference/activities/add-paper"
+            component={AddActivityPaper}
+          />{' '}
+          <AuthRoute
+            needAuth
+            exact
+            path="/conference/activities/add"
+            component={AddActivityTitle}
           />
           <AuthRoute exact path="/conference/activities" component={Schedule} />
           <AuthRoute path="/withThunk" component={WithThunk} />

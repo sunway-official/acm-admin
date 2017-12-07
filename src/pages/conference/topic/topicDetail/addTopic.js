@@ -6,12 +6,33 @@ import { graphql, compose } from 'react-apollo';
 import { queries, mutations } from '../helpers';
 import TopicDetail from './topicDetail';
 import { withRouter } from 'react-router';
+import {
+  alertOptions,
+  MyExclamationTriangle,
+  MyFaCheck,
+} from '../../../../theme/alert';
+import AlertContainer from 'react-alert';
 
 class AddTopic extends Component {
   constructor(props) {
     super(props);
     this.insertTopic = this.insertTopic.bind(this);
   }
+  showAlertError = text => {
+    this.msg.error(text, {
+      type: 'error', // type of alert
+      icon: <MyExclamationTriangle />,
+    });
+  };
+  showAlertSuccess = () => {
+    this.msg.success('Saved!', {
+      type: 'success',
+      icon: <MyFaCheck />,
+      onClose: () => {
+        this.props.history.replace('/conference/topics-management');
+      },
+    });
+  };
   async insertTopic(values) {
     const { INSERT_TOPIC_IN_CONFERENCE_MUTATION } = this.props;
     try {
@@ -27,11 +48,10 @@ class AddTopic extends Component {
           },
         ],
       });
-      window.alert('success');
-      this.props.history.replace('/conference/topics-management');
+      this.showAlertSuccess();
     } catch (error) {
       let temp = error.graphQLErrors[0].message;
-      alert(temp.substring(7, temp.length));
+      this.showAlertError(temp.substring(7, temp.length));
     }
   }
   render() {
@@ -62,6 +82,7 @@ class AddTopic extends Component {
         <div className="dashboard content d-flex">
           <TopicDetail colorsList={colorsList} onSubmit={this.insertTopic} />
         </div>
+        <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />
       </div>
     );
   }

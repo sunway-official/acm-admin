@@ -8,6 +8,12 @@ import { queries as scheduleQueries } from '../../../schedule/helpers';
 import RoomDetail from './roomDetail';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import {
+  alertOptions,
+  MyExclamationTriangle,
+  MyFaCheck,
+} from '../../../../theme/alert';
+import AlertContainer from 'react-alert';
 
 class Index extends Component {
   constructor(props) {
@@ -17,6 +23,21 @@ class Index extends Component {
     };
     this.saveInformation = this.saveInformation.bind(this);
   }
+  showAlertError = text => {
+    this.msg.error(text, {
+      type: 'error', // type of alert
+      icon: <MyExclamationTriangle />,
+    });
+  };
+  showAlertSuccess = () => {
+    this.msg.success('Saved!', {
+      type: 'success',
+      icon: <MyFaCheck />,
+      onClose: () => {
+        this.props.history.replace('/conference/rooms-management');
+      },
+    });
+  };
   async saveInformation({ id, name, seats, status }) {
     const { UPDATE_ROOM_IN_CONFERENCE_MUTATION } = this.props;
     try {
@@ -37,11 +58,10 @@ class Index extends Component {
           },
         ],
       });
-      window.alert('success');
-      this.props.history.replace('/conference/rooms-management');
+      this.showAlertSuccess();
     } catch (error) {
       let temp = error.graphQLErrors[0].message;
-      alert(temp.substring(7, temp.length));
+      this.showAlertError(temp.substring(7, temp.length));
     }
   }
   render() {
@@ -72,6 +92,7 @@ class Index extends Component {
         <div className="dashboard content d-flex">
           <RoomDetail roomDetail={roomDetail} onSubmit={this.saveInformation} />
         </div>
+        <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />
       </div>
     );
   }
