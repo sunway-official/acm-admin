@@ -23,6 +23,11 @@ class Index extends Component {
           abstract: values.abstract,
           keywords: values.keywords,
         },
+        refetchQueries: [
+          {
+            query: queries.GET_PAPERS_BY_CONFERENCE_ID,
+          },
+        ],
       });
       await UPDATE_TOPIC_OF_PAPER({
         variables: {
