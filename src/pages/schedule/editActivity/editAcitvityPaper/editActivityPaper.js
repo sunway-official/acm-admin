@@ -14,7 +14,7 @@ class EditActivityPaper extends Component {
     }
     return (
       <form className="form conference-info " onSubmit={handleSubmit}>
-        <Subheader className="subheader">Add Activity</Subheader>
+        <Subheader className="subheader">Edit Activity Information</Subheader>
 
         {error && <div className="error">{error}</div>}
         <div className="d-flex form-group">

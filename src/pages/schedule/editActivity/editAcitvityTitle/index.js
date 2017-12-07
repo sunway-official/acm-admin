@@ -42,7 +42,7 @@ class Index extends Component {
           <IconButton>
             <HardwareKeyboardArrowRight />
           </IconButton>
-          <span>Add Activity</span>
+          <span>Edit Activity</span>
         </div>
         <div className="dashboard  content d-flex">
           <EditActivityTitle rooms={rooms} />
