@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { reduxForm, Field, FieldArray } from 'redux-form';
 import { RaisedButton, MenuItem, Subheader } from 'material-ui';
-import { renderSchedules, renderSelectField } from '../render';
+import { renderSchedules, renderSelectField } from '../../render';
+import { Link } from 'react-router-dom';
+
 // import validate from './validate';
 
 class AddActivityPaper extends Component {
@@ -53,6 +55,11 @@ class AddActivityPaper extends Component {
             primary={true}
             type="submit"
             disabled={pristine || submitting}
+          />
+          <RaisedButton
+            label="Cancel"
+            containerElement={<Link to="/conference/activities" />}
+            style={{ marginLeft: '10px' }}
           />
         </div>
       </form>

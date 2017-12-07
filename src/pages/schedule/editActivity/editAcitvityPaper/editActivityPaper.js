@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
 import { reduxForm, Field, FieldArray } from 'redux-form';
-import { RaisedButton, Subheader } from 'material-ui';
-import { renderSchedules, renderTextField } from '../render';
+import { RaisedButton, MenuItem, Subheader } from 'material-ui';
+import { renderSchedules, renderSelectField } from '../../render';
+import { Link } from 'react-router-dom';
+
 // import validate from './validate';
 
-class AddActivityTitle extends Component {
+class EditActivityPaper extends Component {
   render() {
     const { handleSubmit, submitting, pristine, error } = this.props;
-    let rooms;
+    let papers, rooms;
     if (this.props) {
+      papers = this.props.papers;
       rooms = this.props.rooms;
     }
     return (
@@ -17,23 +20,25 @@ class AddActivityTitle extends Component {
 
         {error && <div className="error">{error}</div>}
         <div className="d-flex form-group">
-          <label>Title :</label>
+          <label>Paper :</label>
           <Field
-            name="title"
-            component={renderTextField}
-            hintText="Activity Title"
+            name="paper"
+            component={renderSelectField}
+            hintText="Activity Paper"
             fullWidth={true}
-          />
+          >
+            {papers.map(paper => {
+              return (
+                <MenuItem
+                  key={paper.id}
+                  value={paper.id}
+                  primaryText={paper.title}
+                />
+              );
+            })}
+          </Field>
         </div>
-        <div className="d-flex form-group">
-          <label>Description :</label>
-          <Field
-            name="description"
-            component={renderTextField}
-            hintText="Activity Description"
-            fullWidth={true}
-          />
-        </div>
+
         <div className="d-flex form-group">
           <FieldArray
             name="schedules"
@@ -51,14 +56,19 @@ class AddActivityTitle extends Component {
             type="submit"
             disabled={pristine || submitting}
           />
+          <RaisedButton
+            label="Cancel"
+            containerElement={<Link to="/conference/activities" />}
+            style={{ marginLeft: '10px' }}
+          />
         </div>
       </form>
     );
   }
 }
-AddActivityTitle = reduxForm({
-  form: 'addActivityTitle',
+EditActivityPaper = reduxForm({
+  form: 'editActivityPaper',
   // validate,
-  // bo validate vao bi loi
-})(AddActivityTitle);
-export default AddActivityTitle;
+  //bo validate vao bi loi
+})(EditActivityPaper);
+export default EditActivityPaper;

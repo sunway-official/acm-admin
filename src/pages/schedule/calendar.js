@@ -2,7 +2,8 @@ import React from 'react';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
-import AddActivity from './addActivity';
+import AddActivityButton from './addActivityButton';
+import AddActivityPaper from './addActivity/addActivityPaper';
 import EditActivity from './editActivity';
 import { Dialog, IconButton, Subheader, Toggle } from 'material-ui';
 import { Link } from 'react-router-dom';
@@ -44,8 +45,10 @@ class MyCalendar extends React.PureComponent {
     };
   }
   handleEdit(event) {
-    this.props.toggleEdit();
+    // this.props.toggleEdit();
+    <AddActivityPaper />;
     this.props.setEvent(event);
+    console.log(event);
   }
 
   handleTimeFormat() {
@@ -143,7 +146,10 @@ class MyCalendar extends React.PureComponent {
             onSelectEvent={event => {
               const checkDate = moment(event.start).isAfter(moment());
 
-              if (checkDate) this.handleEdit(event);
+              if (checkDate) {
+                // <Link to="/conference/activities/addActivityPaper" />;
+                this.handleEdit(event);
+              }
             }}
             min={
               new Date(
@@ -157,7 +163,7 @@ class MyCalendar extends React.PureComponent {
               event: functions.Event,
             }}
           />
-          <AddActivity
+          <AddActivityButton
             onSubmit={this.addActivity}
             rooms={rooms}
             start_date={start_date}

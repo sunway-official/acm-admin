@@ -3,7 +3,7 @@ import { Subheader, IconButton } from 'material-ui';
 import { Link } from 'react-router-dom';
 import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import AddActivityTitle from './addActivityTitle';
-import { queries } from '../helpers';
+import { queries } from '../../helpers';
 import { graphql, compose } from 'react-apollo';
 
 class Index extends Component {

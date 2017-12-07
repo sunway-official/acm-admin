@@ -3,7 +3,7 @@ import { Subheader, IconButton } from 'material-ui';
 import { Link } from 'react-router-dom';
 import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import AddActivityPaper from './addActivityPaper';
-import { queries, mutations, addActivityFunc, functions } from '../helpers';
+import { queries, mutations, addActivityFunc, functions } from '../../helpers';
 import { graphql, compose } from 'react-apollo';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
