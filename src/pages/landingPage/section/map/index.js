@@ -1,7 +1,7 @@
-import {} from '../../../pages/schedule/helpers/functions';
+import {} from '../../../../pages/schedule/helpers/functions';
 import React from 'react';
 import { Component } from 'react';
-import { images } from '../../../theme';
+import { images } from '../../../../theme';
 import './style.css';
 import * as moment from 'moment';
 class Map extends Component {

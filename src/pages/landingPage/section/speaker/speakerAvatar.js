@@ -34,11 +34,12 @@ class SpeakerAvatar extends Component {
   render() {
     const settings = {
       dots: false,
-      infinite: true,
+      infinite: false,
       slidesToShow: 5,
       slidesToScroll: 1,
-      autoplay: true,
+      autoplay: false,
       autoplaySpeed: 2000,
+      pauseOnHover: true,
       nextArrow: false,
       prevArrow: false,
     };

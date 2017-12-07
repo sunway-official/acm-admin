@@ -7,7 +7,7 @@ import { compose } from 'react-apollo';
 import { connect } from 'react-redux';
 import { Col, Grid, Row } from 'react-flexbox-grid';
 import validate from './validate';
-import { renderField } from '../../../utils';
+import { renderField } from '../../../../utils';
 import { withRouter } from 'react-router';
 import { AppBar } from 'material-ui';
 import { normalizePhone } from 'utils';
