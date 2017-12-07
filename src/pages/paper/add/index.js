@@ -13,15 +13,6 @@ class Index extends Component {
     this.handleAdd = this.handleAdd.bind(this);
   }
   async handleAdd(values) {
-    const arrActiveTopics = [];
-    console.log(values.topics);
-    values.topics.forEach(function(value, index) {
-      console.log(value);
-      console.log(index);
-      if (value === true) {
-        arrActiveTopics.push(index);
-      }
-    });
     try {
       const paper = await this.props.INSERT_PAPER({
         variables: {
@@ -30,28 +21,24 @@ class Index extends Component {
           keywords: values.keywords,
         },
       });
-      arrActiveTopics.forEach(function(topic_id) {
-        this.props.INSERT_PAPER_TOPIC({
-          variables: {
-            paper_id: paper.data.insertPaper.id,
-            topic_id: topic_id,
+      await this.props.INSERT_PAPER_TOPIC({
+        variables: {
+          paper_id: paper.data.insertPaper.id,
+          topic_id: this.props.topic.id,
+        },
+        refetchQueries: [
+          {
+            query: queries.GET_PAPERS_BY_CONFERENCE_ID,
           },
-          refetchQueries: [
-            {
-              query: queries.GET_PAPERS_BY_CONFERENCE_ID,
-              variables: {
-                conference_id: this.props.conference_id,
-              },
-            },
-          ],
-        });
-      }, this);
+        ],
+      });
       this.props.history.replace('/conference/papers');
     } catch (error) {
       throw error;
     }
   }
   render() {
+    console.log(this.props.topic);
     const {
       loading,
       getTopicsOfConference,
@@ -93,7 +80,6 @@ const mapStateToProps = state => {
   if (state) {
     return {
       topic: state.topics.data,
-      conference_id: state.auth.currentUser.currentConference.id,
     };
   }
 };
