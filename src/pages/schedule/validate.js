@@ -6,7 +6,7 @@ const validate = (values, props) => {
   const ArrayErrors = [];
   let requiredFields;
   if (props.status === 'with-paper') {
-    requiredFields = ['paper', 'date', 'start', 'end', 'room'];
+    requiredFields = ['paper', 'date', 'start', 'end', 'room', 'topic'];
   } else {
     requiredFields = ['title', 'description', 'date', 'start', 'end', 'room'];
   }

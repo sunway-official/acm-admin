@@ -6,16 +6,38 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { scheduleOperations } from 'store/ducks/schedule';
 import validate from '../../validate';
+import { graphql, compose, withApollo } from 'react-apollo';
+import { queries } from '../../helpers';
 
 class AddActivityPaper extends Component {
+  constructor() {
+    super();
+    this.handleChangeTopic = this.handleChangeTopic.bind(this);
+    this.state = {
+      papers: [],
+    };
+  }
+
+  async handleChangeTopic(event, value) {
+    console.log(event, value);
+    const papers = await this.props.client.query({
+      query: queries.GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
+      variables: {
+        topic_id: value,
+      },
+    });
+    const { loading, getAllPapersByTopicID } = papers.data;
+    if (!loading) {
+      this.setState({
+        papers: getAllPapersByTopicID,
+      });
+    }
+  }
+
   render() {
     const { handleSubmit, submitting, pristine, error } = this.props;
-    let papers, rooms, topics;
-    if (this.props) {
-      papers = this.props.papers;
-      rooms = this.props.rooms;
-      topics = this.props.topics;
-    }
+    const { rooms, topics } = this.props;
+
     return (
       <form className="form conference-info " onSubmit={handleSubmit}>
         <Subheader className="subheader">Add Activity</Subheader>
@@ -28,6 +50,7 @@ class AddActivityPaper extends Component {
             component={renderSelectField}
             hintText="Activity Topic"
             fullWidth={true}
+            onChange={(event, value) => this.handleChangeTopic(event, value)}
           >
             {topics.map(topic => {
               return (
@@ -48,7 +71,8 @@ class AddActivityPaper extends Component {
             hintText="Activity Paper"
             fullWidth={true}
           >
-            {papers.map(paper => {
+            {this.state.papers.map(data => {
+              const paper = data.paper;
               return (
                 <MenuItem
                   key={paper.id}
@@ -100,4 +124,6 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(undefined, mapDispatchToProps)(AddActivityPaper);
+export default compose(withApollo, connect(undefined, mapDispatchToProps))(
+  AddActivityPaper,
+);

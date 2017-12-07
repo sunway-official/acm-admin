@@ -42,6 +42,17 @@ export const GET_ROOMS_BY_STATUS_IN_CONFERENCE_QUERY = gql`
   }
 `;
 
+export const GET_ALL_PAPERS_BY_TOPIC_ID_QUERY = gql`
+  query getAllPapersByTopicID($topic_id: ID!) {
+    getAllPapersByTopicID(topic_id: $topic_id) {
+      paper {
+        id
+        title
+      }
+    }
+  }
+`;
+
 export const GET_ALL_ROLES = gql`
   query getAllRoles {
     getAllRoles {
@@ -76,4 +87,5 @@ export default {
   GET_ALL_ROLES,
   GET_PAPER_BY_CONFERENCE_ID,
   GET_TOPICS_OF_CONFERENCE,
+  GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
 };
