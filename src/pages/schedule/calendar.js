@@ -3,25 +3,16 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 import AddActivityButton from './addActivityButton';
-import AddActivityPaper from './addActivity/addActivityPaper';
-import EditActivity from './editActivity';
-import { Dialog, IconButton, Subheader, Toggle } from 'material-ui';
+// import EditActivity from './editActivity';
+import { IconButton, Subheader, Toggle } from 'material-ui';
 import { Link } from 'react-router-dom';
-import { scheduleActions, scheduleOperations } from 'store/ducks/schedule';
-import { connect } from 'react-redux';
 import {
-  NavigationClose,
+  // NavigationClose,
   HardwareKeyboardArrowRight,
   ActionHome,
 } from 'material-ui/svg-icons';
 
-import {
-  functions,
-  queries,
-  mutations,
-  addActivityFunc,
-  editActivityFunc,
-} from './helpers';
+import { functions, queries } from './helpers';
 import { graphql, compose } from 'react-apollo';
 import './css/style.css';
 
@@ -36,20 +27,18 @@ class MyCalendar extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    this.handleEdit = this.handleEdit.bind(this);
-    this.addActivity = this.addActivity.bind(this);
-    this.editActivity = this.editActivity.bind(this);
+    // this.handleEdit = this.handleEdit.bind(this);
+    // this.addActivity = this.addActivity.bind(this);
+    // this.editActivity = this.editActivity.bind(this);
     this.handleTimeFormat = this.handleTimeFormat.bind(this);
     this.state = {
       timeFormat: 7,
     };
   }
-  handleEdit(event) {
-    // this.props.toggleEdit();
-    <AddActivityPaper />;
-    this.props.setEvent(event);
-    console.log(event);
-  }
+  // handleEdit(event) {
+  //   this.props.toggleEdit();
+  //   this.props.setEvent(event);
+  // }
 
   handleTimeFormat() {
     this.state.timeFormat === 7
@@ -61,62 +50,12 @@ class MyCalendar extends React.PureComponent {
         });
   }
 
-  addActivity(values) {
-    this.props.toggleAdd();
-    const {
-      INSERT_ACTIVITY_WITH_PAPER_ID_MUTATION,
-      INSERT_SCHEDULE_MUTATION,
-    } = this.props;
-
-    const conferenceId = this.props.conference.id;
-    const data = {
-      INSERT_ACTIVITY_WITH_PAPER_ID_MUTATION,
-      INSERT_SCHEDULE_MUTATION,
-      conferenceId,
-      values,
-    };
-    addActivityFunc(data);
-  }
-  // deleteIds
-  editActivity(values) {
-    const {
-      UPDATE_ACTIVITY_WITH_PAPER_IDMUTATION,
-      UPDATE_SCHEDULE_MUTATION,
-      DELETE_SCHEDULE_MUTATION,
-      INSERT_SCHEDULE_MUTATION,
-    } = this.props;
-    const conferenceId = this.props.conference.id;
-    this.props.toggleEdit();
-    const deleteIds = this.props.deleteIds;
-
-    const data = {
-      UPDATE_ACTIVITY_WITH_PAPER_IDMUTATION,
-      conferenceId,
-      values,
-      DELETE_SCHEDULE_MUTATION,
-      UPDATE_SCHEDULE_MUTATION,
-      INSERT_SCHEDULE_MUTATION,
-      deleteIds,
-    };
-
-    editActivityFunc(data);
-  }
-
   render() {
     const { loading, getActivitiesByConferenceID } = this.props.data;
 
     if (loading) return <div>loading</div>;
-    const papers = this.props.GET_PAPER_BY_CONFERENCE_ID
-      .getPapersByConferenceID;
-    const events = functions.getEvents(getActivitiesByConferenceID);
-    const allSchedules = functions.getAllSchedules(events);
-    const rooms = this.props.GET_ROOMS_BY_STATUS_IN_CONFERENCE_QUERY
-      .getRoomsByStatusInConference;
-    const conference = this.props.conference;
-    if (!conference) return <div>Loading</div>;
-    const start_date = conference.start_date;
-    const end_date = conference.end_date;
 
+    const events = functions.getEvents(getActivitiesByConferenceID);
     const today = new Date();
 
     return (
@@ -142,13 +81,12 @@ class MyCalendar extends React.PureComponent {
             popup
             events={events}
             defaultView="week"
-            defaultDate={new Date()}
+            defaultDate={today}
             onSelectEvent={event => {
               const checkDate = moment(event.start).isAfter(moment());
 
               if (checkDate) {
-                // <Link to="/conference/activities/addActivityPaper" />;
-                this.handleEdit(event);
+                // this.handleEdit(event);
               }
             }}
             min={
@@ -163,92 +101,40 @@ class MyCalendar extends React.PureComponent {
               event: functions.Event,
             }}
           />
-          <AddActivityButton
-            onSubmit={this.addActivity}
-            rooms={rooms}
-            start_date={start_date}
-            end_date={end_date}
-            allSchedules={allSchedules}
-            papers={papers}
-          />
+          <AddActivityButton />
           <div id="format-time">
             <Toggle label="24h" onToggle={this.handleTimeFormat} />
           </div>
         </div>
-
-        <Dialog
-          style={{ top: '-130px' }}
-          open={this.props.openEdit}
-          title="Edit Activity Schedule Information"
-          autoScrollBodyContent={true}
-        >
-          <EditActivity
-            onSubmit={this.editActivity}
-            rooms={rooms}
-            allSchedules={allSchedules}
-            conferenceId={this.props.conference.id}
-            start_date={start_date}
-            end_date={end_date}
-            papers={papers}
-          />
-          <IconButton
-            tooltip="Close"
-            className="cancel-btn dialog"
-            onClick={() => this.props.toggleEdit()}
-          >
-            <NavigationClose />
-          </IconButton>
-        </Dialog>
       </div>
     );
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    openEdit: state.schedule.openEditFormModalWithPaper,
-    deleteIds: state.schedule.deleteIds,
-  };
-};
+export default compose(graphql(queries.GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY))(
+  MyCalendar,
+);
 
-const mapDispatchToProps = dispatch => {
-  return {
-    toggleAdd: () =>
-      dispatch(scheduleActions.toggleAddActivityPaperFormModal()),
-    toggleEdit: () =>
-      dispatch(scheduleActions.toggleEditActivityPaperFormModal()),
-    setEvent: event => dispatch(scheduleOperations.setEventOperation(event)),
-  };
-};
-
-export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
-  graphql(queries.GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY),
-  graphql(queries.GET_ALL_ROLES, {
-    name: 'GET_ALL_ROLES',
-  }),
-  graphql(queries.GET_ROOMS_BY_STATUS_IN_CONFERENCE_QUERY, {
-    options: {
-      variables: { status: 'on' },
-    },
-    name: 'GET_ROOMS_BY_STATUS_IN_CONFERENCE_QUERY',
-  }),
-  graphql(mutations.DELETE_SCHEDULE_MUTATION, {
-    name: 'DELETE_SCHEDULE_MUTATION',
-  }),
-  graphql(mutations.INSERT_ACTIVITY_WITH_PAPER_ID_MUTATION, {
-    name: 'INSERT_ACTIVITY_WITH_PAPER_ID_MUTATION',
-  }),
-  graphql(mutations.INSERT_SCHEDULE_MUTATION, {
-    name: 'INSERT_SCHEDULE_MUTATION',
-  }),
-  graphql(mutations.UPDATE_ACTIVITY_WITH_PAPER_IDMUTATION, {
-    name: 'UPDATE_ACTIVITY_WITH_PAPER_IDMUTATION',
-  }),
-  graphql(mutations.UPDATE_SCHEDULE_MUTATION, {
-    name: 'UPDATE_SCHEDULE_MUTATION',
-  }),
-  graphql(queries.GET_PAPER_BY_CONFERENCE_ID, {
-    name: 'GET_PAPER_BY_CONFERENCE_ID',
-  }),
-)(MyCalendar);
+// <Dialog
+// style={{ top: '-130px' }}
+// open={this.props.openEdit}
+// title="Edit Activity Schedule Information"
+// autoScrollBodyContent={true}
+// >
+// <EditActivity
+//   onSubmit={this.editActivity}
+//   rooms={rooms}
+//   allSchedules={allSchedules}
+//   conferenceId={this.props.conference.id}
+//   start_date={start_date}
+//   end_date={end_date}
+//   papers={papers}
+// />
+// <IconButton
+//   tooltip="Close"
+//   className="cancel-btn dialog"
+//   onClick={() => this.props.toggleEdit()}
+// >
+//   <NavigationClose />
+// </IconButton>
+// </Dialog>

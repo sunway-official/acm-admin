@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { reduxForm, Field, FieldArray } from 'redux-form';
-import { RaisedButton, MenuItem, Subheader } from 'material-ui';
-import { renderSchedules, renderSelectField } from '../../render';
+import { RaisedButton, Subheader } from 'material-ui';
+import { renderSchedules, renderTextField } from '../../render';
 import { Link } from 'react-router-dom';
 // import validate from '../../validate';
+
 class EditActivityPaper extends Component {
   render() {
     const { handleSubmit, submitting, pristine, error } = this.props;
-    let papers, rooms;
+    let rooms;
     if (this.props) {
-      papers = this.props.papers;
       rooms = this.props.rooms;
     }
     return (
@@ -18,25 +18,23 @@ class EditActivityPaper extends Component {
 
         {error && <div className="error">{error}</div>}
         <div className="d-flex form-group">
-          <label>Paper :</label>
+          <label>Title :</label>
           <Field
-            name="paper"
-            component={renderSelectField}
-            hintText="Activity Paper"
+            name="title"
+            component={renderTextField}
+            hintText="Activity Title"
             fullWidth={true}
-          >
-            {papers.map(paper => {
-              return (
-                <MenuItem
-                  key={paper.id}
-                  value={paper.id}
-                  primaryText={paper.title}
-                />
-              );
-            })}
-          </Field>
+          />
         </div>
-
+        <div className="d-flex form-group">
+          <label>Description :</label>
+          <Field
+            name="description"
+            component={renderTextField}
+            hintText="Activity Description"
+            fullWidth={true}
+          />
+        </div>
         <div className="d-flex form-group">
           <FieldArray
             name="schedules"

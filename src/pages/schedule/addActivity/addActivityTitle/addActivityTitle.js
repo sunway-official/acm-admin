@@ -3,8 +3,9 @@ import { reduxForm, Field, FieldArray } from 'redux-form';
 import { RaisedButton, Subheader } from 'material-ui';
 import { renderSchedules, renderTextField } from '../../render';
 import { Link } from 'react-router-dom';
-
-// import validate from './validate';
+import { connect } from 'react-redux';
+import { scheduleOperations } from 'store/ducks/schedule';
+import validate from '../../validate';
 
 class AddActivityTitle extends Component {
   render() {
@@ -65,7 +66,15 @@ class AddActivityTitle extends Component {
 }
 AddActivityTitle = reduxForm({
   form: 'addActivityTitle',
-  // validate,
-  // bo validate vao bi loi
+  validate,
 })(AddActivityTitle);
-export default AddActivityTitle;
+
+const mapDispatchToProps = dispatch => {
+  return {
+    checkError: error => {
+      dispatch(scheduleOperations.checkErrorOperation(error));
+    },
+  };
+};
+
+export default connect(undefined, mapDispatchToProps)(AddActivityTitle);

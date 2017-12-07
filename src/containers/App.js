@@ -32,7 +32,8 @@ import Addconference from '../pages/dashboard/renderDashboard/addConference';
 import ParticipantManagement from '../pages/conference/people/participant';
 import AddActivityPaper from '../pages/schedule/addActivity/addActivityPaper';
 import AddActivityTitle from '../pages/schedule/addActivity/addActivityTitle';
-
+import EditActivityPaper from '../pages/schedule/editActivity/editAcitvityPaper';
+import EditActivityTitle from '../pages/schedule/editActivity/editAcitvityTitle';
 import ReactTable from '../pages/react-table';
 
 export default () => (
@@ -132,14 +133,27 @@ export default () => (
           <AuthRoute
             needAuth
             exact
-            path="/conference/activities/addActivityPaper"
+            path="/conference/activities/add-activity-paper"
             component={AddActivityPaper}
-          />{' '}
+          />
+
           <AuthRoute
             needAuth
             exact
-            path="/conference/activities/addActivityTitle"
+            path="/conference/activities/add-activity-title"
             component={AddActivityTitle}
+          />
+          <AuthRoute
+            needAuth
+            exact
+            path="/conference/activities/edit-activity-paper"
+            component={EditActivityPaper}
+          />
+          <AuthRoute
+            needAuth
+            exact
+            path="/conference/activities/edit-activity-title"
+            component={EditActivityTitle}
           />
           <AuthRoute exact path="/conference/activities" component={Schedule} />
           <AuthRoute path="/withThunk" component={WithThunk} />

@@ -6,12 +6,33 @@ import { graphql, compose } from 'react-apollo';
 import { queries, mutations } from '../helpers';
 import TopicDetail from './topicDetail';
 import { withRouter } from 'react-router';
+import AlertContainer from 'react-alert';
+import {
+  alertOptions,
+  MyExclamationTriangle,
+  MyFaCheck,
+} from '../../../../theme/alert';
 
 class Index extends Component {
   constructor(props) {
     super(props);
     this.saveInformation = this.saveInformation.bind(this);
   }
+  showAlertError = text => {
+    this.msg.error(text, {
+      type: 'error', // type of alert
+      icon: <MyExclamationTriangle />,
+    });
+  };
+  showAlertSuccess = () => {
+    this.msg.success('Saved!', {
+      type: 'success',
+      icon: <MyFaCheck />,
+      onClose: () => {
+        this.props.history.replace('/conference/topics-management');
+      },
+    });
+  };
   async saveInformation(values) {
     const { UPDATE_TOPIC_IN_CONFERENCE_MUTATION } = this.props;
     try {
@@ -29,11 +50,13 @@ class Index extends Component {
           },
         ],
       });
-      window.alert('success');
-      this.props.history.replace('/conference/topics-management');
+      // window.alert('success');
+      // this.props.history.replace('/conference/topics-management');
+      this.showAlertSuccess();
     } catch (error) {
       let temp = error.graphQLErrors[0].message;
-      alert(temp.substring(7, temp.length));
+      this.showAlertError(temp.substring(7, temp.length));
+      //alert(temp.substring(7, temp.length));
     }
   }
   render() {
@@ -71,6 +94,7 @@ class Index extends Component {
             colorsList={colorsList}
             onSubmit={this.saveInformation}
           />
+          <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />
         </div>
       </div>
     );

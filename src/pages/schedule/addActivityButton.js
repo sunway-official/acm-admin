@@ -50,11 +50,11 @@ class AddDialog extends React.PureComponent {
           onRequestClose={this.handleRequestClose}
         >
           <Menu>
-            <Link to="/conference/activities/addActivityPaper">
+            <Link to="/conference/activities/add-activity-paper">
               <MenuItem primaryText="Add activity with paper" />
             </Link>
-            <Link to="/conference/activities/addActivityTitle">
-              <MenuItem primaryText="Add activity with title" />
+            <Link to="/conference/activities/add-activity-title">
+              <MenuItem primaryText="Add activity without paper" />
             </Link>
           </Menu>
         </Popover>

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Subheader, IconButton } from 'material-ui';
 import { Link } from 'react-router-dom';
 import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
-import EditActivityPaper from './editActivityPaper';
+import EditActivityTitle from './editActivityTitle';
 import { queries } from '../../helpers';
 import { graphql, compose } from 'react-apollo';
 // import { connect } from 'react-redux';
@@ -10,20 +10,15 @@ import { graphql, compose } from 'react-apollo';
 
 class Index extends Component {
   render() {
-    const loadingPapers = this.props.GET_PAPER_BY_CONFERENCE_ID.loading;
     const loadingRooms = this.props.GET_ROOMS_BY_STATUS_IN_CONFERENCE_QUERY
       .loading;
-    const { getPapersByConferenceID } = this.props.GET_PAPER_BY_CONFERENCE_ID;
     const {
       getRoomsByStatusInConference,
     } = this.props.GET_ROOMS_BY_STATUS_IN_CONFERENCE_QUERY;
-    if (loadingPapers || loadingRooms) {
+    if (loadingRooms) {
       return <div>Loading...</div>;
     }
-    let papers;
-    if (getPapersByConferenceID) {
-      papers = getPapersByConferenceID;
-    }
+
     let rooms;
     if (getRoomsByStatusInConference) {
       rooms = getRoomsByStatusInConference;
@@ -50,17 +45,14 @@ class Index extends Component {
           <span>Add Activity</span>
         </div>
         <div className="dashboard  content d-flex">
-          <EditActivityPaper papers={papers} rooms={rooms} />
+          <EditActivityTitle rooms={rooms} />
         </div>
       </div>
     );
   }
 }
-export default compose(
-  graphql(queries.GET_PAPER_BY_CONFERENCE_ID, {
-    name: 'GET_PAPER_BY_CONFERENCE_ID',
-  }),
 
+export default compose(
   graphql(queries.GET_ROOMS_BY_STATUS_IN_CONFERENCE_QUERY, {
     options: {
       variables: { status: 'on' },

@@ -11,6 +11,7 @@ import ConfMgtSidebar from '../../../../pages/conference/add';
 
 import { images } from '../../../../theme';
 import style from './style.css';
+const S3_GET_PREFIX = process.env.REACT_APP_S3_GET_PREFIX;
 
 //import { graphql, gql } from 'react-apollo';
 
@@ -83,10 +84,15 @@ class BadgeExampleSimple extends Component {
   render() {
     // const { loading } = this.props.data;
     // if (loading) return <div>Loading...</div>;
-    var first = '';
+    //const avatar = this.props.me.avatar;
+    //console.log(avatar);
+    let first = '';
+    let avatar = '';
     if (this.props.me !== undefined) {
       //console.log(this.props.me.firstname);
       first = this.props.me.firstname;
+      //const avatar = this.props.me.avatar;
+      //console.log(avatar);
     }
     return (
       <div className="menu">
@@ -96,7 +102,10 @@ class BadgeExampleSimple extends Component {
           }}
         />
         <div className="badge user" onClick={this.handleTouchTapUser}>
-          <Avatar className="avatar" src={images.defaultAvatar} />
+          <Avatar
+            className="avatar"
+            src={avatar ? S3_GET_PREFIX + avatar : images.defaultAvatar}
+          />
           <span className="user-name"> {first} </span>
           <IconButton tooltip="User">
             <HardwareKeyboardArrowDown />
@@ -160,3 +169,4 @@ const mapStateToProps = state => ({
 export default compose(withRouter, withApollo, connect(mapStateToProps))(
   BadgeExampleSimple,
 );
+//<Avatar className="avatar" src={images.defaultAvatar} />

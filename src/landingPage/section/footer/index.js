@@ -4,6 +4,9 @@ import { Col, Grid, Row } from 'react-flexbox-grid';
 import './style.css';
 import { graphql } from 'react-apollo';
 import { queries } from '../../helpers';
+import FaFacebookSquare from 'react-icons/lib/fa/facebook-square';
+import FaTwitterSquare from 'react-icons/lib/fa/twitter-square';
+import FaLinkedinSquare from 'react-icons/lib/fa/linkedin-square';
 
 class Footer extends Component {
   render() {
@@ -30,19 +33,19 @@ class Footer extends Component {
               <h3 className="footer-title">Connect With Us</h3>
               <div className="icon-cover">
                 <a href={landingPage.facebook_id}>
-                  <i
+                  <FaFacebookSquare
                     className="fa fa-facebook-square fa-lg footer-icon"
                     aria-hidden="true"
                   />
                 </a>
                 <a href={landingPage.twitter_id}>
-                  <i
+                  <FaTwitterSquare
                     className="fa fa-twitter-square fa-lg footer-icon"
                     aria-hidden="true"
                   />
                 </a>
                 <a href={landingPage.linkedin_id}>
-                  <i
+                  <FaLinkedinSquare
                     className="fa fa-linkedin-square fa-lg footer-icon"
                     aria-hidden="true"
                   />
