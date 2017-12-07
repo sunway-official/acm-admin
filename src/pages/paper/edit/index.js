@@ -14,8 +14,7 @@ class Index extends Component {
     this.handleSave = this.handleSave.bind(this);
   }
   async handleSave(values) {
-    const { UPDATE_PAPER } = this.props;
-    console.log(values);
+    const { UPDATE_PAPER, UPDATE_TOPIC_OF_PAPER } = this.props;
     try {
       await UPDATE_PAPER({
         variables: {
@@ -24,11 +23,17 @@ class Index extends Component {
           abstract: values.abstract,
           keywords: values.keywords,
         },
+      });
+      await UPDATE_TOPIC_OF_PAPER({
+        variables: {
+          paper_id: values.id,
+          topic_id: this.props.topic.id,
+        },
         refetchQueries: [
           {
-            query: queries.GET_PAPERS_BY_CONFERENCE_ID,
+            query: queries.GET_TOPICS_BY_PAPER_ID,
             variables: {
-              conference_id: this.props.conference_id,
+              paper_id: values.id,
             },
           },
         ],
@@ -39,6 +44,7 @@ class Index extends Component {
     }
   }
   render() {
+    console.log(this.props.topic);
     const loadingPaper = this.props.GET_PAPER_BY_ID.loading;
     const loadingTopics = this.props.GET_TOPICS_OF_CONFERENCE.loading;
     const loadingPaperTopics = this.props.GET_TOPICS_BY_PAPER_ID.loading;
@@ -62,7 +68,7 @@ class Index extends Component {
         title: paper.title,
         abstract: paper.abstract,
         keywords: paper.keywords,
-        topic: paperTopicsActive[0].topic.name,
+        topic: paperTopicsActive[0].topic.id,
       };
     }
     return (
@@ -99,8 +105,10 @@ class Index extends Component {
   }
 }
 const mapStateToProps = state => {
-  if (state.auth.currentUser.currentConference) {
-    return { conference_id: state.auth.currentUser.currentConference.id };
+  if (state) {
+    return {
+      topic: state.topics.data,
+    };
   }
 };
 export default compose(
@@ -127,5 +135,8 @@ export default compose(
   }),
   graphql(mutations.UPDATE_PAPER, {
     name: 'UPDATE_PAPER',
+  }),
+  graphql(mutations.UPDATE_TOPIC_OF_PAPER, {
+    name: 'UPDATE_TOPIC_OF_PAPER',
   }),
 )(Index);

@@ -47,10 +47,19 @@ const UPDATE_PAPER = gql`
     }
   }
 `;
+const UPDATE_TOPIC_OF_PAPER = gql`
+  mutation updateTopicOfPaper($paper_id: ID!, $topic_id: ID!) {
+    updateTopicOfPaper(paper_id: $paper_id, topic_id: $topic_id) {
+      id
+      topic_name
+    }
+  }
+`;
 export default {
   DELETE_PAPER,
   INSERT_PAPER,
   INSERT_PAPER_TOPIC,
   UPDATE_PAPER,
   DELETE_PAPER_TOPIC,
+  UPDATE_TOPIC_OF_PAPER,
 };

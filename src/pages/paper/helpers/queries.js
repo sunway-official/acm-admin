@@ -1,8 +1,8 @@
 import { gql } from 'react-apollo';
 
 const GET_PAPERS_BY_CONFERENCE_ID = gql`
-  query getPapersByConferenceID($conference_id: ID!) {
-    getPapersByConferenceID(conference_id: $conference_id) {
+  query getPapersByConferenceID {
+    getPapersByConferenceID {
       id
       title
       abstract

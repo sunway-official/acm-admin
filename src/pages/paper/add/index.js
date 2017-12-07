@@ -29,9 +29,6 @@ class Index extends Component {
         refetchQueries: [
           {
             query: queries.GET_PAPERS_BY_CONFERENCE_ID,
-            variables: {
-              conference_id: this.props.conference_id,
-            },
           },
         ],
       });
@@ -83,7 +80,6 @@ const mapStateToProps = state => {
   if (state) {
     return {
       topic: state.topics.data,
-      conference_id: state.auth.currentUser.currentConference.id,
     };
   }
 };
