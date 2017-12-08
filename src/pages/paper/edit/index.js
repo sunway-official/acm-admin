@@ -67,7 +67,6 @@ class Index extends Component {
     }
     if (getPaperByID) {
       paper = getPaperByID;
-      console.log(paperTopicsActive[0].topic.name);
       initialValues = {
         id: paper.id,
         title: paper.title,
