@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
-import {
-  Subheader,
-  IconButton,
-  CircularProgress,
-  RaisedButton,
-} from 'material-ui';
-import AddDialog from './insert/addDialog';
+import { Subheader, IconButton, CircularProgress } from 'material-ui';
+// import AddDialog from './insert/addDialog';
 import { Link } from 'react-router-dom';
 import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import List from './list';
@@ -32,11 +27,11 @@ class Index extends Component {
     });
   }
   render() {
-    let allUsers;
-    const { getAllUsers } = this.props.GET_ALL_USERS;
-    if (getAllUsers) {
-      allUsers = getAllUsers;
-    } else return <div>Loading...</div>;
+    // let allUsers;
+    // const { getAllUsers } = this.props.GET_ALL_USERS;
+    // if (getAllUsers) {
+    //   allUsers = getAllUsers;
+    // } else return <div>Loading...</div>;
     const { loading } = this.props.data;
     if (loading)
       return (
@@ -70,18 +65,18 @@ class Index extends Component {
             staffs={staffs}
             conference_id={this.props.match.params.conference_id}
           />
-          <RaisedButton
+          {/* <RaisedButton
             onClick={() => this.handleOpenAddDialog()}
             primary={true}
             label="Add New Staff"
-          />
+          />*/}
         </div>
-        <AddDialog
+        {/*<AddDialog
           allUsers={allUsers}
           id={this.state.userId}
           open={this.state.openDialog}
           handleClose={this.handleOpenAddDialog}
-        />
+        />*/}
       </div>
     );
   }
