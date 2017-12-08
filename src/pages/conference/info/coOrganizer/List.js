@@ -97,7 +97,7 @@ class Index extends Component {
         className="cancel-btn dialog"
         onClick={this.handleDialog}
       >
-        <NavigationClose />
+        <NavigationClose color="white" />
       </IconButton>,
     ];
     const actionDelete = [
@@ -108,6 +108,7 @@ class Index extends Component {
         type="submit"
       />,
       <RaisedButton
+        className="marginLeft"
         label="No"
         onClick={this.handleCloseDelete}
         style={this.styleBtn}
@@ -176,6 +177,7 @@ class Index extends Component {
           className="-striped -highlight"
         />
         <Dialog
+          titleStyle={{ backgroundColor: '#3E5566', color: 'white' }}
           title={this.state.title}
           actions={actions}
           modal={true}
@@ -196,7 +198,7 @@ class Index extends Component {
           open={this.state.isDeleting}
           actions={actionDelete}
         />
-        <div className="d-flex btn-group">
+        <div className="d-flex btn-group marginBottom">
           <RaisedButton
             label="Add Co-Organizer"
             primary={true}

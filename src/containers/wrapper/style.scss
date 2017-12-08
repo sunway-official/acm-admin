@@ -20,6 +20,12 @@
 .flex-wrap {
   flex-wrap: wrap;
 }
+.primaryColor {
+  background-color: #3e5566;
+}
+.color-white {
+  color: white;
+}
 .m-auto {
   margin: auto;
 }
@@ -52,6 +58,12 @@ body {
   margin: 15px auto 20px;
   min-width: 785px;
   width: 100%;
+}
+.marginBottom {
+  margin-bottom: 30px;
+}
+.marginLeft {
+  margin-left: 10px;
 }
 .page-breadcrumb {
   background: white;

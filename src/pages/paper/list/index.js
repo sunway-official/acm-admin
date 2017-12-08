@@ -115,6 +115,7 @@ class Index extends Component {
         <div className="d-flex save-btn btn-group">
           <Link to="/conference/paper/add">
             <RaisedButton
+              className="marginBottom"
               icon={<ActionNoteAdd />}
               primary={true}
               label={'Add New Paper'}

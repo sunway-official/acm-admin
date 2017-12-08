@@ -4,10 +4,11 @@ import MenuAppBar from './menu';
 import { AppBar, Drawer } from 'material-ui';
 import { ActionReorder } from 'material-ui/svg-icons';
 import { images } from '../../../theme';
-
+import { connect } from 'react-redux';
 import style from './style.css';
+import { sidebarActions } from 'store/ducks/sidebar';
 
-export default class AppBarExampleIcon extends React.Component {
+class Index extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -15,7 +16,10 @@ export default class AppBarExampleIcon extends React.Component {
     };
   }
 
-  handleToggle = () => this.setState({ open: !this.state.open });
+  handleToggle = () => {
+    // this.setState({ open: !this.state.open });
+    this.props.setSidebar();
+  };
 
   handleTouchTap = event => {
     event.preventDefault();
@@ -46,8 +50,8 @@ export default class AppBarExampleIcon extends React.Component {
         >
           <img className="logo" src={images.defaultLogo} alt="logo" />
           <Drawer
-            open={this.state.open}
-            onRequestChange={open => this.setState({ open })}
+            open={this.props.openModal}
+            // onRequestChange={open => this.setState({ open })}
             docked={false}
           >
             <AppBar
@@ -64,3 +68,14 @@ export default class AppBarExampleIcon extends React.Component {
     );
   }
 }
+const mapStateToProps = state => {
+  return {
+    openModal: state.sidebar.openModal,
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    setSidebar: () => dispatch(sidebarActions.setSidebar()),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Index);
