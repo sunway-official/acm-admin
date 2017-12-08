@@ -52,6 +52,7 @@ class Index extends Component {
     if (getPapersByConferenceID) {
       papers = getPapersByConferenceID;
     }
+    console.log(papers);
     const columns = [
       {
         Header: 'Title',
