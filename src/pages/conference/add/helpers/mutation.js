@@ -25,6 +25,11 @@ export const GET_ALL_CONFERENCES_BY_USER_ID_QUERY = gql`
           lastname
         }
       }
+      user {
+        currentConference {
+          id
+        }
+      }
     }
   }
 `;
@@ -123,13 +128,25 @@ export const INSERT_ORGANIZER_DETAIL_MUTATION = gql`
 `;
 
 export const INSERT_ADDRESS_MUTATION = gql`
-  mutation deleteConference($id: ID!) {
-    deleteConference(id: $id) {
+  mutation insertAddress(
+    $street: String!
+    $city: String!
+    $country: String!
+    $lat: String!
+    $long: String!
+  ) {
+    insertAddress(
+      street: $street
+      city: $city
+      country: $country
+      lat: $lat
+      long: $long
+    ) {
       id
-      title
     }
   }
 `;
+
 export const DELETE_CONFERENCE_BY_ID = gql`
   mutation deleteConference($id: ID!) {
     deleteConference(id: $id) {

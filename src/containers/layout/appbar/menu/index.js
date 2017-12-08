@@ -11,6 +11,7 @@ import ConfMgtSidebar from '../../../../pages/conference/add';
 
 import { images } from '../../../../theme';
 import style from './style.css';
+const S3_GET_PREFIX = process.env.REACT_APP_S3_GET_PREFIX;
 
 //import { graphql, gql } from 'react-apollo';
 
@@ -19,8 +20,8 @@ class BadgeExampleSimple extends Component {
     super(props);
     this.state = {
       openUser: false,
-      openNotification: false,
-      openMail: false,
+      // openNotification: false,
+      // openMail: false,
       openCalendar: false,
       openListConf: false,
     };
@@ -83,10 +84,15 @@ class BadgeExampleSimple extends Component {
   render() {
     // const { loading } = this.props.data;
     // if (loading) return <div>Loading...</div>;
-    var first = '';
+    //const avatar = this.props.me.avatar;
+    //console.log(avatar);
+    let first = '';
+    let avatar = '';
     if (this.props.me !== undefined) {
       //console.log(this.props.me.firstname);
       first = this.props.me.firstname;
+      //const avatar = this.props.me.avatar;
+      //console.log(avatar);
     }
     return (
       <div className="menu">
@@ -95,113 +101,11 @@ class BadgeExampleSimple extends Component {
             __html: style,
           }}
         />
-        {/*
-           <Badge
-          className="badge"
-          badgeContent={10}
-          primary={true}
-          badgeStyle={{
-            top: 10,
-            left: 30,
-          }}
-          onClick={this.handleTouchTapNotification}
-        >
-          <IconButton tooltip="Notifications">
-            <SocialNotificationsNone />
-          </IconButton>
-          <Popover
-            open={this.state.openNotification}
-            anchorEl={this.state.anchorEl}
-            anchorOrigin={{
-              horizontal: 'left',
-              vertical: 'bottom',
-            }}
-            targetOrigin={{
-              horizontal: 'left',
-              vertical: 'top',
-            }}
-            onRequestClose={this.handleRequestClose}
-          >
-            <Menu>
-              <MenuItem primaryText="Noti" />
-              <MenuItem primaryText="Help &amp; feedback" />
-              <MenuItem primaryText="Settings" />
-              <MenuItem primaryText="Sign out" />
-            </Menu>
-          </Popover>
-        </Badge>
-        <Badge
-          className="badge"
-          badgeContent={5}
-          primary={true}
-          badgeStyle={{
-            top: 10,
-            left: 30,
-          }}
-          onClick={this.handleTouchTapMail}
-        >
-          <IconButton tooltip="Mails">
-            <CommunicationMailOutline />
-          </IconButton>
-          <Popover
-            open={this.state.openMail}
-            anchorEl={this.state.anchorEl}
-            anchorOrigin={{
-              horizontal: 'left',
-              vertical: 'bottom',
-            }}
-            targetOrigin={{
-              horizontal: 'left',
-              vertical: 'top',
-            }}
-            onRequestClose={this.handleRequestClose}
-          >
-            <Menu>
-              <MenuItem primaryText="Mail" />
-              <MenuItem primaryText="Help &amp; feedback" />
-              <MenuItem primaryText="Settings" />
-              <MenuItem primaryText="Sign out" />
-            </Menu>
-          </Popover>
-        </Badge>
-
-        <Badge
-          className="badge"
-          badgeContent={4}
-          primary={true}
-          badgeStyle={{
-            top: 10,
-            left: 30,
-          }}
-          onClick={this.handleTouchTapCalendar}
-        >
-          <IconButton tooltip="Calendar">
-            <ActionDateRange />
-          </IconButton>
-          <Popover
-            open={this.state.openCalendar}
-            anchorEl={this.state.anchorEl}
-            anchorOrigin={{
-              horizontal: 'left',
-              vertical: 'bottom',
-            }}
-            targetOrigin={{
-              horizontal: 'left',
-              vertical: 'top',
-            }}
-            onRequestClose={this.handleRequestClose}
-          >
-            <Menu>
-              <MenuItem primaryText="Calendar" />
-              <MenuItem primaryText="Help &amp; feedback" />
-              <MenuItem primaryText="Settings" />
-              <MenuItem primaryText="Sign out" />
-            </Menu>
-          </Popover>
-        </Badge>
-        */}
         <div className="badge user" onClick={this.handleTouchTapUser}>
-          <Avatar className="avatar" src={images.defaultAvatar} />
+          <Avatar
+            className="avatar"
+            src={avatar ? S3_GET_PREFIX + avatar : images.defaultAvatar}
+          />
           <span className="user-name"> {first} </span>
           <IconButton tooltip="User">
             <HardwareKeyboardArrowDown />
@@ -221,7 +125,10 @@ class BadgeExampleSimple extends Component {
           >
             <Menu>
               <Link to="/user-profile">
-                <MenuItem primaryText="User Profile" />
+                <MenuItem
+                  primaryText="User Profile"
+                  onClick={this.handleRequestClose}
+                />
               </Link>
               <MenuItem
                 primaryText="Switch conference"
@@ -262,3 +169,4 @@ const mapStateToProps = state => ({
 export default compose(withRouter, withApollo, connect(mapStateToProps))(
   BadgeExampleSimple,
 );
+//<Avatar className="avatar" src={images.defaultAvatar} />

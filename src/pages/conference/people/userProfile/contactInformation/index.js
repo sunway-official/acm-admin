@@ -8,6 +8,10 @@ import { connect } from 'react-redux';
 import validate from './validate';
 import { renderField } from '../../../../../utils';
 import { withRouter } from 'react-router';
+import FaFacebookSquare from 'react-icons/lib/fa/facebook-square';
+import FaTwitterSquare from 'react-icons/lib/fa/twitter-square';
+import FaLinkedinSquare from 'react-icons/lib/fa/linkedin-square';
+import FaEnvelopeO from 'react-icons/lib/fa/envelope-o';
 
 class ContactInformation extends Component {
   constructor(props) {
@@ -15,7 +19,7 @@ class ContactInformation extends Component {
     this.handleCancel = this.handleCancel.bind(this);
   }
   handleCancel() {
-    this.props.history.replace('/');
+    this.props.history.replace('/conference/info');
   }
 
   render() {
@@ -30,7 +34,10 @@ class ContactInformation extends Component {
                   className="list-item"
                   primaryText="Email"
                   leftIcon={
-                    <i className="fa fa-envelope-o fa-lg" aria-hidden="true" />
+                    <FaEnvelopeO
+                      className="fa fa-envelope-o fa-lg"
+                      aria-hidden="true"
+                    />
                   }
                   disabled={true}
                 />
@@ -40,7 +47,7 @@ class ContactInformation extends Component {
                   className="list-item"
                   primaryText="Facebook"
                   leftIcon={
-                    <i
+                    <FaFacebookSquare
                       className="fa fa-facebook-square fa-lg"
                       aria-hidden="true"
                     />
@@ -53,7 +60,7 @@ class ContactInformation extends Component {
                   className="list-item"
                   primaryText="Twitter"
                   leftIcon={
-                    <i
+                    <FaTwitterSquare
                       className="fa fa-twitter-square fa-lg"
                       aria-hidden="true"
                     />
@@ -66,7 +73,7 @@ class ContactInformation extends Component {
                   className="list-item"
                   primaryText="LinkedIn"
                   leftIcon={
-                    <i
+                    <FaLinkedinSquare
                       className="fa fa-linkedin-square fa-lg"
                       aria-hidden="true"
                     />

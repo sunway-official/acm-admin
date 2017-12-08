@@ -33,6 +33,7 @@ export const getEvents = array => {
         const end = moment(schedule.end)._d;
         const event = {
           id: item.id,
+          paper_id: item.paper_id,
           title: item.title,
           description: item.description,
           start: start,

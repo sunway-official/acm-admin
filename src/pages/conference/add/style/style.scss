@@ -74,10 +74,21 @@
     padding: 20px 0 20px 0 !important;
   }
 }
-.list {
-  .list-item {
-    a .switch-text {
-      color: black !important;
+// .list {
+//   .list-item {
+//     a .switch-text {
+//       color: black !important;
+//     }
+//   }
+// }
+
+.switch-text {
+  div {
+    div {
+    color: black !important;
+    margin-left: 43px !important;
+    padding-left: 1px !important;
     }
   }
+
 }

@@ -25,29 +25,31 @@ class ConferenceInfoForm extends React.Component {
       <form className="form conference-info" onSubmit={handleSubmit}>
         <div>
           <div>
-            <div>
+            <div className="form-body">
               <Subheader className="header title">Basic Information</Subheader>
-              <AppMap
-                onMapPositionChanged={onMapPositionChanged}
-                initalPosition={{
-                  lat: initialValues.lat,
-                  long: initialValues.long,
-                }}
-                googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyDFNlwjsuntl-BmMpDKJPOiUvwxhAEyMEI"
-                loadingElement={<div style={{ height: `100%` }} />}
-                containerElement={<div style={{ height: `400px` }} />}
-                mapElement={
-                  <div
-                    style={{
-                      height: `100%`,
-                      marginLeft: '-50%',
-                      marginRight: '-50%',
-                    }}
-                  />
-                }
-              />
+              <div className="map">
+                <AppMap
+                  onMapPositionChanged={onMapPositionChanged}
+                  initalPosition={{
+                    lat: initialValues.lat,
+                    long: initialValues.long,
+                  }}
+                  googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyDFNlwjsuntl-BmMpDKJPOiUvwxhAEyMEI"
+                  loadingElement={<div style={{ height: `100%` }} />}
+                  containerElement={<div style={{ height: `400px` }} />}
+                  mapElement={
+                    <div
+                      style={{
+                        height: `100%`,
+                        marginLeft: '-8%',
+                        marginRight: '-37%',
+                      }}
+                    />
+                  }
+                />
+              </div>
               <div>
-                <div className="d-flex form-group">
+                <div className="d-flex form-group title-information">
                   <label>Title :</label>
                   <Field
                     name="title"

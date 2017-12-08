@@ -2,8 +2,8 @@ import { regex } from '../../../utils';
 const validate = values => {
   const errors = {};
   const requiredFields = [
-    'firstName',
-    'lastName',
+    'firstname',
+    'lastname',
     'email',
     'password',
     'confirmPassword',
@@ -25,7 +25,7 @@ const validate = values => {
   }
   if (values.password && !regex.passwordRegex.test(values.password)) {
     errors.password =
-      'Password must contains at least 6 character include number and special character ';
+      'Password must contains at least 6 character include number, capital and special character ';
   }
   return errors;
 };

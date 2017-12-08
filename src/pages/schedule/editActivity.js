@@ -26,7 +26,6 @@ class EditActivity extends React.PureComponent {
 
   handleDelete() {
     const { DELETE_ACTIVITY_MUTATION, event } = this.props;
-    console.log(event);
     DELETE_ACTIVITY_MUTATION({
       variables: {
         id: event.id,
@@ -41,16 +40,7 @@ class EditActivity extends React.PureComponent {
     this.toggleDelete();
     this.props.toggleEdit();
   }
-  papers = [
-    {
-      id: 1,
-      name: 'Blockchain',
-    },
-    {
-      id: 2,
-      name: 'Big data',
-    },
-  ];
+
   render() {
     const actions = (
       <div>
@@ -83,12 +73,12 @@ class EditActivity extends React.PureComponent {
               hintText="Paper Title"
               fullWidth={true}
             >
-              {this.papers.map(paper => {
+              {this.props.papers.map(paper => {
                 return (
                   <MenuItem
                     key={paper.id}
                     value={paper.id}
-                    primaryText={paper.name}
+                    primaryText={paper.title}
                   />
                 );
               })}
@@ -138,14 +128,7 @@ const mapStateToProps = state => {
   return {
     initialValues: {
       id: event.id,
-      title: event.title,
-      description: event.description,
-      // start: moment(event.start, 'HH:mm'),
-      // end: moment(event.end, 'HH:mm'),
-      // start: moment(event.start).format('HH:mm'),
-      // end: moment(event.end).format('HH:mm'),
-      // date: new Date(event.start),
-      // schedules: event.schedules,
+      paper: event.paper_id,
     },
     event: event,
   };
@@ -153,7 +136,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    toggleEdit: () => dispatch(scheduleActions.toggleEditActivityFormModal()),
+    toggleEdit: () =>
+      dispatch(scheduleActions.toggleEditActivityPaperFormModal()),
     checkError: error => {
       dispatch(scheduleOperations.checkErrorOperation(error));
     },

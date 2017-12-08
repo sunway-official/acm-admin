@@ -1,21 +1,26 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { Subheader, IconButton, Tabs, Tab } from 'material-ui';
 import { Link } from 'react-router-dom';
 import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import ConferenceInfo from './conferenceInfo';
 import { connect } from 'react-redux';
 import CoOrganizerList from './coOrganizer/List';
-
-class Index extends PureComponent {
+class Index extends Component {
   render() {
-    const conference = this.props.currentConference;
+    let conference;
+    if (this.props.currentConference) {
+      conference = this.props.currentConference;
+    } else return <div>Loading</div>;
     // khai bao conference dua tren query getConferenceByID
     const coOrganizerDetails = conference.coOrganizerDetails;
+    console.log(this.props.currentConference);
     // khai bao coOrganizerDetails dua tren query coOrganizerDetails bang getConferenceByID
 
     return (
       <div className="conference">
-        <Subheader className="subheader"> Conference Information</Subheader>
+        <Subheader className="subheader conf-infor-title">
+          Conference Information
+        </Subheader>
         <div className="page-breadcrumb d-flex">
           <Link className="d-flex" to="/">
             <IconButton>
@@ -48,9 +53,10 @@ class Index extends PureComponent {
 }
 
 const mapStateToProps = state => {
-  return {
-    currentConference: state.auth.currentUser.currentConference,
-  };
+  if (state.auth.currentUser && state.auth.currentUser.currentConference)
+    return {
+      currentConference: state.auth.currentUser.currentConference,
+    };
 };
 
 export default connect(mapStateToProps, undefined)(Index);

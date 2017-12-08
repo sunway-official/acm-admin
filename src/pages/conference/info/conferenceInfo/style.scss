@@ -25,6 +25,10 @@
       }
     }
 
+    .form-body {
+      width: 108%;
+    }
+
     .form-group {
       align-items: center;
 
@@ -45,13 +49,21 @@
           width: 190px !important;
         }
       }
+      &.title-information {
+        margin-top: 20px;
+      }
     }
     .header {
       &.title {
         font-size: 2em !important;
       }
     }
+
+    .map {
+      width: 80% !important;
+    }
   }
+
   .group {
     &.remove-btn {
       justify-content: space-around;

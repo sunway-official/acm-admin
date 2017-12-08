@@ -2,11 +2,11 @@ import functions from './functions';
 import queries from './queries';
 
 export const addActivityFunc = data => {
-  const { INSERT_ACTIVITY_MUTATION, values, INSERT_SCHEDULE_MUTATION } = data;
+  const { INSERT_ACTIVITY_MUTATION, INSERT_SCHEDULE_MUTATION, values } = data;
   INSERT_ACTIVITY_MUTATION({
     variables: {
-      title: values.title,
-      description: values.description,
+      title: data.values.title,
+      description: data.values.description,
     },
   })
     .then(({ data }) => {
@@ -17,7 +17,6 @@ export const addActivityFunc = data => {
           schedule.start,
         );
         const newEndTime = functions.getDateTime(schedule.date, schedule.end);
-
         INSERT_SCHEDULE_MUTATION({
           variables: {
             activity_id: data.insertActivity.id,

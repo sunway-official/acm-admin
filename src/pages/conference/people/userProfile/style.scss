@@ -28,6 +28,14 @@
   justify-content: left;
   align-items: center;
   background-color: #ffffff;
+  // .card-content {
+  //   display: flex;
+  //   justify-content: center;
+
+  //   .img {
+  //     position: relative;
+  //   }
+  }
   .profile-usertitle-name {
     color: #5a7391;
     font-size: 20px;
@@ -44,7 +52,6 @@
   .list-item {
     text-align: left !important;
   }
-}
 .list-item {
   text-align: left !important;
 }
@@ -66,5 +73,18 @@
     font-weight: 800;
     margin-bottom: 7px;
   }
+}
+
+.subheader-user {
+  box-sizing: border-box;
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 26px !important;
+  font-weight: 500 !important;
+  line-height: 48px !important;
+  padding-top: 4.5%;
+}
+
+#content {
+  width: 102% !important;
 }
 

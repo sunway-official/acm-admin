@@ -7,10 +7,10 @@ const Index = props => {
 };
 
 const mapStateToProps = state => {
-  console.log(state);
-  return {
-    conference: state.auth.currentUser.currentConference,
-  };
+  if (state.auth.currentUser && state.auth.currentUser.currentConference)
+    return {
+      conference: state.auth.currentUser.currentConference,
+    };
 };
 
 export default connect(mapStateToProps, undefined)(Index);

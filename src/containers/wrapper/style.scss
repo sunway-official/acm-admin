@@ -7,6 +7,7 @@
 .justify-content-space-around {
   justify-content: space-around;
 }
+
 .justify-content-flex-end {
   justify-content: flex-end;
 }
@@ -16,20 +17,28 @@
 .position-fixed {
   position: fixed;
 }
+.flex-wrap {
+  flex-wrap: wrap;
+}
 .m-auto {
   margin: auto;
 }
 body {
   margin: 0 !important;
   background: #f5f5f5;
+  box-sizing: border-box;
   a {
     text-decoration: none !important;
     color: gray !important;
   }
   .dashboard {
+    padding-left: 3% !important;
+    padding-right: 3% !important;
     padding-bottom: 50px;
     &.content {
+      padding: 0 !important;
       background: white;
+      padding: 0 !important;
     }
   }
   font-family: 'Roboto', sans-serif;
@@ -41,8 +50,8 @@ body {
 }
 .body-content {
   margin: 15px auto 20px;
-  min-width: 800px;
-  width: 90%;
+  min-width: 785px;
+  width: 100%;
 }
 .page-breadcrumb {
   background: white;
@@ -60,4 +69,8 @@ body {
     align-items: center;
     display: flex;
   }
+}
+
+#content {
+  width: 102% !important;
 }

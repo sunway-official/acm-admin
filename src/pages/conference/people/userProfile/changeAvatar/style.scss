@@ -1,43 +1,39 @@
-//image overlay
-#avatar{
 
-  }
-  .img {
-    border-radius: 100%;
-    display: inline-flex;
-    flex: 0 0 140px;
-    height: 140px;
-    justify-content: center;
-    overflow: hidden;
-    position: relative;
-    width: 140px !important;
-    margin-bottom: 20px;
-    margin-top: 20px;
-    text-align: center;
-  }
-  .img img {
-    height: 100%;
-  }
-  .img_overlay {
-    align-items: center;
-    bottom: 0;
-    display: flex;
-    justify-content: center;
-    left: 0;
-    opacity: 0;
+
+.user-profile-img {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin: 2vw;
+  img {
     position: absolute;
-    right: 0;
     top: 0;
-    transition: opacity 0.25s;
-    z-index: 1;
-    background-color: rgba(46,204,113,0.4);
-    background: linear-gradient(65deg, rgba(214, 61, 61, 0.4), rgba(233, 121, 52, 0.4));
-    color: #fafafa;
-    font-size: 24px;
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
   }
-  .img_overlay:hover {
-    opacity: 1;
-  }
+}
+.img_overlay {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.5);
+  align-items: center;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  left: 0;
+  opacity: 0;
+  transition: opacity 0.25s;
+  z-index: 1;
+  // background-color: rgba(46,204,113,0.4);
+  // background: linear-gradient(65deg, rgba(214, 61, 61, 0.4), rgba(233, 121, 52, 0.4));
+  color: #fafafa;
+  font-size: 24px;
+}
+.img_overlay:hover {
+  opacity: 1;
+}
 .avatarButton{
   padding: 0px !important;
   width: 100%;
