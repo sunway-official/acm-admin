@@ -19,9 +19,9 @@ import WithThunk from '../pages/withThunk';
 
 import { muiTheme } from '../theme';
 import Wrapper from './wrapper';
-import LandingPage from '../landingPage';
-import LandingPageManagement from '../pages/landingPageManagement';
-import LandingPageSchedule from '../landingPage/schedule/index';
+import LandingPage from '../pages/landingPage';
+import LandingPageManagement from '../pages/conference/landingPageManagement';
+import LandingPageSchedule from '../pages/landingPage/schedule/index';
 import RoomsManagement from '../pages/conference/room';
 import TopicManagement from '../pages/conference/topic';
 import TopicDetail from '../pages/conference/topic/topicDetail';

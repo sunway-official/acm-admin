@@ -28,7 +28,10 @@ class LandingPage extends Component {
           </div>
           <div className="main">
             <Home landingPage={landingPage} />
-            <Register landingPage={landingPage} />
+            <Register
+              landingPage={landingPage}
+              id={this.props.match.params.conference_id}
+            />
             <Description landingPage={landingPage} />
             <Paper landingPage={landingPage} />
             <CountDownTimer landingPage={landingPage} />

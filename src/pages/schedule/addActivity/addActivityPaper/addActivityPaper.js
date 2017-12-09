@@ -15,11 +15,11 @@ class AddActivityPaper extends Component {
     this.handleChangeTopic = this.handleChangeTopic.bind(this);
     this.state = {
       papers: [],
+      disablePaper: true,
     };
   }
 
   async handleChangeTopic(event, value) {
-    console.log(event, value);
     const papers = await this.props.client.query({
       query: queries.GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
       variables: {
@@ -27,16 +27,27 @@ class AddActivityPaper extends Component {
       },
     });
     const { loading, getAllPapersByTopicID } = papers.data;
+
     if (!loading) {
-      this.setState({
-        papers: getAllPapersByTopicID,
-      });
+      // eslint-disable-next-line
+      if (getAllPapersByTopicID.length == 0) {
+        this.setState({
+          papers: [],
+          disablePaper: true,
+        });
+      } else {
+        this.setState({
+          papers: getAllPapersByTopicID,
+          disablePaper: false,
+        });
+      }
     }
   }
 
   render() {
     const { handleSubmit, submitting, pristine, error } = this.props;
     const { rooms, topics } = this.props;
+    const papers = this.state.papers;
 
     return (
       <form className="form conference-info " onSubmit={handleSubmit}>
@@ -70,8 +81,9 @@ class AddActivityPaper extends Component {
             component={renderSelectField}
             hintText="Activity Paper"
             fullWidth={true}
+            disabled={this.state.disablePaper}
           >
-            {this.state.papers.map(data => {
+            {papers.map(data => {
               const paper = data.paper;
               return (
                 <MenuItem

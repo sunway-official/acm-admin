@@ -39,6 +39,7 @@ class SpeakerAvatar extends Component {
       slidesToScroll: 1,
       autoplay: true,
       autoplaySpeed: 2000,
+      pauseOnHover: true,
       nextArrow: false,
       prevArrow: false,
     };

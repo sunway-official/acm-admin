@@ -10,7 +10,7 @@ import {
   alertOptions,
   MyExclamationTriangle,
   MyFaCheck,
-} from '../../theme/alert';
+} from '../../../theme/alert';
 import AlertContainer from 'react-alert';
 
 class Index extends Component {

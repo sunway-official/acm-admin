@@ -2,7 +2,7 @@ import React from 'react';
 import { Component } from 'react';
 import { Col, Grid, Row } from 'react-flexbox-grid';
 import './style.css';
-import { images } from '../../../theme';
+import { images } from '../../../../theme';
 import * as moment from 'moment';
 
 class CountDownTimer extends Component {

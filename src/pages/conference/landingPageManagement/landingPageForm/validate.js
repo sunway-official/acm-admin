@@ -1,4 +1,4 @@
-import { regex } from '../../../utils';
+import { regex } from '../../../../utils';
 const validate = values => {
   const errors = {};
   const requiredFields = [

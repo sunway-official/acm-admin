@@ -15,6 +15,8 @@ class EditActivityPaper extends Component {
     this.handleChangeTopic = this.handleChangeTopic.bind(this);
     this.state = {
       papers: [],
+      count: 0,
+      disablePaper: true,
     };
   }
 
@@ -27,10 +29,20 @@ class EditActivityPaper extends Component {
     });
     const { loading, getAllPapersByTopicID } = papers.data;
     if (!loading) {
-      console.log(getAllPapersByTopicID);
-      this.setState({
-        papers: getAllPapersByTopicID,
-      });
+      // eslint-disable-next-line
+      if (getAllPapersByTopicID.length == 0) {
+        this.setState({
+          papers: [],
+          count: 1,
+          disablePaper: true,
+        });
+      } else {
+        this.setState({
+          papers: getAllPapersByTopicID,
+          count: 1,
+          disablePaper: false,
+        });
+      }
     }
   }
 
@@ -41,7 +53,8 @@ class EditActivityPaper extends Component {
     if (loading) {
       return <div>Loading...</div>;
     }
-    if (this.state.papers.length === 0) {
+    // eslint-disable-next-line
+    if (this.state.papers.length === 0 && this.state.count == 0) {
       const {
         getAllPapersByTopicID,
       } = this.props.GET_ALL_PAPERS_BY_TOPIC_ID_QUERY;
@@ -82,6 +95,7 @@ class EditActivityPaper extends Component {
             component={renderSelectField}
             hintText="Activity Paper"
             fullWidth={true}
+            disabled={this.state.disablePaper}
           >
             {this.state.papers.map(data => {
               const paper = data.paper;
