@@ -3,7 +3,7 @@ import { Subheader, IconButton } from 'material-ui';
 import { Link } from 'react-router-dom';
 import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import AddActivityTitle from './addActivityTitle';
-import { queries, functions, addActivityFunc, mutations } from '../helpers';
+import { queries, functions, addActivityFunc, mutations } from '../../helpers';
 import { graphql, compose } from 'react-apollo';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
@@ -22,8 +22,8 @@ class Index extends Component {
       INSERT_SCHEDULE_MUTATION,
       values,
     };
-    this.props.history.replace('/conference/activities');
     addActivityFunc(data);
+    this.props.history.replace('/conference/activities');
   }
 
   render() {

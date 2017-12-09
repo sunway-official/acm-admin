@@ -2,7 +2,7 @@ import React from 'react';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
-import AddActivity from './addActivity';
+import AddActivityButton from './addActivityButton';
 // import EditActivity from './editActivity';
 import { IconButton, Subheader, Toggle } from 'material-ui';
 import { Link } from 'react-router-dom';
@@ -11,6 +11,7 @@ import {
   HardwareKeyboardArrowRight,
   ActionHome,
 } from 'material-ui/svg-icons';
+import { withRouter } from 'react-router';
 
 import { functions, queries } from './helpers';
 import { graphql, compose } from 'react-apollo';
@@ -27,18 +28,11 @@ class MyCalendar extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    // this.handleEdit = this.handleEdit.bind(this);
-    // this.addActivity = this.addActivity.bind(this);
-    // this.editActivity = this.editActivity.bind(this);
     this.handleTimeFormat = this.handleTimeFormat.bind(this);
     this.state = {
       timeFormat: 7,
     };
   }
-  // handleEdit(event) {
-  //   this.props.toggleEdit();
-  //   this.props.setEvent(event);
-  // }
 
   handleTimeFormat() {
     this.state.timeFormat === 7
@@ -85,7 +79,18 @@ class MyCalendar extends React.PureComponent {
             onSelectEvent={event => {
               const checkDate = moment(event.start).isAfter(moment());
 
-              if (checkDate) this.handleEdit(event);
+              if (checkDate) {
+                // eslint-disable-next-line
+                if (event.paper_id == 0) {
+                  this.props.history.push(
+                    '/conference/activities/edit-activity-title/' + event.id,
+                  );
+                } else {
+                  this.props.history.push(
+                    '/conference/activities/edit-activity-paper/' + event.id,
+                  );
+                }
+              }
             }}
             min={
               new Date(
@@ -99,7 +104,7 @@ class MyCalendar extends React.PureComponent {
               event: functions.Event,
             }}
           />
-          <AddActivity />
+          <AddActivityButton />
           <div id="format-time">
             <Toggle label="24h" onToggle={this.handleTimeFormat} />
           </div>
@@ -109,9 +114,10 @@ class MyCalendar extends React.PureComponent {
   }
 }
 
-export default compose(graphql(queries.GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY))(
-  MyCalendar,
-);
+export default compose(
+  withRouter,
+  graphql(queries.GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY),
+)(MyCalendar);
 
 // <Dialog
 // style={{ top: '-130px' }}
