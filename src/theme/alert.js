@@ -18,7 +18,7 @@ export const styles = {
   faTriangle: {
     width: 16,
     height: 16,
-    color: 'rgb(255, 235, 59)',
+    color: 'rgb(244, 67, 54)',
   },
 };
 export const MyFaCheck = () => <FaCheckCircleO style={styles.faCheckCircleO} />;

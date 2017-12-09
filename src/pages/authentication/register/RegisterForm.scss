@@ -7,11 +7,21 @@
     width: 120px !important;
   }
 }
-
+.checkbox-row {
+  display: flex;
+  margin-top: 16px;
+  justify-content: center;
+  width: 250px;
+  color: rgb(62, 85, 102);
+}
+#register-checkbox {
+  margin-right: 12px;
+}
 .btn {
   &.register {
     width: 250px !important;
     box-shadow: none !important;
     margin-top: 20px;
+    margin-left: 18px !important;
   }
 }
