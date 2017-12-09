@@ -4,7 +4,7 @@ import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 import AddActivity from './addActivity';
 // import EditActivity from './editActivity';
-import { Dialog, IconButton, Subheader, Toggle } from 'material-ui';
+import { IconButton, Subheader, Toggle } from 'material-ui';
 import { Link } from 'react-router-dom';
 import {
   // NavigationClose,
