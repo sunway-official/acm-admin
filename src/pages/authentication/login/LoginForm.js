@@ -37,7 +37,7 @@ const LoginForm = ({
     <div>
       <RaisedButton
         className="btn login"
-        disabled={submitting || invalid || pristine}
+        disabled={submitting || pristine}
         type="submit"
         label="Sign In"
         labelPosition="before"
