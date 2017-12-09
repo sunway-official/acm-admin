@@ -138,7 +138,7 @@ class ConferenceInfoForm extends React.Component {
                 </div>
               </div>
             </div>
-            <div className="d-flex save-btn btn-group">
+            <div className="d-flex save-btn btn-group marginBottom">
               <RaisedButton
                 label="Save"
                 primary={true}
