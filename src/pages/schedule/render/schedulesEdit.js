@@ -39,7 +39,6 @@ class renderSchedules extends React.Component {
   componentDidMount() {
     this.props.fields.removeAll();
     const event = this.props.event;
-    console.log(this.props);
     const schedules = event.schedules;
     const length = schedules.length;
     for (let i = 0; i < length; i = i + 1) {

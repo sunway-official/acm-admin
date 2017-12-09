@@ -3,7 +3,7 @@ import queries from './queries';
 
 export const editActivityFunc = data => {
   const {
-    UPDATE_ACTIVITY_MUTATION,
+    UPDATE_ACTIVITY_WITH_PAPER_ID_MUTATION,
     conferenceId,
     values,
     DELETE_SCHEDULE_MUTATION,
@@ -11,16 +11,14 @@ export const editActivityFunc = data => {
     INSERT_SCHEDULE_MUTATION,
     deleteIds,
   } = data;
-  UPDATE_ACTIVITY_MUTATION({
+  UPDATE_ACTIVITY_WITH_PAPER_ID_MUTATION({
     variables: {
       id: values.id,
-      title: values.title,
-      description: values.description,
+      paper_id: values.paper,
     },
   })
     .then(() => {
       // xoa schedule
-      console.log(deleteIds);
       if (deleteIds) {
         // eslint-disable-next-line array-callback-return
         deleteIds.map(id => {
@@ -65,7 +63,12 @@ export const editActivityFunc = data => {
               refetchQueries: [
                 {
                   query: queries.GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY,
-                  variables: { conference_id: conferenceId },
+                },
+                {
+                  query: queries.GET_ACTIVITY_PAPER_BY_ID_QUERY,
+                  variables: {
+                    id: values.id,
+                  },
                 },
               ],
             });
@@ -82,6 +85,12 @@ export const editActivityFunc = data => {
             refetchQueries: [
               {
                 query: queries.GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY,
+              },
+              {
+                query: queries.GET_ACTIVITY_PAPER_BY_ID_QUERY,
+                variables: {
+                  id: values.id,
+                },
               },
             ],
           });
