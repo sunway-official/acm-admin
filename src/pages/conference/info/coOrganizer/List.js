@@ -174,7 +174,6 @@ class Index extends Component {
           defaultSorted={sorted}
           defaultPageSize={5}
           className="-striped -highlight"
-          showPaginationTop
         />
         <Dialog
           title={this.state.title}
