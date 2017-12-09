@@ -3,16 +3,24 @@ import { gql, graphql, compose } from 'react-apollo';
 import { SubmissionError } from 'redux-form';
 import { withRouter } from 'react-router';
 import { AppBar } from 'material-ui';
-
+import { alertOptions, MyExclamationTriangle } from '../../../theme/alert';
 import LoginForm from './LoginForm';
 import './style.css';
+import AlertContainer from 'react-alert';
 
 class Login extends PureComponent {
   constructor(props) {
     super(props);
 
     this.onLogin = this.onLogin.bind(this);
+    this.showAlertError = this.showAlertError.bind(this);
   }
+  showAlertError = text => {
+    this.msg.error(text, {
+      type: 'error', // type of alert
+      icon: <MyExclamationTriangle />,
+    });
+  };
   async onLogin({ email, password }) {
     try {
       const {
@@ -23,8 +31,8 @@ class Login extends PureComponent {
       localStorage.setItem('token', token);
       localStorage.setItem('refreshToken', refreshToken);
       this.props.history.replace('/');
-    } catch (e) {
-      console.error(e);
+    } catch (error) {
+      this.showAlertError(error.graphQLErrors[0].message);
       throw new SubmissionError({
         _error: 'Wrong email or password',
       });
@@ -41,6 +49,7 @@ class Login extends PureComponent {
               showMenuIconButton={false}
             />
             <LoginForm onSubmit={this.onLogin} />
+            <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />
             <div className="final-row">
               <a className="forgot-password" href="/forgot">
                 Forgot Password

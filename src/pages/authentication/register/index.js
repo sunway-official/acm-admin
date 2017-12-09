@@ -7,6 +7,12 @@ import RegisterForm from './RegisterForm';
 import { connect } from 'react-redux';
 import './style.css';
 import { mutations } from '../helpers';
+import {
+  alertOptions,
+  MyExclamationTriangle,
+  MyFaCheck,
+} from '../../../theme/alert';
+import AlertContainer from 'react-alert';
 
 class Register extends PureComponent {
   constructor(props) {
@@ -15,7 +21,24 @@ class Register extends PureComponent {
       conference_id: 0,
     };
     this.onRegister = this.onRegister.bind(this);
+    this.showAlertError = this.showAlertError.bind(this);
+    this.showAlertSuccess = this.showAlertSuccess.bind(this);
   }
+  showAlertError = text => {
+    this.msg.error(text, {
+      type: 'error', // type of alert
+      icon: <MyExclamationTriangle />,
+    });
+  };
+  showAlertSuccess = () => {
+    this.msg.success('Saved!', {
+      type: 'success',
+      icon: <MyFaCheck />,
+      onClose: () => {
+        this.props.history.replace('/login');
+      },
+    });
+  };
   async onRegister(values) {
     const { firstname, lastname, email, password } = values;
     try {
@@ -39,10 +62,9 @@ class Register extends PureComponent {
           },
         });
       }
-      console.log(user.data.register.id);
-      //this.props.history.replace('/login');
-    } catch (e) {
-      console.error(e);
+      this.showAlertSuccess();
+    } catch (error) {
+      this.showAlertError(error.graphQLErrors[0].message);
       throw new SubmissionError({
         _error: 'Email existed!',
       });
@@ -59,6 +81,7 @@ class Register extends PureComponent {
               showMenuIconButton={false}
             />
             <RegisterForm onSubmit={this.onRegister} />
+            <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />
           </div>
         </div>
       </div>
