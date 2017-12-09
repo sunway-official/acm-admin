@@ -51,7 +51,7 @@ class Index extends React.Component {
           <img className="logo" src={images.defaultLogo} alt="logo" />
           <Drawer
             open={this.props.openModal}
-            // onRequestChange={open => this.setState({ open })}
+            onRequestChange={() => this.handleToggle()}
             docked={false}
           >
             <AppBar
