@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { List, ListItem } from 'material-ui/List';
 import Badge from 'material-ui/Badge';
 import style from './../style.css';
-import { RaisedButton } from 'material-ui';
+import { withRouter } from 'react-router-dom';
 
 const subTitleString = (text, limit) => {
   if (text.length > limit) return text.substring(0, limit);
@@ -43,14 +43,14 @@ class listCoferences extends React.Component {
     return (
       <div className="list-dashboard">
         <style dangerouslySetInnerHTML={{ __html: style }} />
-        <center className="list-conf">
+        <div className="list-conf">
           MY LIST CONFERENCES
           <Badge
             badgeContent={conferences.length}
             primary={true}
             className="icon-conference"
           />
-        </center>
+        </div>
         <List>
           {conferences.map(data => {
             const conference = data.conference;
@@ -73,17 +73,19 @@ class listCoferences extends React.Component {
               />
             );
           })}
-          <RaisedButton
+          {/* <RaisedButton
             label="Create new conference"
             fullWidth={true}
             primary={true}
             containerElement={<Link to={`/conference/add`} />}
-          />
+          /> */}
         </List>
       </div>
     );
   }
 }
+
+const withRouterListConfs = withRouter(listCoferences);
 
 export const SWITCH_CURRENT_CONFERENCE = gql`
   mutation switchCurrentConference($conference_id: ID!) {
@@ -118,4 +120,4 @@ export default compose(
   graphql(ME_QUERY, {
     name: 'ME_QUERY',
   }),
-)(listCoferences);
+)(withRouterListConfs);

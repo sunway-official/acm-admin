@@ -4,6 +4,7 @@ import { mutations } from '../helpers';
 import { connect } from 'react-redux';
 import { graphql, compose } from 'react-apollo';
 import InfoForm from './InfoForm';
+import { withRouter } from 'react-router-dom';
 import { conferenceOperations } from 'store/ducks/conference';
 import './style.css';
 class ConferenceInfoForm extends PureComponent {
@@ -102,6 +103,8 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
+const withRouterConferenceInfo = withRouter(ConferenceInfoForm);
+
 const mapDispatchToProps = dispatch => {
   return {
     getPosition: position =>
@@ -120,4 +123,4 @@ export default compose(
   graphql(mutations.UPDATE_ADDRESS_MUTATION, {
     name: 'UPDATE_ADDRESS_MUTATION',
   }),
-)(ConferenceInfoForm);
+)(withRouterConferenceInfo);

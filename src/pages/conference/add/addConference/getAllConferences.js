@@ -10,7 +10,10 @@ import {
   ActionSupervisorAccount,
   NavigationClose,
 } from 'material-ui/svg-icons';
-import AddDialog from './addDialog';
+
+import ContentAdd from 'material-ui/svg-icons/content/add';
+import { FloatingActionButton } from 'material-ui';
+// import AddDialog from './addDialog';
 import { withRouter } from 'react-router-dom';
 // import style from '../../../containers/layout/appbar/style.css';
 import style from '../style/style.css';
@@ -97,7 +100,13 @@ class GetAllConfs extends React.Component {
                   margin: '4px 12px 24px',
                 }}
               >
-                <AddDialog onSubmit={this.insertConf} />
+                <FloatingActionButton mini={true}>
+                  <Link to={`/conference/add`}>
+                    <ContentAdd className="add-confs-btn" />
+                  </Link>
+                </FloatingActionButton>
+
+                {/* <AddDialog onSubmit={this.insertConf} /> */}
               </span>
             }
           />
