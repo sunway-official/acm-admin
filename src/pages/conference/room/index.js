@@ -44,13 +44,9 @@ class Index extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  if (state.auth.currentUser && state.auth.currentUser.currentConference) {
-    return {
-      id: state.auth.currentUser.currentConference.id,
-    };
-  }
-};
+const mapStateToProps = (state, ownProps) => ({
+  id: state.auth.currentUser.currentConference.id,
+});
 
 export default compose(
   connect(mapStateToProps, undefined),

@@ -33,6 +33,8 @@ class listCoferences extends React.Component {
         },
       ],
     });
+    const linkTo = '/conference/info';
+    this.props.history.push(linkTo);
   }
 
   render() {
@@ -64,12 +66,7 @@ class listCoferences extends React.Component {
                   '  To  ' +
                   subTitleString(conference.end_date, 10)
                 }
-                containerElement={<Link to={`/conference/info`} />}
-                onClick={async () => {
-                  // clg;
-                  await this.handleSwitch(conference.id);
-                  window.location.reload();
-                }}
+                onClick={() => this.handleSwitch(conference.id)}
               />
             );
           })}
@@ -84,8 +81,6 @@ class listCoferences extends React.Component {
     );
   }
 }
-
-const withRouterListConfs = withRouter(listCoferences);
 
 export const SWITCH_CURRENT_CONFERENCE = gql`
   mutation switchCurrentConference($conference_id: ID!) {
@@ -107,6 +102,7 @@ export const ME_QUERY = gql`
 `;
 
 export default compose(
+  withRouter,
   graphql(queries.GET_ALL_CONFERENCES_BY_USER_ID_QUERY, {
     options: ownProps => ({
       variables: {
@@ -120,4 +116,4 @@ export default compose(
   graphql(ME_QUERY, {
     name: 'ME_QUERY',
   }),
-)(withRouterListConfs);
+)(listCoferences);

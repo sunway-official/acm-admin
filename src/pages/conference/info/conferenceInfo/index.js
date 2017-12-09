@@ -1,11 +1,15 @@
 import React, { PureComponent } from 'react';
 import { SubmissionError } from 'redux-form';
-import { mutations } from '../helpers';
+import { mutations, queries } from '../helpers';
 import { connect } from 'react-redux';
 import { graphql, compose } from 'react-apollo';
 import InfoForm from './InfoForm';
 import { withRouter } from 'react-router-dom';
 import { conferenceOperations } from 'store/ducks/conference';
+import { gql } from 'react-apollo';
+import { bindActionCreators } from 'redux';
+
+import { authActions } from '../../../../store/ducks/auth';
 import './style.css';
 class ConferenceInfoForm extends PureComponent {
   constructor(props) {
@@ -21,6 +25,9 @@ class ConferenceInfoForm extends PureComponent {
         long: this.props.conference.address.long,
       },
     };
+  }
+  componentDidMount() {
+    console.log(this.props);
   }
   async handleUpdateConferenceInfo({
     title,
@@ -59,7 +66,7 @@ class ConferenceInfoForm extends PureComponent {
         },
       });
     } catch (error) {
-      throw new SubmissionError(error);
+      throw error;
     }
   }
   onMapPositionChanged(position) {
@@ -103,16 +110,22 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-const withRouterConferenceInfo = withRouter(ConferenceInfoForm);
-
 const mapDispatchToProps = dispatch => {
   return {
     getPosition: position =>
       dispatch(conferenceOperations.getPositionOperation(position)),
+    setCurrentUser: bindActionCreators(authActions.setCurrentUser, dispatch),
   };
 };
 
 export default compose(
+  withRouter,
+  graphql(queries.ME_QUERY, {
+    name: 'queryMe',
+    options: {
+      notifyOnNetworkStatusChange: true,
+    },
+  }),
   connect(mapStateToProps, mapDispatchToProps),
   graphql(mutations.UPDATE_CONFERENCE_MUTATION, {
     name: 'UPDATE_CONFERENCE_MUTATION',
@@ -123,4 +136,4 @@ export default compose(
   graphql(mutations.UPDATE_ADDRESS_MUTATION, {
     name: 'UPDATE_ADDRESS_MUTATION',
   }),
-)(withRouterConferenceInfo);
+)(ConferenceInfoForm);

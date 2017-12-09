@@ -50,6 +50,8 @@ class GetAllConfs extends React.Component {
         },
       ],
     });
+    const linkTo = '/conference/info';
+    this.props.history.push(linkTo);
   }
 
   handleOpen(index) {
@@ -128,12 +130,7 @@ class GetAllConfs extends React.Component {
                           primaryText="Switch"
                           className="switch-text"
                           leftIcon={<ContentSend style={styles.smallIcon} />}
-                          containerElement={<Link to={`/conference/info`} />}
-                          onClick={async () => {
-                            // clg;
-                            await this.handleSwitch(conference.id);
-                            window.location.reload();
-                          }}
+                          onClick={() => this.handleSwitch(conference.id)}
                         />,
                         <ListItem
                           key={2}

@@ -66,4 +66,15 @@ const GET_CONFERENCE_BY_ID_QUERY = gql`
     }
   }
 `;
-export default { GET_CURRENT_CONFERENCE, GET_CONFERENCE_BY_ID_QUERY };
+
+export const ME_QUERY = gql`
+  query Me {
+    me {
+      id
+      currentConference {
+        id
+      }
+    }
+  }
+`;
+export default { ME_QUERY, GET_CURRENT_CONFERENCE, GET_CONFERENCE_BY_ID_QUERY };

@@ -150,7 +150,7 @@ const AddConferenceForm = ({
             label="Save"
             primary={true}
             type="submit"
-            disabled={pristine || submitting}
+            // disabled={pristine || submitting}
           />
           <RaisedButton
             className="btn"

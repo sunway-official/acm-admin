@@ -212,17 +212,13 @@ class ListExampleSimple extends React.Component {
     );
   }
 }
-const mapStateToProps = (state, ownProps) => {
-  if (state.auth) {
-    return {
-      auth: state.auth,
-    };
-  }
-};
+const mapStateToProps = (state, ownProps) => ({
+  auth: state.auth,
+});
 
 export default compose(
   withRouter,
-  connect(mapStateToProps, undefined),
+  connect(mapStateToProps),
   graphql(queries.GET_LANDING_PAGE_BY_CONFERENCE_ID_QUERY, {
     name: 'GET_LANDING_PAGE_BY_CONFERENCE_ID_QUERY',
   }),

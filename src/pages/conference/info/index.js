@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import { Subheader, IconButton, Tabs, Tab } from 'material-ui';
 import { Link } from 'react-router-dom';
+import { queries } from './helpers';
 import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import ConferenceInfo from './conferenceInfo';
 import { connect } from 'react-redux';
 import CoOrganizerList from './coOrganizer/List';
+import { graphql, gql, compose } from 'react-apollo';
+
 class Index extends Component {
   render() {
     let conference;
+    console.log('daa', this.props);
     if (this.props.currentConference) {
       conference = this.props.currentConference;
     } else return <div>Loading</div>;
@@ -53,10 +57,27 @@ class Index extends Component {
 }
 
 const mapStateToProps = state => {
-  if (state.auth.currentUser && state.auth.currentUser.currentConference)
+  console.log('statae', state);
+  if (
+    state.auth &&
+    state.auth.currentUser &&
+    state.auth.currentUser.currentConference
+  )
     return {
       currentConference: state.auth.currentUser.currentConference,
     };
 };
 
-export default connect(mapStateToProps, undefined)(Index);
+export default compose(
+  graphql(queries.ME_QUERY, {
+    name: 'queryMe',
+  }),
+  graphql(queries.GET_CONFERENCE_BY_ID_QUERY, {
+    options: ownProps => ({
+      variables: {
+        id: ownProps.queryMe.me.currentConference.id,
+      },
+    }),
+  }),
+  connect(mapStateToProps, undefined),
+)(Index);
