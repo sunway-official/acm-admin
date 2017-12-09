@@ -80,6 +80,57 @@ export const GET_PAPER_BY_CONFERENCE_ID = gql`
   }
 `;
 
+export const GET_ACTIVITY_BY_ID_QUERY = gql`
+  query getActivityByID($id: ID!) {
+    getActivityByID(id: $id) {
+      id
+      paper_id
+      conference {
+        start_date
+        end_date
+      }
+      schedules {
+        id
+        start
+        end
+        room {
+          id
+          name
+        }
+      }
+    }
+  }
+`;
+export const GET_ACTIVITY_PAPER_BY_ID_QUERY = gql`
+  query getActivityByID($id: ID!) {
+    getActivityByID(id: $id) {
+      id
+      paper {
+        id
+        papersTopic {
+          topic {
+            id
+            name
+          }
+        }
+      }
+      conference {
+        start_date
+        end_date
+      }
+      schedules {
+        id
+        start
+        end
+        room {
+          id
+          name
+        }
+      }
+    }
+  }
+`;
+
 export default {
   GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY,
   GET_ROOMS_BY_STATUS_IN_CONFERENCE_QUERY,
@@ -88,4 +139,6 @@ export default {
   GET_PAPER_BY_CONFERENCE_ID,
   GET_TOPICS_OF_CONFERENCE,
   GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
+  GET_ACTIVITY_BY_ID_QUERY,
+  GET_ACTIVITY_PAPER_BY_ID_QUERY,
 };

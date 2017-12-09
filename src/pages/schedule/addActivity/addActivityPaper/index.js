@@ -11,7 +11,6 @@ import {
 } from '../../helpers';
 import { graphql, compose } from 'react-apollo';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
 
 class Index extends Component {
   constructor() {
@@ -35,14 +34,12 @@ class Index extends Component {
 
   render() {
     // loading
-    const loadingPapers = this.props.GET_PAPER_BY_CONFERENCE_ID.loading;
     const loadingRooms = this.props.GET_ROOMS_BY_STATUS_IN_CONFERENCE_QUERY
       .loading;
     const loadingActivities = this.props.GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY
       .loading;
     const loadingTopics = this.props.GET_TOPICS_OF_CONFERENCE.loading;
     // get data
-    const { getPapersByConferenceID } = this.props.GET_PAPER_BY_CONFERENCE_ID;
     const {
       getActivitiesByConferenceID,
     } = this.props.GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY;
@@ -51,14 +48,14 @@ class Index extends Component {
     } = this.props.GET_ROOMS_BY_STATUS_IN_CONFERENCE_QUERY;
     const { getTopicsOfConference } = this.props.GET_TOPICS_OF_CONFERENCE;
     // check loading
-    if (loadingPapers || loadingRooms || loadingActivities || loadingTopics) {
+    if (loadingRooms || loadingActivities || loadingTopics) {
       return <div>Loading...</div>;
     }
-    const papers = getPapersByConferenceID;
     const rooms = getRoomsByStatusInConference;
     const topics = getTopicsOfConference;
     const events = functions.getEvents(getActivitiesByConferenceID);
     const allSchedules = functions.getAllSchedules(events);
+    console.log(allSchedules);
 
     const conference = this.props.conference;
     const start_date = conference.start_date;
@@ -86,7 +83,6 @@ class Index extends Component {
         </div>
         <div className="dashboard  content d-flex">
           <AddActivityPaper
-            papers={papers}
             topics={topics}
             rooms={rooms}
             start_date={start_date}
@@ -108,14 +104,9 @@ const mapStateToProps = state => {
   }
 };
 export default compose(
-  withRouter,
-
   connect(mapStateToProps, undefined),
   graphql(queries.GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY, {
     name: 'GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY',
-  }),
-  graphql(queries.GET_PAPER_BY_CONFERENCE_ID, {
-    name: 'GET_PAPER_BY_CONFERENCE_ID',
   }),
   graphql(queries.GET_TOPICS_OF_CONFERENCE, {
     name: 'GET_TOPICS_OF_CONFERENCE',

@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { scheduleOperations } from 'store/ducks/schedule';
 import validate from '../../validate';
-import { graphql, compose, withApollo } from 'react-apollo';
+import { compose, withApollo } from 'react-apollo';
 import { queries } from '../../helpers';
 
 class AddActivityPaper extends Component {

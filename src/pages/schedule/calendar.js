@@ -11,10 +11,12 @@ import {
   HardwareKeyboardArrowRight,
   ActionHome,
 } from 'material-ui/svg-icons';
+import { withRouter } from 'react-router';
 
 import { functions, queries } from './helpers';
 import { graphql, compose } from 'react-apollo';
 import './css/style.css';
+import _ from 'lodash';
 
 BigCalendar.momentLocalizer(moment);
 
@@ -27,18 +29,11 @@ class MyCalendar extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    // this.handleEdit = this.handleEdit.bind(this);
-    // this.addActivity = this.addActivity.bind(this);
-    // this.editActivity = this.editActivity.bind(this);
     this.handleTimeFormat = this.handleTimeFormat.bind(this);
     this.state = {
       timeFormat: 7,
     };
   }
-  // handleEdit(event) {
-  //   this.props.toggleEdit();
-  //   this.props.setEvent(event);
-  // }
 
   handleTimeFormat() {
     this.state.timeFormat === 7
@@ -86,7 +81,9 @@ class MyCalendar extends React.PureComponent {
               const checkDate = moment(event.start).isAfter(moment());
 
               if (checkDate) {
-                // this.handleEdit(event);
+                this.props.history.push(
+                  '/conference/activities/edit-activity-paper/' + event.id,
+                );
               }
             }}
             min={
@@ -111,9 +108,10 @@ class MyCalendar extends React.PureComponent {
   }
 }
 
-export default compose(graphql(queries.GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY))(
-  MyCalendar,
-);
+export default compose(
+  withRouter,
+  graphql(queries.GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY),
+)(MyCalendar);
 
 // <Dialog
 // style={{ top: '-130px' }}

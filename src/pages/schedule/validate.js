@@ -74,15 +74,24 @@ const validate = (values, props) => {
           'End time of schedule must be greater than start time and in the same day!!!';
         ArrayErrors[scheduleIndex] = scheduleErrors;
       }
-
+      console.log(moment(schedule.date, 'DD/MM/YYYY HH:mm'));
+      console.log(moment(new Date(props.end_date), 'DD/MM/YYYY HH:mm'));
+      console.log(
+        moment(schedule.date, 'DD/MM/YYYY HH:mm').isAfter(
+          moment(props.end_date, 'DD/MM/YYYY HH:mm'),
+        ),
+      );
+      const startDate = moment(new Date(props.start_date), 'DD/MM/YYYY');
+      const endDate = moment(new Date(props.end_date), 'DD/MM/YYYY');
+      const scheduleDate = moment(schedule.date, 'DD/MM/YYYY');
+      console.log(moment(schedule.date, 'DD/MM/YYYY'));
+      console.log(moment(endDate, 'DD/MM/YYYY'));
       if (
-        schedule.date &&
-        (moment(schedule.date, 'DD/MM/YYYY HH:mm').isBefore(
-          moment(props.start_date, 'DD/MM/YYYY HH:mm'),
-        ) ||
-          moment(schedule.date, 'DD/MM/YYYY HH:mm').isAfter(
-            moment(props.end_date, 'DD/MM/YYYY HH:mm'),
-          ))
+        (schedule.date &&
+          (scheduleDate.isBefore(startDate) &&
+            !functions.compareDate(scheduleDate, startDate))) ||
+        (!functions.compareDate(scheduleDate, endDate) &&
+          scheduleDate.isAfter(endDate))
       ) {
         scheduleErrors.date =
           'Please choose date from ' +
