@@ -71,7 +71,6 @@ class GetAllConfs extends React.Component {
 
     if (loading) return <div> loading... </div>;
 
-    console.log(this.props.data.getConferenceByUserID);
     const conferences = this.props.data.getConferenceByUserID;
     let currentConferenceID = 0;
     if (this.props.ME_QUERY.me && this.props.ME_QUERY.me.currentConference)

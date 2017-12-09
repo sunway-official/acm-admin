@@ -5,7 +5,6 @@ import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import ConferenceInfo from './conferenceInfo';
 import { connect } from 'react-redux';
 import CoOrganizerList from './coOrganizer/List';
-
 class Index extends Component {
   render() {
     let conference;
@@ -19,11 +18,10 @@ class Index extends Component {
     return (
       <div className="conference">
         <Subheader className="subheader conf-infor-title">
-          {' '}
           Conference Information
         </Subheader>
         <div className="page-breadcrumb d-flex">
-          <Link className="d-flex" to="/conference/info">
+          <Link className="d-flex" to="/">
             <IconButton>
               <ActionHome />
             </IconButton>

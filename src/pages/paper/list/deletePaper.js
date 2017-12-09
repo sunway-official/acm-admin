@@ -21,12 +21,17 @@ class DeletePaper extends Component {
         },
         refetchQueries: [
           {
-            query: queries.GET_ALL_PAPERS,
+            query: queries.GET_PAPERS_BY_CONFERENCE_ID,
+            variables: {
+              conference_id: this.props.conference_id,
+            },
           },
         ],
       });
       this.props.setToggle();
-    } catch (error) {}
+    } catch (error) {
+      console.log({ error });
+    }
   }
 
   render() {
@@ -62,10 +67,13 @@ const mapDispatchToProps = dispatch => {
   };
 };
 const mapStateToProps = state => {
-  return {
-    paper: state.paper.data,
-    openModal: state.paper.openModal,
-  };
+  if (state.auth.currentUser.currentConference) {
+    return {
+      conference_id: state.auth.currentUser.currentConference.id,
+      paper: state.paper.data,
+      openModal: state.paper.openModal,
+    };
+  }
 };
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),

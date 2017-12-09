@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { List, ListItem } from 'material-ui/List';
 import Badge from 'material-ui/Badge';
 import style from './../style.css';
+import { RaisedButton } from 'material-ui';
 
 const subTitleString = (text, limit) => {
   if (text.length > limit) return text.substring(0, limit);
@@ -62,17 +63,23 @@ class listCoferences extends React.Component {
                 secondaryText={
                   subTitleString(conference.start_date, 10) +
                   '  To  ' +
-                  subTitleString(conference.start_date, 10)
+                  subTitleString(conference.end_date, 10)
                 }
                 containerElement={<Link to={`/conference/info`} />}
                 onClick={async () => {
                   // clg;
                   await this.handleSwitch(conference.id);
-                  // window.location.reload();
+                  window.location.reload();
                 }}
               />
             );
           })}
+          <RaisedButton
+            label="Create new conference"
+            fullWidth={true}
+            primary={true}
+            containerElement={<Link to={`/conference/add`} />}
+          />
         </List>
       </div>
     );

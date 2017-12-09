@@ -14,11 +14,13 @@ export const editActivityFunc = data => {
   UPDATE_ACTIVITY_MUTATION({
     variables: {
       id: values.id,
-      paper_id: values.paper,
+      title: values.title,
+      description: values.description,
     },
   })
     .then(() => {
       // xoa schedule
+      console.log(deleteIds);
       if (deleteIds) {
         // eslint-disable-next-line array-callback-return
         deleteIds.map(id => {
@@ -80,7 +82,6 @@ export const editActivityFunc = data => {
             refetchQueries: [
               {
                 query: queries.GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY,
-                variables: { conference_id: conferenceId },
               },
             ],
           });

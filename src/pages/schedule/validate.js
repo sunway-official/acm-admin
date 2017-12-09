@@ -4,14 +4,13 @@ import moment from 'moment';
 const validate = (values, props) => {
   const errors = {};
   const ArrayErrors = [];
-  const requiredFields = [
-    'paper',
-    'description',
-    'date',
-    'start',
-    'end',
-    'room',
-  ];
+  let requiredFields;
+  if (props.status === 'with-paper') {
+    requiredFields = ['paper', 'date', 'start', 'end', 'room', 'topic'];
+  } else {
+    requiredFields = ['title', 'description', 'date', 'start', 'end', 'room'];
+  }
+
   requiredFields.forEach(field => {
     if (!values[field]) {
       errors[field] = 'This field is required';
@@ -75,15 +74,15 @@ const validate = (values, props) => {
           'End time of schedule must be greater than start time and in the same day!!!';
         ArrayErrors[scheduleIndex] = scheduleErrors;
       }
-
+      const startDate = moment(new Date(props.start_date), 'DD/MM/YYYY');
+      const endDate = moment(new Date(props.end_date), 'DD/MM/YYYY');
+      const scheduleDate = moment(schedule.date, 'DD/MM/YYYY');
       if (
-        schedule.date &&
-        (moment(schedule.date, 'DD/MM/YYYY HH:mm').isBefore(
-          moment(props.start_date, 'DD/MM/YYYY HH:mm'),
-        ) ||
-          moment(schedule.date, 'DD/MM/YYYY HH:mm').isAfter(
-            moment(props.end_date, 'DD/MM/YYYY HH:mm'),
-          ))
+        (schedule.date &&
+          (scheduleDate.isBefore(startDate) &&
+            !functions.compareDate(scheduleDate, startDate))) ||
+        (!functions.compareDate(scheduleDate, endDate) &&
+          scheduleDate.isAfter(endDate))
       ) {
         scheduleErrors.date =
           'Please choose date from ' +
@@ -93,8 +92,20 @@ const validate = (values, props) => {
         ArrayErrors[scheduleIndex] = scheduleErrors;
       }
 
-      // check allschedules
+      // check current date
+      if (schedule.date && schedule.start && schedule.end) {
+        const currentDate = moment();
+        const newStarTime = functions.getDateTime(
+          schedule.date,
+          schedule.start,
+        );
+        if (newStarTime.isBefore(currentDate)) {
+          scheduleErrors.start = 'This time is passed';
+          ArrayErrors[scheduleIndex] = scheduleErrors;
+        }
+      }
 
+      // check allschedules
       if (
         scheduleIndex === values.schedules.length - 1 &&
         values.schedules.length !== 1

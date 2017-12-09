@@ -39,7 +39,7 @@ class TopicDetail extends Component {
     this.props.history.replace('/conference/topics-management');
   }
   render() {
-    const { handleSubmit, submitting } = this.props;
+    const { handleSubmit, submitting, pristine } = this.props;
     const ListFields = listField.map(field => (
       <div key={field.id}>
         <Row around="xs" className={field.className}>
@@ -72,6 +72,7 @@ class TopicDetail extends Component {
       </div>
     ));
     const listColors = this.props.colorsList;
+    const detail = this.props.topicDetail ? true : false;
     return (
       <div className="landing-page-form">
         <AppBar
@@ -117,7 +118,7 @@ class TopicDetail extends Component {
                   className="btn save-change"
                   label="Save Change"
                   primary={true}
-                  disabled={submitting}
+                  disabled={submitting || detail ? pristine : submitting}
                   type="submit"
                 />
                 <RaisedButton

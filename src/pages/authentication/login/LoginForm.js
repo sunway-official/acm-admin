@@ -15,7 +15,7 @@ const LoginForm = ({
 }) => (
   <form onSubmit={handleSubmit(onSubmit)}>
     {/* TODO: Form helper here please! */}
-    {error && <div className="error">{error}</div>}
+    {/* {error && <div className="error">{error}</div>} */}
     <div className="field">
       <Field
         name="email"
@@ -37,7 +37,7 @@ const LoginForm = ({
     <div>
       <RaisedButton
         className="btn login"
-        disabled={submitting || invalid || pristine}
+        disabled={submitting || pristine}
         type="submit"
         label="Sign In"
         labelPosition="before"

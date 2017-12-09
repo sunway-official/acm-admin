@@ -39,7 +39,6 @@ class renderSchedules extends React.Component {
   componentDidMount() {
     this.props.fields.removeAll();
     const event = this.props.event;
-    console.log(this.props);
     const schedules = event.schedules;
     const length = schedules.length;
     for (let i = 0; i < length; i = i + 1) {
@@ -80,7 +79,7 @@ class renderSchedules extends React.Component {
                 <div>
                   <Divider style={styles.divider} />
                   <div className="d-flex align-items-center justify-content-space-around">
-                    <h4>Schedule #{index + 1}</h4>
+                    <h4 style={{ paddingTop: '0px' }}>Schedule #{index + 1}</h4>
                     <RaisedButton
                       style={{ minWidth: '50px' }}
                       onClick={() => {

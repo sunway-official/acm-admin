@@ -8,6 +8,8 @@ import Register from '../pages/authentication/register';
 import ResetPassword from '../pages/authentication/resetPassword';
 import ConferenceInfo from '../pages/conference/info';
 import Paper from '../pages/paper';
+import PaperAdd from '../pages/paper/add';
+import PaperEdit from '../pages/paper/edit';
 import ConferenceStaffList from '../pages/conference/people/staff/list';
 import UserProfile from '../pages/conference/people/userProfile/userProfile';
 import Dashboard from '../pages/dashboard';
@@ -17,16 +19,22 @@ import WithThunk from '../pages/withThunk';
 
 import { muiTheme } from '../theme';
 import Wrapper from './wrapper';
-import LandingPage from '../landingPage';
-import LandingPageManagement from '../pages/landingPageManagement';
-import LandingPageSchedule from '../landingPage/schedule/index';
+import LandingPage from '../pages/landingPage';
+import LandingPageManagement from '../pages/conference/landingPageManagement';
+import LandingPageSchedule from '../pages/landingPage/schedule/index';
 import RoomsManagement from '../pages/conference/room';
 import TopicManagement from '../pages/conference/topic';
 import TopicDetail from '../pages/conference/topic/topicDetail';
 import RoomDetail from '../pages/conference/room/roomDetail';
 import AddNewRoom from '../pages/conference/room/roomDetail/addRoom';
 import AddNewTopic from '../pages/conference/topic/topicDetail/addTopic';
+import Addconference from '../pages/dashboard/renderDashboard/addConference';
 import ParticipantManagement from '../pages/conference/people/participant';
+import AddActivityPaper from '../pages/schedule/addActivity/addActivityPaper';
+import AddActivityTitle from '../pages/schedule/addActivity/addActivityTitle';
+import EditActivityPaper from '../pages/schedule/editActivity/editAcitvityPaper';
+import EditActivityTitle from '../pages/schedule/editActivity/editAcitvityTitle';
+import ReactTable from '../pages/react-table';
 
 export default () => (
   <MuiThemeProvider muiTheme={muiTheme}>
@@ -44,6 +52,7 @@ export default () => (
         <Switch>
           <AuthRoute needAuth exact path="/" component={Dashboard} />
           <AuthRoute path="/conference/info" component={ConferenceInfo} />
+          <AuthRoute path="/conference/add" component={Addconference} />
           <AuthRoute
             path="/conference/:conference_id/people/staff"
             component={ConferenceStaffList}
@@ -54,6 +63,7 @@ export default () => (
             path="/conference/landing-page-management"
             component={LandingPageManagement}
           />
+          <AuthRoute needAuth path="/react-table" component={ReactTable} />
           <AuthRoute
             needAuth
             exact
@@ -105,8 +115,45 @@ export default () => (
           <AuthRoute
             needAuth
             exact
+            path="/conference/paper/add"
+            component={PaperAdd}
+          />
+          <AuthRoute
+            needAuth
+            exact
+            path="/conference/paper/edit/:id"
+            component={PaperEdit}
+          />
+          <AuthRoute
+            needAuth
+            exact
             path="/user-profile"
             component={UserProfile}
+          />
+          <AuthRoute
+            needAuth
+            exact
+            path="/conference/activities/add-activity-paper"
+            component={AddActivityPaper}
+          />
+
+          <AuthRoute
+            needAuth
+            exact
+            path="/conference/activities/add-activity-title"
+            component={AddActivityTitle}
+          />
+          <AuthRoute
+            needAuth
+            exact
+            path="/conference/activities/edit-activity-paper/:id"
+            component={EditActivityPaper}
+          />
+          <AuthRoute
+            needAuth
+            exact
+            path="/conference/activities/edit-activity-title/:id"
+            component={EditActivityTitle}
           />
           <AuthRoute exact path="/conference/activities" component={Schedule} />
           <AuthRoute path="/withThunk" component={WithThunk} />

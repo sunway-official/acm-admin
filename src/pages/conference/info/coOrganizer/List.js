@@ -1,26 +1,33 @@
-import React, { PureComponent } from 'react';
-import { graphql } from 'react-apollo';
+import React, { Component } from 'react';
+import ReactTable from 'react-table';
+import 'react-table/react-table.css';
+import { RaisedButton, Dialog, IconButton } from 'material-ui';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { bindActionCreators, compose } from 'redux';
-import {
-  Table,
-  TableBody,
-  TableHeader,
-  TableHeaderColumn,
-  TableRow,
-  TableRowColumn,
-  RaisedButton,
-  Dialog,
-  IconButton,
-} from 'material-ui';
 import { NavigationClose } from 'material-ui/svg-icons';
+import { queries, mutations } from '../helpers';
+import { graphql, compose } from 'react-apollo';
 import { conferenceCoOranizerActions } from 'store/ducks/conference/info/coOrganizer';
 import CoOrganizerInfo from '../coOrganizer';
-import { queries, mutations } from '../helpers';
+const style = {
+  textAlign: 'center',
+  lineHeight: '200%',
+};
 
-class CoOrganizerList extends PureComponent {
-  constructor() {
-    super();
+const styleBtn = {
+  margin: '0px 10px',
+};
+
+const sorted = [
+  {
+    id: 'name',
+    desc: true,
+  },
+];
+
+class Index extends Component {
+  constructor(props) {
+    super(props);
 
     this.state = {
       openDelete: false,
@@ -29,23 +36,15 @@ class CoOrganizerList extends PureComponent {
       isAdding: false,
       isDeleting: false,
     };
-
-    this.handleDelete = this.handleDelete.bind(this);
-    this.handleCloseDelete = this.handleCloseDelete.bind(this);
-    this.handleOpenDelete = this.handleOpenDelete.bind(this);
-    this.handleOpenAdding = this.handleOpenAdding.bind(this);
     this.handleOpenEdit = this.handleOpenEdit.bind(this);
-    this.handleClose = this.handleClose.bind(this);
+    this.handleDialog = this.handleDialog.bind(this);
+    this.handleOpenDelete = this.handleOpenDelete.bind(this);
+    this.handleCloseDelete = this.handleCloseDelete.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+    this.handleOpenAdding = this.handleOpenAdding.bind(this);
   }
-
-  styles = {
-    margin: 10,
-  };
-
-  handleOpenAdding() {
-    this.setState({ isAdding: true, title: 'Add new Co-Organizer' }, () => {
-      this.props.toggleModalForm();
-    });
+  handleDialog() {
+    this.props.toggleModalForm();
   }
   handleOpenEdit(coOrganizer) {
     this.setState({ isAdding: false, title: 'Edit Information' }, () => {
@@ -54,9 +53,6 @@ class CoOrganizerList extends PureComponent {
     this.setState({
       coOrganizer: coOrganizer,
     });
-  }
-  handleClose() {
-    this.props.toggleModalForm();
   }
   handleOpenDelete(coOrganizerId, coOrganizerName) {
     this.setState({
@@ -67,6 +63,11 @@ class CoOrganizerList extends PureComponent {
   }
   handleCloseDelete() {
     this.setState({ isDeleting: false });
+  }
+  handleOpenAdding() {
+    this.setState({ isAdding: true, title: 'Add new Co-Organizer' }, () => {
+      this.props.toggleModalForm();
+    });
   }
   async handleDelete() {
     try {
@@ -90,8 +91,15 @@ class CoOrganizerList extends PureComponent {
   render() {
     const coOrganizerDetails = this.props.coOrganizerDetails;
     const conferenceId = this.props.conferenceId;
-    //khai bao conference_id dua ben index (coOrganizerDetails)
-    // [0] la de khai bao mac dinh la o conference dau tien
+    const actions = [
+      <IconButton
+        tooltip="Close"
+        className="cancel-btn dialog"
+        onClick={this.handleDialog}
+      >
+        <NavigationClose />
+      </IconButton>,
+    ];
     const actionDelete = [
       <RaisedButton
         label="Yes"
@@ -102,96 +110,103 @@ class CoOrganizerList extends PureComponent {
       <RaisedButton
         label="No"
         onClick={this.handleCloseDelete}
-        style={this.styles}
+        style={this.styleBtn}
       />,
     ];
-    const actions = [
-      <IconButton
-        tooltip="No"
-        className="cancel-btn dialog"
-        onClick={this.handleClose}
-      >
-        <NavigationClose />
-      </IconButton>,
-    ];
-    return (
-      <div className="d-flex">
-        <div className="list staff" style={{ marginTop: '20px' }}>
-          <Table fixedHeader={true}>
-            <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
-              <TableRow>
-                <TableHeaderColumn>Name</TableHeaderColumn>
-                <TableHeaderColumn>Email</TableHeaderColumn>
-                <TableHeaderColumn>Website</TableHeaderColumn>
-                <TableHeaderColumn>Phone-number</TableHeaderColumn>
-                <TableHeaderColumn>Action</TableHeaderColumn>
-              </TableRow>
-            </TableHeader>
-            <TableBody displayRowCheckbox={false}>
-              {coOrganizerDetails.map(coOrganizer => {
-                return (
-                  <TableRow key={coOrganizer.id}>
-                    <TableRowColumn>{coOrganizer.name}</TableRowColumn>
-                    <TableRowColumn>{coOrganizer.email}</TableRowColumn>
-                    <TableRowColumn>{coOrganizer.website}</TableRowColumn>
-                    <TableRowColumn>{coOrganizer.phone}</TableRowColumn>
-                    <TableRowColumn>
-                      <RaisedButton
-                        label="Edit"
-                        style={this.styles}
-                        primary={true}
-                        onClick={() => this.handleOpenEdit(coOrganizer)}
-                      />
-                      <RaisedButton
-                        label="Delete"
-                        onClick={() =>
-                          this.handleOpenDelete(
-                            coOrganizer.id,
-                            coOrganizer.name,
-                          )}
-                      />
-                    </TableRowColumn>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-          <Dialog
-            title={<p>Do you want to delete {this.state.coOrganizerName} ?</p>}
-            modal={true}
-            onRequestClose={this.handleCloseDelete}
-            open={this.state.isDeleting}
-            actions={actionDelete}
-          />
 
-          <Dialog
-            title={this.state.title}
-            actions={actions}
-            modal={true}
-            open={this.props.openModalForm}
-            onRequestClose={this.handleClose}
-          >
-            <CoOrganizerInfo
-              coOrganizerDetails={this.state.coOrganizer}
-              onSubmit={this.handleClose}
-              isAdd={this.state.isAdding}
-              conferenceId={conferenceId}
-              //truyen conference_id qua ben conference info de cho xu ly conference dang dung dua tren id
-            />
-          </Dialog>
-          <div className="d-flex btn-group">
+    const columns = [
+      {
+        Header: 'Name',
+        accessor: 'name',
+        minWidth: 200,
+        Cell: props => <div style={style}>{props.value}</div>,
+      },
+      {
+        Header: 'Email',
+        accessor: 'email',
+        minWidth: 150,
+        Cell: props => <div style={style}>{props.value}</div>,
+      },
+      {
+        Header: 'Website',
+        accessor: 'website',
+        minWidth: 120,
+        Cell: props => <div style={style}>{props.value}</div>,
+      },
+      {
+        Header: 'Phone-Number',
+        accessor: 'phone',
+        minWidth: 100,
+        Cell: props => <div style={style}>{props.value}</div>,
+      },
+      {
+        Header: 'Action',
+        minWidth: 150,
+        filterable: false,
+        accessor: '',
+        Cell: props => (
+          <div style={style}>
             <RaisedButton
-              label="Add Co-Organizer"
+              label="Edit"
               primary={true}
-              onClick={this.handleOpenAdding}
+              onClick={() => {
+                this.handleOpenEdit(props.value);
+              }}
+            />
+            <RaisedButton
+              label="Delete"
+              onClick={() => {
+                this.handleOpenDelete(props.value.id, props.value.name);
+              }}
+              style={styleBtn}
             />
           </div>
+        ),
+      },
+    ];
+
+    return (
+      <div>
+        <ReactTable
+          filterable
+          data={coOrganizerDetails}
+          columns={columns}
+          defaultSorted={sorted}
+          defaultPageSize={5}
+          className="-striped -highlight"
+        />
+        <Dialog
+          title={this.state.title}
+          actions={actions}
+          modal={true}
+          open={this.props.openModalForm}
+          onRequestClose={this.handleDialog}
+        >
+          <CoOrganizerInfo
+            coOrganizerDetails={this.state.coOrganizer}
+            onSubmit={this.handleDialog}
+            isAdd={this.state.isAdding}
+            conferenceId={conferenceId}
+          />
+        </Dialog>
+        <Dialog
+          title={<p>Do you want to delete {this.state.coOrganizerName} ?</p>}
+          modal={true}
+          onRequestClose={this.handleCloseDelete}
+          open={this.state.isDeleting}
+          actions={actionDelete}
+        />
+        <div className="d-flex btn-group">
+          <RaisedButton
+            label="Add Co-Organizer"
+            primary={true}
+            onClick={this.handleOpenAdding}
+          />
         </div>
       </div>
     );
   }
 }
-
 const mapStateToProps = state => ({
   openModalForm: state.conferenceCoOranizer.openCoOrganizerFormModal,
 });
@@ -202,10 +217,9 @@ const mapDispatchToProps = dispatch => ({
     dispatch,
   ),
 });
-
 export default compose(
   graphql(mutations.DELETE_COORGANIZER, {
     name: 'DELETE_COORGANIZER',
   }),
   connect(mapStateToProps, mapDispatchToProps),
-)(CoOrganizerList);
+)(Index);

@@ -38,7 +38,7 @@ class RoomDetail extends Component {
     this.props.history.replace('/conference/rooms-management');
   }
   render() {
-    const { handleSubmit, submitting } = this.props;
+    const { handleSubmit, submitting, pristine } = this.props;
     const ListFields = listField.map(field => (
       <div key={field.id}>
         <Row around="xs" className={field.className}>
@@ -67,6 +67,7 @@ class RoomDetail extends Component {
         </Row>
       </div>
     ));
+    const detail = this.props.roomDetail ? true : false;
     return (
       <div className="landing-page-form">
         <AppBar
@@ -106,7 +107,7 @@ class RoomDetail extends Component {
                   className="btn save-change"
                   label="Save Change"
                   primary={true}
-                  disabled={submitting}
+                  disabled={submitting || detail ? pristine : submitting}
                   type="submit"
                 />
                 <RaisedButton

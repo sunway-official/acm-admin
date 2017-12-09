@@ -15,6 +15,12 @@ const muiTheme = getMuiTheme({
   appBar: {
     color: colors.sanJuan,
   },
+  badge: {
+    color: colors.sunglow,
+    textColor: colors.sanJuan,
+    primaryColor: colors.sunglow,
+    primaryTextColor: colors.sanJuan,
+  },
   datePicker: {
     color: colors.sanJuan,
     selectColor: colors.sunglow,
@@ -22,6 +28,7 @@ const muiTheme = getMuiTheme({
   },
   dialog: {
     titleFontSize: 30,
+    padding: 0,
   },
   floatingActionButton: {
     color: colors.sanJuan,
@@ -33,6 +40,9 @@ const muiTheme = getMuiTheme({
     color: colors.outrageousOrange,
     textColor: colors.milkPunch,
     primaryColor: colors.sunglow,
+  },
+  subheader: {
+    color: colors.sanJuan,
   },
   tabs: {
     backgroundColor: colors.sanJuan,

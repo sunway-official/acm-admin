@@ -136,7 +136,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    toggleEdit: () => dispatch(scheduleActions.toggleEditActivityFormModal()),
+    toggleEdit: () =>
+      dispatch(scheduleActions.toggleEditActivityPaperFormModal()),
     checkError: error => {
       dispatch(scheduleOperations.checkErrorOperation(error));
     },
