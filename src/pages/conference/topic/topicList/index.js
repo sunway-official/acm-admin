@@ -107,6 +107,7 @@ class TopicList extends Component {
             </Link>
             <RaisedButton
               className="marginLeft"
+              secondary={true}
               label="Delete"
               onClick={() => this.handleOpenDelete(props.value)}
             />

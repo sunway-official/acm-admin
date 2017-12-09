@@ -112,6 +112,7 @@ class RoomList extends Component {
               <RaisedButton label="Edit" primary={true} />
             </Link>
             <RaisedButton
+              secondary={true}
               className="marginLeft"
               label="Delete"
               onClick={() => this.handleOpenDelete(props.value)}
