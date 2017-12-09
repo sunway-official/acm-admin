@@ -22,8 +22,8 @@ class Index extends Component {
       INSERT_SCHEDULE_MUTATION,
       values,
     };
-    this.props.history.replace('/conference/activities');
     addActivityFunc(data);
+    this.props.history.replace('/conference/activities');
   }
 
   render() {

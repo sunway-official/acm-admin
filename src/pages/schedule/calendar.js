@@ -16,7 +16,6 @@ import { withRouter } from 'react-router';
 import { functions, queries } from './helpers';
 import { graphql, compose } from 'react-apollo';
 import './css/style.css';
-import _ from 'lodash';
 
 BigCalendar.momentLocalizer(moment);
 
@@ -81,9 +80,16 @@ class MyCalendar extends React.PureComponent {
               const checkDate = moment(event.start).isAfter(moment());
 
               if (checkDate) {
-                this.props.history.push(
-                  '/conference/activities/edit-activity-paper/' + event.id,
-                );
+                // eslint-disable-next-line
+                if (event.paper_id == 0) {
+                  this.props.history.push(
+                    '/conference/activities/edit-activity-title/' + event.id,
+                  );
+                } else {
+                  this.props.history.push(
+                    '/conference/activities/edit-activity-paper/' + event.id,
+                  );
+                }
               }
             }}
             min={

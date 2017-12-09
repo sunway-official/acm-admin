@@ -3,26 +3,77 @@ import { Subheader, IconButton } from 'material-ui';
 import { Link } from 'react-router-dom';
 import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import EditActivityTitle from './editActivityTitle';
-import { queries } from '../../helpers';
+import { queries, mutations, functions, editActivityFunc } from '../../helpers';
 import { graphql, compose } from 'react-apollo';
-// import { connect } from 'react-redux';
-// import { withRouter } from 'react-router';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 
 class Index extends Component {
+  constructor() {
+    super();
+    this.handleEdit = this.handleEdit.bind(this);
+  }
+
+  // deleteIds
+  handleEdit(values) {
+    console.log(values);
+    values.id = this.props.match.params.id;
+    const {
+      UPDATE_ACTIVITY_MUTATION,
+      UPDATE_SCHEDULE_MUTATION,
+      DELETE_SCHEDULE_MUTATION,
+      INSERT_SCHEDULE_MUTATION,
+    } = this.props;
+    const conferenceId = this.props.conference.id;
+    const deleteIds = this.props.deleteIds;
+    const data = {
+      UPDATE_ACTIVITY_MUTATION,
+      conferenceId,
+      values,
+      DELETE_SCHEDULE_MUTATION,
+      UPDATE_SCHEDULE_MUTATION,
+      INSERT_SCHEDULE_MUTATION,
+      deleteIds,
+    };
+
+    editActivityFunc(data);
+    this.props.history.replace('/conference/activities');
+  }
+
   render() {
+    // loading
     const loadingRooms = this.props.GET_ROOMS_BY_STATUS_IN_CONFERENCE_QUERY
       .loading;
+    const loadingActivity = this.props.GET_ACTIVITY_BY_ID_QUERY.loading;
+    const loadingActivities = this.props.GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY
+      .loading;
+
+    const { getActivityByID } = this.props.GET_ACTIVITY_BY_ID_QUERY;
+    const {
+      getActivitiesByConferenceID,
+    } = this.props.GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY;
     const {
       getRoomsByStatusInConference,
     } = this.props.GET_ROOMS_BY_STATUS_IN_CONFERENCE_QUERY;
-    if (loadingRooms) {
+
+    // check loading
+    if (loadingRooms || loadingActivity || loadingActivities) {
       return <div>Loading...</div>;
     }
+    const rooms = getRoomsByStatusInConference;
+    const events = functions.getEvents(getActivitiesByConferenceID);
+    const allSchedules = functions.getAllSchedules(events);
 
-    let rooms;
-    if (getRoomsByStatusInConference) {
-      rooms = getRoomsByStatusInConference;
-    }
+    const conference = this.props.conference;
+    const startDate = conference.start_date;
+    const endDate = conference.end_date;
+
+    const event = getActivityByID;
+    console.log(event);
+    const initialValues = {
+      title: event.title,
+      description: event.description,
+    };
     return (
       <div className="conference">
         <Subheader className="subheader"> Activity Management</Subheader>
@@ -45,18 +96,63 @@ class Index extends Component {
           <span>Edit Activity</span>
         </div>
         <div className="dashboard  content d-flex">
-          <EditActivityTitle rooms={rooms} />
+          <EditActivityTitle
+            rooms={rooms}
+            initialValues={initialValues}
+            event={event}
+            start_date={startDate}
+            end_date={endDate}
+            allSchedules={allSchedules}
+            onSubmit={this.handleEdit}
+            status="without-paper"
+          />
         </div>
       </div>
     );
   }
 }
 
+const mapStateToProps = state => {
+  if (state.auth.currentUser.currentConference) {
+    console.log(state);
+    return {
+      conference: state.auth.currentUser.currentConference,
+      deleteIds: state.schedule.deleteIds,
+    };
+  }
+};
+
 export default compose(
+  withRouter,
+  connect(mapStateToProps, undefined),
   graphql(queries.GET_ROOMS_BY_STATUS_IN_CONFERENCE_QUERY, {
     options: {
       variables: { status: 'on' },
     },
     name: 'GET_ROOMS_BY_STATUS_IN_CONFERENCE_QUERY',
+  }),
+  graphql(queries.GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY, {
+    name: 'GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY',
+  }),
+  graphql(queries.GET_ACTIVITY_BY_ID_QUERY, {
+    options: ownProps => ({
+      variables: { id: ownProps.match.params.id },
+    }),
+    name: 'GET_ACTIVITY_BY_ID_QUERY',
+  }),
+  graphql(mutations.DELETE_SCHEDULE_MUTATION, {
+    name: 'DELETE_SCHEDULE_MUTATION',
+  }),
+  graphql(mutations.INSERT_ACTIVITY_MUTATION, {
+    name: 'INSERT_ACTIVITY_MUTATION',
+  }),
+  graphql(mutations.INSERT_SCHEDULE_MUTATION, {
+    name: 'INSERT_SCHEDULE_MUTATION',
+  }),
+  graphql(mutations.UPDATE_ACTIVITY_MUTATION, {
+    name: 'UPDATE_ACTIVITY_MUTATION',
+  }),
+  graphql(mutations.UPDATE_SCHEDULE_MUTATION, {
+    name: 'UPDATE_SCHEDULE_MUTATION',
   }),
 )(Index);

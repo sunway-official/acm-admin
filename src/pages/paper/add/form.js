@@ -3,7 +3,7 @@ import CustomInput from 'components/CustomInput';
 import { renderSelectField } from 'components/render';
 import { reduxForm, Field } from 'redux-form';
 import validate from '../validate';
-import { RaisedButton, Checkbox, Subheader, MenuItem } from 'material-ui';
+import { RaisedButton, Subheader, MenuItem } from 'material-ui';
 import { Link } from 'react-router-dom';
 import { topicsActions } from 'store/ducks/topics';
 import { connect } from 'react-redux';

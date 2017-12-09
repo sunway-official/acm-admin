@@ -24,6 +24,14 @@ export const UPDATE_ACTIVITY_WITH_PAPER_ID_MUTATION = gql`
   }
 `;
 
+export const UPDATE_ACTIVITY_MUTATION = gql`
+  mutation updateActivity($id: ID!, $title: String, $description: String) {
+    updateActivity(id: $id, title: $title, description: $description) {
+      id
+    }
+  }
+`;
+
 export const UPDATE_SCHEDULE_MUTATION = gql`
   mutation updateSchedule(
     $id: ID!
@@ -82,6 +90,7 @@ export default {
   INSERT_ACTIVITY_WITH_PAPER_ID_MUTATION,
   INSERT_ACTIVITY_MUTATION,
   UPDATE_ACTIVITY_WITH_PAPER_ID_MUTATION,
+  UPDATE_ACTIVITY_MUTATION,
   UPDATE_SCHEDULE_MUTATION,
   DELETE_SCHEDULE_MUTATION,
   DELETE_ACTIVITY_MUTATION,

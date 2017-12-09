@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { reduxForm, Field, FieldArray } from 'redux-form';
 import { RaisedButton, Subheader } from 'material-ui';
-import { renderSchedules, renderTextField } from '../../render';
+import { renderSchedulesEdit, renderTextField } from '../../render';
 import { Link } from 'react-router-dom';
-// import validate from '../../validate';
+import { compose, withApollo } from 'react-apollo';
+import validate from '../../validate';
+import { scheduleOperations } from 'store/ducks/schedule';
+import { connect } from 'react-redux';
 
 class EditActivityPaper extends Component {
   render() {
@@ -38,7 +41,8 @@ class EditActivityPaper extends Component {
         <div className="d-flex form-group">
           <FieldArray
             name="schedules"
-            component={renderSchedules}
+            component={renderSchedulesEdit}
+            event={this.props.event}
             rooms={rooms}
           />
         </div>
@@ -64,6 +68,17 @@ class EditActivityPaper extends Component {
 }
 EditActivityPaper = reduxForm({
   form: 'editActivityPaper',
-  // validate,
+  validate,
 })(EditActivityPaper);
-export default EditActivityPaper;
+
+const mapDispatchToProps = dispatch => {
+  return {
+    checkError: error => {
+      dispatch(scheduleOperations.checkErrorOperation(error));
+    },
+  };
+};
+
+export default compose(withApollo, connect(undefined, mapDispatchToProps))(
+  EditActivityPaper,
+);

@@ -85,6 +85,8 @@ export const GET_ACTIVITY_BY_ID_QUERY = gql`
     getActivityByID(id: $id) {
       id
       paper_id
+      title
+      description
       conference {
         start_date
         end_date
@@ -105,6 +107,7 @@ export const GET_ACTIVITY_PAPER_BY_ID_QUERY = gql`
   query getActivityByID($id: ID!) {
     getActivityByID(id: $id) {
       id
+      paper_id
       paper {
         id
         papersTopic {

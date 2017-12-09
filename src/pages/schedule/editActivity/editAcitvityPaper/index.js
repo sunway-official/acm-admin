@@ -43,6 +43,7 @@ class Index extends Component {
     };
 
     editActivityWithPaperFunc(data);
+    this.props.history.replace('/conference/activities');
   }
 
   render() {
@@ -111,9 +112,9 @@ class Index extends Component {
             topic_id={topicId}
             rooms={rooms}
             event={event}
+            allSchedules={allSchedules}
             start_date={startDate}
             end_date={endDate}
-            allSchedules={allSchedules}
             onSubmit={this.handleEdit}
             status="with-paper"
           />
