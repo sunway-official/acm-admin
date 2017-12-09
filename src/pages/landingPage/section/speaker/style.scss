@@ -1,19 +1,19 @@
-.orange-section{
-  &.speaker{
+.orange-section {
+  &.speaker {
     text-align: center;
   }
 }
-#speaker-grid{
+#speaker-grid {
   padding: 0px;
   text-align: center;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 }
-.landingpage-title{
-  &.speaker{
+.landingpage-title {
+  &.speaker {
     color: #ff5722;
   }
 }
-.speaker-avatar{
+.speaker-avatar {
   display: block;
   max-width: 100%;
   height: auto;
@@ -21,37 +21,37 @@
   padding: auto;
 }
 figure {
-	width: 100%;
-	margin: 0;
-	padding: 0;
-	background: #fff;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: #fff;
   overflow: hidden;
 }
-figure:hover+span {
-	bottom: -36px;
-	opacity: 1;
+figure:hover + span {
+  bottom: -36px;
+  opacity: 1;
 }
 
 /* Gray Scale */
-.hover08{
+.hover08 {
   position: relative;
   display: inline-block;
 }
 .hover08 figure img {
-	-webkit-filter: grayscale(100%);
-	filter: grayscale(100%);
-	-webkit-transition: .3s ease-in-out;
-  transition: .3s ease-in-out;
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+  -webkit-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
   width: 100%;
 }
 .hover08 figure:hover img {
-	-webkit-filter: grayscale(0);
-	filter: grayscale(0);
+  -webkit-filter: grayscale(0);
+  filter: grayscale(0);
 }
-.list-image{
+.list-image {
   display: flex;
 }
-.speaker-info-wrapper{
+.speaker-info-wrapper {
   position: absolute;
   height: 30%;
   text-align: center;
@@ -63,7 +63,7 @@ figure:hover+span {
   text-align: left;
   margin-left: 1em;
 }
-.speaker-info-wrapper > div{
+.speaker-info-wrapper > div {
   color: #ffffff;
 }
 h4 {
@@ -74,8 +74,8 @@ h4 {
   font-size: 1.5vw; /*or whatever you want*/
   color: #ff5722;
 }
-.speaker-description{
+.speaker-description {
   font-size: 1.5vw;
   padding-bottom: 3em;
-  color: #2C303B;
+  color: #2c303b;
 }

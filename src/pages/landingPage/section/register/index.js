@@ -3,7 +3,16 @@ import { Component } from 'react';
 import { Col, Grid, Row } from 'react-flexbox-grid';
 import './style.css';
 import * as moment from 'moment';
+import { withRouter } from 'react-router';
 class Register extends Component {
+  constructor() {
+    super();
+    this.handleRegister = this.handleRegister.bind(this);
+  }
+  handleRegister() {
+    localStorage.setItem('conference_id', this.props.id);
+    this.props.history.replace('/register');
+  }
   render() {
     const start = moment(this.props.landingPage.conference.start_date).format(
       'DD-MM-YYYY',
@@ -51,7 +60,10 @@ class Register extends Component {
                   </Row>
                 </Col>
                 <Col xs={4}>
-                  <button className="btn register-button">
+                  <button
+                    className="btn register-button"
+                    onClick={this.handleRegister}
+                  >
                     Register Today
                   </button>
                 </Col>
@@ -63,4 +75,4 @@ class Register extends Component {
     );
   }
 }
-export default Register;
+export default withRouter(Register);

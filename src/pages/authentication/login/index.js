@@ -45,9 +45,6 @@ class Login extends PureComponent {
               <a className="forgot-password" href="/forgot">
                 Forgot Password
               </a>
-              <a className="register" href="/register">
-                Register
-              </a>
             </div>
           </div>
         </div>
@@ -69,3 +66,7 @@ export default compose(
   graphql(LOGIN_MUTATION, { name: 'loginMutation' }),
   withRouter,
 )(Login);
+
+// <a className="register" href="/register">
+// Register
+// </a>

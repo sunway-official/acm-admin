@@ -55,6 +55,15 @@ const RegisterForm = ({
         className="reduxField"
       />
     </div>
+    <div className="checkbox-row">
+      <Field
+        name="author"
+        type="checkbox"
+        component="input"
+        id="register-checkbox"
+      />
+      <div>Become an author</div>
+    </div>
     <div>
       <RaisedButton
         className="btn register"
