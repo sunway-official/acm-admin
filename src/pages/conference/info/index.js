@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import ConferenceInfo from './conferenceInfo';
 import { connect } from 'react-redux';
-import CoOrganizerList from './coOrganizer/List';
+import CoOrganizerList from './coOrganizer';
 class Index extends Component {
   render() {
     let conference;

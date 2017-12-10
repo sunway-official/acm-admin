@@ -66,4 +66,19 @@ const GET_CONFERENCE_BY_ID_QUERY = gql`
     }
   }
 `;
-export default { GET_CURRENT_CONFERENCE, GET_CONFERENCE_BY_ID_QUERY };
+const GET_CO_ORGANIZER_DETAIL_BY_ID = gql`
+  query getCoOrganizerDetailByID($id: ID!) {
+    getCoOrganizerDetailByID(id: $id) {
+      id
+      name
+      email
+      website
+      phone
+    }
+  }
+`;
+export default {
+  GET_CURRENT_CONFERENCE,
+  GET_CONFERENCE_BY_ID_QUERY,
+  GET_CO_ORGANIZER_DETAIL_BY_ID,
+};

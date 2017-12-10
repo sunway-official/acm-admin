@@ -6,14 +6,6 @@ import validate from '../validate';
 import { RaisedButton, Subheader, MenuItem } from 'material-ui';
 import { Link } from 'react-router-dom';
 class EditPaperForm extends Component {
-  constructor() {
-    super();
-    this.handleClick = this.handleClick.bind(this);
-  }
-  handleClick(topic) {
-    this.props.setTopic(topic);
-  }
-
   render() {
     const topics = this.props.topics;
     const { handleSubmit } = this.props;

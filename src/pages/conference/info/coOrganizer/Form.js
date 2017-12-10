@@ -1,59 +1,65 @@
 import React, { Component } from 'react';
-import RaisedButton from 'material-ui/RaisedButton';
+import { RaisedButton, Subheader } from 'material-ui';
 import { Field, reduxForm } from 'redux-form';
 import CustomInput from 'components/CustomInput';
 import normalizePhone from 'utils/normalizePhone';
 import validate from './validate';
+import { Link } from 'react-router-dom';
 class CoOrganizerForm extends Component {
   render() {
     const { onSubmit, handleSubmit } = this.props;
     return (
       <div>
         <form
-          className="form conference-info"
+          className="form  conference-info"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <div>
-            <div className="d-flex form-group">
-              <label>Name :</label>
-              <Field
-                name="coOrganizerName"
-                component={CustomInput}
-                hintText="Co-Organizer Name"
-                fullWidth={true}
-              />
-            </div>
-            <div className="d-flex form-group">
-              <label>Email :</label>
-              <Field
-                name="coOrganizerEmail"
-                component={CustomInput}
-                hintText="Co-Organizer Email"
-                fullWidth={true}
-              />
-            </div>
-            <div className="d-flex form-group">
-              <label>Website :</label>
-              <Field
-                name="coOrganizerWebsite"
-                component={CustomInput}
-                hintText="Co-Organizer Website"
-                fullWidth={true}
-              />
-            </div>
-            <div className="d-flex form-group">
-              <label>Phone Number :</label>
-              <Field
-                name="coOrganizerPhone"
-                component={CustomInput}
-                hintText="Co-Organizer Phone Number"
-                fullWidth={true}
-                normalize={normalizePhone}
-              />
-            </div>
+          <Subheader className="subheader">CoOrganizer Information</Subheader>
+
+          <div className="d-flex form-group">
+            <label>Name :</label>
+            <Field
+              name="coOrganizerName"
+              component={CustomInput}
+              hintText="Co-Organizer Name"
+              fullWidth={true}
+            />
           </div>
-          <div className="d-flex save-btn btn-group">
+          <div className="d-flex form-group">
+            <label>Email :</label>
+            <Field
+              name="coOrganizerEmail"
+              component={CustomInput}
+              hintText="Co-Organizer Email"
+              fullWidth={true}
+            />
+          </div>
+          <div className="d-flex form-group">
+            <label>Website :</label>
+            <Field
+              name="coOrganizerWebsite"
+              component={CustomInput}
+              hintText="Co-Organizer Website"
+              fullWidth={true}
+            />
+          </div>
+          <div className="d-flex form-group">
+            <label>Phone Number :</label>
+            <Field
+              name="coOrganizerPhone"
+              component={CustomInput}
+              hintText="Co-Organizer Phone Number"
+              fullWidth={true}
+              normalize={normalizePhone}
+            />
+          </div>
+          <div className="d-flex save-btn btn-group marginBottom">
             <RaisedButton label="Save" primary={true} type="submit" />
+            <RaisedButton
+              className="marginLeft"
+              label="Cancel"
+              containerElement={<Link to="/conference/info" />}
+            />
           </div>
         </form>
       </div>
