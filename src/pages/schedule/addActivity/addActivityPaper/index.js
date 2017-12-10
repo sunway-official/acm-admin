@@ -55,7 +55,6 @@ class Index extends Component {
     const topics = getTopicsOfConference;
     const events = functions.getEvents(getActivitiesByConferenceID);
     const allSchedules = functions.getAllSchedules(events);
-    console.log(allSchedules);
 
     const conference = this.props.conference;
     const start_date = conference.start_date;

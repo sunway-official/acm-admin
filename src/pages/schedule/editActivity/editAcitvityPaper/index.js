@@ -21,7 +21,6 @@ class Index extends Component {
 
   // deleteIds
   handleEdit(values) {
-    console.log(values);
     values.id = this.props.match.params.id;
     const {
       UPDATE_ACTIVITY_WITH_PAPER_ID_MUTATION,
@@ -31,7 +30,6 @@ class Index extends Component {
     } = this.props;
     const conferenceId = this.props.conference.id;
     const deleteIds = this.props.deleteIds;
-    console.log(deleteIds);
     const data = {
       UPDATE_ACTIVITY_WITH_PAPER_ID_MUTATION,
       conferenceId,
