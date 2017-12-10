@@ -20,9 +20,6 @@ class ConferenceInfoForm extends PureComponent {
       },
     };
   }
-  componentDidMount() {
-    console.log(this.props);
-  }
   async handleUpdateConferenceInfo({
     title,
     description,

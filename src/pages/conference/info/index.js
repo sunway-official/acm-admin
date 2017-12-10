@@ -54,7 +54,6 @@ class Index extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log('statae', state);
   if (
     state.auth &&
     state.auth.currentUser &&

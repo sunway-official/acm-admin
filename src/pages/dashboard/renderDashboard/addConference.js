@@ -4,6 +4,7 @@ import {
   INSERT_CONFERENCE_MUTATION,
   INSERT_ORGANIZER_DETAIL_MUTATION,
   ME_QUERY,
+  INSERT_CONFERENCE_ATTENDEE_MUTATION,
 } from '../helpers/mutations';
 import { SubmissionError } from 'redux-form';
 import AddForm from './addconferenceform';
@@ -42,7 +43,6 @@ class ConferenceAddForm extends PureComponent {
           long: this.props.position.lng,
         },
       });
-      console.log(addressData);
       const organizeDetailData = await this.props.INSERT_ORGANIZER_DETAIL_MUTATION(
         {
           variables: {
@@ -55,7 +55,6 @@ class ConferenceAddForm extends PureComponent {
           },
         },
       );
-      console.log(organizeDetailData);
       const conference = await this.props.INSERT_CONFERENCE_MUTATION({
         variables: {
           organizer_detail_id: organizeDetailData.data.insertOrganizerDetail.id,
@@ -68,6 +67,12 @@ class ConferenceAddForm extends PureComponent {
         },
       });
       console.log(conference);
+      await this.props.INSERT_CONFERENCE_ATTENDEE_MUTATION({
+        variables: {
+          conference_id: conference.data.insertConference.id,
+          user_id: user_id,
+        },
+      });
       await this.props.SWITCH_CURRENT_CONFERENCE({
         variables: {
           conference_id: conference.data.insertConference.id,
@@ -80,6 +85,7 @@ class ConferenceAddForm extends PureComponent {
       });
       window.location.replace('/conference/info');
     } catch (error) {
+      console.log(error);
       throw new SubmissionError(error);
     }
   }
@@ -147,6 +153,9 @@ export default compose(
   }),
   graphql(INSERT_ADDRESS_MUTATION, {
     name: 'INSERT_ADDRESS_MUTATION',
+  }),
+  graphql(INSERT_CONFERENCE_ATTENDEE_MUTATION, {
+    name: 'INSERT_CONFERENCE_ATTENDEE_MUTATION',
   }),
   graphql(SWITCH_CURRENT_CONFERENCE, {
     name: 'SWITCH_CURRENT_CONFERENCE',

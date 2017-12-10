@@ -85,7 +85,6 @@ class BadgeExampleSimple extends Component {
     // const { loading } = this.props.data;
     // if (loading) return <div>Loading...</div>;
     //const avatar = this.props.me.avatar;
-    console.log('prop', this.props);
     let first = '';
     let avatar = '';
     if (this.props.me !== undefined) {
