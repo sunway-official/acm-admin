@@ -52,7 +52,7 @@ export default class AppBarExampleIcon extends React.Component {
           >
             <AppBar
               title="ACM"
-              titleStyle={{ color: 'white' }}
+              titleStyle={{ color: 'white', display: 'block' }}
               className="sidebar"
               onClick={this.handleToggle}
             />

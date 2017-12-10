@@ -85,15 +85,20 @@
 .switch-text {
   div {
     div {
-    color: black !important;
-    margin-left: 43px !important;
-    padding-left: 1px !important;
+      color: black !important;
+      margin-left: 43px !important;
+      padding-left: 1px !important;
     }
   }
-
 }
 
-.add-confs-btn{
+.add-confs-btn {
   color: white !important;
   margin-top: 8px;
+}
+
+.sidebar {
+  h1 {
+    display: block;
+  }
 }
