@@ -21,6 +21,17 @@ import { graphql, compose } from 'react-apollo';
 import { queries, functions } from '../helpers';
 import { withRouter } from 'react-router';
 
+const conferenceInfo = () => (
+  <Link to="/conference/info">
+    <ListItem
+      className="item"
+      primaryText={'Information'}
+      leftIcon={<ActionInfoOutline />}
+      onClick={() => this.handleClickSidebar()}
+    />
+  </Link>
+);
+
 class ListExampleSimple extends React.Component {
   constructor(props) {
     super(props);
@@ -67,14 +78,16 @@ class ListExampleSimple extends React.Component {
     if (loading || loadingRole) return <div>loading...</div>;
     let conference_id;
     let disableView = true;
-    let checkComponent = true;
+    let checkRole = [];
     const roles = this.props.GET_ALL_ROLE_OF_USER.getAllRolesOfUser;
     if (roles && roles.length > 0) {
       const rolesUserId = functions.getRolesId(roles);
-      const rolesComponentId = ['1'];
-      checkComponent = functions.checkRoleUser(rolesUserId, rolesComponentId);
+      // const rolesComponentId = ['1'];
+      // checkComponent = functions.checkRoleUser(rolesUserId, rolesComponentId);
+      checkRole = functions.checkRoleAllComponents(rolesUserId);
     }
-    console.log(checkComponent);
+    console.log(checkRole);
+    const checkComponent = true;
     if (
       this.props.auth.currentUser &&
       this.props.auth.currentUser.currentConference
@@ -103,14 +116,6 @@ class ListExampleSimple extends React.Component {
       <div>
         <style dangerouslySetInnerHTML={{ __html: style }} />
         <List className="list">
-          <Link to="/conference/info">
-            <ListItem
-              className="item"
-              primaryText={'Information'}
-              leftIcon={<ActionInfoOutline />}
-              onClick={() => this.handleClickSidebar()}
-            />
-          </Link>
           {checkComponent ? (
             <Link to="/conference/activities">
               <ListItem
