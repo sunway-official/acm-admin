@@ -47,9 +47,9 @@ export default () => (
       <AuthRoute needGuest path="/register" component={Register} />
       <AuthRoute needGuest path="/forgot" component={ForgotPassword} />
       <AuthRoute needGuest path="/resetPassword" component={ResetPassword} />
-      <AuthRoute needAuth exact path="/" component={Dashboard} />
       <Wrapper>
         <Switch>
+          <AuthRoute needAuth exact path="/" component={Dashboard} />
           <AuthRoute path="/conference/info" component={ConferenceInfo} />
           <AuthRoute path="/conference/add" component={Addconference} />
           <AuthRoute
