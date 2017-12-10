@@ -18,7 +18,7 @@ import {
 import style from './style.css';
 import { connect } from 'react-redux';
 import { graphql, compose } from 'react-apollo';
-import { queries } from '../helpers';
+import { queries, functions } from '../helpers';
 import { withRouter } from 'react-router';
 
 class ListExampleSimple extends React.Component {
@@ -63,9 +63,18 @@ class ListExampleSimple extends React.Component {
       loading,
       getLandingPageByConferenceId,
     } = this.props.GET_LANDING_PAGE_BY_CONFERENCE_ID_QUERY;
-    if (loading) return <div>loading...</div>;
+    const loadingRole = this.props.GET_ALL_ROLE_OF_USER.loading;
+    if (loading || loadingRole) return <div>loading...</div>;
     let conference_id;
     let disableView = true;
+    let checkComponent = true;
+    const roles = this.props.GET_ALL_ROLE_OF_USER.getAllRolesOfUser;
+    if (roles && roles.length > 0) {
+      const rolesUserId = functions.getRolesId(roles);
+      const rolesComponentId = ['1'];
+      checkComponent = functions.checkRoleUser(rolesUserId, rolesComponentId);
+    }
+    console.log(checkComponent);
     if (
       this.props.auth.currentUser &&
       this.props.auth.currentUser.currentConference
@@ -102,14 +111,17 @@ class ListExampleSimple extends React.Component {
               onClick={() => this.handleClickSidebar()}
             />
           </Link>
-          <Link to="/conference/activities">
-            <ListItem
-              className="item"
-              primaryText={'Schedules'}
-              leftIcon={<NotificationEventAvailable />}
-              onClick={() => this.handleClickSidebar()}
-            />
-          </Link>
+          {checkComponent ? (
+            <Link to="/conference/activities">
+              <ListItem
+                className="item"
+                primaryText={'Schedules'}
+                leftIcon={<NotificationEventAvailable />}
+                onClick={() => this.handleClickSidebar()}
+              />
+            </Link>
+          ) : null}
+
           <ListItem
             className="item"
             primaryText="People"
@@ -141,11 +153,11 @@ class ListExampleSimple extends React.Component {
                   />
                 </Link>
                 {/*
-               <MenuItem primaryText={<a href="/dashboard">Speaker</a>} />
-                <MenuItem primaryText={<a href="/dashboard">Author</a>} />
-                <MenuItem primaryText={<a href="/dashboard">Reviewer</a>} />
-                <MenuItem primaryText={<a href="/dashboard">Participant</a>} />
-              */}
+             <MenuItem primaryText={<a href="/dashboard">Speaker</a>} />
+              <MenuItem primaryText={<a href="/dashboard">Author</a>} />
+              <MenuItem primaryText={<a href="/dashboard">Reviewer</a>} />
+              <MenuItem primaryText={<a href="/dashboard">Participant</a>} />
+            */}
               </Menu>
             </Popover>
           </ListItem>
@@ -230,6 +242,7 @@ const mapStateToProps = (state, ownProps) => {
     };
   }
 };
+
 const mapDispatchToProps = dispatch => {
   return {
     setSidebar: () => dispatch(sidebarActions.setSidebar()),
@@ -239,6 +252,9 @@ const mapDispatchToProps = dispatch => {
 export default compose(
   withRouter,
   connect(mapStateToProps, mapDispatchToProps),
+  graphql(queries.GET_ALL_ROLE_OF_USER, {
+    name: 'GET_ALL_ROLE_OF_USER',
+  }),
   graphql(queries.GET_LANDING_PAGE_BY_CONFERENCE_ID_QUERY, {
     name: 'GET_LANDING_PAGE_BY_CONFERENCE_ID_QUERY',
   }),
