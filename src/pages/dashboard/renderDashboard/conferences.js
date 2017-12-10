@@ -36,12 +36,10 @@ class listCoferences extends React.Component {
   }
 
   render() {
-    console.log(this.props);
-    const { loading } = this.props.data;
+    const { loading, getAllConferencesByUserID } = this.props.data;
     if (loading) return <div>loading...</div>;
 
-    const conferences = this.props.data.getConferenceByUserID;
-    console.log(conferences);
+    const conferences = getAllConferencesByUserID;
     return (
       <div className="list-dashboard">
         <style dangerouslySetInnerHTML={{ __html: style }} />
@@ -54,7 +52,8 @@ class listCoferences extends React.Component {
           />
         </center>
         <List>
-          {conferences.map(conference => {
+          {conferences.map(data => {
+            const conference = data.conference;
             return (
               <ListItem
                 key={conference.id}
