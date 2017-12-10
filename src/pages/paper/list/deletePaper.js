@@ -16,25 +16,42 @@ class DeletePaper extends Component {
   async handleDelete() {
     console.log(this.props);
     try {
-      await this.props.DELETE_PAPER({
-        variables: {
-          id: this.props.paper.id,
-        },
-        refetchQueries: [
-          {
-            query: queries.GET_PAPERS_BY_CONFERENCE_ID,
-            variables: {
-              conference_id: this.props.conference_id,
-            },
+      const isAuthor = localStorage.getItem('roles').indexOf('7');
+      if (isAuthor > -1) {
+        await this.props.DELETE_PAPER({
+          variables: {
+            id: this.props.paper.id,
           },
-          {
-            query: queries.GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
-            variables: {
-              topic_id: this.props.topic_id,
+          refetchQueries: [
+            {
+              query: queries.GET_PAPERS_BY_CONFERENCE_ID,
+              variables: {
+                isAuthor: 1,
+              },
             },
+            {
+              query: queries.GET_PAPERS_BY_CONFERENCE_ID,
+            },
+          ],
+        });
+      } else {
+        await this.props.DELETE_PAPER({
+          variables: {
+            id: this.props.paper.id,
           },
-        ],
-      });
+          refetchQueries: [
+            {
+              query: queries.GET_PAPERS_BY_CONFERENCE_ID,
+            },
+            {
+              query: queries.GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
+              variables: {
+                topic_id: this.props.topic_id,
+              },
+            },
+          ],
+        });
+      }
       this.props.setToggle();
     } catch (error) {
       console.log({ error });
