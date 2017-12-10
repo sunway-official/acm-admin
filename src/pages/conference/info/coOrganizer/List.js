@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import { RaisedButton, Dialog, IconButton } from 'material-ui';
+import { withRouter } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { NavigationClose } from 'material-ui/svg-icons';
@@ -9,6 +10,9 @@ import { queries, mutations } from '../helpers';
 import { graphql, compose } from 'react-apollo';
 import { conferenceCoOranizerActions } from 'store/ducks/conference/info/coOrganizer';
 import CoOrganizerInfo from '../coOrganizer';
+import { alertOptions, MyFaCheck } from 'theme/alert';
+
+import AlertContainer from 'react-alert';
 const style = {
   textAlign: 'center',
   lineHeight: '200%',
@@ -43,6 +47,13 @@ class Index extends Component {
     this.handleDelete = this.handleDelete.bind(this);
     this.handleOpenAdding = this.handleOpenAdding.bind(this);
   }
+
+  showAlertSuccess = () => {
+    this.msg.success('Deleted!', {
+      type: 'success',
+      icon: <MyFaCheck />,
+    });
+  };
   handleDialog() {
     this.props.toggleModalForm();
   }
@@ -104,7 +115,10 @@ class Index extends Component {
       <RaisedButton
         label="Yes"
         primary={true}
-        onClick={this.handleDelete}
+        onClick={() => {
+          this.handleDelete();
+          this.showAlertSuccess();
+        }}
         type="submit"
       />,
       <RaisedButton
@@ -203,9 +217,12 @@ class Index extends Component {
           <RaisedButton
             label="Add Co-Organizer"
             primary={true}
-            onClick={this.handleOpenAdding}
+            onClick={() => {
+              this.handleOpenAdding();
+            }}
           />
         </div>
+        <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />
       </div>
     );
   }
@@ -221,6 +238,7 @@ const mapDispatchToProps = dispatch => ({
   ),
 });
 export default compose(
+  withRouter,
   graphql(mutations.DELETE_COORGANIZER, {
     name: 'DELETE_COORGANIZER',
   }),

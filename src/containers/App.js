@@ -155,6 +155,7 @@ export default () => (
             path="/conference/activities/edit-activity-title/:id"
             component={EditActivityTitle}
           />
+
           <AuthRoute exact path="/conference/activities" component={Schedule} />
           <AuthRoute path="/withThunk" component={WithThunk} />
           <AuthRoute component={NoMatch} />

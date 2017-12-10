@@ -4,7 +4,8 @@ import { graphql, compose } from 'react-apollo';
 import { mutations, queries } from '../helpers';
 import { connect } from 'react-redux';
 import { paperActions } from 'store/ducks/paper';
-
+import { alertOptions, MyFaCheck } from 'theme/alert';
+import AlertContainer from 'react-alert';
 class DeletePaper extends Component {
   styles = {
     margin: 10,
@@ -13,6 +14,12 @@ class DeletePaper extends Component {
     super(props);
     this.handleDelete = this.handleDelete.bind(this);
   }
+  showAlertSuccess = () => {
+    this.msg.success('Deleted!', {
+      type: 'success',
+      icon: <MyFaCheck />,
+    });
+  };
   async handleDelete() {
     try {
       await this.props.DELETE_PAPER({
@@ -39,7 +46,10 @@ class DeletePaper extends Component {
       <RaisedButton
         label="Yes"
         primary={true}
-        onClick={this.handleDelete}
+        onClick={() => {
+          this.handleDelete();
+          this.showAlertSuccess();
+        }}
         type="submit"
       />,
       <RaisedButton
@@ -57,6 +67,7 @@ class DeletePaper extends Component {
           actions={actionDelete}
           open={this.props.openModal}
         />
+        <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />
       </div>
     );
   }

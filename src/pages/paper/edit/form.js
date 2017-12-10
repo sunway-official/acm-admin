@@ -5,9 +5,6 @@ import { reduxForm, Field } from 'redux-form';
 import validate from '../validate';
 import { RaisedButton, Subheader, MenuItem } from 'material-ui';
 import { Link } from 'react-router-dom';
-import { topicsActions } from 'store/ducks/topics';
-import { connect } from 'react-redux';
-
 class EditPaperForm extends Component {
   constructor() {
     super();
@@ -16,9 +13,10 @@ class EditPaperForm extends Component {
   handleClick(topic) {
     this.props.setTopic(topic);
   }
+
   render() {
     const topics = this.props.topics;
-    const { handleSubmit, invalid } = this.props;
+    const { handleSubmit } = this.props;
     return (
       <form className="form conference-info" onSubmit={handleSubmit}>
         <Subheader className="subheader">Paper Information</Subheader>
@@ -79,16 +77,7 @@ class EditPaperForm extends Component {
           style={{ marginBottom: '20px' }}
           className="d-flex save-btn btn-group"
         >
-          <RaisedButton
-            label="Save"
-            primary={true}
-            type="submit"
-            onClick={() => {
-              if (!invalid) {
-                alert('Saved');
-              }
-            }}
-          />
+          <RaisedButton label="Save" primary={true} type="submit" />
           <RaisedButton
             label="Cancel"
             style={{ marginLeft: '10px' }}
@@ -99,12 +88,7 @@ class EditPaperForm extends Component {
     );
   }
 }
-const mapDispatchToProps = dispatch => {
-  return {
-    setTopic: topic => dispatch(topicsActions.setTopics(topic)),
-  };
-};
-EditPaperForm = connect(undefined, mapDispatchToProps)(EditPaperForm);
+
 export default reduxForm({
   form: 'EditPaperForm',
   validate,

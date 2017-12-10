@@ -7,12 +7,22 @@ import { queries, mutations } from '../helpers';
 import Form from './form';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
-
+import { alertOptions, MyFaCheck } from 'theme/alert';
+import AlertContainer from 'react-alert';
 class Index extends Component {
   constructor(props) {
     super(props);
     this.handleSave = this.handleSave.bind(this);
   }
+  showAlertSuccess = () => {
+    this.msg.success('Saved!', {
+      type: 'success',
+      icon: <MyFaCheck />,
+      onClose: () => {
+        this.props.history.replace('/conference/papers');
+      },
+    });
+  };
   async handleSave(values) {
     const { UPDATE_PAPER, UPDATE_TOPIC_OF_PAPER } = this.props;
     try {
@@ -32,7 +42,7 @@ class Index extends Component {
       await UPDATE_TOPIC_OF_PAPER({
         variables: {
           paper_id: values.id,
-          topic_id: this.props.topic.id,
+          topic_id: values.topic,
         },
         refetchQueries: [
           {
@@ -43,13 +53,12 @@ class Index extends Component {
           },
         ],
       });
-      this.props.history.replace('/conference/papers');
+      this.showAlertSuccess();
     } catch (error) {
       throw console.log({ error });
     }
   }
   render() {
-    console.log(this.props.topic);
     const loadingPaper = this.props.GET_PAPER_BY_ID.loading;
     const loadingTopics = this.props.GET_TOPICS_OF_CONFERENCE.loading;
     const loadingPaperTopics = this.props.GET_TOPICS_BY_PAPER_ID.loading;
@@ -104,12 +113,13 @@ class Index extends Component {
             paperTopicsActive={paperTopicsActive[0].topic.name}
           />
         </div>
+        <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />
       </div>
     );
   }
 }
 const mapStateToProps = state => {
-  if (state) {
+  if (state.topics) {
     return {
       topic: state.topics.data,
     };

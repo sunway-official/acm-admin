@@ -21,7 +21,7 @@ const styleBtn = {
 
 const sorted = [
   {
-    id: 'name',
+    id: 'title',
     desc: true,
   },
 ];
@@ -52,7 +52,6 @@ class Index extends Component {
     if (getPapersByConferenceID) {
       papers = getPapersByConferenceID;
     }
-    console.log(papers);
     const columns = [
       {
         Header: 'Title',

@@ -6,12 +6,20 @@ import CustomDatePicker from 'components/CustomDatePicker';
 import AppMap from 'components/AppMap';
 import normalizePhone from 'utils/normalizePhone';
 import validate from './validate';
+import AlertContainer from 'react-alert';
+import { alertOptions, MyFaCheck } from 'theme/alert';
 class ConferenceInfoForm extends React.Component {
   state = {
     openDialog: false,
   };
   handleSaved = () => {
     this.setState({ openDialog: !this.state.openDialog });
+  };
+  showAlertSuccess = () => {
+    this.msg.success('Saved!', {
+      type: 'success',
+      icon: <MyFaCheck />,
+    });
   };
   render() {
     const {
@@ -145,7 +153,7 @@ class ConferenceInfoForm extends React.Component {
                 type="submit"
                 onClick={() => {
                   if (!invalid) {
-                    alert('Saved');
+                    this.showAlertSuccess();
                   }
                 }}
               />
@@ -153,6 +161,7 @@ class ConferenceInfoForm extends React.Component {
             <Dialog open={this.state.openDialog} />
           </div>
         </div>
+        <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />
       </form>
     );
   }
