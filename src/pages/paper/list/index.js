@@ -52,6 +52,7 @@ class Index extends Component {
     if (getPapersByConferenceID) {
       papers = getPapersByConferenceID;
     }
+    console.log(papers);
     const columns = [
       {
         Header: 'Title',
@@ -89,6 +90,7 @@ class Index extends Component {
             />
             <RaisedButton
               label="Delete"
+              secondary={true}
               onClick={() => {
                 this.handleDialog(props.value, props.value.id);
               }}
@@ -114,6 +116,7 @@ class Index extends Component {
         <div className="d-flex save-btn btn-group">
           <Link to="/conference/paper/add">
             <RaisedButton
+              className="marginBottom"
               icon={<ActionNoteAdd />}
               primary={true}
               label={'Add New Paper'}

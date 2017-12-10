@@ -4,18 +4,20 @@ import GetRoles from './getRoles';
 import { userActions } from 'store/ducks/user';
 import { conferenceOperations } from 'store/ducks/conference';
 import { connect } from 'react-redux';
+import ReactTable from 'react-table';
+import 'react-table/react-table.css';
+import { RaisedButton } from 'material-ui';
+const style = {
+  textAlign: 'center',
+  lineHeight: '200%',
+};
 
-import {
-  Table,
-  TableBody,
-  TableHeader,
-  TableHeaderColumn,
-  TableRow,
-  TableRowColumn,
-  RaisedButton,
-} from 'material-ui';
-import { style } from './style.css';
-
+const sorted = [
+  {
+    id: 'name',
+    desc: true,
+  },
+];
 class List extends Component {
   constructor(props) {
     super(props);
@@ -37,53 +39,70 @@ class List extends Component {
   render() {
     const conference_id = this.props.conference_id;
     const staffs = this.props.staffs;
+    console.log(staffs);
+    const columns = [
+      {
+        Header: 'Name',
+        accessor: 'firstname',
+        minWidth: 400,
+        Cell: props => <div style={style}>{props.value}</div>,
+      },
+
+      {
+        Header: 'Mail',
+        accessor: 'email',
+        minWidth: 400,
+        Cell: props => (
+          <div style={style}>{props.value + console.log(props.value)}</div>
+        ),
+      },
+      {
+        Header: 'Position',
+        accessor: '',
+        minWidth: 400,
+        Cell: props => (
+          <div style={style}>
+            <GetRoles id={props.value.id} conference_id={conference_id} />
+          </div>
+        ),
+      },
+      {
+        Header: 'Action',
+        minWidth: 150,
+        filterable: false,
+        accessor: '',
+        Cell: props => (
+          <div style={style}>
+            <RaisedButton
+              label="Edit"
+              primary={true}
+              onClick={() => {
+                this.handleOpenDialog(props.value, props.value.id);
+              }}
+            />
+          </div>
+        ),
+      },
+    ];
     return (
-      <div className="d-flex">
-        <style dangerouslySetInnerHTML={{ __html: style }} />
-        <div className="list staff">
-          <Table fixedHeader={true}>
-            <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
-              <TableRow>
-                <TableHeaderColumn>No.</TableHeaderColumn>
-                <TableHeaderColumn>Name</TableHeaderColumn>
-                <TableHeaderColumn>Mail</TableHeaderColumn>
-                <TableHeaderColumn>Position</TableHeaderColumn>
-                <TableHeaderColumn>Action</TableHeaderColumn>
-              </TableRow>
-            </TableHeader>
-            <TableBody displayRowCheckbox={false}>
-              {staffs.map((staff, index) => (
-                <TableRow key={staff.id}>
-                  <TableRowColumn>{index + 1}</TableRowColumn>
-                  <TableRowColumn>
-                    {staff.firstname} {staff.lastname}
-                  </TableRowColumn>
-                  <TableRowColumn>{staff.email}</TableRowColumn>
-                  <TableRowColumn>
-                    <GetRoles id={staff.id} conference_id={conference_id} />
-                  </TableRowColumn>
-                  <TableRowColumn>
-                    <RaisedButton
-                      primary={true}
-                      label="edit"
-                      onClick={() => {
-                        this.handleOpenDialog(staff, staff.id);
-                      }}
-                    />
-                  </TableRowColumn>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-          <DialogEdit
-            openDialog={this.state.openDialog}
-            handleClose={() => {
-              this.handleClose();
-            }}
-            staff_id={this.state.staffId}
-            conference_id={conference_id}
-          />
-        </div>
+      <div className="react-table">
+        <ReactTable
+          filterable
+          data={staffs}
+          columns={columns}
+          defaultSorted={sorted}
+          defaultPageSize={10}
+          className="-striped -highlight"
+          showPaginationTop
+        />
+        <DialogEdit
+          openDialog={this.state.openDialog}
+          handleClose={() => {
+            this.handleClose();
+          }}
+          staff_id={this.state.staffId}
+          conference_id={conference_id}
+        />
       </div>
     );
   }

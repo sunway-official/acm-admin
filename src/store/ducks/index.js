@@ -7,3 +7,4 @@ export { default as roles } from './roles';
 export { default as user } from './user';
 export { default as paper } from './paper';
 export { default as topics } from './topics';
+export { default as sidebar } from './sidebar';

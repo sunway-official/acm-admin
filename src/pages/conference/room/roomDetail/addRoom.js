@@ -13,6 +13,7 @@ import {
   MyFaCheck,
 } from '../../../../theme/alert';
 import AlertContainer from 'react-alert';
+import { queries as scheduleQueries } from '../../../schedule/helpers';
 
 class AddNewRoom extends Component {
   constructor(props) {
@@ -49,6 +50,10 @@ class AddNewRoom extends Component {
         refetchQueries: [
           {
             query: queries.GET_ROOMS_BY_CONFERENCE_ID_QUERY,
+          },
+          {
+            query: scheduleQueries.GET_ROOMS_BY_STATUS_IN_CONFERENCE_QUERY,
+            variables: { status: 'on' },
           },
         ],
       });

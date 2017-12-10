@@ -14,7 +14,6 @@ const RegisterForm = ({
   pristine,
 }) => (
   <form onSubmit={handleSubmit(onSubmit)}>
-    {error && <div className="error">{error}</div>}
     <div className="register-field">
       <Field
         className="subname reduxField"
@@ -54,6 +53,15 @@ const RegisterForm = ({
         label="Confirm Password"
         className="reduxField"
       />
+    </div>
+    <div className="checkbox-row">
+      <Field
+        name="author"
+        type="checkbox"
+        component="input"
+        id="register-checkbox"
+      />
+      <div>Become an author</div>
     </div>
     <div>
       <RaisedButton

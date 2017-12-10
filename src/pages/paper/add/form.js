@@ -1,19 +1,24 @@
 import React, { Component } from 'react';
 import CustomInput from 'components/CustomInput';
+import { renderSelectField } from 'components/render';
 import { reduxForm, Field } from 'redux-form';
 import validate from '../validate';
-import { RaisedButton, Checkbox, Subheader } from 'material-ui';
+import { RaisedButton, Subheader, MenuItem } from 'material-ui';
 import { Link } from 'react-router-dom';
+import { topicsActions } from 'store/ducks/topics';
+import { connect } from 'react-redux';
+
 class AddPaperForm extends Component {
+  constructor() {
+    super();
+    this.handleClick = this.handleClick.bind(this);
+  }
+  handleClick(topic) {
+    this.props.setTopic(topic);
+  }
   render() {
     const topics = this.props.topics;
-    const renderCheckbox = ({ input, label }) => (
-      <Checkbox
-        label={label}
-        checked={input.value ? true : false}
-        onCheck={input.onChange}
-      />
-    );
+
     const { handleSubmit, invalid } = this.props;
     return (
       <form className="form conference-info" onSubmit={handleSubmit}>
@@ -49,19 +54,27 @@ class AddPaperForm extends Component {
             hintText="Paper Abstract"
           />
         </div>
-        <Subheader style={{ fontSize: '20px' }}>Topic</Subheader>
-        <div className="d-flex flex-wrap" style={{ marginTop: '20px' }}>
-          {topics.map(topic => {
-            return (
-              <div key={topic.id} style={{ width: '50%' }}>
-                <Field
-                  name={`topics[${topic.id}]`}
-                  component={renderCheckbox}
-                  label={topic.name}
+        <div className="d-flex form-group">
+          <label>Topic :</label>
+          <Field
+            name="topic"
+            component={renderSelectField}
+            hintText="Paper Topic"
+            fullWidth={true}
+          >
+            {topics.map(topic => {
+              return (
+                <MenuItem
+                  key={topic.id}
+                  value={topic.id}
+                  primaryText={topic.name}
+                  onClick={() => {
+                    this.handleClick(topic);
+                  }}
                 />
-              </div>
-            );
-          })}
+              );
+            })}
+          </Field>
         </div>
         <div
           style={{ marginBottom: '20px' }}
@@ -87,7 +100,12 @@ class AddPaperForm extends Component {
     );
   }
 }
-
+const mapDispatchToProps = dispatch => {
+  return {
+    setTopic: topic => dispatch(topicsActions.setTopics(topic)),
+  };
+};
+AddPaperForm = connect(undefined, mapDispatchToProps)(AddPaperForm);
 export default reduxForm({
   form: 'AddPaperForm',
   validate,
