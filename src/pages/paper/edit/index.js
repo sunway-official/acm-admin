@@ -57,6 +57,7 @@ class Index extends Component {
     }
   }
   render() {
+    console.log(this.props.topic);
     const loadingPaper = this.props.GET_PAPER_BY_ID.loading;
     const loadingTopics = this.props.GET_TOPICS_OF_CONFERENCE.loading;
     const loadingPaperTopics = this.props.GET_TOPICS_BY_PAPER_ID.loading;
@@ -90,7 +91,7 @@ class Index extends Component {
             <IconButton>
               <ActionHome />
             </IconButton>
-            <span>Home</span>
+            <span>Conference Information</span>
           </Link>
           <IconButton>
             <HardwareKeyboardArrowRight />
