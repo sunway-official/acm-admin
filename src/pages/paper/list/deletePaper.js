@@ -4,7 +4,7 @@ import { graphql, compose } from 'react-apollo';
 import { mutations, queries } from '../helpers';
 import { connect } from 'react-redux';
 import { paperActions } from 'store/ducks/paper';
-import { alertOptions, MyFaCheck } from 'theme/alert';
+import { alertOptions, MyExclamationTriangle, MyFaCheck } from 'theme/alert';
 import AlertContainer from 'react-alert';
 class DeletePaper extends Component {
   styles = {
@@ -14,6 +14,12 @@ class DeletePaper extends Component {
     super(props);
     this.handleDelete = this.handleDelete.bind(this);
   }
+  showAlertError = text => {
+    this.msg.error(text, {
+      type: 'error', // type of alert
+      icon: <MyExclamationTriangle />,
+    });
+  };
   showAlertSuccess = () => {
     this.msg.success('Deleted!', {
       type: 'success',
@@ -37,14 +43,18 @@ class DeletePaper extends Component {
           {
             query: queries.GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
             variables: {
-              topic_id: this.props.topic_id,
+              topic_id: this.props.paper.papersTopic[0].topic_id,
             },
           },
         ],
       });
       this.props.setToggle();
+      this.showAlertSuccess();
     } catch (error) {
-      console.log({ error });
+      let temp = error.graphQLErrors[0].message;
+      this.props.setToggle();
+
+      this.showAlertError(temp.substring(7, temp.length));
     }
   }
 
@@ -55,7 +65,6 @@ class DeletePaper extends Component {
         primary={true}
         onClick={() => {
           this.handleDelete();
-          this.showAlertSuccess();
         }}
         type="submit"
       />,

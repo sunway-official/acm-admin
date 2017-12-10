@@ -7,7 +7,7 @@ import { queries, mutations } from '../helpers';
 import Form from '../form';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
-import { alertOptions, MyFaCheck } from 'theme/alert';
+import { alertOptions, MyExclamationTriangle, MyFaCheck } from 'theme/alert';
 import AlertContainer from 'react-alert';
 class Index extends Component {
   constructor(props) {
@@ -21,6 +21,12 @@ class Index extends Component {
       onClose: () => {
         this.props.history.replace('/conference/papers');
       },
+    });
+  };
+  showAlertError = text => {
+    this.msg.error(text, {
+      type: 'error', // type of alert
+      icon: <MyExclamationTriangle />,
     });
   };
   async handleSave(values) {
@@ -62,9 +68,10 @@ class Index extends Component {
           ],
         });
       }
-      this.props.history.replace('/conference/papers');
+      this.showAlertSuccess();
     } catch (error) {
-      throw console.log({ error });
+      let temp = error.graphQLErrors[0].message;
+      this.showAlertError(temp.substring(7, temp.length));
     }
   }
   render() {

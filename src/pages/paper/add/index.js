@@ -6,7 +6,7 @@ import { graphql, compose } from 'react-apollo';
 import { mutations, queries } from '../helpers';
 import { withRouter } from 'react-router';
 import Form from '../form';
-import { alertOptions, MyFaCheck } from 'theme/alert';
+import { alertOptions, MyExclamationTriangle, MyFaCheck } from 'theme/alert';
 import AlertContainer from 'react-alert';
 class Index extends Component {
   constructor(props) {
@@ -20,6 +20,12 @@ class Index extends Component {
       onClose: () => {
         this.props.history.replace('/conference/papers');
       },
+    });
+  };
+  showAlertError = text => {
+    this.msg.error(text, {
+      type: 'error', // type of alert
+      icon: <MyExclamationTriangle />,
     });
   };
   async handleAdd(values) {
@@ -44,20 +50,21 @@ class Index extends Component {
           {
             query: queries.GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
             variables: {
-              topic_id: this.props.topic.id,
+              topic_id: values.topic,
             },
           },
           {
             query: queries.GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
             variables: {
-              topic_id: this.props.topic.id,
+              topic_id: values.topic,
             },
           },
         ],
       });
       this.showAlertSuccess();
     } catch (error) {
-      throw error;
+      let temp = error.graphQLErrors[0].message;
+      this.showAlertError(temp.substring(7, temp.length));
     }
   }
   render() {

@@ -7,7 +7,7 @@ import validate from './validate';
 import { Link } from 'react-router-dom';
 class CoOrganizerForm extends Component {
   render() {
-    const { onSubmit, handleSubmit } = this.props;
+    const { onSubmit, handleSubmit, pristine } = this.props;
     return (
       <div>
         <form
@@ -54,7 +54,12 @@ class CoOrganizerForm extends Component {
             />
           </div>
           <div className="d-flex save-btn btn-group marginBottom">
-            <RaisedButton label="Save" primary={true} type="submit" />
+            <RaisedButton
+              label="Save"
+              primary={true}
+              type="submit"
+              disabled={pristine}
+            />
             <RaisedButton
               className="marginLeft"
               label="Cancel"

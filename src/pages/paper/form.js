@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 class EditPaperForm extends Component {
   render() {
     const topics = this.props.topics;
-    const { handleSubmit } = this.props;
+    const { handleSubmit, pristine } = this.props;
     return (
       <form className="form conference-info" onSubmit={handleSubmit}>
         <Subheader className="subheader">Paper Information</Subheader>
@@ -57,9 +57,6 @@ class EditPaperForm extends Component {
                   key={topic.id}
                   value={topic.id}
                   primaryText={topic.name}
-                  // onClick={() => {
-                  //   this.handleClick(topic);
-                  // }}
                 />
               );
             })}
@@ -69,7 +66,12 @@ class EditPaperForm extends Component {
           style={{ marginBottom: '20px' }}
           className="d-flex save-btn btn-group"
         >
-          <RaisedButton label="Save" primary={true} type="submit" />
+          <RaisedButton
+            label="Save"
+            primary={true}
+            type="submit"
+            disabled={pristine}
+          />
           <RaisedButton
             label="Cancel"
             style={{ marginLeft: '10px' }}

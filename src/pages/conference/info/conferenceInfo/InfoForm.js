@@ -27,6 +27,7 @@ class ConferenceInfoForm extends React.Component {
       invalid,
       initialValues,
       onMapPositionChanged,
+      pristine,
     } = this.props;
 
     return (
@@ -151,6 +152,7 @@ class ConferenceInfoForm extends React.Component {
                 label="Save"
                 primary={true}
                 type="submit"
+                disabled={pristine}
                 onClick={() => {
                   if (!invalid) {
                     this.showAlertSuccess();
