@@ -5,6 +5,7 @@ const initalState = {
   openAddFormModalWithPaper: false,
   openAddFormModalWithTitle: false,
   openEditFormModalWithTitle: false,
+  openDeleteFormModal: false,
 };
 
 const reducer = (state = initalState, action) => {
@@ -33,6 +34,12 @@ const reducer = (state = initalState, action) => {
         openEditFormModalWithTitle: !state.openEditFormModalWithTitle,
       };
       return editActivityTitle;
+    case types.TOGGLE_DELETE_ACTIVITY:
+      const toggleDeleteActivity = {
+        ...state,
+        openDeleteFormModal: !state.openDeleteFormModal,
+      };
+      return toggleDeleteActivity;
     case types.SET_EVENT_SUCCESS: {
       const newState = Object.assign({}, state, {
         event: action.payload.event,

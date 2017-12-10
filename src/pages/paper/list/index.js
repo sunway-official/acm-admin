@@ -90,6 +90,7 @@ class Index extends Component {
             />
             <RaisedButton
               label="Delete"
+              secondary={true}
               onClick={() => {
                 this.handleDialog(props.value, props.value.id);
               }}

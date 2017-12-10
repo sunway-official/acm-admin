@@ -156,6 +156,7 @@ class Index extends Component {
             />
             <RaisedButton
               label="Delete"
+              secondary={true}
               onClick={() => {
                 this.handleOpenDelete(props.value.id, props.value.name);
               }}

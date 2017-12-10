@@ -18,6 +18,9 @@ const toggleEditActivityTitleFormModal = () => ({
   type: types.TOGGLE_EDIT_ACTIVITY_TITLE_FORM_MODAL,
 });
 
+const toggleDeleteActivity = () => ({
+  type: types.TOGGLE_DELETE_ACTIVITY,
+});
 // SET EVENT
 const setEventRequested = () => ({
   type: types.SET_EVENT_REQUESTED,
@@ -71,6 +74,7 @@ export default {
   toggleEditActivityPaperFormModal,
   toggleAddActivityTitleFormModal,
   toggleEditActivityTitleFormModal,
+  toggleDeleteActivity,
   setEventRequested,
   setEventSuccess,
   setEventFailure,
