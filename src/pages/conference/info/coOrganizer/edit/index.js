@@ -4,7 +4,7 @@ import { Subheader, IconButton } from 'material-ui';
 import { Link } from 'react-router-dom';
 import { compose, graphql } from 'react-apollo';
 import { mutations, queries } from '../../helpers';
-import Form from '../form';
+import Form from '../Form';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { alertOptions, MyFaCheck } from 'theme/alert';
@@ -25,7 +25,6 @@ class Index extends Component {
     });
   };
   async handleEdit(values) {
-    console.log(values);
     try {
       await this.props.UPDATE_COORGANIZER_MUTATION({
         variables: {
@@ -49,7 +48,6 @@ class Index extends Component {
     let coOrganizer, initialValues;
     if (getCoOrganizerDetailByID) {
       coOrganizer = getCoOrganizerDetailByID;
-      console.log(coOrganizer);
       initialValues = {
         coOrganizerName: coOrganizer.name,
         coOrganizerEmail: coOrganizer.email,
@@ -60,7 +58,6 @@ class Index extends Component {
     if (loading) {
       return <div>Loading...</div>;
     }
-    console.log(initialValues);
     return (
       <div className="conference">
         <Subheader className="subheader">Co-Organizer Management</Subheader>
@@ -91,8 +88,6 @@ class Index extends Component {
   }
 }
 const mapStateToProps = (state, ownProps) => {
-  console.log(state);
-  console.log(ownProps);
   if (ownProps) {
     return {
       coOrganizer_id: ownProps.match.params.id,

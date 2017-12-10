@@ -4,7 +4,7 @@ import { Subheader, IconButton } from 'material-ui';
 import { Link } from 'react-router-dom';
 import { compose, graphql } from 'react-apollo';
 import { mutations, queries } from '../../helpers';
-import Form from '../form';
+import Form from '../Form';
 import { withRouter } from 'react-router';
 import { alertOptions, MyFaCheck } from 'theme/alert';
 import AlertContainer from 'react-alert';
@@ -24,7 +24,6 @@ class Index extends Component {
     });
   };
   async handleAdd(values) {
-    console.log(values);
     try {
       await this.props.INSERT_COORGANIZER({
         variables: {

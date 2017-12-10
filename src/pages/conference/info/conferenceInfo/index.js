@@ -1,10 +1,9 @@
 import React, { PureComponent } from 'react';
-import { SubmissionError } from 'redux-form';
 import { mutations } from '../helpers';
 import { connect } from 'react-redux';
 import { graphql, compose } from 'react-apollo';
 import InfoForm from './InfoForm';
-import { conferenceOperations } from 'store/ducks/conference';
+import { withRouter } from 'react-router-dom';
 import './style.css';
 class ConferenceInfoForm extends PureComponent {
   constructor(props) {
@@ -58,7 +57,7 @@ class ConferenceInfoForm extends PureComponent {
         },
       });
     } catch (error) {
-      throw new SubmissionError(error);
+      throw error;
     }
   }
   onMapPositionChanged(position) {
@@ -101,16 +100,9 @@ const mapStateToProps = (state, ownProps) => {
     },
   };
 };
-
-const mapDispatchToProps = dispatch => {
-  return {
-    getPosition: position =>
-      dispatch(conferenceOperations.getPositionOperation(position)),
-  };
-};
-
 export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
+  withRouter,
+  connect(mapStateToProps, undefined),
   graphql(mutations.UPDATE_CONFERENCE_MUTATION, {
     name: 'UPDATE_CONFERENCE_MUTATION',
   }),

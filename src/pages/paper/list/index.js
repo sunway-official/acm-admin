@@ -33,12 +33,13 @@ class Index extends Component {
   }
   state = {
     paper_id: 0,
+    topic_id: 0,
   };
   styles = {
     margin: 10,
   };
-  handleDialog(paper, paper_id) {
-    this.setState({ paper_id: paper_id });
+  handleDialog(paper, paper_id, topic_id) {
+    this.setState({ paper_id: paper_id, topic_id: topic_id });
     this.props.setPaper(paper);
     this.props.setToggle();
   }
@@ -91,7 +92,11 @@ class Index extends Component {
               label="Delete"
               secondary={true}
               onClick={() => {
-                this.handleDialog(props.value, props.value.id);
+                this.handleDialog(
+                  props.value,
+                  props.value.id,
+                  props.value.papersTopic[0].topic_id,
+                );
               }}
               style={styleBtn}
             />

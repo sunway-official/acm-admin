@@ -46,12 +46,9 @@ class DialogEdit extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  console.log(state.user.data);
-  return {
-    user: state.user.data,
-  };
-};
+const mapStateToProps = state => ({
+  user: state.user.data,
+});
 
 export default compose(
   connect(mapStateToProps, undefined),

@@ -41,6 +41,18 @@ class Index extends Component {
           {
             query: queries.GET_PAPERS_BY_CONFERENCE_ID,
           },
+          {
+            query: queries.GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
+            variables: {
+              topic_id: this.props.topic.id,
+            },
+          },
+          {
+            query: queries.GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
+            variables: {
+              topic_id: this.props.topic.id,
+            },
+          },
         ],
       });
       this.showAlertSuccess();
@@ -66,7 +78,7 @@ class Index extends Component {
             <IconButton>
               <ActionHome />
             </IconButton>
-            <span>Home</span>
+            <span>Conference Information</span>
           </Link>
           <IconButton>
             <HardwareKeyboardArrowRight />

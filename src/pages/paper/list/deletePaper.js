@@ -21,6 +21,7 @@ class DeletePaper extends Component {
     });
   };
   async handleDelete() {
+    console.log(this.props);
     try {
       await this.props.DELETE_PAPER({
         variables: {
@@ -31,6 +32,12 @@ class DeletePaper extends Component {
             query: queries.GET_PAPERS_BY_CONFERENCE_ID,
             variables: {
               conference_id: this.props.conference_id,
+            },
+          },
+          {
+            query: queries.GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
+            variables: {
+              topic_id: this.props.topic_id,
             },
           },
         ],

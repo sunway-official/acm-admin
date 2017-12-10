@@ -94,6 +94,14 @@ export const INSERT_ADDRESS_MUTATION = gql`
   }
 `;
 
+export const INSERT_CONFERENCE_ATTENDEE_MUTATION = gql`
+  mutation insertConferenceAttendee($conference_id: ID!, $user_id: ID!) {
+    insertConferenceAttendee(conference_id: $conference_id, user_id: $user_id) {
+      id
+    }
+  }
+`;
+
 export const ME_QUERY = gql`
   query Me {
     me {
@@ -108,4 +116,5 @@ export default {
   INSERT_ORGANIZER_DETAIL_MUTATION,
   INSERT_ADDRESS_MUTATION,
   ME_QUERY,
+  INSERT_CONFERENCE_ATTENDEE_MUTATION,
 };
