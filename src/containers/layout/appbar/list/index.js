@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { List, ListItem, Menu, MenuItem, Popover } from 'material-ui';
+import { sidebarActions } from 'store/ducks/sidebar';
+
 import {
   ActionInfoOutline,
   ActionSupervisorAccount,
@@ -29,7 +31,9 @@ class ListExampleSimple extends React.Component {
     };
     // this.handleRequestClose = this.handleRequestClose.bind(this);
   }
-
+  handleClickSidebar = () => {
+    this.props.setSidebar();
+  };
   handleTouchTap = event => {
     event.preventDefault();
 
@@ -52,6 +56,7 @@ class ListExampleSimple extends React.Component {
       open: false,
       openLanding: false,
     });
+    this.props.setSidebar();
   };
   render() {
     const {
@@ -94,6 +99,7 @@ class ListExampleSimple extends React.Component {
               className="item"
               primaryText={'Information'}
               leftIcon={<ActionInfoOutline />}
+              onClick={() => this.handleClickSidebar()}
             />
           </Link>
           <Link to="/conference/activities">
@@ -101,6 +107,7 @@ class ListExampleSimple extends React.Component {
               className="item"
               primaryText={'Schedules'}
               leftIcon={<NotificationEventAvailable />}
+              onClick={() => this.handleClickSidebar()}
             />
           </Link>
           <ListItem
@@ -147,6 +154,7 @@ class ListExampleSimple extends React.Component {
               className="item"
               primaryText={'Papers'}
               leftIcon={<AvLibraryBooks />}
+              onClick={() => this.handleClickSidebar()}
             />
           </Link>
           <ListItem
@@ -181,6 +189,7 @@ class ListExampleSimple extends React.Component {
               className="item"
               primaryText={'Rooms'}
               leftIcon={<SocialLocationCity />}
+              onClick={() => this.handleClickSidebar()}
             />
           </Link>
           <Link to="/conference/topics-management">
@@ -188,6 +197,7 @@ class ListExampleSimple extends React.Component {
               className="item"
               primaryText={'Topics'}
               leftIcon={<EditorFormatListNumbered />}
+              onClick={() => this.handleClickSidebar()}
             />
           </Link>
           {/*
@@ -212,13 +222,23 @@ class ListExampleSimple extends React.Component {
     );
   }
 }
-const mapStateToProps = (state, ownProps) => ({
-  auth: state.auth,
-});
+const mapStateToProps = (state, ownProps) => {
+  if (state.auth) {
+    return {
+      auth: state.auth,
+      openSidebar: state.sidebar.openSidebar,
+    };
+  }
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    setSidebar: () => dispatch(sidebarActions.setSidebar()),
+  };
+};
 
 export default compose(
   withRouter,
-  connect(mapStateToProps),
+  connect(mapStateToProps, mapDispatchToProps),
   graphql(queries.GET_LANDING_PAGE_BY_CONFERENCE_ID_QUERY, {
     name: 'GET_LANDING_PAGE_BY_CONFERENCE_ID_QUERY',
   }),

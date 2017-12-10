@@ -30,6 +30,18 @@ class Index extends Component {
           {
             query: queries.GET_PAPERS_BY_CONFERENCE_ID,
           },
+          {
+            query: queries.GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
+            variables: {
+              topic_id: this.props.topic.id,
+            },
+          },
+          {
+            query: queries.GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
+            variables: {
+              topic_id: this.props.topic.id,
+            },
+          },
         ],
       });
       this.props.history.replace('/conference/papers');
