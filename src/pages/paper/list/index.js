@@ -112,9 +112,10 @@ class Index extends Component {
         />
 
         <DeletePaper id={this.state.paper_id} />
-        <div className="d-flex save-btn btn-group">
+        <div className="d-flex justify-content-center save-btn btn-group">
           <Link to="/conference/paper/add">
             <RaisedButton
+              style={{ marginTop: '20px' }}
               className="marginBottom"
               icon={<ActionNoteAdd />}
               primary={true}

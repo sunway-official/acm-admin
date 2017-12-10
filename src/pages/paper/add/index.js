@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { graphql, compose } from 'react-apollo';
 import { mutations, queries } from '../helpers';
 import { withRouter } from 'react-router';
-import Form from './form';
+import Form from '../form';
 import { alertOptions, MyFaCheck } from 'theme/alert';
 import AlertContainer from 'react-alert';
 class Index extends Component {

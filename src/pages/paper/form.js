@@ -2,24 +2,12 @@ import React, { Component } from 'react';
 import CustomInput from 'components/CustomInput';
 import { renderSelectField } from 'components/render';
 import { reduxForm, Field } from 'redux-form';
-import validate from '../validate';
+import validate from './validate';
 import { RaisedButton, Subheader, MenuItem } from 'material-ui';
 import { Link } from 'react-router-dom';
-import { topicsActions } from 'store/ducks/topics';
-import { connect } from 'react-redux';
-
-class AddPaperForm extends Component {
-  constructor() {
-    super();
-    this.handleClick = this.handleClick.bind(this);
-  }
-  handleClick(topic) {
-    this.props.setTopic(topic);
-  }
-
+class EditPaperForm extends Component {
   render() {
     const topics = this.props.topics;
-
     const { handleSubmit } = this.props;
     return (
       <form className="form conference-info" onSubmit={handleSubmit}>
@@ -69,9 +57,9 @@ class AddPaperForm extends Component {
                   key={topic.id}
                   value={topic.id}
                   primaryText={topic.name}
-                  onClick={() => {
-                    this.handleClick(topic);
-                  }}
+                  // onClick={() => {
+                  //   this.handleClick(topic);
+                  // }}
                 />
               );
             })}
@@ -92,13 +80,8 @@ class AddPaperForm extends Component {
     );
   }
 }
-const mapDispatchToProps = dispatch => {
-  return {
-    setTopic: topic => dispatch(topicsActions.setTopics(topic)),
-  };
-};
-AddPaperForm = connect(undefined, mapDispatchToProps)(AddPaperForm);
+
 export default reduxForm({
-  form: 'AddPaperForm',
+  form: 'EditPaperForm',
   validate,
-})(AddPaperForm);
+})(EditPaperForm);
