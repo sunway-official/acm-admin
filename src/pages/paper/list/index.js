@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { graphql, compose } from 'react-apollo';
+import { graphql, compose, withApollo } from 'react-apollo';
 import { queries } from '../helpers';
 import { paperActions } from 'store/ducks/paper';
 import { Link } from 'react-router-dom';
@@ -34,6 +34,7 @@ class Index extends Component {
   state = {
     paper_id: 0,
     topic_id: 0,
+    papers: [],
   };
   styles = {
     margin: 10,
@@ -46,14 +47,53 @@ class Index extends Component {
   handleEdit(paper) {
     this.props.setPaper(paper);
   }
-  render() {
-    const { loading, getPapersByConferenceID } = this.props.data;
-    if (loading) return <div>Loading..</div>;
-    let papers;
-    if (getPapersByConferenceID) {
-      papers = getPapersByConferenceID;
+
+  componentWillMount() {
+    const isAuthor = localStorage.getItem('roles').indexOf('7');
+    if (isAuthor > -1) {
+      this.props.client
+        .query({
+          query: queries.GET_PAPERS_BY_CONFERENCE_ID,
+          variables: {
+            isAuthor: 1,
+          },
+        })
+        .then(value => {
+          const { loading, data } = value;
+          if (!loading) {
+            const papers = data.getPapersByConferenceID;
+            this.setState({
+              papers: papers,
+            });
+          }
+        });
+    } else {
+      this.props.client
+        .query({
+          query: queries.GET_PAPERS_BY_CONFERENCE_ID,
+        })
+        .then(value => {
+          const { loading, data } = value;
+          if (!loading) {
+            const papers = data.getPapersByConferenceID;
+            this.setState({
+              papers: papers,
+            });
+          }
+        });
     }
-    console.log(papers);
+  }
+  render() {
+    // const { loading, getAllPapersByTopicID } = papers.data;
+    // const {
+    //   loading,
+    //   getPapersByConferenceID,
+    // } = this.props.GET_PAPERS_BY_CONFERENCE_ID;
+    // if (loading) return <div>Loading..</div>;
+    // let papers;
+    // if (getPapersByConferenceID) {
+    //   papers = getPapersByConferenceID;
+    // }
     const columns = [
       {
         Header: 'Title',
@@ -109,7 +149,7 @@ class Index extends Component {
       <div className="react-table">
         <ReactTable
           filterable
-          data={papers}
+          data={this.state.papers}
           columns={columns}
           defaultSorted={sorted}
           defaultPageSize={10}
@@ -140,16 +180,8 @@ const mapDispatchToProps = dispatch => {
 };
 export default compose(
   connect(undefined, mapDispatchToProps),
-  graphql(queries.GET_PAPERS_BY_CONFERENCE_ID, {
-    options: ownProps => ({
-      name: 'GET_PAPERS_BY_CONFERENCE_ID',
-      if(ownProps) {
-        return {
-          variables: {
-            conference_id: ownProps.conference_id,
-          },
-        };
-      },
-    }),
-  }),
+  withApollo,
+  // graphql(queries.GET_PAPERS_BY_CONFERENCE_ID, {
+  //   name: 'GET_PAPERS_BY_CONFERENCE_ID',
+  // }),
 )(Index);

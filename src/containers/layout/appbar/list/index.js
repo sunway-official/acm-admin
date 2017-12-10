@@ -21,17 +21,6 @@ import { graphql, compose } from 'react-apollo';
 import { queries, functions } from '../helpers';
 import { withRouter } from 'react-router';
 
-const conferenceInfo = () => (
-  <Link to="/conference/info">
-    <ListItem
-      className="item"
-      primaryText={'Information'}
-      leftIcon={<ActionInfoOutline />}
-      onClick={() => this.handleClickSidebar()}
-    />
-  </Link>
-);
-
 class ListExampleSimple extends React.Component {
   constructor(props) {
     super(props);
@@ -78,22 +67,24 @@ class ListExampleSimple extends React.Component {
     if (loading || loadingRole) return <div>loading...</div>;
     let conference_id;
     let disableView = true;
-    let checkRole = [];
+
+    // check role and show component
+    let isShow = [];
     const roles = this.props.GET_ALL_ROLE_OF_USER.getAllRolesOfUser;
+
     if (roles && roles.length > 0) {
       const rolesUserId = functions.getRolesId(roles);
-      // const rolesComponentId = ['1'];
-      // checkComponent = functions.checkRoleUser(rolesUserId, rolesComponentId);
-      checkRole = functions.checkRoleAllComponents(rolesUserId);
+      localStorage.setItem('roles', rolesUserId);
+      isShow = functions.checkRoleAllComponents(rolesUserId);
     }
-    console.log(checkRole);
-    const checkComponent = true;
+    // check role and show component
+
     if (
       this.props.auth.currentUser &&
       this.props.auth.currentUser.currentConference
     ) {
       conference_id = this.props.auth.currentUser.currentConference.id;
-      if (getLandingPageByConferenceId[0]) disableView = false;
+      if (getLandingPageByConferenceId) disableView = false;
     } else {
       conference_id = 0;
     }
@@ -116,7 +107,18 @@ class ListExampleSimple extends React.Component {
       <div>
         <style dangerouslySetInnerHTML={{ __html: style }} />
         <List className="list">
-          {checkComponent ? (
+          {isShow['conference-info'] ? (
+            <Link to="/conference/info">
+              <ListItem
+                className="item"
+                primaryText={'Information'}
+                leftIcon={<ActionInfoOutline />}
+                onClick={() => this.handleClickSidebar()}
+              />
+            </Link>
+          ) : null}
+
+          {isShow['activities'] ? (
             <Link to="/conference/activities">
               <ListItem
                 className="item"
@@ -127,96 +129,107 @@ class ListExampleSimple extends React.Component {
             </Link>
           ) : null}
 
-          <ListItem
-            className="item"
-            primaryText="People"
-            leftIcon={<ActionSupervisorAccount />}
-            onClick={this.handleTouchTap}
-            rightIcon={<HardwareKeyboardArrowRight />}
-          >
-            <Popover
-              open={this.state.open}
-              className="people"
-              anchorEl={this.state.anchorEl}
-              anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
-              targetOrigin={{ horizontal: 'left', vertical: 'top' }}
-              onRequestClose={this.handleRequestClose}
+          {isShow['people'] ? (
+            <ListItem
+              className="item"
+              primaryText="People"
+              leftIcon={<ActionSupervisorAccount />}
+              onClick={this.handleTouchTap}
+              rightIcon={<HardwareKeyboardArrowRight />}
             >
-              <Menu style={{ color: 'black' }} className="menu people-menu">
-                <Link to="/conference/1/people/staff">
-                  <MenuItem
-                    className="item"
-                    primaryText={'Staff'}
-                    onClick={this.handleRequestClose}
-                  />
-                </Link>
-                <Link to="/conference/people/participant-management">
-                  <MenuItem
-                    className="item"
-                    primaryText={'Participant'}
-                    onClick={this.handleRequestClose}
-                  />
-                </Link>
-                {/*
+              <Popover
+                open={this.state.open}
+                className="people"
+                anchorEl={this.state.anchorEl}
+                anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+                targetOrigin={{ horizontal: 'left', vertical: 'top' }}
+                onRequestClose={this.handleRequestClose}
+              >
+                <Menu style={{ color: 'black' }} className="menu people-menu">
+                  <Link to="/conference/1/people/staff">
+                    <MenuItem
+                      className="item"
+                      primaryText={'Staff'}
+                      onClick={this.handleRequestClose}
+                    />
+                  </Link>
+                  <Link to="/conference/people/participant-management">
+                    <MenuItem
+                      className="item"
+                      primaryText={'Participant'}
+                      onClick={this.handleRequestClose}
+                    />
+                  </Link>
+                  {/*
              <MenuItem primaryText={<a href="/dashboard">Speaker</a>} />
               <MenuItem primaryText={<a href="/dashboard">Author</a>} />
               <MenuItem primaryText={<a href="/dashboard">Reviewer</a>} />
               <MenuItem primaryText={<a href="/dashboard">Participant</a>} />
             */}
-              </Menu>
-            </Popover>
-          </ListItem>
-          <Link to="/conference/papers">
+                </Menu>
+              </Popover>
+            </ListItem>
+          ) : null}
+
+          {isShow['papers'] ? (
+            <Link to="/conference/papers">
+              <ListItem
+                className="item"
+                primaryText={'Papers'}
+                leftIcon={<AvLibraryBooks />}
+                onClick={() => this.handleClickSidebar()}
+              />
+            </Link>
+          ) : null}
+          {isShow['landing-page'] ? (
             <ListItem
-              className="item"
-              primaryText={'Papers'}
-              leftIcon={<AvLibraryBooks />}
-              onClick={() => this.handleClickSidebar()}
-            />
-          </Link>
-          <ListItem
-            className="item landing-page"
-            primaryText={'Landing Page'}
-            leftIcon={<AvWeb />}
-            onClick={this.handleLanding}
-            rightIcon={<HardwareKeyboardArrowRight />}
-          >
-            <Popover
-              open={this.state.openLanding}
-              className="landing"
-              anchorEl={this.state.anchorLanding}
-              anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
-              targetOrigin={{ horizontal: 'left', vertical: 'top' }}
-              onRequestClose={this.handleRequestClose}
+              className="item landing-page"
+              primaryText={'Landing Page'}
+              leftIcon={<AvWeb />}
+              onClick={this.handleLanding}
+              rightIcon={<HardwareKeyboardArrowRight />}
             >
-              <Menu style={{ color: 'black' }}>
-                <Link to="/conference/landing-page-management">
-                  <MenuItem
-                    className="item"
-                    primaryText={'Edit'}
-                    onClick={this.handleRequestClose}
-                  />
-                </Link>
-                {view}
-              </Menu>
-            </Popover>
-          </ListItem>
-          <Link to="/conference/rooms-management">
-            <ListItem
-              className="item"
-              primaryText={'Rooms'}
-              leftIcon={<SocialLocationCity />}
-              onClick={() => this.handleClickSidebar()}
-            />
-          </Link>
-          <Link to="/conference/topics-management">
-            <ListItem
-              className="item"
-              primaryText={'Topics'}
-              leftIcon={<EditorFormatListNumbered />}
-              onClick={() => this.handleClickSidebar()}
-            />
-          </Link>
+              <Popover
+                open={this.state.openLanding}
+                className="landing"
+                anchorEl={this.state.anchorLanding}
+                anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+                targetOrigin={{ horizontal: 'left', vertical: 'top' }}
+                onRequestClose={this.handleRequestClose}
+              >
+                <Menu style={{ color: 'black' }}>
+                  <Link to="/conference/landing-page-management">
+                    <MenuItem
+                      className="item"
+                      primaryText={'Edit'}
+                      onClick={this.handleRequestClose}
+                    />
+                  </Link>
+                  {view}
+                </Menu>
+              </Popover>
+            </ListItem>
+          ) : null}
+          {isShow['rooms'] ? (
+            <Link to="/conference/rooms-management">
+              <ListItem
+                className="item"
+                primaryText={'Rooms'}
+                leftIcon={<SocialLocationCity />}
+                onClick={() => this.handleClickSidebar()}
+              />
+            </Link>
+          ) : null}
+          {isShow['topics'] ? (
+            <Link to="/conference/topics-management">
+              <ListItem
+                className="item"
+                primaryText={'Topics'}
+                leftIcon={<EditorFormatListNumbered />}
+                onClick={() => this.handleClickSidebar()}
+              />
+            </Link>
+          ) : null}
           {/*
           <ListItem
             className="item"

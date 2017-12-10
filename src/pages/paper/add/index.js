@@ -21,29 +21,59 @@ class Index extends Component {
           keywords: values.keywords,
         },
       });
-      await this.props.INSERT_PAPER_TOPIC({
-        variables: {
-          paper_id: paper.data.insertPaper.id,
-          topic_id: this.props.topic.id,
-        },
-        refetchQueries: [
-          {
-            query: queries.GET_PAPERS_BY_CONFERENCE_ID,
+      const isAuthor = localStorage.getItem('roles').indexOf('7');
+      if (isAuthor > -1) {
+        await this.props.INSERT_PAPER_TOPIC({
+          variables: {
+            paper_id: paper.data.insertPaper.id,
+            topic_id: this.props.topic.id,
           },
-          {
-            query: queries.GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
-            variables: {
-              topic_id: this.props.topic.id,
+          refetchQueries: [
+            {
+              query: queries.GET_PAPERS_BY_CONFERENCE_ID,
+              variables: {
+                isAuthor: 1,
+              },
             },
-          },
-          {
-            query: queries.GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
-            variables: {
-              topic_id: this.props.topic.id,
+            {
+              query: queries.GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
+              variables: {
+                topic_id: this.props.topic.id,
+              },
             },
+            {
+              query: queries.GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
+              variables: {
+                topic_id: this.props.topic.id,
+              },
+            },
+          ],
+        });
+      } else {
+        await this.props.INSERT_PAPER_TOPIC({
+          variables: {
+            paper_id: paper.data.insertPaper.id,
+            topic_id: this.props.topic.id,
           },
-        ],
-      });
+          refetchQueries: [
+            {
+              query: queries.GET_PAPERS_BY_CONFERENCE_ID,
+            },
+            {
+              query: queries.GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
+              variables: {
+                topic_id: this.props.topic.id,
+              },
+            },
+            {
+              query: queries.GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
+              variables: {
+                topic_id: this.props.topic.id,
+              },
+            },
+          ],
+        });
+      }
       this.props.history.replace('/conference/papers');
     } catch (error) {
       throw error;

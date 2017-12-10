@@ -1,6 +1,3 @@
-import React from 'react';
-import { ConferenceInfo } from './renders';
-
 export const getRolesId = roles => {
   const rolesId = [];
   roles.forEach(data => {
@@ -31,51 +28,46 @@ export const checkRoleUser = (rolesUser, rolesComponent) => {
 export const getRolesComponent = () => {
   return [
     {
-      name: 'conference-info',
+      component: 'conference-info',
       roles: ['1', '2', '3', '4', '5', '6', '7', '8'],
-      component: <ConferenceInfo />,
     },
     {
-      name: 'activities',
+      component: 'activities',
       roles: ['1'],
-      component: null,
     },
     {
-      name: 'people',
+      component: 'people',
       roles: ['1'],
-      component: null,
     },
     {
-      name: 'papers',
+      component: 'papers',
       roles: ['1', '7'],
-      component: null,
     },
     {
-      name: 'rooms',
+      component: 'rooms',
       roles: ['1'],
-      component: null,
     },
     {
-      name: 'topics',
+      component: 'topics',
       roles: ['1'],
-      component: null,
+    },
+    {
+      component: 'landing-page',
+      roles: ['1'],
     },
   ];
 };
 
 export const checkRoleAllComponents = rolesUser => {
-  console.log(rolesUser);
   const rolesComponents = getRolesComponent();
-  const checkRolesComponents = [];
+  const result = [];
   rolesComponents.map(rolesComponent => {
-    const checkRole = checkRoleUser(rolesUser, rolesComponent.roles);
-    checkRolesComponents.push({
-      name: rolesComponent.name,
-      isShow: checkRole,
-      component: checkRole ? rolesComponent.component : null,
-    });
+    result[rolesComponent.component] = checkRoleUser(
+      rolesUser,
+      rolesComponent.roles,
+    );
   });
-  return checkRolesComponents;
+  return result;
 };
 
 export default {
