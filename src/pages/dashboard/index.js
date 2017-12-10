@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { compose, withApollo } from 'react-apollo';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
@@ -10,38 +10,35 @@ import { Subheader, IconButton } from 'material-ui';
 import { Link } from 'react-router-dom';
 import { ActionHome } from 'material-ui/svg-icons';
 
-class Index extends Component {
-  render() {
-    const user_id = this.props.me.id;
-    // const firstName = this.props.me.firstname;
-    // let lastName = this.props.me.lastname;
-    return (
-      <div>
-        <style dangerouslySetInnerHTML={{ __html: style }} />
-        <Subheader className="subheader conf-infor-title"> Home</Subheader>
-        <div className="page-breadcrumb d-flex">
-          <Link className="d-flex" to="/">
-            <IconButton>
-              <ActionHome />
-            </IconButton>
-            <span>Home</span>
-          </Link>
-        </div>
-        <DashboardMenu />
-        <div className="dashboard content data">
-          <Card className="card-content-dashboard" />
-          <Conferences user_id={user_id} />
-        </div>
+function DashboardIndex(props) {
+  const user_id = props.me && props.me.id;
+  return (
+    <div>
+      <style dangerouslySetInnerHTML={{ __html: style }} />
+      <Subheader className="subheader conf-infor-title">
+        Academic conferecne management
+      </Subheader>
+      <div className="page-breadcrumb d-flex">
+        <Link className="d-flex" to="/">
+          <IconButton>
+            <ActionHome />
+          </IconButton>
+          <span>Dashboard</span>
+        </Link>
       </div>
-    );
-  }
+      <DashboardMenu />
+      <div className="dashboard content data">
+        <Card className="card-content-dashboard" />
+        <Conferences user_id={user_id} />
+      </div>
+    </div>
+  );
 }
 
-const mapStateToProps = state => {
-  if (state.auth.currentUser)
-    return {
-      me: state.auth.currentUser,
-    };
-};
+const mapStateToProps = state => ({
+  me: state.auth.currentUser,
+});
 
-export default compose(withRouter, withApollo, connect(mapStateToProps))(Index);
+export default compose(withRouter, withApollo, connect(mapStateToProps))(
+  DashboardIndex,
+);
