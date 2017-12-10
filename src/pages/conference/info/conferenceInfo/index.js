@@ -1,15 +1,9 @@
 import React, { PureComponent } from 'react';
-import { SubmissionError } from 'redux-form';
-import { mutations, queries } from '../helpers';
+import { mutations } from '../helpers';
 import { connect } from 'react-redux';
 import { graphql, compose } from 'react-apollo';
 import InfoForm from './InfoForm';
 import { withRouter } from 'react-router-dom';
-import { conferenceOperations } from 'store/ducks/conference';
-import { gql } from 'react-apollo';
-import { bindActionCreators } from 'redux';
-
-import { authActions } from '../../../../store/ducks/auth';
 import './style.css';
 class ConferenceInfoForm extends PureComponent {
   constructor(props) {
@@ -109,24 +103,9 @@ const mapStateToProps = (state, ownProps) => {
     },
   };
 };
-
-const mapDispatchToProps = dispatch => {
-  return {
-    getPosition: position =>
-      dispatch(conferenceOperations.getPositionOperation(position)),
-    setCurrentUser: bindActionCreators(authActions.setCurrentUser, dispatch),
-  };
-};
-
 export default compose(
   withRouter,
-  graphql(queries.ME_QUERY, {
-    name: 'queryMe',
-    options: {
-      notifyOnNetworkStatusChange: true,
-    },
-  }),
-  connect(mapStateToProps, mapDispatchToProps),
+  connect(mapStateToProps, undefined),
   graphql(mutations.UPDATE_CONFERENCE_MUTATION, {
     name: 'UPDATE_CONFERENCE_MUTATION',
   }),

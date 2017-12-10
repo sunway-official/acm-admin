@@ -101,7 +101,7 @@ class ConferenceAddForm extends PureComponent {
             <IconButton>
               <ActionHome />
             </IconButton>
-            <span>Home</span>
+            <span>Dashboard</span>
           </Link>
         </div>
         <div className="add-form-bg">

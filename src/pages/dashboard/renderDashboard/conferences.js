@@ -1,7 +1,6 @@
 import React from 'react';
 import { queries } from './../helpers';
 import { graphql, compose, gql } from 'react-apollo';
-import { Link } from 'react-router-dom';
 import { List, ListItem } from 'material-ui/List';
 import Badge from 'material-ui/Badge';
 import style from './../style.css';
