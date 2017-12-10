@@ -71,7 +71,9 @@ class AuthRoute extends PureComponent {
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.queryMe.error) {
+      const conference_id = localStorage.getItem('conference_id');
       localStorage.clear();
+      localStorage.setItem('conference_id', conference_id);
     }
     if (nextProps.queryMe.me !== this.props.queryMe.me) {
       this.props.setCurrentUser(nextProps.queryMe.me);
