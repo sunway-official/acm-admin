@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
 import { GET_ALL_ROLES_ACTIVE_BY_USER_ID_QUERY } from './helpers';
-import { CircularProgress } from 'material-ui';
+import Loading from '../../../../../components/render/renderLoading';
 class GetRoles extends Component {
   render() {
     const { loading, error } = this.props.data;
     if (loading) {
       return (
         <div>
-          <CircularProgress size={30} />
+          <Loading />
         </div>
       );
     }

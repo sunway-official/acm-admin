@@ -6,6 +6,7 @@ import { List, ListItem } from 'material-ui/List';
 import Badge from 'material-ui/Badge';
 import style from './../style.css';
 import { RaisedButton } from 'material-ui';
+import Loading from '../../../components/render/renderLoading';
 
 const subTitleString = (text, limit) => {
   if (text.length > limit) return text.substring(0, limit);
@@ -38,7 +39,7 @@ class listCoferences extends React.Component {
   render() {
     console.log(this.props);
     const { loading } = this.props.data;
-    if (loading) return <div>loading...</div>;
+    if (loading) return <Loading />;
 
     const conferences = this.props.data.getConferenceByUserID;
     console.log(conferences);

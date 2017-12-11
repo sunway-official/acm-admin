@@ -6,6 +6,7 @@ import { graphql, compose } from 'react-apollo';
 import { queries } from './helpers';
 import ParticipantList from './participantList';
 import { connect } from 'react-redux';
+import Loading from '../../../../components/render/renderLoading';
 
 class Index extends Component {
   constructor(props) {
@@ -19,7 +20,7 @@ class Index extends Component {
       loading,
       getAllParticipantsInConference,
     } = this.props.GET_ALL_PARTICIPANTS_IN_CONFERENCE_QUERY;
-    if (loading) return <div>loading...</div>;
+    if (loading) return <Loading />;
     const listParticipant = getAllParticipantsInConference;
     return (
       <div className="conference">

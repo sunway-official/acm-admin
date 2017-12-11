@@ -4,6 +4,7 @@ import 'react-table/react-table.css';
 import RaisedButton from 'material-ui/RaisedButton';
 import { gql, graphql } from 'react-apollo';
 import { Subheader } from 'material-ui';
+import Loading from '../components/render/renderLoading';
 
 const style = {
   textAlign: 'center',
@@ -66,7 +67,7 @@ const Index = props => {
     loading,
     getTopicsOfConference,
   } = props.GET_TOPICS_OF_CONFERENCE_QUERY;
-  if (loading) return <div>loading</div>;
+  if (loading) return <Loading />;
   const topics = getTopicsOfConference;
   return (
     <div className="conference">

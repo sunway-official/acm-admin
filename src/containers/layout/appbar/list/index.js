@@ -18,6 +18,7 @@ import { connect } from 'react-redux';
 import { graphql, compose } from 'react-apollo';
 import { queries } from '../helpers';
 import { withRouter } from 'react-router';
+import Loading from '../../../../components/render/renderLoading';
 
 class ListExampleSimple extends React.Component {
   constructor(props) {
@@ -58,7 +59,7 @@ class ListExampleSimple extends React.Component {
       loading,
       getLandingPageByConferenceId,
     } = this.props.GET_LANDING_PAGE_BY_CONFERENCE_ID_QUERY;
-    if (loading) return <div>loading...</div>;
+    if (loading) return <Loading />;
     let conference_id;
     let disableView = true;
     if (

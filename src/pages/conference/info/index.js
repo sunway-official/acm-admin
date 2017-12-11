@@ -5,12 +5,13 @@ import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import ConferenceInfo from './conferenceInfo';
 import { connect } from 'react-redux';
 import CoOrganizerList from './coOrganizer/List';
+import Loading from '../../../components/render/renderLoading';
 class Index extends Component {
   render() {
     let conference;
     if (this.props.currentConference) {
       conference = this.props.currentConference;
-    } else return <div>Loading</div>;
+    } else return <Loading />;
     // khai bao conference dua tren query getConferenceByID
     const coOrganizerDetails = conference.coOrganizerDetails;
     // khai bao coOrganizerDetails dua tren query coOrganizerDetails bang getConferenceByID

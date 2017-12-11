@@ -12,6 +12,7 @@ import {
   MyFaCheck,
 } from '../../../../theme/alert';
 import AlertContainer from 'react-alert';
+import Loading from '../../../../components/render/renderLoading';
 
 class AddTopic extends Component {
   constructor(props) {
@@ -56,7 +57,7 @@ class AddTopic extends Component {
   }
   render() {
     const { loading, getAllColors } = this.props.GET_ALL_COLORS_QUERY;
-    if (loading) return <div>loading</div>;
+    if (loading) return <Loading />;
     const colorsList = getAllColors;
     return (
       <div className="conference">

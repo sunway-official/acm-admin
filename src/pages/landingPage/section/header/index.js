@@ -20,10 +20,11 @@ class Index extends Component {
             Schedules
           </Link>
           <a href="">Contact Us</a>
-          <button className="btn get-ticket">Get Ticket</button>
         </nav>
       </div>
     );
   }
 }
 export default Index;
+
+//<button className="btn get-ticket">Get Ticket</button>
