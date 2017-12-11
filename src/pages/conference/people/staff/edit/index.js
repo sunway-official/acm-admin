@@ -7,12 +7,13 @@ import { connect } from 'react-redux';
 import { queries } from '../helpers';
 import { graphql, compose } from 'react-apollo';
 import '../../../info/coOrganizer/style.css';
+import Loading from '../../../../../components/render/renderLoading';
 
 class DialogEdit extends React.Component {
   render() {
     const { loading, error, getAllRolesActiveByUserID } = this.props.data;
     if (loading) {
-      return <div />;
+      return <Loading />;
     }
     if (error) {
       return <div />;

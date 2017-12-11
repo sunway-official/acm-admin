@@ -12,6 +12,7 @@ import {
   MyFaCheck,
 } from '../../../theme/alert';
 import AlertContainer from 'react-alert';
+import Loading from '../../../components/render/renderLoading';
 
 class Index extends Component {
   constructor(props) {
@@ -96,8 +97,8 @@ class Index extends Component {
       loading,
       getLandingPageByConferenceId,
     } = this.props.GET_LANDING_PAGE_BY_CONFERENCE_ID_QUERY;
-    if (loading) return <div>loading</div>;
-    const landingPage = getLandingPageByConferenceId;
+    if (loading) return <Loading />;
+    const landingPage = getLandingPageByConferenceId[0];
     return (
       <div className="conference">
         <Subheader className="subheader"> Landing Page Management</Subheader>

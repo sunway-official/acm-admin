@@ -2,15 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { graphql, compose } from 'react-apollo';
 import { mutations, queries, functions } from '../helpers';
-
 import RoleActive from './rolesActive';
+import Loading from '../../../../../components/render/renderLoading';
 
 class RolesInfo extends Component {
   render() {
     const { loading, error, getAllRoles } = this.props.GET_ALL_ROLES;
 
     if (loading) {
-      return <div>Loading...</div>;
+      return <Loading />;
     }
     if (error) {
       return <div>error</div>;

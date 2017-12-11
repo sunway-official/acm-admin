@@ -12,14 +12,15 @@ import { graphql, compose } from 'react-apollo';
 import { queries } from './helpers/index';
 import Home from './section/home';
 import Header from './section/header';
+import Loading from '../../components/render/renderLoading';
 class LandingPage extends Component {
   render() {
     const {
       loading,
       getLandingPageByConferenceId,
     } = this.props.GET_LANDING_PAGE_BY_CONFERENCE_ID_QUERY;
-    if (loading) return <div>loading</div>;
-    const landingPage = getLandingPageByConferenceId;
+    if (loading) return <Loading />;
+    const landingPage = getLandingPageByConferenceId[0];
     return (
       <div className="landingpage-body">
         <div className="container">

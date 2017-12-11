@@ -132,7 +132,7 @@ class TopicList extends Component {
     return (
       <div className="react-table">
         <ReactTable
-          noDataText="Please add new topic!"
+          noDataText="No rows found"
           filterable
           resizable={false}
           data={listTopic}
@@ -142,7 +142,7 @@ class TopicList extends Component {
           className="-striped -highlight"
         />
         <Dialog
-          title="Do you want to delete this color?"
+          title="Do you want to delete this topic?"
           modal={true}
           onRequestClose={this.handleClose}
           open={this.state.openDelete}

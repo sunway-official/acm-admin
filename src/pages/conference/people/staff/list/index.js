@@ -9,6 +9,8 @@ import 'react-table/react-table.css';
 import { RaisedButton } from 'material-ui';
 import { queries } from '../helpers';
 import { graphql, compose } from 'react-apollo';
+import Loading from '../../../../../components/render/renderLoading';
+
 const style = {
   textAlign: 'center',
   lineHeight: '200%',
@@ -47,9 +49,12 @@ class List extends Component {
     if (getAllStaffInConference) {
       staffs = getAllStaffInConference;
     }
-    if (loading) {
-      return <div>Loading...</div>;
-    }
+    if (loading)
+      return (
+        <div>
+          <Loading />
+        </div>
+      );
     const conference_id = this.props.conference_id;
     const columns = [
       {
@@ -58,7 +63,6 @@ class List extends Component {
         minWidth: 400,
         Cell: props => <div style={style}>{props.value}</div>,
       },
-
       {
         Header: 'Mail',
         accessor: 'email',

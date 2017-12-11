@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { alertOptions, MyFaCheck } from 'theme/alert';
 import AlertContainer from 'react-alert';
+import Loading from '../../../../components/render/renderLoading';
 class Index extends Component {
   constructor() {
     super();
@@ -43,7 +44,7 @@ class Index extends Component {
     const loadingActivities = this.props.GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY
       .loading;
     if (loadingRooms || loadingActivities) {
-      return <div>Loading...</div>;
+      return <Loading />;
     }
     const {
       getActivitiesByConferenceID,
