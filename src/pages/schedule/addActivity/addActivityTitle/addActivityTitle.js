@@ -47,7 +47,7 @@ class AddActivityTitle extends Component {
         <div className="d-flex form-group">
           <Field name="error" component="label" />
         </div>
-        <div className="d-flex justify-content-flex-end">
+        <div className="marginBottom d-flex justify-content-flex-end">
           <RaisedButton
             label="Save"
             primary={true}

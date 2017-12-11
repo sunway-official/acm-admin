@@ -110,13 +110,11 @@ class RoomList extends Component {
             <Link
               to={`/conference/rooms-management/room-detail/${props.value}`}
             >
-              <RaisedButton
-                label="Edit"
-                primary={true}
-                className="list-btn-action"
-              />
+              <RaisedButton label="Edit" primary={true} />
             </Link>
             <RaisedButton
+              secondary={true}
+              className="marginLeft"
               label="Delete"
               onClick={() => this.handleOpenDelete(props.value)}
             />
@@ -138,7 +136,11 @@ class RoomList extends Component {
         onClick={this.handleDelete}
         type="submit"
       />,
-      <RaisedButton label="No" onClick={this.handleClose} />,
+      <RaisedButton
+        className="marginLeft"
+        label="No"
+        onClick={this.handleClose}
+      />,
     ];
     return (
       <div className="react-table">

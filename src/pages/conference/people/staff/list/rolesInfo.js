@@ -37,12 +37,9 @@ class RolesInfo extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  console.log(state);
-  return {
-    roles: state.roles.data,
-  };
-};
+const mapStateToProps = state => ({
+  roles: state.roles.data,
+});
 
 export default compose(
   connect(mapStateToProps, undefined),

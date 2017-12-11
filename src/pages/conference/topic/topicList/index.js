@@ -103,13 +103,11 @@ class TopicList extends Component {
             <Link
               to={`/conference/topics-management/topic-detail/${props.value}`}
             >
-              <RaisedButton
-                label="Edit"
-                primary={true}
-                className="list-btn-action"
-              />
+              <RaisedButton label="Edit" primary={true} />
             </Link>
             <RaisedButton
+              className="marginLeft"
+              secondary={true}
               label="Delete"
               onClick={() => this.handleOpenDelete(props.value)}
             />
@@ -125,7 +123,11 @@ class TopicList extends Component {
         onClick={this.handleDelete}
         type="submit"
       />,
-      <RaisedButton label="No" onClick={this.handleClose} />,
+      <RaisedButton
+        className="marginLeft"
+        label="No"
+        onClick={this.handleClose}
+      />,
     ];
     return (
       <div className="react-table">

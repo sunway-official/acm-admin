@@ -30,7 +30,7 @@ class Index extends Component {
             <IconButton>
               <ActionHome />
             </IconButton>
-            <span>Home</span>
+            <span>Conference Information</span>
           </Link>
           <IconButton>
             <HardwareKeyboardArrowRight />
@@ -44,13 +44,9 @@ class Index extends Component {
     );
   }
 }
-const mapStateToProps = (state, ownProps) => {
-  if (state.auth.currentUser && state.auth.currentUser.currentConference) {
-    return {
-      id: state.auth.currentUser.currentConference.id,
-    };
-  }
-};
+const mapStateToProps = (state, ownProps) => ({
+  id: state.auth.currentUser.currentConference.id,
+});
 export default compose(
   connect(mapStateToProps, undefined),
   graphql(queries.GET_ALL_PARTICIPANTS_IN_CONFERENCE_QUERY, {

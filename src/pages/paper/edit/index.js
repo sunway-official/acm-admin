@@ -18,7 +18,7 @@ class Index extends Component {
     try {
       await UPDATE_PAPER({
         variables: {
-          id: values.id,
+          id: this.props.match.params.id,
           title: values.title,
           abstract: values.abstract,
           keywords: values.keywords,
@@ -29,20 +29,28 @@ class Index extends Component {
           },
         ],
       });
-      await UPDATE_TOPIC_OF_PAPER({
-        variables: {
-          paper_id: values.id,
-          topic_id: this.props.topic.id,
-        },
-        refetchQueries: [
-          {
-            query: queries.GET_TOPICS_BY_PAPER_ID,
-            variables: {
-              paper_id: values.id,
-            },
+      if (this.props.topic) {
+        await UPDATE_TOPIC_OF_PAPER({
+          variables: {
+            paper_id: this.props.match.params.id,
+            topic_id: this.props.topic.id,
           },
-        ],
-      });
+          refetchQueries: [
+            {
+              query: queries.GET_TOPICS_BY_PAPER_ID,
+              variables: {
+                paper_id: values.id,
+              },
+            },
+            {
+              query: queries.GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
+              variables: {
+                topic_id: this.props.topic.id,
+              },
+            },
+          ],
+        });
+      }
       this.props.history.replace('/conference/papers');
     } catch (error) {
       throw console.log({ error });
@@ -83,7 +91,7 @@ class Index extends Component {
             <IconButton>
               <ActionHome />
             </IconButton>
-            <span>Home</span>
+            <span>Conference Information</span>
           </Link>
           <IconButton>
             <HardwareKeyboardArrowRight />

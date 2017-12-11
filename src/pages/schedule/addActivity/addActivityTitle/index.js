@@ -16,7 +16,6 @@ class Index extends Component {
   }
 
   handleAdd(values) {
-    console.log(values);
     const { INSERT_ACTIVITY_MUTATION, INSERT_SCHEDULE_MUTATION } = this.props;
     const data = {
       INSERT_ACTIVITY_MUTATION,

@@ -20,7 +20,6 @@ export const editActivityFunc = data => {
   })
     .then(() => {
       // xoa schedule
-      console.log(deleteIds);
       if (deleteIds) {
         // eslint-disable-next-line array-callback-return
         deleteIds.map(id => {

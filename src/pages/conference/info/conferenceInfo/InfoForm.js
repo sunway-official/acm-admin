@@ -41,8 +41,8 @@ class ConferenceInfoForm extends React.Component {
                     <div
                       style={{
                         height: `100%`,
-                        marginLeft: '-8%',
-                        marginRight: '-37%',
+                        marginLeft: '0%',
+                        marginRight: '-26%',
                       }}
                     />
                   }
@@ -76,7 +76,7 @@ class ConferenceInfoForm extends React.Component {
                       name="startDate"
                       component={CustomDatePicker}
                       format={null}
-                      textFieldStyle={{ width: '100%' }}
+                      textFieldStyle={{ width: '100%', marginLeft: -46 }}
                       hintText="Start Date"
                     />
                   </div>
@@ -138,7 +138,7 @@ class ConferenceInfoForm extends React.Component {
                 </div>
               </div>
             </div>
-            <div className="d-flex save-btn btn-group">
+            <div className="d-flex save-btn btn-group marginBottom">
               <RaisedButton
                 label="Save"
                 primary={true}
