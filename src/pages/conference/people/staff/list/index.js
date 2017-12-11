@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Subheader, IconButton, CircularProgress } from 'material-ui';
+import { Subheader, IconButton } from 'material-ui';
 // import AddDialog from './insert/addDialog';
 import { Link } from 'react-router-dom';
 import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import List from './list';
 import { graphql, gql, compose } from 'react-apollo';
+import Loading from '../../../../../components/render/renderLoading';
 
 class Index extends Component {
   constructor(props) {
@@ -36,7 +37,7 @@ class Index extends Component {
     if (loading)
       return (
         <div>
-          <CircularProgress />
+          <Loading />
         </div>
       );
 

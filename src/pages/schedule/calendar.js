@@ -16,6 +16,7 @@ import { withRouter } from 'react-router';
 import { functions, queries } from './helpers';
 import { graphql, compose } from 'react-apollo';
 import './css/style.css';
+import Loading from '../../components/render/renderLoading';
 
 BigCalendar.momentLocalizer(moment);
 
@@ -47,7 +48,7 @@ class MyCalendar extends React.PureComponent {
   render() {
     const { loading, getActivitiesByConferenceID } = this.props.data;
 
-    if (loading) return <div>loading</div>;
+    if (loading) return <Loading />;
 
     const events = functions.getEvents(getActivitiesByConferenceID);
     const today = new Date();

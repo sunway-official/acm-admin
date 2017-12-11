@@ -12,6 +12,7 @@ import {
 import { graphql, compose, withApollo } from 'react-apollo';
 import { connect } from 'react-redux';
 // import { withRouter } from 'react-router';
+import Loading from '../../../../components/render/renderLoading';
 
 class Index extends Component {
   constructor() {
@@ -65,7 +66,7 @@ class Index extends Component {
 
     // check loading
     if (loadingRooms || loadingActivity || loadingActivities || loadingTopics) {
-      return <div>Loading...</div>;
+      return <Loading />;
     }
     const rooms = getRoomsByStatusInConference;
     const topics = getTopicsOfConference;

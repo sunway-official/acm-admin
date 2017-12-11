@@ -6,6 +6,7 @@ import { mutations, queries } from '../helpers';
 import { connect } from 'react-redux';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
+import Loading from '../../../../components/render/renderLoading';
 import {
   alertOptions,
   MyExclamationTriangle,
@@ -126,7 +127,7 @@ class RoomList extends Component {
       getRoomsByConferenceID,
     } = this.props.GET_ROOMS_BY_CONFERENCE_ID_QUERY;
 
-    if (loading) return <div>loading...</div>;
+    if (loading) return <Loading />;
     const listRoom = getRoomsByConferenceID;
     const actionDelete = [
       <RaisedButton
@@ -144,7 +145,7 @@ class RoomList extends Component {
     return (
       <div className="react-table">
         <ReactTable
-          noDataText="Please add new room!"
+          noDataText="No rows found"
           filterable
           resizable={false}
           data={listRoom}

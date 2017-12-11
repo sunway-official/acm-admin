@@ -7,6 +7,7 @@ import { queries, functions, addActivityFunc, mutations } from '../../helpers';
 import { graphql, compose } from 'react-apollo';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import Loading from '../../../../components/render/renderLoading';
 
 class Index extends Component {
   constructor() {
@@ -34,7 +35,7 @@ class Index extends Component {
     const loadingActivities = this.props.GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY
       .loading;
     if (loadingRooms || loadingActivities) {
-      return <div>Loading...</div>;
+      return <Loading />;
     }
     const {
       getActivitiesByConferenceID,

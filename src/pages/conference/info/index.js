@@ -6,6 +6,7 @@ import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import ConferenceInfo from './conferenceInfo';
 import { connect } from 'react-redux';
 import CoOrganizerList from './coOrganizer/List';
+// import Loading from '../../../components/render/renderLoading';
 import { graphql, compose } from 'react-apollo';
 
 class Index extends Component {

@@ -17,6 +17,7 @@ import { FloatingActionButton } from 'material-ui';
 import { withRouter } from 'react-router-dom';
 // import style from '../../../containers/layout/appbar/style.css';
 import style from '../style/style.css';
+import Loading from '../../../../components/render/renderLoading';
 
 const styles = {
   smallIcon: {
@@ -74,7 +75,7 @@ class GetAllConfs extends React.Component {
   render() {
     const { loading } = this.props.data;
 
-    if (loading) return <div> loading... </div>;
+    if (loading) return <Loading />;
 
     const conferences = this.props.data.getConferenceByUserID;
     let currentConferenceID = 0;
