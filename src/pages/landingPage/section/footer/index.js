@@ -12,7 +12,7 @@ class Footer extends Component {
   render() {
     const { loading, getLandingPageByConferenceId } = this.props.data;
     if (loading) return <div>loading</div>;
-    const landingPage = getLandingPageByConferenceId[0];
+    const landingPage = getLandingPageByConferenceId;
     return (
       <div id="landingpage-footer">
         <Grid fluid>
