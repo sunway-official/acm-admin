@@ -1,20 +1,22 @@
 import React, { Component } from 'react';
 import { Subheader, IconButton, Tabs, Tab } from 'material-ui';
 import { Link } from 'react-router-dom';
+import { queries } from './helpers';
 import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import ConferenceInfo from './conferenceInfo';
 import { connect } from 'react-redux';
 import CoOrganizerList from './coOrganizer/List';
+import { graphql, compose } from 'react-apollo';
+
 class Index extends Component {
   render() {
     let conference;
     if (this.props.currentConference) {
       conference = this.props.currentConference;
-    } else return <div>Loading</div>;
+    } else return window.location.reload();
     // khai bao conference dua tren query getConferenceByID
     const coOrganizerDetails = conference.coOrganizerDetails;
     // khai bao coOrganizerDetails dua tren query coOrganizerDetails bang getConferenceByID
-
     return (
       <div className="conference">
         <Subheader className="subheader conf-infor-title">
@@ -25,7 +27,7 @@ class Index extends Component {
             <IconButton>
               <ActionHome />
             </IconButton>
-            <span>Home</span>
+            <span>Dashboard</span>
           </Link>
           <IconButton>
             <HardwareKeyboardArrowRight />
@@ -52,10 +54,18 @@ class Index extends Component {
 }
 
 const mapStateToProps = state => {
-  if (state.auth.currentUser && state.auth.currentUser.currentConference)
-    return {
-      currentConference: state.auth.currentUser.currentConference,
-    };
+  if (
+    state.auth &&
+    state.auth.currentUser &&
+    state.auth.currentUser.currentConference
+  ) {
+    return { currentConference: state.auth.currentUser.currentConference };
+  }
 };
 
-export default connect(mapStateToProps, undefined)(Index);
+export default compose(
+  graphql(queries.ME_QUERY, {
+    name: 'queryMe',
+  }),
+  connect(mapStateToProps, undefined),
+)(Index);

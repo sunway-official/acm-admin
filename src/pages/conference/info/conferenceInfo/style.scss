@@ -1,6 +1,6 @@
 .form {
   &.conference-info {
-    width: 600px;
+    width: 680px;
     margin: auto;
     justify-content: center;
     .date,
@@ -16,6 +16,7 @@
       }
       &.save-btn {
         margin-top: 70px;
+        margin-bottom: 20px;
       }
       .add-btn {
         margin-top: 40px;
@@ -26,7 +27,7 @@
     }
 
     .form-body {
-      width: 108%;
+      width: 100%;
     }
 
     .form-group {

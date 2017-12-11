@@ -12,17 +12,15 @@
 
 .list-conf {
   background-color: rgb(62, 85, 102);
-  padding-bottom: 18px;
-  padding-top: 10px;
+  padding-bottom: 20px;
+  padding-top: 1px;
   margin-bottom: -9px;
-  // color: rgb(255, 87, 34);
-  font-weight: bold;
   font-size: 16px;
   color: white;
+  text-align: center;
 
   .icon-conference {
     padding-right: 7px !important;
-
   }
 }
 
@@ -56,6 +54,7 @@
 //menu
 .menu-dashboard {
   margin-left: -3% !important;
+  padding-bottom: 4px;
 }
 .navbar {
   h1 {
@@ -118,4 +117,3 @@
 .btn {
   margin-right: 20px;
 }
-

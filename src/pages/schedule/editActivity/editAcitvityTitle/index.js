@@ -16,7 +16,6 @@ class Index extends Component {
 
   // deleteIds
   handleEdit(values) {
-    console.log(values);
     values.id = this.props.match.params.id;
     const {
       UPDATE_ACTIVITY_MUTATION,
@@ -69,7 +68,6 @@ class Index extends Component {
     const endDate = conference.end_date;
 
     const event = getActivityByID;
-    console.log(event);
     const initialValues = {
       title: event.title,
       description: event.description,
@@ -114,7 +112,6 @@ class Index extends Component {
 
 const mapStateToProps = state => {
   if (state.auth.currentUser.currentConference) {
-    console.log(state);
     return {
       conference: state.auth.currentUser.currentConference,
       deleteIds: state.schedule.deleteIds,
