@@ -39,7 +39,6 @@ class List extends Component {
   render() {
     const conference_id = this.props.conference_id;
     const staffs = this.props.staffs;
-    console.log(staffs);
     const columns = [
       {
         Header: 'Name',

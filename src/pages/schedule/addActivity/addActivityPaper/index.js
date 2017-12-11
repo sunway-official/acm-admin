@@ -11,13 +11,22 @@ import {
 } from '../../helpers';
 import { graphql, compose } from 'react-apollo';
 import { connect } from 'react-redux';
-
+import { alertOptions, MyFaCheck } from 'theme/alert';
+import AlertContainer from 'react-alert';
 class Index extends Component {
   constructor() {
     super();
     this.handleAdd = this.handleAdd.bind(this);
   }
-
+  showAlertSuccess = () => {
+    this.msg.success('Saved!', {
+      type: 'success',
+      icon: <MyFaCheck />,
+      onClose: () => {
+        this.props.history.replace('/conference/activities');
+      },
+    });
+  };
   handleAdd(values) {
     const {
       INSERT_ACTIVITY_WITH_PAPER_ID_MUTATION,
@@ -29,7 +38,7 @@ class Index extends Component {
       values,
     };
     addActivityWithPaperFunc(data);
-    this.props.history.replace('/conference/activities');
+    this.showAlertSuccess();
   }
 
   render() {
@@ -91,6 +100,7 @@ class Index extends Component {
             status="with-paper"
           />
         </div>
+        <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />
       </div>
     );
   }

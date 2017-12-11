@@ -41,6 +41,7 @@ class Index extends Component {
       );
 
     const staffs = this.props.data.getAllStaffInConference;
+    console.log(this.props);
     return (
       <div className="conference">
         <Subheader className="subheader"> Staff List</Subheader>

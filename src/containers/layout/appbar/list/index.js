@@ -126,13 +126,13 @@ class ListExampleSimple extends React.Component {
               onRequestClose={this.handleRequestClose}
             >
               <Menu style={{ color: 'black' }} className="menu people-menu">
-                <Link to="/conference/people/staff">
+                {/*<Link to="/conference/people/staff">
                   <MenuItem
                     className="item"
                     primaryText={'Staff'}
                     onClick={this.handleRequestClose}
                   />
-                </Link>
+                </Link>*/}
                 <Link to="/conference/people/participant-management">
                   <MenuItem
                     className="item"
@@ -140,12 +140,6 @@ class ListExampleSimple extends React.Component {
                     onClick={this.handleRequestClose}
                   />
                 </Link>
-                {/*
-               <MenuItem primaryText={<a href="/dashboard">Speaker</a>} />
-                <MenuItem primaryText={<a href="/dashboard">Author</a>} />
-                <MenuItem primaryText={<a href="/dashboard">Reviewer</a>} />
-                <MenuItem primaryText={<a href="/dashboard">Participant</a>} />
-              */}
               </Menu>
             </Popover>
           </ListItem>
@@ -200,23 +194,6 @@ class ListExampleSimple extends React.Component {
               onClick={() => this.handleClickSidebar()}
             />
           </Link>
-          {/*
-          <ListItem
-            className="item"
-            primaryText={<a href="/dashboard">Paper</a>}
-            leftIcon={<AvLibraryBooks />}
-          />
-          <ListItem
-            className="item"
-            primaryText={<a href="/dashboard">Newfeed</a>}
-            leftIcon={<ActionChromeReaderMode />}
-          />
-          <ListItem
-            className="item"
-            primaryText={<a href="/dashboard">Statistic</a>}
-            leftIcon={<EditorShowChart />}
-          />
-          */}
         </List>
       </div>
     );
