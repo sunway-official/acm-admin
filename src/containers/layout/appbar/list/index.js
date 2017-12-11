@@ -71,7 +71,7 @@ class ListExampleSimple extends React.Component {
       this.props.auth.currentUser.currentConference
     ) {
       conference_id = this.props.auth.currentUser.currentConference.id;
-      if (getLandingPageByConferenceId[0]) disableView = false;
+      if (getLandingPageByConferenceId) disableView = false;
     } else {
       conference_id = 0;
     }
