@@ -7,11 +7,8 @@ import { queries, mutations } from '../helpers';
 import TopicDetail from './topicDetail';
 import { withRouter } from 'react-router';
 import AlertContainer from 'react-alert';
-import {
-  alertOptions,
-  MyExclamationTriangle,
-  MyFaCheck,
-} from '../../../../theme/alert';
+import { alertOptions, MyExclamationTriangle, MyFaCheck } from 'theme/alert';
+import Loading from 'components/render/renderLoading';
 
 class Index extends Component {
   constructor(props) {
@@ -62,7 +59,7 @@ class Index extends Component {
   render() {
     const loadingTopic = this.props.GET_TOPIC_BY_ID_QUERY.loading;
     const loadingColor = this.props.GET_ALL_COLORS_QUERY.loading;
-    if (loadingTopic || loadingColor) return <div> loading</div>;
+    if (loadingTopic || loadingColor) return <Loading />;
     const { getTopicByID } = this.props.GET_TOPIC_BY_ID_QUERY;
     const { getAllColors } = this.props.GET_ALL_COLORS_QUERY;
     const colorsList = getAllColors;

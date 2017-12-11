@@ -7,6 +7,7 @@ import { functions } from '../helpers';
 import ScheduleForm from './scheduleForm';
 import Footer from '../section/footer';
 import Header from '../section/header';
+import Loading from 'components/render/renderLoading';
 class LandingPageSchedule extends Component {
   constructor(props) {
     super(props);
@@ -31,7 +32,7 @@ class LandingPageSchedule extends Component {
       loading,
       getActivitiesByConferenceID,
     } = this.props.GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY;
-    if (loading) return <div>loading</div>;
+    if (loading) return <Loading />;
     const events = functions.getEvents(getActivitiesByConferenceID);
     this.sortActivities(events);
     return (

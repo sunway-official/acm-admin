@@ -6,6 +6,9 @@ import './style.css';
 class ScheduleForm extends Component {
   render() {
     const events = this.props.events;
+    const noData = (
+      <div className="no-data">This conference has no specific calendar</div>
+    );
     const content = events.map((event, index) => (
       <tr key={index} className="event-detail landing-page-tr">
         <th className="event-time landing-page-th">
@@ -37,6 +40,7 @@ class ScheduleForm extends Component {
             </thead>
             <tbody className="landing-page-tbody">{content}</tbody>
           </table>
+          {!events[1] ? noData : ''}
         </div>
       </div>
     );

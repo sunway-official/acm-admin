@@ -5,13 +5,14 @@ import { UPDATE_USER_ROLE_STATUS, GET_ALL_ROLES } from './helpers';
 
 import functions from './helpers/functions';
 import RoleItem from './roleItem';
+import Loading from 'components/render/renderLoading';
 
 class RolesInfo extends Component {
   render() {
     const { loading, error, getAllRoles } = this.props.GET_ALL_ROLES;
 
     if (loading) {
-      return <div>Loading...</div>;
+      return <Loading />;
     }
     if (error) {
       return <div>error</div>;

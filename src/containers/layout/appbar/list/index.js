@@ -20,6 +20,7 @@ import { connect } from 'react-redux';
 import { graphql, compose } from 'react-apollo';
 import { queries, functions } from '../helpers';
 import { withRouter } from 'react-router';
+import Loading from 'components/render/renderLoading';
 
 class ListExampleSimple extends React.Component {
   constructor(props) {
@@ -64,7 +65,7 @@ class ListExampleSimple extends React.Component {
       getLandingPageByConferenceId,
     } = this.props.GET_LANDING_PAGE_BY_CONFERENCE_ID_QUERY;
     const loadingRole = this.props.GET_ALL_ROLE_OF_USER.loading;
-    if (loading || loadingRole) return <div>loading...</div>;
+    if (loading || loadingRole) return <Loading />;
     let conference_id;
     let disableView = true;
 

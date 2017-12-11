@@ -69,6 +69,7 @@ export const getRolesComponent = () => {
 export const checkRoleAllComponents = rolesUser => {
   const rolesComponents = getRolesComponent();
   const result = [];
+  // eslint-disable-next-line
   rolesComponents.map(rolesComponent => {
     result[rolesComponent.component] = checkRoleUser(
       rolesUser,

@@ -8,6 +8,7 @@ import { compose, withApollo, graphql } from 'react-apollo';
 import { scheduleOperations, scheduleActions } from 'store/ducks/schedule';
 import { connect } from 'react-redux';
 import validate from '../../validate';
+import Loading from 'components/render/renderLoading';
 
 class EditActivityPaper extends Component {
   constructor() {
@@ -51,7 +52,7 @@ class EditActivityPaper extends Component {
     const { rooms, topics } = this.props;
     const { loading } = this.props.GET_ALL_PAPERS_BY_TOPIC_ID_QUERY;
     if (loading) {
-      return <div>Loading...</div>;
+      return <Loading />;
     }
     // eslint-disable-next-line
     if (this.state.papers.length === 0 && this.state.count == 0) {

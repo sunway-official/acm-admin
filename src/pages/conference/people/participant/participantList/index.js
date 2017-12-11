@@ -95,7 +95,7 @@ class ParticipantList extends Component {
     return (
       <div className="react-table">
         <ReactTable
-          noDataText="Please add new participant!"
+          noDataText="No row found"
           filterable
           resizable={false}
           data={listParticipant}

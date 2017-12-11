@@ -6,6 +6,7 @@ import { graphql, compose } from 'react-apollo';
 import { queries } from './helpers';
 import RoomList from './roomList';
 import { connect } from 'react-redux';
+import Loading from 'components/render/renderLoading';
 
 class Index extends Component {
   constructor(props) {
@@ -19,7 +20,7 @@ class Index extends Component {
       loading,
       getRoomsByConferenceID,
     } = this.props.GET_ROOMS_BY_CONFERENCE_ID_QUERY;
-    if (loading) return <div>loading...</div>;
+    if (loading) return <Loading />;
     const listRoom = getRoomsByConferenceID;
     return (
       <div className="conference">

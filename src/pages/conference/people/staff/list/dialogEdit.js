@@ -6,12 +6,13 @@ import PersonalInfo from './personalInfo';
 import { connect } from 'react-redux';
 import { GET_ALL_ROLES_ACTIVE_BY_USER_ID_QUERY } from './helpers';
 import { graphql, compose } from 'react-apollo';
+import Loading from 'components/render/renderLoading';
 
 class DialogEdit extends React.Component {
   render() {
     const { loading, error, getAllRolesActiveByUserID } = this.props.data;
     if (loading) {
-      return <div />;
+      return <Loading />;
     }
     if (error) {
       return <div />;
