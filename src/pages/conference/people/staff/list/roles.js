@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
-import { GET_ALL_ROLES_ACTIVE_BY_USER_ID_QUERY } from './helpers';
+import { queries } from '../helpers';
 import { CircularProgress } from 'material-ui';
 class GetRoles extends Component {
   render() {
@@ -33,7 +33,7 @@ class GetRoles extends Component {
   }
 }
 
-export default graphql(GET_ALL_ROLES_ACTIVE_BY_USER_ID_QUERY, {
+export default graphql(queries.GET_ALL_ROLES_ACTIVE_BY_USER_ID_QUERY, {
   options: ownProps => ({
     variables: {
       user_id: ownProps.id,

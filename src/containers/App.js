@@ -10,7 +10,7 @@ import ConferenceInfo from '../pages/conference/info';
 import Paper from '../pages/paper';
 import PaperAdd from '../pages/paper/add';
 import PaperEdit from '../pages/paper/edit';
-import ConferenceStaffList from '../pages/conference/people/staff/list';
+import ConferenceStaffList from '../pages/conference/people/staff';
 import UserProfile from '../pages/conference/people/userProfile/userProfile';
 import Dashboard from '../pages/dashboard';
 import NoMatch from '../pages/NoMatch';
