@@ -18,7 +18,7 @@ const style = {
 
 const sorted = [
   {
-    id: 'name',
+    id: 'firstName',
     desc: true,
   },
 ];
@@ -60,7 +60,7 @@ class List extends Component {
       {
         Header: 'Name',
         accessor: 'firstname',
-        minWidth: 400,
+        minWidth: 300,
         Cell: props => <div style={style}>{props.value}</div>,
       },
       {
@@ -72,7 +72,7 @@ class List extends Component {
       {
         Header: 'Position',
         accessor: '',
-        minWidth: 400,
+        minWidth: 200,
         Cell: props => (
           <div style={style}>
             <Roles id={props.value.id} conference_id={conference_id} />
