@@ -92,7 +92,7 @@ class BadgeExampleSimple extends Component {
       //console.log(avatar);
     }
     const loadingRole = this.props.GET_ALL_ROLE_OF_USER.loading;
-    if (loadingRole) return <Loading />;
+    if (loadingRole) return <div />;
 
     let isShow = [];
     const roles = this.props.GET_ALL_ROLE_OF_USER.getAllRolesOfUser;
