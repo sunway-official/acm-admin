@@ -6,13 +6,9 @@ import { graphql, compose } from 'react-apollo';
 import LandingPageForm from './landingPageForm';
 import { queries, mutations } from './helpers';
 import { connect } from 'react-redux';
-import {
-  alertOptions,
-  MyExclamationTriangle,
-  MyFaCheck,
-} from '../../../theme/alert';
+import { alertOptions, MyExclamationTriangle, MyFaCheck } from 'theme/alert';
 import AlertContainer from 'react-alert';
-import Loading from '../../../components/render/renderLoading';
+import Loading from 'components/render/renderLoading';
 
 class Index extends Component {
   constructor(props) {
@@ -98,7 +94,7 @@ class Index extends Component {
       getLandingPageByConferenceId,
     } = this.props.GET_LANDING_PAGE_BY_CONFERENCE_ID_QUERY;
     if (loading) return <Loading />;
-    const landingPage = getLandingPageByConferenceId[0];
+    const landingPage = getLandingPageByConferenceId;
     return (
       <div className="conference">
         <Subheader className="subheader"> Landing Page Management</Subheader>

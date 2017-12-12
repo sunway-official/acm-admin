@@ -30,39 +30,67 @@ class Index extends Component {
     });
   };
   async handleSave(values) {
+    console.log(values);
     const { UPDATE_PAPER, UPDATE_TOPIC_OF_PAPER } = this.props;
     try {
-      await UPDATE_PAPER({
-        variables: {
-          id: this.props.match.params.id,
-          title: values.title,
-          abstract: values.abstract,
-          keywords: values.keywords,
-        },
-        refetchQueries: [
-          {
-            query: queries.GET_PAPERS_BY_CONFERENCE_ID,
-          },
-        ],
-      });
+      const isAuthor = localStorage.getItem('roles').indexOf('7');
+      console.log(isAuthor);
+      let paper;
 
-      if (this.props.topic) {
+      if (isAuthor > -1) {
+        paper = await UPDATE_PAPER({
+          variables: {
+            id: this.props.match.params.id,
+            title: values.title,
+            abstract: values.abstract,
+            keywords: values.keywords,
+          },
+          refetchQueries: [
+            {
+              query: queries.GET_PAPERS_WITH_AUTHOR_BY_CONFERENCE_ID,
+            },
+          ],
+        });
+      } else {
+        paper = await UPDATE_PAPER({
+          variables: {
+            id: this.props.match.params.id,
+            title: values.title,
+            abstract: values.abstract,
+            keywords: values.keywords,
+          },
+          refetchQueries: [
+            {
+              query: queries.GET_PAPERS_BY_CONFERENCE_ID,
+            },
+          ],
+        });
+      }
+      console.log(paper);
+      if (values.topic) {
+        const topic_id = paper.data.updatePaper.papersTopic[0].topic_id;
         await UPDATE_TOPIC_OF_PAPER({
           variables: {
             paper_id: this.props.match.params.id,
-            topic_id: this.props.topic.id,
+            topic_id: values.topic,
           },
           refetchQueries: [
             {
               query: queries.GET_TOPICS_BY_PAPER_ID,
               variables: {
-                paper_id: values.id,
+                paper_id: this.props.match.params.id,
               },
             },
             {
               query: queries.GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
               variables: {
-                topic_id: this.props.topic.id,
+                topic_id: values.topic,
+              },
+            },
+            {
+              query: queries.GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
+              variables: {
+                topic_id: topic_id,
               },
             },
           ],

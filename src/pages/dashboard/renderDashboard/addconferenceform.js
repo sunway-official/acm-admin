@@ -144,7 +144,10 @@ const AddConferenceForm = ({
             </div>
           </div>
         </div>
-        <div className="d-flex submit-btn btn-group">
+        <div
+          className="d-flex submit-btn btn-group"
+          style={{ paddingBottom: '20px' }}
+        >
           <RaisedButton
             className="btn"
             label="Save"

@@ -101,8 +101,9 @@ class ConferenceAddForm extends PureComponent {
       });
       this.showAlertSuccess();
     } catch (error) {
-      let temp = error.graphQLErrors[0].message;
-      this.showAlertError(temp.substring(7, temp.length));
+      // let temp = error.graphQLErrors[0].message;
+      // this.showAlertError(temp.substring(7, temp.length));
+      console.log(error);
     }
   }
 

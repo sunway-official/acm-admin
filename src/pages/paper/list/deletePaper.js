@@ -27,27 +27,55 @@ class DeletePaper extends Component {
     });
   };
   async handleDelete() {
-    console.log(this.props);
+    let topic_id = 0;
+
+    const paper_id = this.props.paper.id;
+    console.log(topic_id);
+    console.log(paper_id);
+    let deletePaperTopic;
     try {
-      await this.props.DELETE_PAPER({
-        variables: {
-          id: this.props.paper.id,
-        },
-        refetchQueries: [
-          {
-            query: queries.GET_PAPERS_BY_CONFERENCE_ID,
-            variables: {
-              conference_id: this.props.conference_id,
-            },
+      if (this.props.paper.papersTopic[0]) {
+        topic_id = this.props.paper.papersTopic[0].topic_id;
+        deletePaperTopic = await this.props.DELETE_PAPER_TOPIC({
+          variables: {
+            paper_id: paper_id,
+            topic_id: topic_id,
           },
-          {
-            query: queries.GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
-            variables: {
-              topic_id: this.props.paper.papersTopic[0].topic_id,
+          refetchQueries: [
+            {
+              query: queries.GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
+              variables: {
+                topic_id: topic_id,
+              },
             },
+          ],
+        });
+      }
+      console.log(deletePaperTopic);
+      const isAuthor = localStorage.getItem('roles').indexOf('7');
+      if (isAuthor > -1) {
+        await this.props.DELETE_PAPER({
+          variables: {
+            id: paper_id,
           },
-        ],
-      });
+          refetchQueries: [
+            {
+              query: queries.GET_PAPERS_WITH_AUTHOR_BY_CONFERENCE_ID,
+            },
+          ],
+        });
+      } else {
+        await this.props.DELETE_PAPER({
+          variables: {
+            id: paper_id,
+          },
+          refetchQueries: [
+            {
+              query: queries.GET_PAPERS_BY_CONFERENCE_ID,
+            },
+          ],
+        });
+      }
       this.props.setToggle();
       this.showAlertSuccess();
     } catch (error) {
@@ -95,8 +123,8 @@ const mapDispatchToProps = dispatch => {
 };
 const mapStateToProps = state => {
   if (state.auth.currentUser.currentConference) {
+    console.log('state', state);
     return {
-      conference_id: state.auth.currentUser.currentConference.id,
       paper: state.paper.data,
       openModal: state.paper.openModal,
     };
@@ -106,10 +134,8 @@ export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   graphql(mutations.DELETE_PAPER, {
     name: 'DELETE_PAPER',
-    option: ownProps => ({
-      variables: {
-        id: ownProps.id,
-      },
-    }),
+  }),
+  graphql(mutations.DELETE_PAPER_TOPIC, {
+    name: 'DELETE_PAPER_TOPIC',
   }),
 )(DeletePaper);

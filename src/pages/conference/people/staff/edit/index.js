@@ -6,8 +6,8 @@ import Form from './form';
 import { connect } from 'react-redux';
 import { queries } from '../helpers';
 import { graphql, compose } from 'react-apollo';
+import Loading from 'components/render/renderLoading';
 import '../../../info/coOrganizer/style.css';
-import Loading from '../../../../../components/render/renderLoading';
 
 class DialogEdit extends React.Component {
   render() {

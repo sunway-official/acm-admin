@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { graphql, compose } from 'react-apollo';
 import { mutations, queries, functions } from '../helpers';
 import RoleActive from './rolesActive';
-import Loading from '../../../../../components/render/renderLoading';
+import Loading from 'components/render/renderLoading';
 
 class RolesInfo extends Component {
   render() {
