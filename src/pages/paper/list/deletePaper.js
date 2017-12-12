@@ -30,13 +30,10 @@ class DeletePaper extends Component {
     let topic_id = 0;
 
     const paper_id = this.props.paper.id;
-    console.log(topic_id);
-    console.log(paper_id);
-    let deletePaperTopic;
     try {
       if (this.props.paper.papersTopic[0]) {
         topic_id = this.props.paper.papersTopic[0].topic_id;
-        deletePaperTopic = await this.props.DELETE_PAPER_TOPIC({
+        await this.props.DELETE_PAPER_TOPIC({
           variables: {
             paper_id: paper_id,
             topic_id: topic_id,
@@ -51,7 +48,6 @@ class DeletePaper extends Component {
           ],
         });
       }
-      console.log(deletePaperTopic);
       const isAuthor = localStorage.getItem('roles').indexOf('7');
       if (isAuthor > -1) {
         await this.props.DELETE_PAPER({
@@ -123,7 +119,6 @@ const mapDispatchToProps = dispatch => {
 };
 const mapStateToProps = state => {
   if (state.auth.currentUser.currentConference) {
-    console.log('state', state);
     return {
       paper: state.paper.data,
       openModal: state.paper.openModal,

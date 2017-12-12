@@ -31,10 +31,8 @@ class Index extends Component {
     });
   };
   async handleAdd(values) {
-    console.log(values);
     try {
       const isAuthor = localStorage.getItem('roles').indexOf('7');
-      console.log(isAuthor);
       let paper;
       if (isAuthor > -1) {
         paper = await this.props.INSERT_PAPER({

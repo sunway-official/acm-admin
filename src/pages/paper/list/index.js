@@ -114,7 +114,6 @@ class Index extends Component {
         ),
       },
     ];
-    console.log(papers);
     return (
       <div className="react-table">
         <ReactTable

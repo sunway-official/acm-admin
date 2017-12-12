@@ -9,7 +9,6 @@ import { Link } from 'react-router-dom';
 import { AppBar, Drawer } from 'material-ui';
 import ConfMgtSidebar from 'pages/conference/add';
 import { queries } from '../helpers';
-// import { images } from 'theme';
 import style from './style.css';
 import { functions } from 'containers/layout/appbar/helpers';
 import Loading from 'components/render/renderLoading';
@@ -79,6 +78,7 @@ class BadgeExampleSimple extends Component {
     localStorage.clear();
     this.props.client.resetStore();
     this.props.history.replace('/login');
+    window.location.reload();
   }
   render() {
     // const { loading } = this.props.data;
