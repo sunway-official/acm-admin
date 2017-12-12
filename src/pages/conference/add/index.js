@@ -12,7 +12,7 @@ class ConfMgtSidebar extends React.Component {
     if (loading) return <Loading />;
 
     if (this.props.data.me) return <GetAllConfs id={this.props.data.me.id} />;
-    else return <div>Loading</div>;
+    else return <Loading />;
   }
 }
 
