@@ -12,7 +12,7 @@ class Map extends Component {
             lat: parseFloat(position.lat),
             long: parseFloat(position.long),
           }}
-          googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyDFNlwjsuntl-BmMpDKJPOiUvwxhAEyMEI"
+          googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyAhGSgJvoGdeOzzDDDyTxWyQj7YRA2lZiA"
           loadingElement={<div style={{ height: `100%` }} />}
           containerElement={<div style={{ height: `400px` }} />}
           mapElement={
