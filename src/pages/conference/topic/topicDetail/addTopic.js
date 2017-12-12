@@ -6,13 +6,9 @@ import { graphql, compose } from 'react-apollo';
 import { queries, mutations } from '../helpers';
 import TopicDetail from './topicDetail';
 import { withRouter } from 'react-router';
-import {
-  alertOptions,
-  MyExclamationTriangle,
-  MyFaCheck,
-} from '../../../../theme/alert';
+import { alertOptions, MyExclamationTriangle, MyFaCheck } from 'theme/alert';
 import AlertContainer from 'react-alert';
-import Loading from '../../../../components/render/renderLoading';
+import Loading from 'components/render/renderLoading';
 
 class AddTopic extends Component {
   constructor(props) {

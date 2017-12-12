@@ -6,8 +6,6 @@ import CustomDatePicker from 'components/CustomDatePicker';
 import AppMap from 'components/AppMap';
 import normalizePhone from 'utils/normalizePhone';
 import validate from './validate';
-import AlertContainer from 'react-alert';
-import { alertOptions, MyFaCheck } from 'theme/alert';
 class ConferenceInfoForm extends React.Component {
   state = {
     openDialog: false,
@@ -15,19 +13,12 @@ class ConferenceInfoForm extends React.Component {
   handleSaved = () => {
     this.setState({ openDialog: !this.state.openDialog });
   };
-  showAlertSuccess = () => {
-    this.msg.success('Saved!', {
-      type: 'success',
-      icon: <MyFaCheck />,
-    });
-  };
   render() {
     const {
       handleSubmit,
       invalid,
       initialValues,
       onMapPositionChanged,
-      pristine,
     } = this.props;
 
     return (
@@ -38,6 +29,7 @@ class ConferenceInfoForm extends React.Component {
               <Subheader className="header title">Basic Information</Subheader>
               <div className="map">
                 <AppMap
+                  disabled={true}
                   onMapPositionChanged={onMapPositionChanged}
                   initalPosition={{
                     lat: initialValues.lat,
@@ -65,6 +57,7 @@ class ConferenceInfoForm extends React.Component {
                     component={CustomInput}
                     fullWidth={true}
                     hintText="Conference Title"
+                    disabled={true}
                   />
                 </div>
                 <div className="d-flex form-group">
@@ -75,6 +68,7 @@ class ConferenceInfoForm extends React.Component {
                     multiLine
                     rows={1}
                     fullWidth={true}
+                    disabled={true}
                   />
                 </div>
                 <div className="d-flex date">
@@ -87,6 +81,7 @@ class ConferenceInfoForm extends React.Component {
                       format={null}
                       textFieldStyle={{ width: '100%', marginLeft: -46 }}
                       hintText="Start Date"
+                      disabled={true}
                     />
                   </div>
                   <div className="d-flex form-group">
@@ -98,6 +93,7 @@ class ConferenceInfoForm extends React.Component {
                       format={null}
                       textFieldStyle={{ width: '100%' }}
                       hintText="End Date"
+                      disabled={true}
                     />
                   </div>
                 </div>
@@ -114,6 +110,7 @@ class ConferenceInfoForm extends React.Component {
                       component={CustomInput}
                       hintText="Organizer Name"
                       fullWidth={true}
+                      disabled={true}
                     />
                   </div>
                   <div className="d-flex form-group">
@@ -123,6 +120,7 @@ class ConferenceInfoForm extends React.Component {
                       component={CustomInput}
                       hintText="Organizer Email"
                       fullWidth={true}
+                      disabled={true}
                     />
                   </div>
                   <div className="d-flex form-group">
@@ -132,6 +130,7 @@ class ConferenceInfoForm extends React.Component {
                       component={CustomInput}
                       hintText="Organizer Website"
                       fullWidth={true}
+                      disabled={true}
                     />
                   </div>
                   <div className="d-flex form-group">
@@ -142,6 +141,7 @@ class ConferenceInfoForm extends React.Component {
                       hintText="Organizer Phone Number"
                       fullWidth={true}
                       normalize={normalizePhone}
+                      disabled={true}
                     />
                   </div>
                 </div>
@@ -152,18 +152,17 @@ class ConferenceInfoForm extends React.Component {
                 label="Save"
                 primary={true}
                 type="submit"
-                // disabled={pristine}
-                // onClick={() => {
-                //   if (!invalid) {
-                //     this.showAlertSuccess();
-                //   }
-                // }}
+                onClick={() => {
+                  if (!invalid) {
+                    alert('Saved');
+                  }
+                }}
+                disabled={true}
               />
             </div>
             <Dialog open={this.state.openDialog} />
           </div>
         </div>
-        <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />
       </form>
     );
   }

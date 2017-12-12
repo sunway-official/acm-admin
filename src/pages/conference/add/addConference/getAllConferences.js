@@ -17,7 +17,7 @@ import { FloatingActionButton } from 'material-ui';
 import { withRouter } from 'react-router-dom';
 // import style from '../../../containers/layout/appbar/style.css';
 import style from '../style/style.css';
-import Loading from '../../../../components/render/renderLoading';
+import Loading from 'components/render/renderLoading';
 
 const styles = {
   smallIcon: {

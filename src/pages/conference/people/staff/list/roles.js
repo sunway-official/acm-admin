@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
 import { queries } from '../helpers';
-import Loading from '../../../../../components/render/renderLoading';
+import Loading from 'components/render/renderLoading';
+
 class GetRoles extends Component {
   render() {
     const { loading, error } = this.props.data;

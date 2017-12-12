@@ -16,7 +16,7 @@ import { withRouter } from 'react-router';
 import { functions, queries } from './helpers';
 import { graphql, compose } from 'react-apollo';
 import './css/style.css';
-import Loading from '../../components/render/renderLoading';
+import Loading from 'components/render/renderLoading';
 
 BigCalendar.momentLocalizer(moment);
 
