@@ -68,13 +68,16 @@ class ConferenceInfoForm extends PureComponent {
           phone: organizerPhoneNumber,
         },
       });
-      const address = await this.props.UPDATE_ADDRESS_MUTATION({
-        variables: {
-          id: this.props.address_id,
-          lat: this.props.position.lat,
-          long: this.props.position.lng,
-        },
-      });
+      let address;
+      if (this.props.position) {
+        address = await this.props.UPDATE_ADDRESS_MUTATION({
+          variables: {
+            id: this.props.address_id,
+            lat: this.props.position.lat,
+            long: this.props.position.lng,
+          },
+        });
+      }
       if (conference || organizer || address) {
         this.showAlertSuccess();
       }

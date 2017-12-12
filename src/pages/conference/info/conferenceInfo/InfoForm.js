@@ -23,13 +23,7 @@ class ConferenceInfoForm extends React.Component {
     });
   };
   render() {
-    const {
-      handleSubmit,
-      invalid,
-      initialValues,
-      onMapPositionChanged,
-      pristine,
-    } = this.props;
+    const { handleSubmit, initialValues, onMapPositionChanged } = this.props;
 
     return (
       <form className="form conference-info" onSubmit={handleSubmit}>
