@@ -8,7 +8,7 @@ import { compose, withApollo, graphql } from 'react-apollo';
 import { scheduleOperations, scheduleActions } from 'store/ducks/schedule';
 import { connect } from 'react-redux';
 import validate from '../../validate';
-import Loading from '../../../../components/render/renderLoading';
+import Loading from 'components/render/renderLoading';
 
 class EditActivityPaper extends Component {
   constructor() {

@@ -31,13 +31,37 @@ class Index extends Component {
   async handleAdd(values) {
     console.log(values);
     try {
-      const paper = await this.props.INSERT_PAPER({
-        variables: {
-          title: values.title,
-          abstract: values.abstract,
-          keywords: values.keywords,
-        },
-      });
+      const isAuthor = localStorage.getItem('roles').indexOf('7');
+      console.log(isAuthor);
+      let paper;
+      if (isAuthor > -1) {
+        paper = await this.props.INSERT_PAPER({
+          variables: {
+            title: values.title,
+            abstract: values.abstract,
+            keywords: values.keywords,
+          },
+          refetchQueries: [
+            {
+              query: queries.GET_PAPERS_WITH_AUTHOR_BY_CONFERENCE_ID,
+            },
+          ],
+        });
+      } else {
+        paper = await this.props.INSERT_PAPER({
+          variables: {
+            title: values.title,
+            abstract: values.abstract,
+            keywords: values.keywords,
+          },
+          refetchQueries: [
+            {
+              query: queries.GET_PAPERS_BY_CONFERENCE_ID,
+            },
+          ],
+        });
+      }
+
       await this.props.INSERT_PAPER_TOPIC({
         variables: {
           paper_id: paper.data.insertPaper.id,
@@ -45,18 +69,15 @@ class Index extends Component {
         },
         refetchQueries: [
           {
-            query: queries.GET_PAPERS_BY_CONFERENCE_ID,
-          },
-          {
             query: queries.GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
             variables: {
               topic_id: values.topic,
             },
           },
           {
-            query: queries.GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
+            query: queries.GET_TOPICS_BY_PAPER_ID,
             variables: {
-              topic_id: values.topic,
+              paper_id: paper.data.insertPaper.id,
             },
           },
         ],
@@ -67,6 +88,7 @@ class Index extends Component {
       this.showAlertError(temp.substring(7, temp.length));
     }
   }
+
   render() {
     const {
       loading,

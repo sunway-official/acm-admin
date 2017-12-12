@@ -9,7 +9,7 @@ import 'react-table/react-table.css';
 import { RaisedButton } from 'material-ui';
 import { queries } from '../helpers';
 import { graphql, compose } from 'react-apollo';
-import Loading from '../../../../../components/render/renderLoading';
+import Loading from 'components/render/renderLoading';
 
 const style = {
   textAlign: 'center',
@@ -49,6 +49,7 @@ class List extends Component {
     if (getAllStaffInConference) {
       staffs = getAllStaffInConference;
     }
+    console.log(staffs);
     if (loading)
       return (
         <div>
@@ -60,19 +61,19 @@ class List extends Component {
       {
         Header: 'Name',
         accessor: 'firstname',
-        minWidth: 400,
+        minWidth: 200,
         Cell: props => <div style={style}>{props.value}</div>,
       },
       {
         Header: 'Mail',
         accessor: 'email',
-        minWidth: 400,
+        minWidth: 275,
         Cell: props => <div style={style}>{props.value}</div>,
       },
       {
         Header: 'Position',
         accessor: '',
-        minWidth: 400,
+        minWidth: 150,
         Cell: props => (
           <div style={style}>
             <Roles id={props.value.id} conference_id={conference_id} />

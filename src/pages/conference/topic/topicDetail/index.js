@@ -7,12 +7,8 @@ import { queries, mutations } from '../helpers';
 import TopicDetail from './topicDetail';
 import { withRouter } from 'react-router';
 import AlertContainer from 'react-alert';
-import {
-  alertOptions,
-  MyExclamationTriangle,
-  MyFaCheck,
-} from '../../../../theme/alert';
-import Loading from '../../../../components/render/renderLoading';
+import { alertOptions, MyExclamationTriangle, MyFaCheck } from 'theme/alert';
+import Loading from 'components/render/renderLoading';
 
 class Index extends Component {
   constructor(props) {

@@ -7,13 +7,14 @@ import { queries } from '../../helpers';
 import FaFacebookSquare from 'react-icons/lib/fa/facebook-square';
 import FaTwitterSquare from 'react-icons/lib/fa/twitter-square';
 import FaLinkedinSquare from 'react-icons/lib/fa/linkedin-square';
-import Loading from '../../../../components/render/renderLoading';
+import Loading from 'components/render/renderLoading';
 
 class Footer extends Component {
   render() {
     const { loading, getLandingPageByConferenceId } = this.props.data;
+
     if (loading) return <Loading />;
-    const landingPage = getLandingPageByConferenceId[0];
+    const landingPage = getLandingPageByConferenceId;
     return (
       <div id="landingpage-footer">
         <Grid fluid>
