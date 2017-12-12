@@ -9,6 +9,9 @@ import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { alertOptions, MyExclamationTriangle, MyFaCheck } from 'theme/alert';
 import AlertContainer from 'react-alert';
+
+import Loading from 'components/render/renderLoading';
+
 class Index extends Component {
   constructor(props) {
     super(props);
@@ -109,8 +112,7 @@ class Index extends Component {
     const { getPaperByID } = this.props.GET_PAPER_BY_ID;
     const { getTopicsOfConference } = this.props.GET_TOPICS_OF_CONFERENCE;
     const { getTopicsByPaperID } = this.props.GET_TOPICS_BY_PAPER_ID;
-    if (loadingPaper || loadingTopics || loadingPaperTopics)
-      return <div>Loading...</div>;
+    if (loadingPaper || loadingTopics || loadingPaperTopics) return <Loading />;
     let paper, topics, paperTopicsActive, initialValues;
     if (getTopicsByPaperID) {
       paperTopicsActive = getTopicsByPaperID;

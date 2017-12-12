@@ -10,6 +10,8 @@ import { RaisedButton } from 'material-ui';
 import { ActionNoteAdd } from 'material-ui/svg-icons';
 import Topic from '../topic';
 import DeletePaper from './deletePaper';
+import Loading from 'components/render/renderLoading';
+
 const style = {
   textAlign: 'center',
   lineHeight: '200%',
@@ -87,14 +89,14 @@ class Index extends Component {
         loading,
         getPapersWithAuthorByConferenceID,
       } = this.props.GET_PAPERS_WITH_AUTHOR_BY_CONFERENCE_ID;
-      if (loading) return <div>Loading..</div>;
+      if (loading) return <Loading />;
       papers = getPapersWithAuthorByConferenceID;
     } else {
       const {
         loading,
         getPapersByConferenceID,
       } = this.props.GET_PAPERS_BY_CONFERENCE_ID;
-      if (loading) return <div>Loading..</div>;
+      if (loading) return <Loading />;
       papers = getPapersByConferenceID;
     }
     const columns = [
@@ -148,7 +150,7 @@ class Index extends Component {
     return (
       <div className="react-table">
         <ReactTable
-          filterable
+          // filterable
           data={papers}
           columns={columns}
           defaultSorted={sorted}
