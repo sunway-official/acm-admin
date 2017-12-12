@@ -3,12 +3,44 @@ import { reduxForm, Field, FieldArray } from 'redux-form';
 import { RaisedButton, Subheader, Dialog } from 'material-ui';
 import { renderSchedulesEdit, renderTextField } from '../../render';
 import { Link } from 'react-router-dom';
-import { compose, withApollo } from 'react-apollo';
+import { queries, mutations } from '../../helpers';
+import { compose, withApollo, graphql } from 'react-apollo';
 import validate from '../../validate';
 import { scheduleOperations, scheduleActions } from 'store/ducks/schedule';
 import { connect } from 'react-redux';
+import AlertContainer from 'react-alert';
+import { alertOptions, MyFaCheck } from 'theme/alert';
+import { withRouter } from 'react-router';
 
 class EditActivityPaper extends Component {
+  constructor() {
+    super();
+    this.handleDelete = this.handleDelete.bind(this);
+  }
+
+  showAlertSuccess = () => {
+    this.msg.success('Deleted success!', {
+      type: 'success',
+      icon: <MyFaCheck />,
+      onClose: () => {
+        this.props.history.replace('/conference/activities');
+      },
+    });
+  };
+  async handleDelete() {
+    await this.props.DELETE_ACTIVITY_MUTATION({
+      variables: {
+        id: this.props.event.id,
+      },
+      refetchQueries: [
+        {
+          query: queries.GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY,
+        },
+      ],
+    });
+    this.showAlertSuccess();
+  }
+
   render() {
     const { handleSubmit, submitting, pristine, error } = this.props;
     let rooms;
@@ -16,7 +48,15 @@ class EditActivityPaper extends Component {
       rooms = this.props.rooms;
     }
     const actionDelete = [
-      <RaisedButton label="Yes" primary={true} type="submit" />,
+      <RaisedButton
+        label="Yes"
+        primary={true}
+        type="submit"
+        onClick={() => {
+          this.handleDelete();
+          this.props.setToggle();
+        }}
+      />,
       <RaisedButton
         className="marginLeft"
         label="No"
@@ -87,6 +127,7 @@ class EditActivityPaper extends Component {
           actions={actionDelete}
           open={this.props.openDeleteFormModal}
         />
+        <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />
       </form>
     );
   }
@@ -111,5 +152,9 @@ const mapDispatchToProps = dispatch => {
 
 export default compose(
   withApollo,
+  withRouter,
   connect(mapStateToProps, mapDispatchToProps),
+  graphql(mutations.DELETE_ACTIVITY_MUTATION, {
+    name: 'DELETE_ACTIVITY_MUTATION',
+  }),
 )(EditActivityPaper);

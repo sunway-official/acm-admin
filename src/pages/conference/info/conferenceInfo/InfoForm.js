@@ -8,6 +8,7 @@ import normalizePhone from 'utils/normalizePhone';
 import validate from './validate';
 import AlertContainer from 'react-alert';
 import { alertOptions, MyFaCheck } from 'theme/alert';
+
 class ConferenceInfoForm extends React.Component {
   state = {
     openDialog: false,
@@ -152,12 +153,12 @@ class ConferenceInfoForm extends React.Component {
                 label="Save"
                 primary={true}
                 type="submit"
-                disabled={pristine}
-                onClick={() => {
-                  if (!invalid) {
-                    this.showAlertSuccess();
-                  }
-                }}
+                // disabled={pristine}
+                // onClick={() => {
+                //   if (!invalid) {
+                //     this.showAlertSuccess();
+                //   }
+                // }}
               />
             </div>
             <Dialog open={this.state.openDialog} />

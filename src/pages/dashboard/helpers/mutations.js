@@ -102,10 +102,41 @@ export const INSERT_CONFERENCE_ATTENDEE_MUTATION = gql`
   }
 `;
 
-export const ME_QUERY = gql`
+const ME_QUERY = gql`
   query Me {
     me {
       id
+      firstname
+      lastname
+      gender
+      email
+      bio
+      dob
+      avatar
+      linkedin_id
+      facebook_id
+      twitter_id
+      position
+      organization
+      currentConference {
+        id
+        title
+        description
+        start_date
+        end_date
+        address {
+          id
+          lat
+          long
+        }
+        organizerDetail {
+          id
+          name
+          email
+          website
+          phone
+        }
+      }
     }
   }
 `;

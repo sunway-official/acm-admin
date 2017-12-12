@@ -16,7 +16,7 @@ function DashboardIndex(props) {
     <div>
       <style dangerouslySetInnerHTML={{ __html: style }} />
       <Subheader className="subheader conf-infor-title">
-        Academic conferecne management
+        Academic conference management
       </Subheader>
       <div className="page-breadcrumb d-flex">
         <Link className="d-flex" to="/">

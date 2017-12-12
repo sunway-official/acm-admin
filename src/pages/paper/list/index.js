@@ -49,38 +49,6 @@ class Index extends Component {
     this.props.setPaper(paper);
   }
 
-  componentWillMount() {
-    // const isAuthor = localStorage.getItem('roles').indexOf('7');
-    // if (isAuthor > -1) {
-    //   this.props.client
-    //     .query({
-    //       query: queries.GET_PAPERS_WITH_AUTHOR_BY_CONFERENCE_ID,
-    //     })
-    //     .then(value => {
-    //       const { loading, data } = value;
-    //       if (!loading) {
-    //         const papers = data.getPapersWithAuthorByConferenceID;
-    //         this.setState({
-    //           papers: papers,
-    //         });
-    //       }
-    //     });
-    // } else {
-    //   this.props.client
-    //     .query({
-    //       query: queries.GET_PAPERS_BY_CONFERENCE_ID,
-    //     })
-    //     .then(value => {
-    //       const { loading, data } = value;
-    //       if (!loading) {
-    //         const papers = data.getPapersByConferenceID;
-    //         this.setState({
-    //           papers: papers,
-    //         });
-    //       }
-    //     });
-    // }
-  }
   render() {
     const isAuthor = localStorage.getItem('roles').indexOf('7');
     let papers;

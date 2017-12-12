@@ -3,23 +3,36 @@ import { reduxForm, Field, FieldArray } from 'redux-form';
 import { RaisedButton, MenuItem, Subheader, Dialog } from 'material-ui';
 import { renderSchedulesEdit, renderSelectField } from '../../render';
 import { Link } from 'react-router-dom';
-import { queries } from '../../helpers';
+import { queries, mutations } from '../../helpers';
 import { compose, withApollo, graphql } from 'react-apollo';
 import { scheduleOperations, scheduleActions } from 'store/ducks/schedule';
 import { connect } from 'react-redux';
 import validate from '../../validate';
 import Loading from 'components/render/renderLoading';
+import { alertOptions, MyFaCheck } from 'theme/alert';
+import AlertContainer from 'react-alert';
+import { withRouter } from 'react-router';
 
 class EditActivityPaper extends Component {
   constructor() {
     super();
     this.handleChangeTopic = this.handleChangeTopic.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
     this.state = {
       papers: [],
       count: 0,
       disablePaper: true,
     };
   }
+  showAlertSuccess = () => {
+    this.msg.success('Deleted success!', {
+      type: 'success',
+      icon: <MyFaCheck />,
+      onClose: () => {
+        this.props.history.replace('/conference/activities');
+      },
+    });
+  };
 
   async handleChangeTopic(event, value) {
     const papers = await this.props.client.query({
@@ -47,6 +60,20 @@ class EditActivityPaper extends Component {
     }
   }
 
+  async handleDelete() {
+    await this.props.DELETE_ACTIVITY_MUTATION({
+      variables: {
+        id: this.props.event.id,
+      },
+      refetchQueries: [
+        {
+          query: queries.GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY,
+        },
+      ],
+    });
+    this.showAlertSuccess();
+  }
+
   render() {
     const { handleSubmit, submitting, pristine, error } = this.props;
     const { rooms, topics } = this.props;
@@ -65,7 +92,15 @@ class EditActivityPaper extends Component {
       };
     }
     const actionDelete = [
-      <RaisedButton label="Yes" primary={true} type="submit" />,
+      <RaisedButton
+        label="Yes"
+        primary={true}
+        type="submit"
+        onClick={() => {
+          this.handleDelete();
+          this.props.setToggle();
+        }}
+      />,
       <RaisedButton
         className="marginLeft"
         label="No"
@@ -161,6 +196,7 @@ class EditActivityPaper extends Component {
           actions={actionDelete}
           open={this.props.openDeleteFormModal}
         />
+        <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />
       </form>
     );
   }
@@ -185,6 +221,7 @@ const mapStateToProps = state => {
 };
 export default compose(
   withApollo,
+  withRouter,
   connect(mapStateToProps, mapDispatchToProps),
   graphql(queries.GET_ALL_PAPERS_BY_TOPIC_ID_QUERY, {
     options: ownProps => ({
@@ -193,5 +230,8 @@ export default compose(
       },
     }),
     name: 'GET_ALL_PAPERS_BY_TOPIC_ID_QUERY',
+  }),
+  graphql(mutations.DELETE_ACTIVITY_MUTATION, {
+    name: 'DELETE_ACTIVITY_MUTATION',
   }),
 )(EditActivityPaper);
