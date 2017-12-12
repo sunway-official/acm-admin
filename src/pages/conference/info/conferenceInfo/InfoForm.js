@@ -8,6 +8,7 @@ import normalizePhone from 'utils/normalizePhone';
 import validate from './validate';
 import AlertContainer from 'react-alert';
 import { alertOptions, MyFaCheck } from 'theme/alert';
+
 class ConferenceInfoForm extends React.Component {
   state = {
     openDialog: false,
