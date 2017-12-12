@@ -2,18 +2,19 @@ import { Avatar, IconButton, Menu, MenuItem, Popover } from 'material-ui';
 import { HardwareKeyboardArrowDown } from 'material-ui/svg-icons';
 import { Component } from 'react';
 import React from 'react';
-import { compose, withApollo } from 'react-apollo';
+import { compose, withApollo, graphql } from 'react-apollo';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 import { AppBar, Drawer } from 'material-ui';
-import ConfMgtSidebar from '../../../../pages/conference/add';
-
-import { images } from '../../../../theme';
+import ConfMgtSidebar from 'pages/conference/add';
+import { queries } from '../helpers';
+import { images } from 'theme';
 import style from './style.css';
-const S3_GET_PREFIX = process.env.REACT_APP_S3_GET_PREFIX;
+import { functions } from 'containers/layout/appbar/helpers';
+import Loading from 'components/render/renderLoading';
 
-//import { graphql, gql } from 'react-apollo';
+const S3_GET_PREFIX = process.env.REACT_APP_S3_GET_PREFIX;
 
 class BadgeExampleSimple extends Component {
   constructor(props) {
@@ -93,6 +94,18 @@ class BadgeExampleSimple extends Component {
       //const avatar = this.props.me.avatar;
       //console.log(avatar);
     }
+    const loadingRole = this.props.GET_ALL_ROLE_OF_USER.loading;
+    if (loadingRole) return <Loading />;
+
+    let isShow = [];
+    const roles = this.props.GET_ALL_ROLE_OF_USER.getAllRolesOfUser;
+
+    if (roles && roles.length > 0) {
+      const rolesUserId = functions.getRolesId(roles);
+      localStorage.setItem('roles', rolesUserId);
+      isShow = functions.checkRoleAllComponents(rolesUserId);
+    }
+
     return (
       <div className="menu">
         <style
@@ -129,10 +142,14 @@ class BadgeExampleSimple extends Component {
                   onClick={this.handleRequestClose}
                 />
               </Link>
-              <MenuItem
-                primaryText="Switch conference"
-                onClick={this.handleToggleConference}
-              />
+              {isShow['switch-conferences'] ? (
+                <MenuItem
+                  primaryText="Switch conference"
+                  onClick={this.handleToggleConference}
+                />
+              ) : (
+                ''
+              )}
               <MenuItem primaryText="Sign out" onClick={this.handleSignOut} />
             </Menu>
           </Popover>
@@ -154,18 +171,16 @@ class BadgeExampleSimple extends Component {
   }
 }
 
-// const QUERY_ME = gql`
-//   query Me {
-//     me {
-//       firstname
-//     }
-//   }
-// `;
 const mapStateToProps = state => ({
   me: state.auth.currentUser,
 });
 
-export default compose(withRouter, withApollo, connect(mapStateToProps))(
-  BadgeExampleSimple,
-);
+export default compose(
+  withRouter,
+  withApollo,
+  connect(mapStateToProps),
+  graphql(queries.GET_ALL_ROLE_OF_USER, {
+    name: 'GET_ALL_ROLE_OF_USER',
+  }),
+)(BadgeExampleSimple);
 //<Avatar className="avatar" src={images.defaultAvatar} />
