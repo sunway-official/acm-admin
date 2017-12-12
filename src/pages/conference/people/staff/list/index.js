@@ -18,7 +18,7 @@ const style = {
 
 const sorted = [
   {
-    id: 'name',
+    id: 'firstName',
     desc: true,
   },
 ];
