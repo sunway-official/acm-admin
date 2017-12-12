@@ -5,8 +5,7 @@ import { queries } from './helpers';
 import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import ConferenceInfo from './conferenceInfo';
 import { connect } from 'react-redux';
-import CoOrganizerList from './coOrganizer/List';
-// import Loading from 'components/render/renderLoading';
+import CoOrganizerList from './coOrganizer';
 import { graphql, compose } from 'react-apollo';
 import { functions } from 'containers/layout/appbar/helpers';
 

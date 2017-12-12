@@ -3,18 +3,36 @@ import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import { Subheader, IconButton } from 'material-ui';
 import { Link } from 'react-router-dom';
 import { graphql, compose } from 'react-apollo';
-import { connect } from 'react-redux';
 import { mutations, queries } from '../helpers';
 import { withRouter } from 'react-router';
-import Form from './form';
+import Form from '../form';
+import { alertOptions, MyExclamationTriangle, MyFaCheck } from 'theme/alert';
+import AlertContainer from 'react-alert';
 class Index extends Component {
   constructor(props) {
     super(props);
     this.handleAdd = this.handleAdd.bind(this);
   }
+  showAlertSuccess = () => {
+    this.msg.success('Saved!', {
+      type: 'success',
+      icon: <MyFaCheck />,
+      onClose: () => {
+        this.props.history.replace('/conference/papers');
+      },
+    });
+  };
+  showAlertError = text => {
+    this.msg.error(text, {
+      type: 'error', // type of alert
+      icon: <MyExclamationTriangle />,
+    });
+  };
   async handleAdd(values) {
+    console.log(values);
     try {
       const isAuthor = localStorage.getItem('roles').indexOf('7');
+      console.log(isAuthor);
       let paper;
       if (isAuthor > -1) {
         paper = await this.props.INSERT_PAPER({
@@ -25,10 +43,7 @@ class Index extends Component {
           },
           refetchQueries: [
             {
-              query: queries.GET_PAPERS_BY_CONFERENCE_ID,
-              variables: {
-                isAuthor: 1,
-              },
+              query: queries.GET_PAPERS_WITH_AUTHOR_BY_CONFERENCE_ID,
             },
           ],
         });
@@ -42,9 +57,6 @@ class Index extends Component {
           refetchQueries: [
             {
               query: queries.GET_PAPERS_BY_CONFERENCE_ID,
-              variables: {
-                topic_id: this.props.topic.id,
-              },
             },
           ],
         });
@@ -53,27 +65,31 @@ class Index extends Component {
       await this.props.INSERT_PAPER_TOPIC({
         variables: {
           paper_id: paper.data.insertPaper.id,
-          topic_id: this.props.topic.id,
+          topic_id: values.topic,
         },
         refetchQueries: [
           {
-            query: queries.GET_PAPERS_BY_CONFERENCE_ID,
-          },
-          {
             query: queries.GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
             variables: {
-              topic_id: this.props.topic.id,
+              topic_id: values.topic,
+            },
+          },
+          {
+            query: queries.GET_TOPICS_BY_PAPER_ID,
+            variables: {
+              paper_id: paper.data.insertPaper.id,
             },
           },
         ],
       });
-      this.props.history.replace('/conference/papers');
+      this.showAlertSuccess();
     } catch (error) {
-      throw error;
+      let temp = error.graphQLErrors[0].message;
+      this.showAlertError(temp.substring(7, temp.length));
     }
   }
+
   render() {
-    console.log(this.props.topic);
     const {
       loading,
       getTopicsOfConference,
@@ -107,20 +123,15 @@ class Index extends Component {
         <div className="dashboard content d-flex">
           <Form onSubmit={this.handleAdd} topics={topics} />
         </div>
+        <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />
       </div>
     );
   }
 }
-const mapStateToProps = state => {
-  if (state) {
-    return {
-      topic: state.topics.data,
-    };
-  }
-};
+
 export default compose(
   withRouter,
-  connect(mapStateToProps, undefined),
+  // connect(mapStateToProps, undefined),
   graphql(mutations.INSERT_PAPER_TOPIC, {
     name: 'INSERT_PAPER_TOPIC',
   }),

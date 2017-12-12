@@ -1,38 +1,67 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
+import ReactTable from 'react-table';
+import 'react-table/react-table.css';
+import { RaisedButton, Dialog } from 'material-ui';
+import { withRouter } from 'react-router';
+import { queries, mutations } from '../helpers';
 import { graphql, compose } from 'react-apollo';
-import { connect } from 'react-redux';
-import { SubmissionError } from 'redux-form';
-import { bindActionCreators } from 'redux';
-import { mutations, queries } from '../helpers';
-import CoOrganizerForm from './Form';
-import { conferenceCoOranizerActions } from 'store/ducks/conference/info/coOrganizer';
-import './style.css';
+import { alertOptions, MyFaCheck } from 'theme/alert';
+import AlertContainer from 'react-alert';
+const style = {
+  textAlign: 'center',
+  lineHeight: '200%',
+};
 
-class CoOrganizerInfo extends PureComponent {
-  constructor() {
-    super();
-    this.save = this.save.bind(this);
-    this.add = this.add.bind(this);
-    this.toggleExit = this.toggleExit.bind(this);
+const styleBtn = {
+  margin: '0px 10px',
+};
+
+const sorted = [
+  {
+    id: 'name',
+    desc: true,
+  },
+];
+
+class Index extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      coOrganizer: {},
+      title: '',
+      open: false,
+    };
+    this.handleOpen = this.handleOpen.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
-  toggleExit() {
-    this.props.toggleModalForm();
+
+  showAlertSuccess = () => {
+    this.msg.success('Deleted!', {
+      type: 'success',
+      icon: <MyFaCheck />,
+      onClose: () => {
+        this.setState({ disableAdd: false });
+      },
+    });
+  };
+
+  handleOpen(coOrganizerId, coOrganizerName) {
+    this.setState({
+      coOrganizerId: coOrganizerId,
+      coOrganizerName: coOrganizerName,
+      open: true,
+    });
   }
-  async add({
-    coOrganizerName,
-    coOrganizerEmail,
-    coOrganizerWebsite,
-    coOrganizerPhone,
-  }) {
+  handleClose() {
+    this.setState({ open: false });
+  }
+
+  async handleDelete() {
     try {
-      await this.props.INSERT_COORGANIZER({
+      await this.props.DELETE_COORGANIZER({
         variables: {
-          address: '',
-          id: this.props.coOrganizerId,
-          name: coOrganizerName,
-          email: coOrganizerEmail,
-          website: coOrganizerWebsite,
-          phone: coOrganizerPhone,
+          id: this.state.coOrganizerId,
         },
         refetchQueries: [
           {
@@ -40,72 +69,127 @@ class CoOrganizerInfo extends PureComponent {
           },
         ],
       });
-      this.toggleExit();
-    } catch (error) {
-      throw new SubmissionError(error);
-    }
-  }
-  async save({
-    coOrganizerName,
-    coOrganizerEmail,
-    coOrganizerWebsite,
-    coOrganizerPhone,
-  }) {
-    try {
-      await this.props.UPDATE_COORGANIZER_MUTATION({
-        variables: {
-          id: this.props.coOrganizerId,
-          name: coOrganizerName,
-          email: coOrganizerEmail,
-          website: coOrganizerWebsite,
-          phone: coOrganizerPhone,
-        },
+      this.setState({
+        open: false,
       });
-      this.toggleExit();
     } catch (error) {
-      throw new SubmissionError(error);
+      console.error(error);
     }
   }
   render() {
+    const coOrganizerDetails = this.props.coOrganizerDetails;
+
+    const actionDelete = [
+      <RaisedButton
+        label="Yes"
+        primary={true}
+        onClick={() => {
+          this.handleDelete();
+          this.showAlertSuccess();
+          this.setState({ disableAdd: true });
+        }}
+        type="submit"
+      />,
+      <RaisedButton
+        className="marginLeft"
+        label="No"
+        onClick={this.handleClose}
+        style={this.styleBtn}
+      />,
+    ];
+
+    const columns = [
+      {
+        Header: 'Name',
+        accessor: 'name',
+        minWidth: 200,
+        Cell: props => <div style={style}>{props.value}</div>,
+      },
+      {
+        Header: 'Email',
+        accessor: 'email',
+        minWidth: 150,
+        Cell: props => <div style={style}>{props.value}</div>,
+      },
+      {
+        Header: 'Website',
+        accessor: 'website',
+        minWidth: 120,
+        Cell: props => <div style={style}>{props.value}</div>,
+      },
+      {
+        Header: 'Phone-Number',
+        accessor: 'phone',
+        minWidth: 100,
+        Cell: props => <div style={style}>{props.value}</div>,
+      },
+      {
+        Header: 'Action',
+        minWidth: 150,
+        filterable: false,
+        accessor: '',
+        Cell: props => (
+          <div style={style}>
+            <RaisedButton
+              label="Edit"
+              primary={true}
+              onClick={() => {
+                this.props.history.push(
+                  `/conference/edit-co-organizer/${props.value.id}`,
+                );
+              }}
+            />
+            <RaisedButton
+              label="Delete"
+              secondary={true}
+              onClick={() => {
+                this.handleOpen(props.value.id, props.value.name);
+              }}
+              style={styleBtn}
+            />
+          </div>
+        ),
+      },
+    ];
+
     return (
-      <CoOrganizerForm
-        initialValues={this.props.initialValues}
-        onSubmit={this.props.isAdd ? this.add : this.save}
-      />
+      <div>
+        <ReactTable
+          filterable
+          data={coOrganizerDetails}
+          columns={columns}
+          defaultSorted={sorted}
+          defaultPageSize={5}
+          className="-striped -highlight"
+        />
+
+        <Dialog
+          title={<p>Do you want to delete {this.state.coOrganizerName} ?</p>}
+          modal={true}
+          onRequestClose={this.handleClose}
+          open={this.state.open}
+          actions={actionDelete}
+        />
+        <div className="d-flex btn-group justify-content-center marginBottom">
+          <RaisedButton
+            style={{ marginTop: '20px' }}
+            label="Add Co-Organizer"
+            primary={true}
+            disabled={this.state.disableAdd}
+            onClick={() => {
+              this.props.history.push('/conference/add-co-organizer');
+            }}
+          />
+        </div>
+        <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />
+      </div>
     );
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  console.log(ownProps);
-  const coOrganizerDetails = ownProps.coOrganizerDetails;
-  const isAdd = ownProps.isAdd;
-  return {
-    coOrganizerId: coOrganizerDetails.id,
-    initialValues: isAdd
-      ? {}
-      : {
-          coOrganizerName: coOrganizerDetails.name,
-          coOrganizerEmail: coOrganizerDetails.email,
-          coOrganizerWebsite: coOrganizerDetails.website,
-          coOrganizerPhone: coOrganizerDetails.phone,
-        },
-  };
-};
-
-const mapDispatchToProps = dispatch => ({
-  toggleModalForm: bindActionCreators(
-    conferenceCoOranizerActions.toggleCoOrganizerFormModal,
-    dispatch,
-  ),
-});
-
 export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
-  graphql(mutations.UPDATE_COORGANIZER_MUTATION, {
-    name: 'UPDATE_COORGANIZER_MUTATION',
+  withRouter,
+  graphql(mutations.DELETE_COORGANIZER, {
+    name: 'DELETE_COORGANIZER',
   }),
-  graphql(mutations.INSERT_COORGANIZER, {
-    name: 'INSERT_COORGANIZER',
-  }),
-)(CoOrganizerInfo);
+)(Index);

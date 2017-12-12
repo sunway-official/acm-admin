@@ -7,6 +7,8 @@ import { queries, functions, addActivityFunc, mutations } from '../../helpers';
 import { graphql, compose } from 'react-apollo';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import { alertOptions, MyFaCheck } from 'theme/alert';
+import AlertContainer from 'react-alert';
 import Loading from 'components/render/renderLoading';
 
 class Index extends Component {
@@ -14,7 +16,15 @@ class Index extends Component {
     super();
     this.handleAdd = this.handleAdd.bind(this);
   }
-
+  showAlertSuccess = () => {
+    this.msg.success('Saved!', {
+      type: 'success',
+      icon: <MyFaCheck />,
+      onClose: () => {
+        this.props.history.replace('/conference/activities');
+      },
+    });
+  };
   handleAdd(values) {
     const { INSERT_ACTIVITY_MUTATION, INSERT_SCHEDULE_MUTATION } = this.props;
     const data = {
@@ -23,7 +33,7 @@ class Index extends Component {
       values,
     };
     addActivityFunc(data);
-    this.props.history.replace('/conference/activities');
+    this.showAlertSuccess();
   }
 
   render() {
@@ -78,6 +88,7 @@ class Index extends Component {
             onSubmit={this.handleAdd}
           />
         </div>
+        <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />
       </div>
     );
   }

@@ -1,8 +1,21 @@
 import { gql } from 'react-apollo';
 
+const GET_PAPERS_WITH_AUTHOR_BY_CONFERENCE_ID = gql`
+  query getPapersWithAuthorByConferenceID {
+    getPapersWithAuthorByConferenceID {
+      id
+      title
+      abstract
+      keywords
+      papersTopic {
+        topic_id
+      }
+    }
+  }
+`;
 const GET_PAPERS_BY_CONFERENCE_ID = gql`
-  query getPapersByConferenceID($isAuthor: Int) {
-    getPapersByConferenceID(isAuthor: $isAuthor) {
+  query getPapersByConferenceID {
+    getPapersByConferenceID {
       id
       title
       abstract
@@ -75,4 +88,5 @@ export default {
   GET_TOPICS_OF_CONFERENCE,
   GET_PAPER_BY_ID,
   GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
+  GET_PAPERS_WITH_AUTHOR_BY_CONFERENCE_ID,
 };
