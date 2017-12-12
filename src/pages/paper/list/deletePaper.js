@@ -27,28 +27,31 @@ class DeletePaper extends Component {
     });
   };
   async handleDelete() {
-    console.log(this.props);
     let topic_id = 0;
-    if (this.props.paper.papersTopic[0])
-      topic_id = this.props.paper.papersTopic[0].topic_id;
 
     const paper_id = this.props.paper.id;
+    console.log(topic_id);
+    console.log(paper_id);
+    let deletePaperTopic;
     try {
-      await this.props.DELETE_PAPER_TOPIC({
-        variables: {
-          paper_id: paper_id,
-          topic_id: topic_id,
-        },
-        refetchQueries: [
-          {
-            query: queries.GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
-            variables: {
-              topic_id: topic_id,
-            },
+      if (this.props.paper.papersTopic[0]) {
+        topic_id = this.props.paper.papersTopic[0].topic_id;
+        deletePaperTopic = await this.props.DELETE_PAPER_TOPIC({
+          variables: {
+            paper_id: paper_id,
+            topic_id: topic_id,
           },
-        ],
-      });
-      console.log('check');
+          refetchQueries: [
+            {
+              query: queries.GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
+              variables: {
+                topic_id: topic_id,
+              },
+            },
+          ],
+        });
+      }
+      console.log(deletePaperTopic);
       const isAuthor = localStorage.getItem('roles').indexOf('7');
       if (isAuthor > -1) {
         await this.props.DELETE_PAPER({
@@ -58,12 +61,6 @@ class DeletePaper extends Component {
           refetchQueries: [
             {
               query: queries.GET_PAPERS_WITH_AUTHOR_BY_CONFERENCE_ID,
-            },
-            {
-              query: queries.GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
-              variables: {
-                topic_id: topic_id,
-              },
             },
           ],
         });
@@ -75,12 +72,6 @@ class DeletePaper extends Component {
           refetchQueries: [
             {
               query: queries.GET_PAPERS_BY_CONFERENCE_ID,
-            },
-            {
-              query: queries.GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
-              variables: {
-                topic_id: topic_id,
-              },
             },
           ],
         });

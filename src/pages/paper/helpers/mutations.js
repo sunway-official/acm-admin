@@ -29,7 +29,7 @@ const INSERT_PAPER_TOPIC = gql`
 const DELETE_PAPER_TOPIC = gql`
   mutation deletePaperTopic($paper_id: ID!, $topic_id: ID!) {
     deletePaperTopic(paper_id: $paper_id, topic_id: $topic_id) {
-      id
+      topic_id
     }
   }
 `;
