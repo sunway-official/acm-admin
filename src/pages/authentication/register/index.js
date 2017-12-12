@@ -30,12 +30,18 @@ class Register extends PureComponent {
       icon: <MyExclamationTriangle />,
     });
   };
-  showAlertSuccess = () => {
+  showAlertSuccess = isAuthor => {
     this.msg.success('Saved!', {
       type: 'success',
       icon: <MyFaCheck />,
       onClose: () => {
-        this.props.history.replace('/login');
+        if (isAuthor) {
+          this.props.history.replace('/login');
+        } else {
+          let link = '/landingpage/';
+          link = link.concat(this.props.conference_id);
+          this.props.history.replace(link);
+        }
       },
     });
   };
@@ -62,7 +68,7 @@ class Register extends PureComponent {
           },
         });
       }
-      this.showAlertSuccess();
+      this.showAlertSuccess(values.author ? true : false);
     } catch (error) {
       this.showAlertError(error.graphQLErrors[0].message);
       throw new SubmissionError({

@@ -1,4 +1,4 @@
-import { Avatar, IconButton, Menu, MenuItem, Popover } from 'material-ui';
+import { IconButton, Menu, MenuItem, Popover } from 'material-ui';
 import { HardwareKeyboardArrowDown } from 'material-ui/svg-icons';
 import { Component } from 'react';
 import React from 'react';
@@ -9,9 +9,9 @@ import { Link } from 'react-router-dom';
 import { AppBar, Drawer } from 'material-ui';
 import ConfMgtSidebar from '../../../../pages/conference/add';
 
-import { images } from '../../../../theme';
+//import { images } from '../../../../theme';
 import style from './style.css';
-const S3_GET_PREFIX = process.env.REACT_APP_S3_GET_PREFIX;
+//const S3_GET_PREFIX = process.env.REACT_APP_S3_GET_PREFIX;
 
 //import { graphql, gql } from 'react-apollo';
 
@@ -86,7 +86,6 @@ class BadgeExampleSimple extends Component {
     // if (loading) return <div>Loading...</div>;
     //const avatar = this.props.me.avatar;
     let first = '';
-    let avatar = '';
     if (this.props.me !== undefined) {
       //console.log(this.props.me.firstname);
       first = this.props.me.firstname;
@@ -101,10 +100,6 @@ class BadgeExampleSimple extends Component {
           }}
         />
         <div className="badge user" onClick={this.handleTouchTapUser}>
-          <Avatar
-            className="avatar"
-            src={avatar ? S3_GET_PREFIX + avatar : images.defaultAvatar}
-          />
           <span className="user-name"> {first} </span>
           <IconButton tooltip="User">
             <HardwareKeyboardArrowDown />
@@ -169,3 +164,7 @@ export default compose(withRouter, withApollo, connect(mapStateToProps))(
   BadgeExampleSimple,
 );
 //<Avatar className="avatar" src={images.defaultAvatar} />
+// <Avatar
+// className="avatar"
+// src={avatar ? S3_GET_PREFIX + avatar : images.defaultAvatar}
+// />

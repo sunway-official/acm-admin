@@ -1,4 +1,4 @@
-import { Avatar, IconButton, Menu, MenuItem, Popover } from 'material-ui';
+import { IconButton, Menu, MenuItem, Popover } from 'material-ui';
 import { HardwareKeyboardArrowDown } from 'material-ui/svg-icons';
 import { Component } from 'react';
 import React from 'react';
@@ -67,7 +67,6 @@ class DashboardMenu extends Component {
           <img className="logo" src={images.defaultLogo} alt="logo" />
           <div className="space" />
           <div className="badge user" onClick={this.handleTouchTapUser}>
-            <Avatar className="avatar" src={images.defaultAvatar} />
             <span className="user-name"> {first} </span>
             <IconButton tooltip="User">
               <HardwareKeyboardArrowDown />
@@ -103,3 +102,4 @@ const mapStateToProps = state => ({
 export default compose(withRouter, withApollo, connect(mapStateToProps))(
   DashboardMenu,
 );
+//<Avatar className="avatar" src={images.defaultAvatar} />
