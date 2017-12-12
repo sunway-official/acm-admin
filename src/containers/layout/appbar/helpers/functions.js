@@ -32,6 +32,10 @@ export const getRolesComponent = () => {
       roles: ['1', '2', '3', '4', '5', '6', '7', '8'],
     },
     {
+      component: 'switch-conferences',
+      roles: ['1'],
+    },
+    {
       component: 'edit-conference-info',
       roles: ['1'],
     },

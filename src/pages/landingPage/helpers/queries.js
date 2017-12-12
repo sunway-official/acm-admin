@@ -19,6 +19,8 @@ export const GET_LANDING_PAGE_BY_CONFERENCE_ID_QUERY = gql`
           street
           city
           country
+          lat
+          long
         }
         description
         start_date
