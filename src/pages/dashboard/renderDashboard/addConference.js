@@ -6,7 +6,6 @@ import {
   ME_QUERY,
   INSERT_CONFERENCE_ATTENDEE_MUTATION,
 } from '../helpers/mutations';
-import { SubmissionError } from 'redux-form';
 import AddForm from './addconferenceform';
 import { conferenceOperations } from 'store/ducks/conference';
 import { connect } from 'react-redux';
@@ -17,6 +16,10 @@ import { IconButton } from 'material-ui';
 import { ActionHome } from 'material-ui/svg-icons';
 import { Subheader } from 'material-ui';
 import DashboardMenu from './menu';
+import { alertOptions, MyExclamationTriangle, MyFaCheck } from 'theme/alert';
+import AlertContainer from 'react-alert';
+import { withRouter } from 'react-router';
+
 class ConferenceAddForm extends PureComponent {
   constructor(props) {
     super(props);
@@ -30,7 +33,21 @@ class ConferenceAddForm extends PureComponent {
     };
     this.onMapPositionChanged = this.onMapPositionChanged.bind(this);
   }
-
+  showAlertSuccess = () => {
+    this.msg.success('Saved!', {
+      type: 'success',
+      icon: <MyFaCheck />,
+      onClose: () => {
+        this.props.history.replace('/conference/info');
+      },
+    });
+  };
+  showAlertError = text => {
+    this.msg.error(text, {
+      type: 'error', // type of alert
+      icon: <MyExclamationTriangle />,
+    });
+  };
   async handleAddConference(values) {
     const user_id = this.props.data.me.id;
     try {
@@ -66,7 +83,6 @@ class ConferenceAddForm extends PureComponent {
           bg_image: 'Background image',
         },
       });
-      console.log(conference);
       await this.props.INSERT_CONFERENCE_ATTENDEE_MUTATION({
         variables: {
           conference_id: conference.data.insertConference.id,
@@ -83,10 +99,10 @@ class ConferenceAddForm extends PureComponent {
           },
         ],
       });
-      window.location.replace('/conference/info');
+      this.showAlertSuccess();
     } catch (error) {
-      console.log(error);
-      throw new SubmissionError(error);
+      let temp = error.graphQLErrors[0].message;
+      this.showAlertError(temp.substring(7, temp.length));
     }
   }
 
@@ -117,6 +133,7 @@ class ConferenceAddForm extends PureComponent {
             handleSwitch={this.handleSwitch}
           />
         </div>
+        <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />
       </div>
     );
   }
@@ -144,6 +161,7 @@ export const SWITCH_CURRENT_CONFERENCE = gql`
 `;
 
 export default compose(
+  withRouter,
   connect(mapStateToProps, mapDispatchToProps),
   graphql(INSERT_CONFERENCE_MUTATION, {
     name: 'INSERT_CONFERENCE_MUTATION',

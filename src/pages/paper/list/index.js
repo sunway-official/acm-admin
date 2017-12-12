@@ -21,7 +21,7 @@ const styleBtn = {
 
 const sorted = [
   {
-    id: 'name',
+    id: 'title',
     desc: true,
   },
 ];
@@ -53,7 +53,6 @@ class Index extends Component {
     if (getPapersByConferenceID) {
       papers = getPapersByConferenceID;
     }
-    console.log(papers);
     const columns = [
       {
         Header: 'Title',
@@ -117,10 +116,11 @@ class Index extends Component {
           showPaginationTop
         />
 
-        <DeletePaper id={this.state.paper_id} topic_id={this.state.topic_id} />
-        <div className="d-flex save-btn btn-group">
+        <DeletePaper id={this.state.paper_id} />
+        <div className="d-flex justify-content-center save-btn btn-group">
           <Link to="/conference/paper/add">
             <RaisedButton
+              style={{ marginTop: '20px' }}
               className="marginBottom"
               icon={<ActionNoteAdd />}
               primary={true}
