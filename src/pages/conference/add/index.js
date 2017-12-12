@@ -11,14 +11,8 @@ class ConfMgtSidebar extends React.Component {
 
     if (loading) return <Loading />;
 
-    if (this.props.data.me)
-      return (
-        <GetAllConfs
-          id={this.props.data.me.id}
-          handleCloseConference={this.props.handleCloseConference}
-        />
-      );
-    else return <div>Loading</div>;
+    if (this.props.data.me) return <GetAllConfs id={this.props.data.me.id} />;
+    else return <Loading />;
   }
 }
 

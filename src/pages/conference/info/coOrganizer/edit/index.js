@@ -9,6 +9,8 @@ import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { alertOptions, MyFaCheck } from 'theme/alert';
 import AlertContainer from 'react-alert';
+import Loading from 'components/render/renderLoading';
+
 class Index extends Component {
   constructor() {
     super();
@@ -56,7 +58,7 @@ class Index extends Component {
       };
     }
     if (loading) {
-      return <div>Loading...</div>;
+      return <Loading />;
     }
     return (
       <div className="conference">
