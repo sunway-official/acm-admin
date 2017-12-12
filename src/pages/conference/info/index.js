@@ -5,9 +5,9 @@ import { queries } from './helpers';
 import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import ConferenceInfo from './conferenceInfo';
 import { connect } from 'react-redux';
-import CoOrganizerList from './coOrganizer/List';
-// import Loading from '../../../components/render/renderLoading';
+import CoOrganizerList from './coOrganizer';
 import { graphql, compose } from 'react-apollo';
+import { functions } from 'containers/layout/appbar/helpers';
 
 class Index extends Component {
   render() {
@@ -18,6 +18,9 @@ class Index extends Component {
     // khai bao conference dua tren query getConferenceByID
     const coOrganizerDetails = conference.coOrganizerDetails;
     // khai bao coOrganizerDetails dua tren query coOrganizerDetails bang getConferenceByID
+
+    const roles = localStorage.getItem('roles');
+    const isShow = functions.checkRoleAllComponents(roles);
     return (
       <div className="conference">
         <Subheader className="subheader conf-infor-title">
@@ -38,15 +41,23 @@ class Index extends Component {
         <div className="dashboard content d-flex">
           <Tabs style={{ width: '100%' }}>
             <Tab label="Basic Information">
-              <ConferenceInfo conference={conference} onSubmit={() => {}} />
+              <ConferenceInfo
+                isShow={isShow}
+                conference={conference}
+                onSubmit={() => {}}
+              />
               {/* truyen conference qua conferenceInfo  */}
             </Tab>
-            <Tab label="Co-Organizer">
-              <CoOrganizerList
-                conferenceId={conference.id}
-                coOrganizerDetails={coOrganizerDetails}
-              />
-            </Tab>
+            {isShow['view-co-organizer'] ? (
+              <Tab label="Co-Organizer">
+                <CoOrganizerList
+                  conferenceId={conference.id}
+                  coOrganizerDetails={coOrganizerDetails}
+                />
+              </Tab>
+            ) : (
+              ''
+            )}
           </Tabs>
         </div>
       </div>

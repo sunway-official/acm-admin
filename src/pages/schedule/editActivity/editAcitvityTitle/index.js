@@ -7,14 +7,24 @@ import { queries, mutations, functions, editActivityFunc } from '../../helpers';
 import { graphql, compose } from 'react-apollo';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import Loading from '../../../../components/render/renderLoading';
+import { alertOptions, MyFaCheck } from 'theme/alert';
+import AlertContainer from 'react-alert';
+import Loading from 'components/render/renderLoading';
 
 class Index extends Component {
   constructor() {
     super();
     this.handleEdit = this.handleEdit.bind(this);
   }
-
+  showAlertSuccess = () => {
+    this.msg.success('Saved!', {
+      type: 'success',
+      icon: <MyFaCheck />,
+      onClose: () => {
+        this.props.history.replace('/conference/activities');
+      },
+    });
+  };
   // deleteIds
   handleEdit(values) {
     values.id = this.props.match.params.id;
@@ -37,7 +47,7 @@ class Index extends Component {
     };
 
     editActivityFunc(data);
-    this.props.history.replace('/conference/activities');
+    this.showAlertSuccess();
   }
 
   render() {
@@ -106,6 +116,7 @@ class Index extends Component {
             status="without-paper"
           />
         </div>
+        <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />
       </div>
     );
   }

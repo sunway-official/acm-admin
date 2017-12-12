@@ -1,10 +1,13 @@
 import React, { PureComponent } from 'react';
-import { mutations } from '../helpers';
+import { mutations, queries } from '../helpers';
 import { connect } from 'react-redux';
 import { graphql, compose } from 'react-apollo';
 import InfoForm from './InfoForm';
 import { withRouter } from 'react-router-dom';
 import './style.css';
+import { conferenceOperations } from 'store/ducks/conference';
+import ViewInfoForm from './ViewInfoForm';
+
 class ConferenceInfoForm extends PureComponent {
   constructor(props) {
     super(props);
@@ -66,16 +69,34 @@ class ConferenceInfoForm extends PureComponent {
     console.log(this.props);
   }
   render() {
-    return (
-      <InfoForm
-        initialValues={this.props.initialValues}
-        conference={this.props.conference}
-        onSubmit={this.handleUpdateConferenceInfo}
-        onMapPositionChanged={this.onMapPositionChanged}
-      />
-    );
+    if (this.props.isShow['edit-conference-info']) {
+      return (
+        <InfoForm
+          initialValues={this.props.initialValues}
+          conference={this.props.conference}
+          onSubmit={this.handleUpdateConferenceInfo}
+          onMapPositionChanged={this.onMapPositionChanged}
+        />
+      );
+    } else {
+      return (
+        <ViewInfoForm
+          initialValues={this.props.initialValues}
+          conference={this.props.conference}
+          onSubmit={this.handleUpdateConferenceInfo}
+          onMapPositionChanged={this.onMapPositionChanged}
+        />
+      );
+    }
   }
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getPosition: position =>
+      dispatch(conferenceOperations.getPositionOperation(position)),
+  };
+};
 
 const mapStateToProps = (state, ownProps) => {
   const conference = ownProps.conference;
@@ -102,7 +123,10 @@ const mapStateToProps = (state, ownProps) => {
 };
 export default compose(
   withRouter,
-  connect(mapStateToProps, undefined),
+  connect(mapStateToProps, mapDispatchToProps),
+  graphql(queries.GET_ALL_ROLE_OF_USER, {
+    name: 'GET_ALL_ROLE_OF_USER',
+  }),
   graphql(mutations.UPDATE_CONFERENCE_MUTATION, {
     name: 'UPDATE_CONFERENCE_MUTATION',
   }),

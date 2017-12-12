@@ -1,12 +1,13 @@
 import React from 'react';
 import { Dialog, Tabs, Tab, IconButton } from 'material-ui';
 import { NavigationClose } from 'material-ui/svg-icons';
-import RolesInfo from './rolesInfo';
-import PersonalInfo from './personalInfo';
+import Roles from './roles';
+import Form from './form';
 import { connect } from 'react-redux';
-import { GET_ALL_ROLES_ACTIVE_BY_USER_ID_QUERY } from './helpers';
+import { queries } from '../helpers';
 import { graphql, compose } from 'react-apollo';
-import Loading from '../../../../../components/render/renderLoading';
+import Loading from 'components/render/renderLoading';
+import '../../../info/coOrganizer/style.css';
 
 class DialogEdit extends React.Component {
   render() {
@@ -36,10 +37,10 @@ class DialogEdit extends React.Component {
       <Dialog open={this.props.openDialog} actions={actions}>
         <Tabs style={{ marginTop: '20px' }}>
           <Tab label="Personal Information">
-            <PersonalInfo initialValues={this.props.user} roles={roles} />
+            <Form initialValues={this.props.user} roles={roles} />
           </Tab>
           <Tab label="Roles Information">
-            <RolesInfo />
+            <Roles />
           </Tab>
         </Tabs>
       </Dialog>
@@ -53,7 +54,7 @@ const mapStateToProps = state => ({
 
 export default compose(
   connect(mapStateToProps, undefined),
-  graphql(GET_ALL_ROLES_ACTIVE_BY_USER_ID_QUERY, {
+  graphql(queries.GET_ALL_ROLES_ACTIVE_BY_USER_ID_QUERY, {
     options: ownProps => ({
       variables: {
         user_id: ownProps.staff_id,

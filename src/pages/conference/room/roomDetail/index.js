@@ -8,13 +8,9 @@ import { queries as scheduleQueries } from '../../../schedule/helpers';
 import RoomDetail from './roomDetail';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import {
-  alertOptions,
-  MyExclamationTriangle,
-  MyFaCheck,
-} from '../../../../theme/alert';
+import { alertOptions, MyExclamationTriangle, MyFaCheck } from 'theme/alert';
 import AlertContainer from 'react-alert';
-import Loading from '../../../../components/render/renderLoading';
+import Loading from 'components/render/renderLoading';
 
 class Index extends Component {
   constructor(props) {

@@ -10,7 +10,7 @@ import ConferenceInfo from '../pages/conference/info';
 import Paper from '../pages/paper';
 import PaperAdd from '../pages/paper/add';
 import PaperEdit from '../pages/paper/edit';
-import ConferenceStaffList from '../pages/conference/people/staff/list';
+import ConferenceStaffList from '../pages/conference/people/staff';
 import UserProfile from '../pages/conference/people/userProfile/userProfile';
 import Dashboard from '../pages/dashboard';
 import NoMatch from '../pages/NoMatch';
@@ -34,7 +34,8 @@ import AddActivityPaper from '../pages/schedule/addActivity/addActivityPaper';
 import AddActivityTitle from '../pages/schedule/addActivity/addActivityTitle';
 import EditActivityPaper from '../pages/schedule/editActivity/editAcitvityPaper';
 import EditActivityTitle from '../pages/schedule/editActivity/editAcitvityTitle';
-import ReactTable from '../pages/react-table';
+import AddCoOrganizer from '../pages/conference/info/coOrganizer/add';
+import EditCoOrganizer from '../pages/conference/info/coOrganizer/edit';
 
 export default () => (
   <MuiThemeProvider muiTheme={muiTheme}>
@@ -54,7 +55,15 @@ export default () => (
           <AuthRoute path="/conference/info" component={ConferenceInfo} />
           <AuthRoute path="/conference/add" component={Addconference} />
           <AuthRoute
-            path="/conference/:conference_id/people/staff"
+            path="/conference/add-co-organizer"
+            component={AddCoOrganizer}
+          />
+          <AuthRoute
+            path="/conference/edit-co-organizer/:id"
+            component={EditCoOrganizer}
+          />
+          <AuthRoute
+            path="/conference/people/staff"
             component={ConferenceStaffList}
           />
           <AuthRoute
@@ -63,7 +72,6 @@ export default () => (
             path="/conference/landing-page-management"
             component={LandingPageManagement}
           />
-          <AuthRoute needAuth path="/react-table" component={ReactTable} />
           <AuthRoute
             needAuth
             exact
@@ -155,6 +163,7 @@ export default () => (
             path="/conference/activities/edit-activity-title/:id"
             component={EditActivityTitle}
           />
+
           <AuthRoute exact path="/conference/activities" component={Schedule} />
           <AuthRoute path="/withThunk" component={WithThunk} />
           <AuthRoute component={NoMatch} />

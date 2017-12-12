@@ -66,7 +66,17 @@ const GET_CONFERENCE_BY_ID_QUERY = gql`
     }
   }
 `;
-
+const GET_CO_ORGANIZER_DETAIL_BY_ID = gql`
+  query getCoOrganizerDetailByID($id: ID!) {
+    getCoOrganizerDetailByID(id: $id) {
+      id
+      name
+      email
+      website
+      phone
+    }
+  }
+`;
 const ME_QUERY = gql`
   query Me {
     me {
@@ -105,4 +115,21 @@ const ME_QUERY = gql`
     }
   }
 `;
-export default { ME_QUERY, GET_CURRENT_CONFERENCE, GET_CONFERENCE_BY_ID_QUERY };
+
+export const GET_ALL_ROLE_OF_USER = gql`
+  query getAllRolesOfUser {
+    getAllRolesOfUser {
+      role {
+        id
+      }
+    }
+  }
+`;
+
+export default {
+  ME_QUERY,
+  GET_CURRENT_CONFERENCE,
+  GET_CONFERENCE_BY_ID_QUERY,
+  GET_ALL_ROLE_OF_USER,
+  GET_CO_ORGANIZER_DETAIL_BY_ID,
+};

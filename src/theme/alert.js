@@ -6,7 +6,7 @@ export const alertOptions = {
   offset: 14,
   position: 'bottom right',
   theme: 'dark',
-  time: 2000, // set time for all alert
+  time: 1500, // set time for all alert
   transition: 'scale',
 };
 export const styles = {

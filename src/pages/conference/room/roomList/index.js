@@ -6,12 +6,8 @@ import { mutations, queries } from '../helpers';
 import { connect } from 'react-redux';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
-import Loading from '../../../../components/render/renderLoading';
-import {
-  alertOptions,
-  MyExclamationTriangle,
-  MyFaCheck,
-} from '../../../../theme/alert';
+import Loading from 'components/render/renderLoading';
+import { alertOptions, MyExclamationTriangle, MyFaCheck } from 'theme/alert';
 import AlertContainer from 'react-alert';
 
 const style = {
@@ -161,7 +157,7 @@ class RoomList extends Component {
           open={this.state.openDelete}
           actions={actionDelete}
         />
-        <div className="d-flex btn-group list-btn-add">
+        <div className="d-flex justify-content-center btn-group list-btn-add">
           <Link to={`/conference/rooms-management/room-detail`}>
             <RaisedButton label="Add Room" primary={true} />
           </Link>

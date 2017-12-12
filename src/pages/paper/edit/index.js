@@ -4,60 +4,105 @@ import { Subheader, IconButton } from 'material-ui';
 import { Link } from 'react-router-dom';
 import { graphql, compose } from 'react-apollo';
 import { queries, mutations } from '../helpers';
-import Form from './form';
+import Form from '../form';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
-
+import { alertOptions, MyExclamationTriangle, MyFaCheck } from 'theme/alert';
+import AlertContainer from 'react-alert';
 class Index extends Component {
   constructor(props) {
     super(props);
     this.handleSave = this.handleSave.bind(this);
   }
+  showAlertSuccess = () => {
+    this.msg.success('Saved!', {
+      type: 'success',
+      icon: <MyFaCheck />,
+      onClose: () => {
+        this.props.history.replace('/conference/papers');
+      },
+    });
+  };
+  showAlertError = text => {
+    this.msg.error(text, {
+      type: 'error', // type of alert
+      icon: <MyExclamationTriangle />,
+    });
+  };
   async handleSave(values) {
+    console.log(values);
     const { UPDATE_PAPER, UPDATE_TOPIC_OF_PAPER } = this.props;
     try {
-      await UPDATE_PAPER({
-        variables: {
-          id: this.props.match.params.id,
-          title: values.title,
-          abstract: values.abstract,
-          keywords: values.keywords,
-        },
-        refetchQueries: [
-          {
-            query: queries.GET_PAPERS_BY_CONFERENCE_ID,
+      const isAuthor = localStorage.getItem('roles').indexOf('7');
+      console.log(isAuthor);
+      let paper;
+
+      if (isAuthor > -1) {
+        paper = await UPDATE_PAPER({
+          variables: {
+            id: this.props.match.params.id,
+            title: values.title,
+            abstract: values.abstract,
+            keywords: values.keywords,
           },
-        ],
-      });
-      if (this.props.topic) {
+          refetchQueries: [
+            {
+              query: queries.GET_PAPERS_WITH_AUTHOR_BY_CONFERENCE_ID,
+            },
+          ],
+        });
+      } else {
+        paper = await UPDATE_PAPER({
+          variables: {
+            id: this.props.match.params.id,
+            title: values.title,
+            abstract: values.abstract,
+            keywords: values.keywords,
+          },
+          refetchQueries: [
+            {
+              query: queries.GET_PAPERS_BY_CONFERENCE_ID,
+            },
+          ],
+        });
+      }
+      console.log(paper);
+      if (values.topic) {
+        const topic_id = paper.data.updatePaper.papersTopic[0].topic_id;
         await UPDATE_TOPIC_OF_PAPER({
           variables: {
             paper_id: this.props.match.params.id,
-            topic_id: this.props.topic.id,
+            topic_id: values.topic,
           },
           refetchQueries: [
             {
               query: queries.GET_TOPICS_BY_PAPER_ID,
               variables: {
-                paper_id: values.id,
+                paper_id: this.props.match.params.id,
               },
             },
             {
               query: queries.GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
               variables: {
-                topic_id: this.props.topic.id,
+                topic_id: values.topic,
+              },
+            },
+            {
+              query: queries.GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
+              variables: {
+                topic_id: topic_id,
               },
             },
           ],
         });
       }
-      this.props.history.replace('/conference/papers');
+      this.showAlertSuccess();
     } catch (error) {
-      throw console.log({ error });
+      let temp = error.graphQLErrors[0].message;
+      this.showAlertError(temp.substring(7, temp.length));
     }
   }
   render() {
-    console.log(this.props.topic);
     const loadingPaper = this.props.GET_PAPER_BY_ID.loading;
     const loadingTopics = this.props.GET_TOPICS_OF_CONFERENCE.loading;
     const loadingPaperTopics = this.props.GET_TOPICS_BY_PAPER_ID.loading;
@@ -112,12 +157,13 @@ class Index extends Component {
             paperTopicsActive={paperTopicsActive[0].topic.name}
           />
         </div>
+        <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />
       </div>
     );
   }
 }
 const mapStateToProps = state => {
-  if (state) {
+  if (state.topics) {
     return {
       topic: state.topics.data,
     };

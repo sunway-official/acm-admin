@@ -148,7 +148,7 @@ class TopicList extends Component {
           open={this.state.openDelete}
           actions={actionDelete}
         />
-        <div className="d-flex btn-group list-btn-add">
+        <div className="d-flex btn-group justify-content-center list-btn-add">
           <Link to={`/conference/topics-management/topic-detail`}>
             <RaisedButton label="Add Topic" primary={true} />
           </Link>

@@ -5,7 +5,7 @@ import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import { graphql } from 'react-apollo';
 import { queries } from './helpers';
 import TopicList from './topicList';
-import Loading from '../../../components/render/renderLoading';
+import Loading from 'components/render/renderLoading';
 
 class Index extends Component {
   constructor(props) {

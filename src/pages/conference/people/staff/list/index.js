@@ -1,116 +1,141 @@
 import React, { Component } from 'react';
-import { Subheader, IconButton } from 'material-ui';
-// import AddDialog from './insert/addDialog';
-import { Link } from 'react-router-dom';
-import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
-import List from './list';
-import { graphql, gql, compose } from 'react-apollo';
-import Loading from '../../../../../components/render/renderLoading';
+import Edit from '../edit';
+import Roles from './roles';
+import { userActions } from 'store/ducks/user';
+import { conferenceOperations } from 'store/ducks/conference';
+import { connect } from 'react-redux';
+import ReactTable from 'react-table';
+import 'react-table/react-table.css';
+import { RaisedButton } from 'material-ui';
+import { queries } from '../helpers';
+import { graphql, compose } from 'react-apollo';
+import Loading from 'components/render/renderLoading';
 
-class Index extends Component {
+const style = {
+  textAlign: 'center',
+  lineHeight: '200%',
+};
+
+const sorted = [
+  {
+    id: 'name',
+    desc: true,
+  },
+];
+class List extends Component {
   constructor(props) {
     super(props);
-    this.handleOpenAddDialog = this.handleOpenAddDialog.bind(this);
-    this.handleCloseAddDialog = this.handleCloseAddDialog.bind(this);
+    this.handleOpenDialog = this.handleOpenDialog.bind(this);
+    this.state = {
+      openDialog: false,
+      staffId: 0,
+    };
   }
-  state = {
-    openDialog: false,
-    userId: 0,
+  handleOpenDialog(staff, staffId) {
+    this.setState({ openDialog: !this.state.openDialog, staffId: staffId });
+    this.props.setUser(staff);
+    this.props.getConferenceId(this.props.conference_id);
+  }
+  handleClose = () => {
+    this.setState({ openDialog: !this.state.openDialog });
   };
-  handleOpenAddDialog() {
-    this.setState({
-      openDialog: !this.state.openDialog,
-    });
-  }
-  handleCloseAddDialog() {
-    this.setState({
-      openDialog: !this.state.openDialog,
-    });
-  }
+
   render() {
-    // let allUsers;
-    // const { getAllUsers } = this.props.GET_ALL_USERS;
-    // if (getAllUsers) {
-    //   allUsers = getAllUsers;
-    // } else return <div>Loading...</div>;
-    const { loading } = this.props.data;
+    const {
+      loading,
+      getAllStaffInConference,
+    } = this.props.GET_ALL_STAFF_IN_CONFERENCE;
+    let staffs;
+    if (getAllStaffInConference) {
+      staffs = getAllStaffInConference;
+    }
+    console.log(staffs);
     if (loading)
       return (
         <div>
           <Loading />
         </div>
       );
-
-    const staffs = this.props.data.getAllStaffInConference;
+    const conference_id = this.props.conference_id;
+    const columns = [
+      {
+        Header: 'Name',
+        accessor: 'firstname',
+        minWidth: 200,
+        Cell: props => <div style={style}>{props.value}</div>,
+      },
+      {
+        Header: 'Mail',
+        accessor: 'email',
+        minWidth: 275,
+        Cell: props => <div style={style}>{props.value}</div>,
+      },
+      {
+        Header: 'Position',
+        accessor: '',
+        minWidth: 150,
+        Cell: props => (
+          <div style={style}>
+            <Roles id={props.value.id} conference_id={conference_id} />
+          </div>
+        ),
+      },
+      {
+        Header: 'Action',
+        minWidth: 150,
+        filterable: false,
+        accessor: '',
+        Cell: props => (
+          <div style={style}>
+            <RaisedButton
+              label="Edit"
+              primary={true}
+              onClick={() => {
+                this.handleOpenDialog(props.value, props.value.id);
+              }}
+            />
+          </div>
+        ),
+      },
+    ];
     return (
-      <div className="conference">
-        <Subheader className="subheader"> Staff List</Subheader>
-        <div className="page-breadcrumb d-flex">
-          <Link className="d-flex" to="/conference/info">
-            <IconButton>
-              <ActionHome />
-            </IconButton>
-            <span>Conference Information</span>
-          </Link>
-          <IconButton>
-            <HardwareKeyboardArrowRight />
-          </IconButton>
-          <span>People</span>
-          <IconButton>
-            <HardwareKeyboardArrowRight />
-          </IconButton>
-          <span>Staff</span>
-        </div>
-        <div className="dashboard content">
-          <List
-            staffs={staffs}
-            conference_id={this.props.match.params.conference_id}
-          />
-          {/* <RaisedButton
-            onClick={() => this.handleOpenAddDialog()}
-            primary={true}
-            label="Add New Staff"
-          />*/}
-        </div>
-        {/*<AddDialog
-          allUsers={allUsers}
-          id={this.state.userId}
-          open={this.state.openDialog}
-          handleClose={this.handleOpenAddDialog}
-        />*/}
+      <div className="react-table">
+        <ReactTable
+          filterable
+          data={staffs}
+          columns={columns}
+          defaultSorted={sorted}
+          defaultPageSize={10}
+          className="-striped -highlight"
+          showPaginationTop
+        />
+        <Edit
+          openDialog={this.state.openDialog}
+          handleClose={() => {
+            this.handleClose();
+          }}
+          staff_id={this.state.staffId}
+          conference_id={conference_id}
+        />
       </div>
     );
   }
 }
 
-export const GET_ALL_STAFF_IN_CONFERENCE = gql`
-  query getAllStaffInConference($conference_id: ID!) {
-    getAllStaffInConference(conference_id: $conference_id) {
-      id
-      firstname
-      lastname
-      email
-      dob
-      gender
-    }
-  }
-`;
-const GET_ALL_USERS = gql`
-  query getAllUsers {
-    getAllUsers {
-      id
-      firstname
-      lastname
-    }
-  }
-`;
+const mapDispatchToProps = dispatch => {
+  return {
+    setUser: user => dispatch(userActions.setUser(user)),
+    getConferenceId: conference_id =>
+      dispatch(conferenceOperations.getIdOperation(conference_id)),
+  };
+};
+
 export default compose(
-  graphql(GET_ALL_STAFF_IN_CONFERENCE, {
+  connect(undefined, mapDispatchToProps),
+  graphql(queries.GET_ALL_STAFF_IN_CONFERENCE, {
+    name: 'GET_ALL_STAFF_IN_CONFERENCE',
     options: ownProps => ({
-      variables: { conference_id: ownProps.match.params.conference_id },
+      variables: { conference_id: ownProps.conference_id },
     }),
   }),
-  graphql(GET_ALL_USERS, {
-    name: 'GET_ALL_USERS',
-  }),
-)(Index);
+)(List);

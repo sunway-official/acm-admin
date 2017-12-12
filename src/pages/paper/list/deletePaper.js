@@ -4,7 +4,8 @@ import { graphql, compose } from 'react-apollo';
 import { mutations, queries } from '../helpers';
 import { connect } from 'react-redux';
 import { paperActions } from 'store/ducks/paper';
-
+import { alertOptions, MyExclamationTriangle, MyFaCheck } from 'theme/alert';
+import AlertContainer from 'react-alert';
 class DeletePaper extends Component {
   styles = {
     margin: 10,
@@ -13,31 +14,75 @@ class DeletePaper extends Component {
     super(props);
     this.handleDelete = this.handleDelete.bind(this);
   }
+  showAlertError = text => {
+    this.msg.error(text, {
+      type: 'error', // type of alert
+      icon: <MyExclamationTriangle />,
+    });
+  };
+  showAlertSuccess = () => {
+    this.msg.success('Deleted!', {
+      type: 'success',
+      icon: <MyFaCheck />,
+    });
+  };
   async handleDelete() {
-    console.log(this.props);
+    let topic_id = 0;
+
+    const paper_id = this.props.paper.id;
+    console.log(topic_id);
+    console.log(paper_id);
+    let deletePaperTopic;
     try {
-      await this.props.DELETE_PAPER({
-        variables: {
-          id: this.props.paper.id,
-        },
-        refetchQueries: [
-          {
-            query: queries.GET_PAPERS_BY_CONFERENCE_ID,
-            variables: {
-              conference_id: this.props.conference_id,
-            },
+      if (this.props.paper.papersTopic[0]) {
+        topic_id = this.props.paper.papersTopic[0].topic_id;
+        deletePaperTopic = await this.props.DELETE_PAPER_TOPIC({
+          variables: {
+            paper_id: paper_id,
+            topic_id: topic_id,
           },
-          {
-            query: queries.GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
-            variables: {
-              topic_id: this.props.topic_id,
+          refetchQueries: [
+            {
+              query: queries.GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
+              variables: {
+                topic_id: topic_id,
+              },
             },
+          ],
+        });
+      }
+      console.log(deletePaperTopic);
+      const isAuthor = localStorage.getItem('roles').indexOf('7');
+      if (isAuthor > -1) {
+        await this.props.DELETE_PAPER({
+          variables: {
+            id: paper_id,
           },
-        ],
-      });
+          refetchQueries: [
+            {
+              query: queries.GET_PAPERS_WITH_AUTHOR_BY_CONFERENCE_ID,
+            },
+          ],
+        });
+      } else {
+        await this.props.DELETE_PAPER({
+          variables: {
+            id: paper_id,
+          },
+          refetchQueries: [
+            {
+              query: queries.GET_PAPERS_BY_CONFERENCE_ID,
+            },
+          ],
+        });
+      }
       this.props.setToggle();
+      this.showAlertSuccess();
     } catch (error) {
-      console.log({ error });
+      let temp = error.graphQLErrors[0].message;
+      this.props.setToggle();
+
+      this.showAlertError(temp.substring(7, temp.length));
     }
   }
 
@@ -46,7 +91,9 @@ class DeletePaper extends Component {
       <RaisedButton
         label="Yes"
         primary={true}
-        onClick={this.handleDelete}
+        onClick={() => {
+          this.handleDelete();
+        }}
         type="submit"
       />,
       <RaisedButton
@@ -64,6 +111,7 @@ class DeletePaper extends Component {
           actions={actionDelete}
           open={this.props.openModal}
         />
+        <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />
       </div>
     );
   }
@@ -75,8 +123,8 @@ const mapDispatchToProps = dispatch => {
 };
 const mapStateToProps = state => {
   if (state.auth.currentUser.currentConference) {
+    console.log('state', state);
     return {
-      conference_id: state.auth.currentUser.currentConference.id,
       paper: state.paper.data,
       openModal: state.paper.openModal,
     };
@@ -86,10 +134,8 @@ export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   graphql(mutations.DELETE_PAPER, {
     name: 'DELETE_PAPER',
-    option: ownProps => ({
-      variables: {
-        id: ownProps.id,
-      },
-    }),
+  }),
+  graphql(mutations.DELETE_PAPER_TOPIC, {
+    name: 'DELETE_PAPER_TOPIC',
   }),
 )(DeletePaper);

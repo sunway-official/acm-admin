@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
-import { GET_ALL_ROLES_ACTIVE_BY_USER_ID_QUERY } from './helpers';
-import Loading from '../../../../../components/render/renderLoading';
+import { queries } from '../helpers';
+import Loading from 'components/render/renderLoading';
+
 class GetRoles extends Component {
   render() {
     const { loading, error } = this.props.data;
@@ -33,7 +34,7 @@ class GetRoles extends Component {
   }
 }
 
-export default graphql(GET_ALL_ROLES_ACTIVE_BY_USER_ID_QUERY, {
+export default graphql(queries.GET_ALL_ROLES_ACTIVE_BY_USER_ID_QUERY, {
   options: ownProps => ({
     variables: {
       user_id: ownProps.id,

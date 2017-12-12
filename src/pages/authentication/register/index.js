@@ -61,7 +61,7 @@ class Register extends PureComponent {
       if (values.author) {
         await this.props.updateUserRoleStatus({
           variables: {
-            role_id: 8,
+            role_id: 7,
             user_id: user.data.register.id,
             conference_id: this.props.conference_id,
             status: 'on',

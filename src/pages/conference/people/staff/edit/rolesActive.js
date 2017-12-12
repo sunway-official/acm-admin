@@ -2,11 +2,7 @@ import React, { Component } from 'react';
 import { ListItem, Toggle } from 'material-ui';
 import { graphql, compose } from 'react-apollo';
 import { connect } from 'react-redux';
-import {
-  GET_ALL_ROLES_ACTIVE_BY_USER_ID_QUERY,
-  UPDATE_USER_ROLE_STATUS,
-  // GET_ALL_ROLES,
-} from './helpers';
+import { queries, mutations } from '../helpers';
 class RoleItem extends Component {
   constructor(props) {
     super(props);
@@ -23,7 +19,7 @@ class RoleItem extends Component {
         },
         refetchQueries: [
           {
-            query: GET_ALL_ROLES_ACTIVE_BY_USER_ID_QUERY,
+            query: queries.GET_ALL_ROLES_ACTIVE_BY_USER_ID_QUERY,
             variables: {
               user_id: this.props.id,
               conference_id: this.props.conference_id,
@@ -41,8 +37,6 @@ class RoleItem extends Component {
   render() {
     const role = this.props.role;
     const rolesActive = this.props.rolesActive;
-    console.log(rolesActive);
-    console.log(role);
     // const roles = this.props.roles;
     return (
       <ListItem
@@ -65,7 +59,7 @@ const mapStateToProps = state => {
 };
 export default compose(
   connect(mapStateToProps, undefined),
-  graphql(UPDATE_USER_ROLE_STATUS, {
+  graphql(mutations.UPDATE_USER_ROLE_STATUS, {
     name: 'UPDATE_USER_ROLE_STATUS',
   }),
 )(RoleItem);
