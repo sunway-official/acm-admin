@@ -35,12 +35,8 @@ class DeleteDialog extends React.Component {
 
   render() {
     const actions = [
-      <FlatButton
-        label="Cancel"
-        primary={true}
-        onClick={this.props.handleClose}
-      />,
-      <FlatButton label="Submit" primary={true} onClick={this.handleDelete} />,
+      <FlatButton label="No" primary={true} onClick={this.props.handleClose} />,
+      <FlatButton label="Yes" primary={true} onClick={this.handleDelete} />,
     ];
 
     // const id = this.props.id;

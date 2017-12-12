@@ -147,7 +147,7 @@ class BadgeExampleSimple extends Component {
             className="sidebar"
             onClick={this.handleCloseConference}
           />
-          <ConfMgtSidebar />
+          <ConfMgtSidebar handleCloseConference={this.handleCloseConference} />
         </Drawer>
       </div>
     );

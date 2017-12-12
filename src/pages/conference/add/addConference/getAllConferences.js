@@ -105,7 +105,10 @@ class GetAllConfs extends React.Component {
               >
                 <FloatingActionButton mini={true}>
                   <Link to={`/conference/add`}>
-                    <ContentAdd className="add-confs-btn" />
+                    <ContentAdd
+                      className="add-confs-btn"
+                      onClick={this.props.handleCloseConference}
+                    />
                   </Link>
                 </FloatingActionButton>
 
