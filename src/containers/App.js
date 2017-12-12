@@ -44,7 +44,7 @@ export default () => (
         path="/landingpage/:conference_id/schedule"
         component={LandingPageSchedule}
       />
-      <AuthRoute path="/landingpage/:conference_id?" component={LandingPage} />
+      <AuthRoute path="/landingpage/:conference_id" component={LandingPage} />
       <AuthRoute needGuest path="/login" component={Login} />
       <AuthRoute needGuest path="/register" component={Register} />
       <AuthRoute needGuest path="/forgot" component={ForgotPassword} />
