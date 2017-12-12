@@ -33,11 +33,9 @@ class Index extends Component {
     });
   };
   async handleSave(values) {
-    console.log(values);
     const { UPDATE_PAPER, UPDATE_TOPIC_OF_PAPER } = this.props;
     try {
       const isAuthor = localStorage.getItem('roles').indexOf('7');
-      console.log(isAuthor);
       let paper;
 
       if (isAuthor > -1) {
@@ -69,7 +67,6 @@ class Index extends Component {
           ],
         });
       }
-      console.log(paper);
       if (values.topic) {
         const topic_id = paper.data.updatePaper.papersTopic[0].topic_id;
         await UPDATE_TOPIC_OF_PAPER({
