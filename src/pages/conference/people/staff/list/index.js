@@ -49,6 +49,7 @@ class List extends Component {
     if (getAllStaffInConference) {
       staffs = getAllStaffInConference;
     }
+    console.log(staffs);
     if (loading)
       return (
         <div>
