@@ -7,7 +7,7 @@ import { functions } from '../helpers';
 import ScheduleForm from './scheduleForm';
 import Footer from '../section/footer';
 import Header from '../section/header';
-import Loading from '../../../components/render/renderLoading';
+import Loading from 'components/render/renderLoading';
 class LandingPageSchedule extends Component {
   constructor(props) {
     super(props);

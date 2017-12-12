@@ -9,7 +9,7 @@ import 'react-table/react-table.css';
 import { RaisedButton } from 'material-ui';
 import { queries } from '../helpers';
 import { graphql, compose } from 'react-apollo';
-import Loading from '../../../../../components/render/renderLoading';
+import Loading from 'components/render/renderLoading';
 
 const style = {
   textAlign: 'center',
@@ -49,6 +49,7 @@ class List extends Component {
     if (getAllStaffInConference) {
       staffs = getAllStaffInConference;
     }
+    console.log(staffs);
     if (loading)
       return (
         <div>
