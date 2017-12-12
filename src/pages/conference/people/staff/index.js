@@ -8,7 +8,7 @@ class Index extends Component {
   render() {
     return (
       <div className="conference">
-        <Subheader className="subheader"> Staff List</Subheader>
+        <Subheader className="subheader"> Staff Managements</Subheader>
         <div className="page-breadcrumb d-flex">
           <Link className="d-flex" to="/conference/info">
             <IconButton>
@@ -19,11 +19,7 @@ class Index extends Component {
           <IconButton>
             <HardwareKeyboardArrowRight />
           </IconButton>
-          <span>People</span>
-          <IconButton>
-            <HardwareKeyboardArrowRight />
-          </IconButton>
-          <span>Staff</span>
+          <span>Staff Managements</span>
         </div>
         <div className="dashboard content">
           <List conference_id={this.props.conference_id} />
