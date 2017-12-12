@@ -10,7 +10,7 @@ class ConfMgtSidebar extends React.Component {
     const { loading } = this.props.data;
 
     if (loading) return <Loading />;
-
+    
     if (this.props.data.me)
       return (
         <GetAllConfs
@@ -19,6 +19,7 @@ class ConfMgtSidebar extends React.Component {
         />
       );
     else return <div>Loading</div>;
+
   }
 }
 

@@ -8,6 +8,8 @@ import { withRouter } from 'react-router';
 import Form from '../form';
 import { alertOptions, MyExclamationTriangle, MyFaCheck } from 'theme/alert';
 import AlertContainer from 'react-alert';
+import Loading from 'components/render/renderLoading';
+
 class Index extends Component {
   constructor(props) {
     super(props);
@@ -98,7 +100,7 @@ class Index extends Component {
     if (getTopicsOfConference) {
       topics = getTopicsOfConference;
     }
-    if (loading) return <div>Loading...</div>;
+    if (loading) return <Loading />;
     return (
       <div className="conference">
         <Subheader className="subheader">Paper Management</Subheader>
