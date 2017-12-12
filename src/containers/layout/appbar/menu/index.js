@@ -11,7 +11,7 @@ import ConfMgtSidebar from 'pages/conference/add';
 import { queries } from '../helpers';
 import style from './style.css';
 import { functions } from 'containers/layout/appbar/helpers';
-import Loading from 'components/render/renderLoading';
+// import Loading from 'components/render/renderLoading';
 
 class BadgeExampleSimple extends Component {
   constructor(props) {
