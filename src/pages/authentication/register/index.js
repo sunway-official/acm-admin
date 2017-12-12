@@ -30,12 +30,18 @@ class Register extends PureComponent {
       icon: <MyExclamationTriangle />,
     });
   };
-  showAlertSuccess = () => {
+  showAlertSuccess = isAuthor => {
     this.msg.success('Saved!', {
       type: 'success',
       icon: <MyFaCheck />,
       onClose: () => {
-        this.props.history.replace('/login');
+        if (isAuthor) {
+          this.props.history.replace('/login');
+        } else {
+          let link = '/landingpage/';
+          link = link.concat(this.props.conference_id);
+          this.props.history.replace(link);
+        }
       },
     });
   };
@@ -55,14 +61,14 @@ class Register extends PureComponent {
       if (values.author) {
         await this.props.updateUserRoleStatus({
           variables: {
-            role_id: 8,
+            role_id: 7,
             user_id: user.data.register.id,
             conference_id: this.props.conference_id,
             status: 'on',
           },
         });
       }
-      this.showAlertSuccess();
+      this.showAlertSuccess(values.author ? true : false);
     } catch (error) {
       this.showAlertError(error.graphQLErrors[0].message);
       throw new SubmissionError({

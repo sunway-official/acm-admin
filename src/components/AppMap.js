@@ -98,40 +98,52 @@ class AppMap extends PureComponent {
         defaultCenter={center}
         onBoundsChanged={this.onBoundsChanged}
       >
-        <SearchBox
-          ref={ref => {
-            this.searchBoxRef = ref;
-          }}
-          bounds={this.state.bounds}
-          controlPosition={google.maps.ControlPosition.TOP_LEFT}
-          onPlacesChanged={this.onPlacesChanged}
-        >
-          <input
-            type="text"
-            placeholder="Search the location"
-            style={{
-              boxSizing: `border-box`,
-              border: `1px solid transparent`,
-              width: `240px`,
-              height: `32px`,
-              marginTop: `27px`,
-              padding: `0 12px`,
-              borderRadius: `3px`,
-              boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
-              fontSize: `14px`,
-              outline: `none`,
-              textOverflow: `ellipses`,
+        {this.props.disabled ? (
+          <Marker
+            ref={ref => {
+              this.markerRef = ref;
             }}
+            position={position}
+            onDragEnd={this.onMarkerPositionChanged}
           />
-        </SearchBox>
-        <Marker
-          draggable
-          ref={ref => {
-            this.markerRef = ref;
-          }}
-          position={position}
-          onDragEnd={this.onMarkerPositionChanged}
-        />
+        ) : (
+          <div>
+            <SearchBox
+              ref={ref => {
+                this.searchBoxRef = ref;
+              }}
+              bounds={this.state.bounds}
+              controlPosition={google.maps.ControlPosition.TOP_LEFT}
+              onPlacesChanged={this.onPlacesChanged}
+            >
+              <input
+                type="text"
+                placeholder="Search the location"
+                style={{
+                  boxSizing: `border-box`,
+                  border: `1px solid transparent`,
+                  width: `240px`,
+                  height: `32px`,
+                  marginTop: `27px`,
+                  padding: `0 12px`,
+                  borderRadius: `3px`,
+                  boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
+                  fontSize: `14px`,
+                  outline: `none`,
+                  textOverflow: `ellipses`,
+                }}
+              />
+            </SearchBox>
+            <Marker
+              draggable
+              ref={ref => {
+                this.markerRef = ref;
+              }}
+              position={position}
+              onDragEnd={this.onMarkerPositionChanged}
+            />
+          </div>
+        )}
       </GoogleMap>
     );
   }

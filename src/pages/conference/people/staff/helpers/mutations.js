@@ -18,4 +18,4 @@ const UPDATE_USER_ROLE_STATUS = gql`
   }
 `;
 
-export default UPDATE_USER_ROLE_STATUS;
+export default { UPDATE_USER_ROLE_STATUS };

@@ -5,6 +5,7 @@ import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import { graphql } from 'react-apollo';
 import { queries } from './helpers';
 import TopicList from './topicList';
+import Loading from 'components/render/renderLoading';
 
 class Index extends Component {
   constructor(props) {
@@ -18,7 +19,7 @@ class Index extends Component {
       loading,
       getTopicsOfConference,
     } = this.props.GET_TOPICS_OF_CONFERENCE_QUERY;
-    if (loading) return <div>loading...</div>;
+    if (loading) return <Loading />;
     const listTopic = getTopicsOfConference;
     return (
       <div className="conference">
@@ -28,7 +29,7 @@ class Index extends Component {
             <IconButton>
               <ActionHome />
             </IconButton>
-            <span>Home</span>
+            <span>Conference Information</span>
           </Link>
           <IconButton>
             <HardwareKeyboardArrowRight />

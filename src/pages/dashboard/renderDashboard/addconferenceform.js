@@ -37,8 +37,8 @@ const AddConferenceForm = ({
                 <div
                   style={{
                     height: `100%`,
-                    marginLeft: '-5%',
-                    marginRight: '-25%',
+                    marginLeft: '0%',
+                    marginRight: '-24%',
                   }}
                 />
               }
@@ -73,7 +73,7 @@ const AddConferenceForm = ({
                   name="startDate"
                   component={CustomDatePicker}
                   format={null}
-                  textFieldStyle={{ width: '100%' }}
+                  textFieldStyle={{ width: '100%', marginLeft: -46 }}
                   hintText="Start Date"
                 />
               </div>
@@ -144,18 +144,21 @@ const AddConferenceForm = ({
             </div>
           </div>
         </div>
-        <div className="d-flex submit-btn btn-group">
+        <div
+          className="d-flex submit-btn btn-group"
+          style={{ paddingBottom: '20px' }}
+        >
           <RaisedButton
             className="btn"
             label="Save"
             primary={true}
             type="submit"
-            disabled={pristine || submitting || invalid}
+            // disabled={pristine || submitting}
           />
           <RaisedButton
             className="btn"
             label="Reset"
-            primary={true}
+            secondary={true}
             type="reset"
             disabled={pristine || submitting}
             onClick={reset}

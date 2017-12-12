@@ -1,11 +1,12 @@
 import React from 'react';
 import { queries } from './../helpers';
 import { graphql, compose, gql } from 'react-apollo';
-import { Link } from 'react-router-dom';
 import { List, ListItem } from 'material-ui/List';
 import Badge from 'material-ui/Badge';
 import style from './../style.css';
-import { RaisedButton } from 'material-ui';
+//import { RaisedButton } from 'material-ui';
+import Loading from '../../../components/render/renderLoading';
+import { withRouter } from 'react-router-dom';
 
 const subTitleString = (text, limit) => {
   if (text.length > limit) return text.substring(0, limit);
@@ -33,28 +34,29 @@ class listCoferences extends React.Component {
         },
       ],
     });
+    const linkTo = '/conference/info';
+    this.props.history.push(linkTo);
   }
 
   render() {
-    console.log(this.props);
-    const { loading } = this.props.data;
-    if (loading) return <div>loading...</div>;
+    const { loading, getAllConferencesByUserID } = this.props.data;
+    if (loading) return <Loading />;
 
-    const conferences = this.props.data.getConferenceByUserID;
-    console.log(conferences);
+    const conferences = getAllConferencesByUserID;
     return (
       <div className="list-dashboard">
         <style dangerouslySetInnerHTML={{ __html: style }} />
-        <center className="list-conf">
+        <div className="list-conf">
           MY LIST CONFERENCES
           <Badge
             badgeContent={conferences.length}
             primary={true}
             className="icon-conference"
           />
-        </center>
+        </div>
         <List>
-          {conferences.map(conference => {
+          {conferences.map(data => {
+            const conference = data.conference;
             return (
               <ListItem
                 key={conference.id}
@@ -65,21 +67,16 @@ class listCoferences extends React.Component {
                   '  To  ' +
                   subTitleString(conference.end_date, 10)
                 }
-                containerElement={<Link to={`/conference/info`} />}
-                onClick={async () => {
-                  // clg;
-                  await this.handleSwitch(conference.id);
-                  window.location.reload();
-                }}
+                onClick={() => this.handleSwitch(conference.id)}
               />
             );
           })}
-          <RaisedButton
+          {/* <RaisedButton
             label="Create new conference"
             fullWidth={true}
             primary={true}
             containerElement={<Link to={`/conference/add`} />}
-          />
+          /> */}
         </List>
       </div>
     );
@@ -106,6 +103,7 @@ export const ME_QUERY = gql`
 `;
 
 export default compose(
+  withRouter,
   graphql(queries.GET_ALL_CONFERENCES_BY_USER_ID_QUERY, {
     options: ownProps => ({
       variables: {

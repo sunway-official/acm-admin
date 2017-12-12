@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { graphql, compose } from 'react-apollo';
+import { graphql, compose, withApollo } from 'react-apollo';
 import { queries } from '../helpers';
 import { paperActions } from 'store/ducks/paper';
 import { Link } from 'react-router-dom';
@@ -21,7 +21,7 @@ const styleBtn = {
 
 const sorted = [
   {
-    id: 'name',
+    id: 'title',
     desc: true,
   },
 ];
@@ -33,6 +33,7 @@ class Index extends Component {
   }
   state = {
     paper_id: 0,
+    papers: [],
   };
   styles = {
     margin: 10,
@@ -45,14 +46,57 @@ class Index extends Component {
   handleEdit(paper) {
     this.props.setPaper(paper);
   }
+
+  componentWillMount() {
+    // const isAuthor = localStorage.getItem('roles').indexOf('7');
+    // if (isAuthor > -1) {
+    //   this.props.client
+    //     .query({
+    //       query: queries.GET_PAPERS_WITH_AUTHOR_BY_CONFERENCE_ID,
+    //     })
+    //     .then(value => {
+    //       const { loading, data } = value;
+    //       if (!loading) {
+    //         const papers = data.getPapersWithAuthorByConferenceID;
+    //         this.setState({
+    //           papers: papers,
+    //         });
+    //       }
+    //     });
+    // } else {
+    //   this.props.client
+    //     .query({
+    //       query: queries.GET_PAPERS_BY_CONFERENCE_ID,
+    //     })
+    //     .then(value => {
+    //       const { loading, data } = value;
+    //       if (!loading) {
+    //         const papers = data.getPapersByConferenceID;
+    //         this.setState({
+    //           papers: papers,
+    //         });
+    //       }
+    //     });
+    // }
+  }
   render() {
-    const { loading, getPapersByConferenceID } = this.props.data;
-    if (loading) return <div>Loading..</div>;
+    const isAuthor = localStorage.getItem('roles').indexOf('7');
     let papers;
-    if (getPapersByConferenceID) {
+    if (isAuthor > -1) {
+      const {
+        loading,
+        getPapersWithAuthorByConferenceID,
+      } = this.props.GET_PAPERS_WITH_AUTHOR_BY_CONFERENCE_ID;
+      if (loading) return <div>Loading..</div>;
+      papers = getPapersWithAuthorByConferenceID;
+    } else {
+      const {
+        loading,
+        getPapersByConferenceID,
+      } = this.props.GET_PAPERS_BY_CONFERENCE_ID;
+      if (loading) return <div>Loading..</div>;
       papers = getPapersByConferenceID;
     }
-    console.log(papers);
     const columns = [
       {
         Header: 'Title',
@@ -73,7 +117,7 @@ class Index extends Component {
       },
       {
         Header: 'Action',
-        minWidth: 150,
+        minWidth: 170,
         filterable: false,
         accessor: '',
         Cell: props => (
@@ -90,8 +134,9 @@ class Index extends Component {
             />
             <RaisedButton
               label="Delete"
+              secondary={true}
               onClick={() => {
-                this.handleDialog(props.value, props.value.id);
+                this.handleDialog(props.value, props.value.id, props);
               }}
               style={styleBtn}
             />
@@ -99,6 +144,7 @@ class Index extends Component {
         ),
       },
     ];
+    console.log(papers);
     return (
       <div className="react-table">
         <ReactTable
@@ -112,9 +158,11 @@ class Index extends Component {
         />
 
         <DeletePaper id={this.state.paper_id} />
-        <div className="d-flex save-btn btn-group">
+        <div className="d-flex justify-content-center save-btn btn-group">
           <Link to="/conference/paper/add">
             <RaisedButton
+              style={{ marginTop: '20px' }}
+              className="marginBottom"
               icon={<ActionNoteAdd />}
               primary={true}
               label={'Add New Paper'}
@@ -133,16 +181,11 @@ const mapDispatchToProps = dispatch => {
 };
 export default compose(
   connect(undefined, mapDispatchToProps),
+  withApollo,
+  graphql(queries.GET_PAPERS_WITH_AUTHOR_BY_CONFERENCE_ID, {
+    name: 'GET_PAPERS_WITH_AUTHOR_BY_CONFERENCE_ID',
+  }),
   graphql(queries.GET_PAPERS_BY_CONFERENCE_ID, {
-    options: ownProps => ({
-      name: 'GET_PAPERS_BY_CONFERENCE_ID',
-      if(ownProps) {
-        return {
-          variables: {
-            conference_id: ownProps.conference_id,
-          },
-        };
-      },
-    }),
+    name: 'GET_PAPERS_BY_CONFERENCE_ID',
   }),
 )(Index);

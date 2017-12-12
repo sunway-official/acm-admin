@@ -103,13 +103,11 @@ class TopicList extends Component {
             <Link
               to={`/conference/topics-management/topic-detail/${props.value}`}
             >
-              <RaisedButton
-                label="Edit"
-                primary={true}
-                className="list-btn-action"
-              />
+              <RaisedButton label="Edit" primary={true} />
             </Link>
             <RaisedButton
+              className="marginLeft"
+              secondary={true}
               label="Delete"
               onClick={() => this.handleOpenDelete(props.value)}
             />
@@ -125,12 +123,16 @@ class TopicList extends Component {
         onClick={this.handleDelete}
         type="submit"
       />,
-      <RaisedButton label="No" onClick={this.handleClose} />,
+      <RaisedButton
+        className="marginLeft"
+        label="No"
+        onClick={this.handleClose}
+      />,
     ];
     return (
       <div className="react-table">
         <ReactTable
-          noDataText="Please add new topic!"
+          noDataText="No rows found"
           filterable
           resizable={false}
           data={listTopic}
@@ -140,13 +142,13 @@ class TopicList extends Component {
           className="-striped -highlight"
         />
         <Dialog
-          title="Do you want to delete this color?"
+          title="Do you want to delete this topic?"
           modal={true}
           onRequestClose={this.handleClose}
           open={this.state.openDelete}
           actions={actionDelete}
         />
-        <div className="d-flex btn-group list-btn-add">
+        <div className="d-flex btn-group justify-content-center list-btn-add">
           <Link to={`/conference/topics-management/topic-detail`}>
             <RaisedButton label="Add Topic" primary={true} />
           </Link>

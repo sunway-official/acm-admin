@@ -10,10 +10,14 @@ import {
   ActionSupervisorAccount,
   NavigationClose,
 } from 'material-ui/svg-icons';
-import AddDialog from './addDialog';
+
+import ContentAdd from 'material-ui/svg-icons/content/add';
+import { FloatingActionButton } from 'material-ui';
+// import AddDialog from './addDialog';
 import { withRouter } from 'react-router-dom';
 // import style from '../../../containers/layout/appbar/style.css';
 import style from '../style/style.css';
+import Loading from 'components/render/renderLoading';
 
 const styles = {
   smallIcon: {
@@ -47,6 +51,8 @@ class GetAllConfs extends React.Component {
         },
       ],
     });
+    const linkTo = '/conference/info';
+    this.props.history.push(linkTo);
   }
 
   handleOpen(index) {
@@ -69,7 +75,7 @@ class GetAllConfs extends React.Component {
   render() {
     const { loading } = this.props.data;
 
-    if (loading) return <div> loading... </div>;
+    if (loading) return <Loading />;
 
     const conferences = this.props.data.getConferenceByUserID;
     let currentConferenceID = 0;
@@ -97,7 +103,13 @@ class GetAllConfs extends React.Component {
                   margin: '4px 12px 24px',
                 }}
               >
-                <AddDialog onSubmit={this.insertConf} />
+                <FloatingActionButton mini={true}>
+                  <Link to={`/conference/add`}>
+                    <ContentAdd className="add-confs-btn" />
+                  </Link>
+                </FloatingActionButton>
+
+                {/* <AddDialog onSubmit={this.insertConf} /> */}
               </span>
             }
           />
@@ -119,12 +131,7 @@ class GetAllConfs extends React.Component {
                           primaryText="Switch"
                           className="switch-text"
                           leftIcon={<ContentSend style={styles.smallIcon} />}
-                          containerElement={<Link to={`/conference/info`} />}
-                          onClick={async () => {
-                            // clg;
-                            await this.handleSwitch(conference.id);
-                            window.location.reload();
-                          }}
+                          onClick={() => this.handleSwitch(conference.id)}
                         />,
                         <ListItem
                           key={2}

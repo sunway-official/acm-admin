@@ -5,6 +5,7 @@ import { graphql, gql, compose } from 'react-apollo';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { authActions } from '../store/ducks/auth';
+import Loading from './render/renderLoading';
 
 class AuthRoute extends PureComponent {
   constructor(props) {
@@ -92,7 +93,7 @@ class AuthRoute extends PureComponent {
     } = this.props;
 
     if (loading) {
-      return <div>Loading</div>;
+      return <Loading />;
     }
 
     if (error && needAuth) {

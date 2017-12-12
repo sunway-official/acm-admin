@@ -6,6 +6,7 @@ import { graphql, compose } from 'react-apollo';
 import { queries } from './helpers';
 import RoomList from './roomList';
 import { connect } from 'react-redux';
+import Loading from 'components/render/renderLoading';
 
 class Index extends Component {
   constructor(props) {
@@ -19,7 +20,7 @@ class Index extends Component {
       loading,
       getRoomsByConferenceID,
     } = this.props.GET_ROOMS_BY_CONFERENCE_ID_QUERY;
-    if (loading) return <div>loading...</div>;
+    if (loading) return <Loading />;
     const listRoom = getRoomsByConferenceID;
     return (
       <div className="conference">
@@ -29,7 +30,7 @@ class Index extends Component {
             <IconButton>
               <ActionHome />
             </IconButton>
-            <span>Home</span>
+            <span>Conference Information</span>
           </Link>
           <IconButton>
             <HardwareKeyboardArrowRight />
@@ -44,13 +45,9 @@ class Index extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  if (state.auth.currentUser && state.auth.currentUser.currentConference) {
-    return {
-      id: state.auth.currentUser.currentConference.id,
-    };
-  }
-};
+const mapStateToProps = (state, ownProps) => ({
+  id: state.auth.currentUser.currentConference.id,
+});
 
 export default compose(
   connect(mapStateToProps, undefined),

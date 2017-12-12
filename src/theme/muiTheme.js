@@ -6,6 +6,7 @@ const colors = {
   milkPunch: '#f6e6be',
   sunglow: '#f9cb3e',
   outrageousOrange: '#ec5f3e',
+  white: '#ffffff',
 };
 const muiTheme = getMuiTheme({
   palette: {
@@ -37,9 +38,9 @@ const muiTheme = getMuiTheme({
     nestedLevelDepth: 1000,
   },
   raisedButton: {
-    color: colors.outrageousOrange,
-    textColor: colors.milkPunch,
+    color: colors.white,
     primaryColor: colors.sunglow,
+    secondaryColor: colors.outrageousOrange,
   },
   subheader: {
     color: colors.sanJuan,

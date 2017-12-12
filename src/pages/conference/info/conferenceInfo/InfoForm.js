@@ -6,6 +6,8 @@ import CustomDatePicker from 'components/CustomDatePicker';
 import AppMap from 'components/AppMap';
 import normalizePhone from 'utils/normalizePhone';
 import validate from './validate';
+import AlertContainer from 'react-alert';
+import { alertOptions, MyFaCheck } from 'theme/alert';
 class ConferenceInfoForm extends React.Component {
   state = {
     openDialog: false,
@@ -13,12 +15,19 @@ class ConferenceInfoForm extends React.Component {
   handleSaved = () => {
     this.setState({ openDialog: !this.state.openDialog });
   };
+  showAlertSuccess = () => {
+    this.msg.success('Saved!', {
+      type: 'success',
+      icon: <MyFaCheck />,
+    });
+  };
   render() {
     const {
       handleSubmit,
       invalid,
       initialValues,
       onMapPositionChanged,
+      pristine,
     } = this.props;
 
     return (
@@ -41,8 +50,8 @@ class ConferenceInfoForm extends React.Component {
                     <div
                       style={{
                         height: `100%`,
-                        marginLeft: '-8%',
-                        marginRight: '-37%',
+                        marginLeft: '0%',
+                        marginRight: '-26%',
                       }}
                     />
                   }
@@ -76,7 +85,7 @@ class ConferenceInfoForm extends React.Component {
                       name="startDate"
                       component={CustomDatePicker}
                       format={null}
-                      textFieldStyle={{ width: '100%' }}
+                      textFieldStyle={{ width: '100%', marginLeft: -46 }}
                       hintText="Start Date"
                     />
                   </div>
@@ -138,14 +147,15 @@ class ConferenceInfoForm extends React.Component {
                 </div>
               </div>
             </div>
-            <div className="d-flex save-btn btn-group">
+            <div className="d-flex save-btn btn-group marginBottom">
               <RaisedButton
                 label="Save"
                 primary={true}
                 type="submit"
+                disabled={pristine}
                 onClick={() => {
                   if (!invalid) {
-                    alert('Saved');
+                    this.showAlertSuccess();
                   }
                 }}
               />
@@ -153,6 +163,7 @@ class ConferenceInfoForm extends React.Component {
             <Dialog open={this.state.openDialog} />
           </div>
         </div>
+        <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />
       </form>
     );
   }

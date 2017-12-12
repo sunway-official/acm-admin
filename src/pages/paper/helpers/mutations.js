@@ -11,6 +11,9 @@ const INSERT_PAPER = gql`
   mutation insertPaper($title: String!, $abstract: String!, $keywords: String) {
     insertPaper(title: $title, abstract: $abstract, keywords: $keywords) {
       id
+      papersTopic {
+        topic_id
+      }
     }
   }
 `;
@@ -26,7 +29,7 @@ const INSERT_PAPER_TOPIC = gql`
 const DELETE_PAPER_TOPIC = gql`
   mutation deletePaperTopic($paper_id: ID!, $topic_id: ID!) {
     deletePaperTopic(paper_id: $paper_id, topic_id: $topic_id) {
-      id
+      topic_id
     }
   }
 `;
@@ -44,6 +47,9 @@ const UPDATE_PAPER = gql`
       keywords: $keywords
     ) {
       id
+      papersTopic {
+        topic_id
+      }
     }
   }
 `;
@@ -55,6 +61,7 @@ const UPDATE_TOPIC_OF_PAPER = gql`
     }
   }
 `;
+
 export default {
   DELETE_PAPER,
   INSERT_PAPER,

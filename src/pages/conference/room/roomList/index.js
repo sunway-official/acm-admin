@@ -6,11 +6,8 @@ import { mutations, queries } from '../helpers';
 import { connect } from 'react-redux';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
-import {
-  alertOptions,
-  MyExclamationTriangle,
-  MyFaCheck,
-} from '../../../../theme/alert';
+import Loading from 'components/render/renderLoading';
+import { alertOptions, MyExclamationTriangle, MyFaCheck } from 'theme/alert';
 import AlertContainer from 'react-alert';
 
 const style = {
@@ -109,13 +106,11 @@ class RoomList extends Component {
             <Link
               to={`/conference/rooms-management/room-detail/${props.value}`}
             >
-              <RaisedButton
-                label="Edit"
-                primary={true}
-                className="list-btn-action"
-              />
+              <RaisedButton label="Edit" primary={true} />
             </Link>
             <RaisedButton
+              secondary={true}
+              className="marginLeft"
               label="Delete"
               onClick={() => this.handleOpenDelete(props.value)}
             />
@@ -128,7 +123,7 @@ class RoomList extends Component {
       getRoomsByConferenceID,
     } = this.props.GET_ROOMS_BY_CONFERENCE_ID_QUERY;
 
-    if (loading) return <div>loading...</div>;
+    if (loading) return <Loading />;
     const listRoom = getRoomsByConferenceID;
     const actionDelete = [
       <RaisedButton
@@ -137,12 +132,16 @@ class RoomList extends Component {
         onClick={this.handleDelete}
         type="submit"
       />,
-      <RaisedButton label="No" onClick={this.handleClose} />,
+      <RaisedButton
+        className="marginLeft"
+        label="No"
+        onClick={this.handleClose}
+      />,
     ];
     return (
       <div className="react-table">
         <ReactTable
-          noDataText="Please add new room!"
+          noDataText="No rows found"
           filterable
           resizable={false}
           data={listRoom}
@@ -158,7 +157,7 @@ class RoomList extends Component {
           open={this.state.openDelete}
           actions={actionDelete}
         />
-        <div className="d-flex btn-group list-btn-add">
+        <div className="d-flex justify-content-center btn-group list-btn-add">
           <Link to={`/conference/rooms-management/room-detail`}>
             <RaisedButton label="Add Room" primary={true} />
           </Link>

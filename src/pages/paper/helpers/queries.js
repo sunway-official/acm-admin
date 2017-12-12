@@ -1,5 +1,18 @@
 import { gql } from 'react-apollo';
 
+const GET_PAPERS_WITH_AUTHOR_BY_CONFERENCE_ID = gql`
+  query getPapersWithAuthorByConferenceID {
+    getPapersWithAuthorByConferenceID {
+      id
+      title
+      abstract
+      keywords
+      papersTopic {
+        topic_id
+      }
+    }
+  }
+`;
 const GET_PAPERS_BY_CONFERENCE_ID = gql`
   query getPapersByConferenceID {
     getPapersByConferenceID {
@@ -7,6 +20,23 @@ const GET_PAPERS_BY_CONFERENCE_ID = gql`
       title
       abstract
       keywords
+      papersTopic {
+        topic_id
+      }
+    }
+  }
+`;
+
+const GET_PAPERS_BY_USER_ID = gql`
+  query getPapersByUserID {
+    getPapersByUserID {
+      id
+      title
+      abstract
+      keywords
+      papersTopic {
+        topic_id
+      }
     }
   }
 `;
@@ -39,9 +69,24 @@ const GET_PAPER_BY_ID = gql`
     }
   }
 `;
+
+export const GET_ALL_PAPERS_BY_TOPIC_ID_QUERY = gql`
+  query getAllPapersByTopicID($topic_id: ID!) {
+    getAllPapersByTopicID(topic_id: $topic_id) {
+      paper {
+        id
+        title
+      }
+    }
+  }
+`;
+
 export default {
   GET_PAPERS_BY_CONFERENCE_ID,
+  GET_PAPERS_BY_USER_ID,
   GET_TOPICS_BY_PAPER_ID,
   GET_TOPICS_OF_CONFERENCE,
   GET_PAPER_BY_ID,
+  GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
+  GET_PAPERS_WITH_AUTHOR_BY_CONFERENCE_ID,
 };

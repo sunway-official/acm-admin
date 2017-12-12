@@ -9,28 +9,30 @@ export const ME_QUERY = gql`
 `;
 
 export const GET_ALL_CONFERENCES_BY_USER_ID_QUERY = gql`
-  query getConferenceByUserID($user_id: ID!) {
-    getConferenceByUserID(user_id: $user_id) {
-      id
-      title
-      description
-      start_date
-      end_date
-      bg_image
-      address {
+  query getAllConferencesByUserID {
+    getAllConferencesByUserID {
+      conference {
         id
-        city
-      }
-      organizerDetail {
-        id
-        name
-        email
-        address
-        website
-        phone
-        user {
+        title
+        description
+        start_date
+        end_date
+        bg_image
+        address {
           id
-          lastname
+          city
+        }
+        organizerDetail {
+          id
+          name
+          email
+          address
+          website
+          phone
+          user {
+            id
+            lastname
+          }
         }
       }
     }
