@@ -20,6 +20,7 @@ import { connect } from 'react-redux';
 import { graphql, compose } from 'react-apollo';
 import { queries } from '../helpers';
 import { withRouter } from 'react-router';
+import Loading from '../../../../components/render/renderLoading';
 
 class ListExampleSimple extends React.Component {
   constructor(props) {
@@ -63,7 +64,7 @@ class ListExampleSimple extends React.Component {
       loading,
       getLandingPageByConferenceId,
     } = this.props.GET_LANDING_PAGE_BY_CONFERENCE_ID_QUERY;
-    if (loading) return <div>loading...</div>;
+    if (loading) return <Loading />;
     let conference_id;
     let disableView = true;
     if (
@@ -71,7 +72,7 @@ class ListExampleSimple extends React.Component {
       this.props.auth.currentUser.currentConference
     ) {
       conference_id = this.props.auth.currentUser.currentConference.id;
-      if (getLandingPageByConferenceId[0]) disableView = false;
+      if (getLandingPageByConferenceId) disableView = false;
     } else {
       conference_id = 0;
     }
@@ -126,7 +127,7 @@ class ListExampleSimple extends React.Component {
               onRequestClose={this.handleRequestClose}
             >
               <Menu style={{ color: 'black' }} className="menu people-menu">
-                <Link to="/conference/1/people/staff">
+                <Link to="/conference/people/staff">
                   <MenuItem
                     className="item"
                     primaryText={'Staff'}
@@ -140,12 +141,6 @@ class ListExampleSimple extends React.Component {
                     onClick={this.handleRequestClose}
                   />
                 </Link>
-                {/*
-               <MenuItem primaryText={<a href="/dashboard">Speaker</a>} />
-                <MenuItem primaryText={<a href="/dashboard">Author</a>} />
-                <MenuItem primaryText={<a href="/dashboard">Reviewer</a>} />
-                <MenuItem primaryText={<a href="/dashboard">Participant</a>} />
-              */}
               </Menu>
             </Popover>
           </ListItem>
@@ -200,23 +195,6 @@ class ListExampleSimple extends React.Component {
               onClick={() => this.handleClickSidebar()}
             />
           </Link>
-          {/*
-          <ListItem
-            className="item"
-            primaryText={<a href="/dashboard">Paper</a>}
-            leftIcon={<AvLibraryBooks />}
-          />
-          <ListItem
-            className="item"
-            primaryText={<a href="/dashboard">Newfeed</a>}
-            leftIcon={<ActionChromeReaderMode />}
-          />
-          <ListItem
-            className="item"
-            primaryText={<a href="/dashboard">Statistic</a>}
-            leftIcon={<EditorShowChart />}
-          />
-          */}
         </List>
       </div>
     );

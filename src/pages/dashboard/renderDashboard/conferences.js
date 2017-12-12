@@ -4,6 +4,8 @@ import { graphql, compose, gql } from 'react-apollo';
 import { List, ListItem } from 'material-ui/List';
 import Badge from 'material-ui/Badge';
 import style from './../style.css';
+//import { RaisedButton } from 'material-ui';
+import Loading from '../../../components/render/renderLoading';
 import { withRouter } from 'react-router-dom';
 
 const subTitleString = (text, limit) => {
@@ -38,7 +40,7 @@ class listCoferences extends React.Component {
 
   render() {
     const { loading, getAllConferencesByUserID } = this.props.data;
-    if (loading) return <div>loading...</div>;
+    if (loading) return <Loading />;
 
     const conferences = getAllConferencesByUserID;
     return (

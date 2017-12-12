@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { graphql, compose } from 'react-apollo';
-import { UPDATE_USER_ROLE_STATUS, GET_ALL_ROLES } from './helpers';
-
-import functions from './helpers/functions';
-import RoleItem from './roleItem';
+import { mutations, queries, functions } from '../helpers';
+import RoleActive from './rolesActive';
+import Loading from '../../../../../components/render/renderLoading';
 
 class RolesInfo extends Component {
   render() {
     const { loading, error, getAllRoles } = this.props.GET_ALL_ROLES;
 
     if (loading) {
-      return <div>Loading...</div>;
+      return <Loading />;
     }
     if (error) {
       return <div>error</div>;
@@ -27,7 +26,7 @@ class RolesInfo extends Component {
         {allRoles.map((role, index) => {
           return (
             <div key={index}>
-              <RoleItem role={role} rolesActive={rolesActive} roles={roles} />
+              <RoleActive role={role} rolesActive={rolesActive} roles={roles} />
             </div>
           );
         })}
@@ -42,10 +41,10 @@ const mapStateToProps = state => ({
 
 export default compose(
   connect(mapStateToProps, undefined),
-  graphql(UPDATE_USER_ROLE_STATUS, {
+  graphql(mutations.UPDATE_USER_ROLE_STATUS, {
     name: 'UPDATE_USER_ROLE_STATUS',
   }),
-  graphql(GET_ALL_ROLES, {
+  graphql(queries.GET_ALL_ROLES, {
     name: 'GET_ALL_ROLES',
   }),
 )(RolesInfo);

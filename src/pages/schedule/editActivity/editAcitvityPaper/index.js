@@ -11,14 +11,23 @@ import {
 } from '../../helpers';
 import { graphql, compose, withApollo } from 'react-apollo';
 import { connect } from 'react-redux';
-// import { withRouter } from 'react-router';
-
+import { alertOptions, MyFaCheck } from 'theme/alert';
+import AlertContainer from 'react-alert';
+import Loading from '../../../../components/render/renderLoading';
 class Index extends Component {
   constructor() {
     super();
     this.handleEdit = this.handleEdit.bind(this);
   }
-
+  showAlertSuccess = () => {
+    this.msg.success('Saved!', {
+      type: 'success',
+      icon: <MyFaCheck />,
+      onClose: () => {
+        this.props.history.replace('/conference/activities');
+      },
+    });
+  };
   // deleteIds
   handleEdit(values) {
     values.id = this.props.match.params.id;
@@ -41,7 +50,7 @@ class Index extends Component {
     };
 
     editActivityWithPaperFunc(data);
-    this.props.history.replace('/conference/activities');
+    this.showAlertSuccess();
   }
 
   render() {
@@ -65,7 +74,7 @@ class Index extends Component {
 
     // check loading
     if (loadingRooms || loadingActivity || loadingActivities || loadingTopics) {
-      return <div>Loading...</div>;
+      return <Loading />;
     }
     const rooms = getRoomsByStatusInConference;
     const topics = getTopicsOfConference;
@@ -117,6 +126,7 @@ class Index extends Component {
             status="with-paper"
           />
         </div>
+        <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />
       </div>
     );
   }
