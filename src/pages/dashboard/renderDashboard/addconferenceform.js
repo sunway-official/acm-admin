@@ -155,7 +155,7 @@ const AddConferenceForm = ({
           <RaisedButton
             className="btn"
             label="Reset"
-            primary={true}
+            secondary={true}
             type="reset"
             disabled={pristine || submitting}
             onClick={reset}
