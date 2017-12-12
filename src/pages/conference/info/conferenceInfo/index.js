@@ -7,6 +7,8 @@ import { withRouter } from 'react-router-dom';
 import './style.css';
 import { conferenceOperations } from 'store/ducks/conference';
 import ViewInfoForm from './ViewInfoForm';
+import { alertOptions, MyExclamationTriangle, MyFaCheck } from 'theme/alert';
+import AlertContainer from 'react-alert';
 
 class ConferenceInfoForm extends PureComponent {
   constructor(props) {
@@ -23,6 +25,20 @@ class ConferenceInfoForm extends PureComponent {
       },
     };
   }
+
+  showAlertSuccess = () => {
+    this.msg.success('Saved!', {
+      type: 'success',
+      icon: <MyFaCheck />,
+    });
+  };
+  showAlertError = text => {
+    this.msg.error(text, {
+      type: 'error', // type of alert
+      icon: <MyExclamationTriangle />,
+    });
+  };
+
   async handleUpdateConferenceInfo({
     title,
     description,
@@ -34,7 +50,7 @@ class ConferenceInfoForm extends PureComponent {
     organizerPhoneNumber,
   }) {
     try {
-      await this.props.UPDATE_CONFERENCE_MUTATION({
+      const conference = await this.props.UPDATE_CONFERENCE_MUTATION({
         variables: {
           id: this.props.conference_id,
           title: title,
@@ -43,7 +59,7 @@ class ConferenceInfoForm extends PureComponent {
           end_date: endDate,
         },
       });
-      await this.props.UPDATE_ORGANIZER_DETAIL_MUTATION({
+      const organizer = await this.props.UPDATE_ORGANIZER_DETAIL_MUTATION({
         variables: {
           id: this.props.organizer_id,
           name: organizerName,
@@ -52,40 +68,48 @@ class ConferenceInfoForm extends PureComponent {
           phone: organizerPhoneNumber,
         },
       });
-      await this.props.UPDATE_ADDRESS_MUTATION({
+      const address = await this.props.UPDATE_ADDRESS_MUTATION({
         variables: {
           id: this.props.address_id,
           lat: this.props.position.lat,
           long: this.props.position.lng,
         },
       });
+      if (conference || organizer || address) {
+        this.showAlertSuccess();
+      }
     } catch (error) {
-      throw error;
+      let temp = error.graphQLErrors[0].message;
+      this.showAlertError(temp);
     }
   }
   onMapPositionChanged(position) {
     this.props.getPosition(position);
-
-    console.log(this.props);
   }
   render() {
     if (this.props.isShow['edit-conference-info']) {
       return (
-        <InfoForm
-          initialValues={this.props.initialValues}
-          conference={this.props.conference}
-          onSubmit={this.handleUpdateConferenceInfo}
-          onMapPositionChanged={this.onMapPositionChanged}
-        />
+        <div>
+          <InfoForm
+            initialValues={this.props.initialValues}
+            conference={this.props.conference}
+            onSubmit={this.handleUpdateConferenceInfo}
+            onMapPositionChanged={this.onMapPositionChanged}
+          />
+          <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />
+        </div>
       );
     } else {
       return (
-        <ViewInfoForm
-          initialValues={this.props.initialValues}
-          conference={this.props.conference}
-          onSubmit={this.handleUpdateConferenceInfo}
-          onMapPositionChanged={this.onMapPositionChanged}
-        />
+        <div>
+          <ViewInfoForm
+            initialValues={this.props.initialValues}
+            conference={this.props.conference}
+            onSubmit={this.handleUpdateConferenceInfo}
+            onMapPositionChanged={this.onMapPositionChanged}
+          />
+          <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />
+        </div>
       );
     }
   }

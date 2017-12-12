@@ -152,12 +152,12 @@ class ConferenceInfoForm extends React.Component {
                 label="Save"
                 primary={true}
                 type="submit"
-                disabled={pristine}
-                onClick={() => {
-                  if (!invalid) {
-                    this.showAlertSuccess();
-                  }
-                }}
+                // disabled={pristine}
+                // onClick={() => {
+                //   if (!invalid) {
+                //     this.showAlertSuccess();
+                //   }
+                // }}
               />
             </div>
             <Dialog open={this.state.openDialog} />

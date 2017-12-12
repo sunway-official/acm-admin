@@ -3,9 +3,9 @@ import {
   INSERT_ADDRESS_MUTATION,
   INSERT_CONFERENCE_MUTATION,
   INSERT_ORGANIZER_DETAIL_MUTATION,
-  ME_QUERY,
   INSERT_CONFERENCE_ATTENDEE_MUTATION,
 } from '../helpers/mutations';
+import { ME_QUERY } from '../helpers/queries';
 import AddForm from './addconferenceform';
 import { conferenceOperations } from 'store/ducks/conference';
 import { connect } from 'react-redux';
@@ -38,7 +38,7 @@ class ConferenceAddForm extends PureComponent {
       type: 'success',
       icon: <MyFaCheck />,
       onClose: () => {
-        this.props.history.replace('/conference/info');
+        this.props.history.push('/conference/info');
       },
     });
   };
@@ -51,6 +51,9 @@ class ConferenceAddForm extends PureComponent {
   async handleAddConference(values) {
     const user_id = this.props.data.me.id;
     try {
+      if (!this.props.position) {
+        this.showAlertError('Please set address');
+      }
       const addressData = await this.props.INSERT_ADDRESS_MUTATION({
         variables: {
           street: '',
@@ -101,9 +104,8 @@ class ConferenceAddForm extends PureComponent {
       });
       this.showAlertSuccess();
     } catch (error) {
-      // let temp = error.graphQLErrors[0].message;
-      // this.showAlertError(temp.substring(7, temp.length));
-      console.log(error);
+      let temp = error.graphQLErrors[0].message;
+      this.showAlertError(temp);
     }
   }
 
