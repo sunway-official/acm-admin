@@ -16,6 +16,7 @@ import { withRouter } from 'react-router';
 import { functions, queries } from './helpers';
 import { graphql, compose } from 'react-apollo';
 import './css/style.css';
+import Loading from '../../components/render/renderLoading';
 
 BigCalendar.momentLocalizer(moment);
 
@@ -47,7 +48,7 @@ class MyCalendar extends React.PureComponent {
   render() {
     const { loading, getActivitiesByConferenceID } = this.props.data;
 
-    if (loading) return <div>loading</div>;
+    if (loading) return <Loading />;
 
     const events = functions.getEvents(getActivitiesByConferenceID);
     const today = new Date();
@@ -118,27 +119,3 @@ export default compose(
   withRouter,
   graphql(queries.GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY),
 )(MyCalendar);
-
-// <Dialog
-// style={{ top: '-130px' }}
-// open={this.props.openEdit}
-// title="Edit Activity Schedule Information"
-// autoScrollBodyContent={true}
-// >
-// <EditActivity
-//   onSubmit={this.editActivity}
-//   rooms={rooms}
-//   allSchedules={allSchedules}
-//   conferenceId={this.props.conference.id}
-//   start_date={start_date}
-//   end_date={end_date}
-//   papers={papers}
-// />
-// <IconButton
-//   tooltip="Close"
-//   className="cancel-btn dialog"
-//   onClick={() => this.props.toggleEdit()}
-// >
-//   <NavigationClose />
-// </IconButton>
-// </Dialog>

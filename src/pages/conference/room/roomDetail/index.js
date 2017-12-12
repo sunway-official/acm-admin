@@ -14,6 +14,7 @@ import {
   MyFaCheck,
 } from '../../../../theme/alert';
 import AlertContainer from 'react-alert';
+import Loading from '../../../../components/render/renderLoading';
 
 class Index extends Component {
   constructor(props) {
@@ -66,7 +67,7 @@ class Index extends Component {
   }
   render() {
     const { loading, getRoomByID } = this.props.GET_ROOM_BY_ID_QUERY;
-    if (loading) return <div>loading</div>;
+    if (loading) return <Loading />;
     const roomDetail = getRoomByID;
     return (
       <div className="conference">

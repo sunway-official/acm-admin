@@ -8,6 +8,7 @@ import { compose, withApollo, graphql } from 'react-apollo';
 import { scheduleOperations, scheduleActions } from 'store/ducks/schedule';
 import { connect } from 'react-redux';
 import validate from '../../validate';
+import Loading from '../../../../components/render/renderLoading';
 
 class EditActivityPaper extends Component {
   constructor() {
@@ -51,7 +52,7 @@ class EditActivityPaper extends Component {
     const { rooms, topics } = this.props;
     const { loading } = this.props.GET_ALL_PAPERS_BY_TOPIC_ID_QUERY;
     if (loading) {
-      return <div>Loading...</div>;
+      return <Loading />;
     }
     // eslint-disable-next-line
     if (this.state.papers.length === 0 && this.state.count == 0) {
@@ -75,7 +76,17 @@ class EditActivityPaper extends Component {
     ];
     return (
       <form className="form conference-info " onSubmit={handleSubmit}>
-        <Subheader className="subheader">Edit Activity Information</Subheader>
+        <div className="d-flex align-items-baseline">
+          <Subheader className="subheader">Edit Activity Information</Subheader>
+          <RaisedButton
+            className="marginLeft"
+            label="Delete"
+            secondary={true}
+            onClick={() => {
+              this.props.setToggle();
+            }}
+          />
+        </div>
 
         {error && <div className="error">{error}</div>}
         <div className="d-flex form-group">
@@ -138,14 +149,7 @@ class EditActivityPaper extends Component {
             type="submit"
             disabled={pristine || submitting}
           />
-          <RaisedButton
-            className="marginLeft"
-            label="Delete"
-            secondary={true}
-            onClick={() => {
-              this.props.setToggle();
-            }}
-          />
+
           <RaisedButton
             label="Cancel"
             containerElement={<Link to="/conference/activities" />}
@@ -175,7 +179,6 @@ const mapDispatchToProps = dispatch => {
   };
 };
 const mapStateToProps = state => {
-  console.log(state);
   return {
     openDeleteFormModal: state.schedule.openDeleteFormModal,
   };

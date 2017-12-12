@@ -2,23 +2,13 @@ import React, { Component } from 'react';
 import CustomInput from 'components/CustomInput';
 import { renderSelectField } from 'components/render';
 import { reduxForm, Field } from 'redux-form';
-import validate from '../validate';
+import validate from './validate';
 import { RaisedButton, Subheader, MenuItem } from 'material-ui';
 import { Link } from 'react-router-dom';
-import { topicsActions } from 'store/ducks/topics';
-import { connect } from 'react-redux';
-
 class EditPaperForm extends Component {
-  constructor() {
-    super();
-    this.handleClick = this.handleClick.bind(this);
-  }
-  handleClick(topic) {
-    this.props.setTopic(topic);
-  }
   render() {
     const topics = this.props.topics;
-    const { handleSubmit, invalid } = this.props;
+    const { handleSubmit, pristine } = this.props;
     return (
       <form className="form conference-info" onSubmit={handleSubmit}>
         <Subheader className="subheader">Paper Information</Subheader>
@@ -67,9 +57,6 @@ class EditPaperForm extends Component {
                   key={topic.id}
                   value={topic.id}
                   primaryText={topic.name}
-                  onClick={() => {
-                    this.handleClick(topic);
-                  }}
                 />
               );
             })}
@@ -83,11 +70,7 @@ class EditPaperForm extends Component {
             label="Save"
             primary={true}
             type="submit"
-            onClick={() => {
-              if (!invalid) {
-                alert('Saved');
-              }
-            }}
+            disabled={pristine}
           />
           <RaisedButton
             label="Cancel"
@@ -99,12 +82,7 @@ class EditPaperForm extends Component {
     );
   }
 }
-const mapDispatchToProps = dispatch => {
-  return {
-    setTopic: topic => dispatch(topicsActions.setTopics(topic)),
-  };
-};
-EditPaperForm = connect(undefined, mapDispatchToProps)(EditPaperForm);
+
 export default reduxForm({
   form: 'EditPaperForm',
   validate,
