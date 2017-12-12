@@ -60,19 +60,19 @@ class List extends Component {
       {
         Header: 'Name',
         accessor: 'firstname',
-        minWidth: 400,
+        minWidth: 200,
         Cell: props => <div style={style}>{props.value}</div>,
       },
       {
         Header: 'Mail',
         accessor: 'email',
-        minWidth: 400,
+        minWidth: 275,
         Cell: props => <div style={style}>{props.value}</div>,
       },
       {
         Header: 'Position',
         accessor: '',
-        minWidth: 400,
+        minWidth: 150,
         Cell: props => (
           <div style={style}>
             <Roles id={props.value.id} conference_id={conference_id} />

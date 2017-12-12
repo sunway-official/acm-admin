@@ -73,7 +73,7 @@ class Index extends Component {
       },
       {
         Header: 'Action',
-        minWidth: 150,
+        minWidth: 170,
         filterable: false,
         accessor: '',
         Cell: props => (
