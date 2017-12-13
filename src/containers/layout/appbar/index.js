@@ -5,7 +5,7 @@ import { AppBar, Drawer } from 'material-ui';
 import { ActionReorder } from 'material-ui/svg-icons';
 import { images } from '../../../theme';
 import { connect } from 'react-redux';
-import style from './style.css';
+import './style.css';
 import { sidebarActions } from 'store/ducks/sidebar';
 
 class Index extends React.Component {
@@ -35,7 +35,6 @@ class Index extends React.Component {
   render() {
     return (
       <div>
-        <style dangerouslySetInnerHTML={{ __html: style }} />
         <AppBar
           className="navbar main"
           iconElementLeft={
@@ -55,7 +54,13 @@ class Index extends React.Component {
             docked={false}
           >
             <AppBar
-              title="ACM"
+              title={
+                <img
+                  className="logo sidebar"
+                  src={images.defaultLogoSidebar}
+                  alt="logo"
+                />
+              }
               titleStyle={{ color: 'white', display: 'block' }}
               className="sidebar"
               onClick={this.handleToggle}
