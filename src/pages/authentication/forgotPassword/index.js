@@ -1,9 +1,10 @@
 import React, { PureComponent } from 'react';
 import { AppBar } from 'material-ui';
 import { gql, graphql } from 'react-apollo';
+import { alertOptions, MyFaCheck } from 'theme/alert';
 
 import ForgotPasswordForm from './forgotForm';
-
+import AlertContainer from 'react-alert';
 import './style.css';
 
 class ForgotPassword extends PureComponent {
@@ -14,14 +15,20 @@ class ForgotPassword extends PureComponent {
       this,
     );
   }
+  showAlertSuccess = () => {
+    this.msg.success('Success, please check you inbox.', {
+      type: 'success',
+      icon: <MyFaCheck />,
+      onClose: () => {},
+    });
+  };
   async handleSendForgotPasswordEmail({ email }) {
     await this.props.sendForgotPasswordEmail({
       variables: {
         email,
       },
     });
-    // TODO: Display message for this
-    alert('Server is down!');
+    this.showAlertSuccess();
   }
   render() {
     return (
@@ -36,6 +43,7 @@ class ForgotPassword extends PureComponent {
             <ForgotPasswordForm onSubmit={this.handleSendForgotPasswordEmail} />
           </div>
         </div>
+        <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />
       </div>
     );
   }

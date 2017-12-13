@@ -3,6 +3,8 @@ import { AppBar } from 'material-ui';
 import { gql, graphql, compose } from 'react-apollo';
 import { withRouter } from 'react-router';
 import ResetPasswordForm from './ResetPasswordForm';
+import { alertOptions, MyFaCheck } from 'theme/alert';
+import AlertContainer from 'react-alert';
 
 class ResetPassword extends PureComponent {
   constructor(props) {
@@ -34,6 +36,15 @@ class ResetPassword extends PureComponent {
       // TODO: Display an error message here saying that the token is invalid!
     }
   }
+  showAlertSuccess = () => {
+    this.msg.success('Your password has been changed', {
+      type: 'success',
+      icon: <MyFaCheck />,
+      onClose: () => {
+        this.props.history.replace('/login');
+      },
+    });
+  };
   async onResetPassword({ password }) {
     try {
       await this.props.resetUserPassword({
@@ -42,13 +53,10 @@ class ResetPassword extends PureComponent {
           newPassword: password,
         },
       });
-
-      console.log('SUCCESS!');
-
-      this.props.history.replace('/login');
+      this.showAlertSuccess();
     } catch (error) {
-      console.error(error);
-      // TODO: Display error message here that there is somethings happened
+      // console.error(error);
+      // // TODO: Display error message here that there is somethings happened
     }
   }
   render() {
@@ -62,6 +70,7 @@ class ResetPassword extends PureComponent {
               showMenuIconButton={false}
             />
             <ResetPasswordForm onSubmit={this.onResetPassword} />
+            <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />
           </div>
         </div>
       </div>
