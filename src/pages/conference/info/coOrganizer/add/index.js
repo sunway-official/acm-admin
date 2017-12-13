@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
+import { HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import { Subheader, IconButton } from 'material-ui';
 import { Link } from 'react-router-dom';
 import { compose, graphql } from 'react-apollo';

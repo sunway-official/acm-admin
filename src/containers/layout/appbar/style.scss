@@ -11,9 +11,15 @@
   }
 
   .logo {
-    height: 30px;
-    margin-left: 50px;
+    height: 40px;
+    margin-top: 10px !important;
+    margin-left: 20px !important;
+    &.sidebar {
+      margin-top: 15px;
+      margin-left: 0 !important;
+    }
   }
+
   .menu-icon {
     padding-left: 20px !important;
   }
