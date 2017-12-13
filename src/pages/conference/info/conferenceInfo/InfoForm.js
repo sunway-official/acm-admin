@@ -8,6 +8,7 @@ import normalizePhone from 'utils/normalizePhone';
 import validate from './validate';
 import AlertContainer from 'react-alert';
 import { alertOptions, MyFaCheck } from 'theme/alert';
+
 class ConferenceInfoForm extends React.Component {
   state = {
     openDialog: false,
@@ -22,13 +23,7 @@ class ConferenceInfoForm extends React.Component {
     });
   };
   render() {
-    const {
-      handleSubmit,
-      invalid,
-      initialValues,
-      onMapPositionChanged,
-      pristine,
-    } = this.props;
+    const { handleSubmit, initialValues, onMapPositionChanged } = this.props;
 
     return (
       <form className="form conference-info" onSubmit={handleSubmit}>
@@ -43,7 +38,7 @@ class ConferenceInfoForm extends React.Component {
                     lat: initialValues.lat,
                     long: initialValues.long,
                   }}
-                  googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyDFNlwjsuntl-BmMpDKJPOiUvwxhAEyMEI"
+                  googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyAhGSgJvoGdeOzzDDDyTxWyQj7YRA2lZiA"
                   loadingElement={<div style={{ height: `100%` }} />}
                   containerElement={<div style={{ height: `400px` }} />}
                   mapElement={
@@ -152,12 +147,12 @@ class ConferenceInfoForm extends React.Component {
                 label="Save"
                 primary={true}
                 type="submit"
-                disabled={pristine}
-                onClick={() => {
-                  if (!invalid) {
-                    this.showAlertSuccess();
-                  }
-                }}
+                // disabled={pristine}
+                // onClick={() => {
+                //   if (!invalid) {
+                //     this.showAlertSuccess();
+                //   }
+                // }}
               />
             </div>
             <Dialog open={this.state.openDialog} />

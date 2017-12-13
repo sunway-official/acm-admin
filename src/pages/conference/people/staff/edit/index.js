@@ -21,7 +21,7 @@ class DialogEdit extends React.Component {
     let roles;
     if (getAllRolesActiveByUserID) {
       roles = getAllRolesActiveByUserID;
-    } else return <div>Loading...</div>;
+    }
     const actions = (
       <div>
         <IconButton

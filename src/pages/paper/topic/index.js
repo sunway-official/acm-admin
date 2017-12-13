@@ -1,15 +1,26 @@
 import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
 import { queries } from '../helpers';
+import Loading from 'components/render/renderLoading';
 
 class Index extends Component {
   render() {
     const { loading, getTopicsByPaperID } = this.props.data;
-    if (loading) return <div>Loading...</div>;
+    if (loading)
+      return (
+        <div>
+          <Loading />
+        </div>
+      );
     let topics;
     if (getTopicsByPaperID) {
       topics = getTopicsByPaperID;
-    } else return <div>Loading</div>;
+    } else
+      return (
+        <div>
+          <Loading />
+        </div>
+      );
     return (
       <div>
         {topics.map((data, index) => {
