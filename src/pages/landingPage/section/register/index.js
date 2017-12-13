@@ -36,16 +36,6 @@ class Register extends Component {
                 </p>
               </Row>
               <Row className="register-final-row">
-                <Col xs={4} className="register-col">
-                  <Row> Where </Row>
-                  <Row>{this.props.landingPage.conference.address.street} </Row>
-                  <Row>
-                    <div>
-                      {this.props.landingPage.conference.address.city}, <span />
-                      {this.props.landingPage.conference.address.country}
-                    </div>
-                  </Row>
-                </Col>
                 <Col xs={3}>
                   <Row> When </Row>
                   <Row>
