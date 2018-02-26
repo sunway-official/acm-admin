@@ -1,3 +1,7 @@
+body {
+  overflow: auto !important;
+}
+
 @media only screen and (min-width: 957px) {
   #format-time {
     position: absolute;
@@ -5,6 +9,7 @@
     right: 40vw;
   }
 }
+
 @media only screen and (min-width: 1200px) {
   #format-time {
     position: absolute;
