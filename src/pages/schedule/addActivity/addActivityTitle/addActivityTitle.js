@@ -15,7 +15,7 @@ class AddActivityTitle extends Component {
       rooms = this.props.rooms;
     }
     return (
-      <form className="form conference-info " onSubmit={handleSubmit}>
+      <form className="form conference-info m-auto" onSubmit={handleSubmit}>
         <Subheader className="subheader">Add Activity</Subheader>
 
         {error && <div className="error">{error}</div>}

@@ -10,7 +10,11 @@ class EditPaperForm extends Component {
     const topics = this.props.topics;
     const { handleSubmit, pristine } = this.props;
     return (
-      <form className="form conference-info" onSubmit={handleSubmit}>
+      <form
+        className="form conference-info m-auto"
+        onSubmit={handleSubmit}
+        style={{ width: '800px' }}
+      >
         <Subheader className="subheader">Paper Information</Subheader>
         <div className="d-flex form-group">
           <label>Title :</label>

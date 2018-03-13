@@ -50,7 +50,7 @@ class AddActivityPaper extends Component {
     const papers = this.state.papers;
 
     return (
-      <form className="form conference-info " onSubmit={handleSubmit}>
+      <form className="form conference-info m-auto" onSubmit={handleSubmit}>
         <Subheader className="subheader">Add Activity</Subheader>
 
         {error && <div className="error">{error}</div>}

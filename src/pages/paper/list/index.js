@@ -94,7 +94,7 @@ class Index extends Component {
           <div style={style}>
             <RaisedButton
               label="Edit"
-              primary={true}
+              default={true}
               onClick={() => {
                 this.handleEdit(props.value);
               }}

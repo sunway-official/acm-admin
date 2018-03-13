@@ -110,7 +110,7 @@ class EditActivityPaper extends Component {
       />,
     ];
     return (
-      <form className="form conference-info " onSubmit={handleSubmit}>
+      <form className="form conference-info m-auto" onSubmit={handleSubmit}>
         <div className="d-flex align-items-baseline">
           <Subheader className="subheader">Edit Activity Information</Subheader>
           <RaisedButton
