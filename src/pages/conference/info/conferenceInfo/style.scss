@@ -1,9 +1,6 @@
 .form {
   &.conference-info {
-    width: 680px;
-    margin: auto;
     justify-content: center;
-    .date,
     .place {
       justify-content: space-between;
       margin-bottom: 30px;
@@ -15,7 +12,6 @@
         padding-top: 20px;
       }
       &.save-btn {
-        margin-top: 70px;
         margin-bottom: 20px;
       }
       .add-btn {
@@ -50,9 +46,6 @@
           width: 190px !important;
         }
       }
-      &.title-information {
-        margin-top: 20px;
-      }
     }
     .header {
       &.title {
@@ -61,7 +54,7 @@
     }
 
     .map {
-      width: 80% !important;
+      width: 70% !important;
     }
   }
 
