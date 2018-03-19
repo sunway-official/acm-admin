@@ -86,7 +86,6 @@ class ContactInformation extends Component {
               <form onSubmit={handleSubmit}>
                 <Row className="secondColunm firstRow">
                   <Field
-                    id="text-field-default"
                     name="email"
                     type="text"
                     component={renderField}
@@ -97,7 +96,6 @@ class ContactInformation extends Component {
                 </Row>
                 <Row className="secondColunm">
                   <Field
-                    id="text-field-default"
                     name="facebook_id"
                     type="text"
                     hintText="Facebook link"
@@ -107,7 +105,6 @@ class ContactInformation extends Component {
                 </Row>
                 <Row className="secondColunm">
                   <Field
-                    id="text-field-default"
                     name="twitter_id"
                     type="text"
                     hintText="Twitter link"
@@ -118,7 +115,6 @@ class ContactInformation extends Component {
                 </Row>
                 <Row className="secondColunm">
                   <Field
-                    id="text-field-default"
                     name="linkedin_id"
                     type="text"
                     hintText="LinkedIn link"

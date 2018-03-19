@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { graphql, compose, withApollo } from 'react-apollo';
 import { queries } from '../helpers';
-import { paperActions } from 'store/ducks/paper';
 import { Link } from 'react-router-dom';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import { RaisedButton } from 'material-ui';
 import { ActionNoteAdd } from 'material-ui/svg-icons';
-import Topic from '../topic';
-import DeletePaper from './deletePaper';
 import Loading from 'components/render/renderLoading';
 
 const style = {
@@ -24,66 +20,84 @@ const styleBtn = {
 const sorted = [
   {
     id: 'title',
-    desc: true,
+    desc: false,
   },
 ];
+
 class Index extends Component {
   constructor(props) {
     super(props);
-    this.handleDialog = this.handleDialog.bind(this);
+    this.state = {
+      papers: [],
+    };
     this.handleEdit = this.handleEdit.bind(this);
-  }
-  state = {
-    paper_id: 0,
-    papers: [],
-  };
-  styles = {
-    margin: 10,
-  };
-  handleDialog(paper, paper_id) {
-    this.setState({ paper_id: paper_id });
-    this.props.setPaper(paper);
-    this.props.setToggle();
   }
   handleEdit(paper) {
     this.props.setPaper(paper);
   }
 
   render() {
-    const isAuthor = localStorage.getItem('roles').indexOf('7');
+    const role = localStorage.getItem('roles');
+    const loadingListPaper = this.props.GET_PAPERS_BY_CONFERENCE_ID.loading;
+    if (loadingListPaper) return <Loading />;
     let papers;
-    if (isAuthor > -1) {
-      const {
-        loading,
-        getPapersWithAuthorByConferenceID,
-      } = this.props.GET_PAPERS_WITH_AUTHOR_BY_CONFERENCE_ID;
-      if (loading) return <Loading />;
-      papers = getPapersWithAuthorByConferenceID;
-    } else {
-      const {
-        loading,
-        getPapersByConferenceID,
-      } = this.props.GET_PAPERS_BY_CONFERENCE_ID;
-      if (loading) return <Loading />;
-      papers = getPapersByConferenceID;
+    let addPaperButton;
+    papers = this.props.GET_PAPERS_BY_CONFERENCE_ID.getPapersByConferenceID;
+    // eslint-disable-next-line
+    if (role == 1 || role == 6) {
+      addPaperButton = (
+        <div className="d-flex justify-content-center save-btn btn-group">
+          <Link to="/conference/paper/add">
+            <RaisedButton
+              style={{ marginTop: '20px' }}
+              className="marginBottom"
+              icon={<ActionNoteAdd />}
+              primary={true}
+              label={'Add New Paper'}
+            />
+          </Link>
+        </div>
+      );
     }
+    let i = 1;
     const columns = [
+      {
+        Header: 'Id',
+        accessor: '',
+        minWidth: 50,
+        Cell: props => <div style={style}>{i++}</div>,
+      },
       {
         Header: 'Title',
         accessor: 'title',
-        minWidth: 400,
+        minWidth: 300,
         Cell: props => <div style={style}>{props.value}</div>,
       },
-
       {
-        Header: 'Topic',
+        Header: 'Reviewer',
         minWidth: 200,
-        accessor: '',
+        accessor: 'reviewers',
+        // eslint-disable-next-line
+        show: role == 1 ? true : false,
         Cell: props => (
           <div style={style}>
-            <Topic paper={props.value} />
+            <span>{props.value[0]} </span>
+            <span>{props.value[1]} </span>
+            <span>{props.value[2]} </span>
           </div>
         ),
+      },
+      {
+        Header: 'Topic',
+        minWidth: 150,
+        accessor: 'topic_name',
+        Cell: props => <div style={style}>{props.value}</div>,
+      },
+      {
+        Header: 'Status',
+        minWidth: 150,
+        accessor: 'status',
+        Cell: props => <div style={style}>{props.value}</div>,
       },
       {
         Header: 'Action',
@@ -93,7 +107,7 @@ class Index extends Component {
         Cell: props => (
           <div style={style}>
             <RaisedButton
-              label="Edit"
+              label="View"
               primary={true}
               onClick={() => {
                 this.handleEdit(props.value);
@@ -102,14 +116,12 @@ class Index extends Component {
                 <Link to={`/conference/paper/edit/${props.value.id}`} />
               }
             />
-            <RaisedButton
-              label="Delete"
-              secondary={true}
-              onClick={() => {
-                this.handleDialog(props.value, props.value.id, props);
-              }}
-              style={styleBtn}
-            />
+            {// eslint-disable-next-line
+            role == 1 || role == 7 ? (
+              <RaisedButton label="Review" secondary={true} style={styleBtn} />
+            ) : (
+              ''
+            )}
           </div>
         ),
       },
@@ -125,36 +137,23 @@ class Index extends Component {
           className="-striped -highlight"
           showPaginationTop
         />
-
-        <DeletePaper id={this.state.paper_id} />
-        <div className="d-flex justify-content-center save-btn btn-group">
-          <Link to="/conference/paper/add">
-            <RaisedButton
-              style={{ marginTop: '20px' }}
-              className="marginBottom"
-              icon={<ActionNoteAdd />}
-              primary={true}
-              label={'Add New Paper'}
-            />
-          </Link>
-        </div>
+        {addPaperButton}
       </div>
     );
   }
 }
-const mapDispatchToProps = dispatch => {
-  return {
-    setPaper: paper => dispatch(paperActions.setPaper(paper)),
-    setToggle: () => dispatch(paperActions.setToggle()),
-  };
-};
+
 export default compose(
-  connect(undefined, mapDispatchToProps),
   withApollo,
-  graphql(queries.GET_PAPERS_WITH_AUTHOR_BY_CONFERENCE_ID, {
-    name: 'GET_PAPERS_WITH_AUTHOR_BY_CONFERENCE_ID',
-  }),
   graphql(queries.GET_PAPERS_BY_CONFERENCE_ID, {
     name: 'GET_PAPERS_BY_CONFERENCE_ID',
+    options: ownProps => ({
+      variables: {
+        role_id: localStorage.getItem('roles'),
+      },
+    }),
   }),
+  // graphql(queries.GET_PAPERS_WITH_AUTHOR_BY_CONFERENCE_ID, {
+  //   name: 'GET_PAPERS_WITH_AUTHOR_BY_CONFERENCE_ID',
+  // }),
 )(Index);

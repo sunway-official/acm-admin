@@ -17,6 +17,7 @@ class Index extends Component {
     super(props);
     this.handleSave = this.handleSave.bind(this);
   }
+  // eslint-disable-next-line
   showAlertSuccess = () => {
     this.msg.success('Saved!', {
       type: 'success',
