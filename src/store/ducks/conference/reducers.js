@@ -39,6 +39,7 @@ const reducer = (state = {}, action) => {
     case types.GET_POSITION_FAILURE: {
       return state;
     }
+
     default: {
       return state;
     }
