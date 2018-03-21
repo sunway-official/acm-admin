@@ -31,11 +31,23 @@ class Index extends Component {
       papers: [],
     };
     this.handleEdit = this.handleEdit.bind(this);
+    this.mapReviewer = this.mapReviewer.bind(this);
   }
   handleEdit(paper) {
     this.props.setPaper(paper);
   }
-
+  mapReviewer(reviewers) {
+    let result = '';
+    reviewers.forEach((element, index) => {
+      // eslint-disable-next-line
+      if (index != reviewers.length - 1) {
+        result = result + ' ' + element.reviewer_name + ', ';
+      } else {
+        result = result + ' ' + element.reviewer_name;
+      }
+    });
+    return result;
+  }
   render() {
     const role = localStorage.getItem('roles');
     const loadingListPaper = this.props.GET_PAPERS_BY_CONFERENCE_ID.loading;
@@ -59,14 +71,7 @@ class Index extends Component {
         </div>
       );
     }
-    let i = 1;
     const columns = [
-      {
-        Header: 'Id',
-        accessor: '',
-        minWidth: 50,
-        Cell: props => <div style={style}>{i++}</div>,
-      },
       {
         Header: 'Title',
         accessor: 'title',
@@ -79,13 +84,7 @@ class Index extends Component {
         accessor: 'reviewers',
         // eslint-disable-next-line
         show: role == 1 ? true : false,
-        Cell: props => (
-          <div style={style}>
-            <span>{props.value[0]} </span>
-            <span>{props.value[1]} </span>
-            <span>{props.value[2]} </span>
-          </div>
-        ),
+        Cell: props => <div style={style}>{this.mapReviewer(props.value)}</div>,
       },
       {
         Header: 'Topic',
@@ -93,12 +92,12 @@ class Index extends Component {
         accessor: 'topic_name',
         Cell: props => <div style={style}>{props.value}</div>,
       },
-      {
-        Header: 'Status',
-        minWidth: 150,
-        accessor: 'status',
-        Cell: props => <div style={style}>{props.value}</div>,
-      },
+      // {
+      //   Header: 'Status',
+      //   minWidth: 150,
+      //   accessor: 'status',
+      //   Cell: props => <div style={style}>{props.value}</div>,
+      // },
       {
         Header: 'Action',
         minWidth: 170,
@@ -117,8 +116,15 @@ class Index extends Component {
               }
             />
             {// eslint-disable-next-line
-            role == 1 || role == 7 ? (
+            (role == 1 || role == 7) && // if user is an organizer or reviewer
+            (props.value.status == 'reviewing' ||
+              props.value.status == 're-reviewing') ? ( // and if paper status is reviewing or re-reviewing
               <RaisedButton label="Review" secondary={true} style={styleBtn} />
+            ) : // eslint-disable-next-line
+            role == 6 && // if user is an author
+            (props.value.status == 'submitting' ||
+              props.value.status == 're-submitting') ? ( // and if paper status is submitting or re-submitting
+              <RaisedButton label="Submit" secondary={true} style={styleBtn} />
             ) : (
               ''
             )}

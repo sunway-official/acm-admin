@@ -18,8 +18,12 @@ const GET_PAPERS_BY_CONFERENCE_ID = gql`
     getPapersByConferenceID(role_id: $role_id) {
       id
       title
-      reviewers
-      authors
+      reviewers {
+        reviewer_name
+      }
+      authors {
+        author_name
+      }
       topic_name
     }
   }
