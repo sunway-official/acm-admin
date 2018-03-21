@@ -94,7 +94,11 @@ class OrganizationDate extends PureComponent {
                     label={stepIndex === 2 ? 'Submit' : 'Next'}
                     primary={true}
                     type="submit"
-                    onClick={this.handleNext}
+                    onClick={
+                      this.props.fieldError === false
+                        ? this.handleNext
+                        : () => {}
+                    }
                   />
                 </div>
               </div>
@@ -109,6 +113,11 @@ OrganizationDate = reduxForm({
   form: 'OrganizationDate',
   validate,
 })(OrganizationDate);
+const mapStateToProps = state => {
+  if (state.schedule) {
+    return { fieldError: state.schedule.error };
+  }
+};
 const mapDispatchToProps = dispatch => {
   return {
     checkError: error => {
@@ -116,6 +125,7 @@ const mapDispatchToProps = dispatch => {
     },
   };
 };
-export default compose(withApollo, connect(undefined, mapDispatchToProps))(
-  OrganizationDate,
-);
+export default compose(
+  withApollo,
+  connect(mapStateToProps, mapDispatchToProps),
+)(OrganizationDate);

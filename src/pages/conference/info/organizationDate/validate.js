@@ -18,7 +18,6 @@ const validate = (values, props) => {
     if (arrayErrors.length) {
       props.checkError(true);
     } else props.checkError(false);
-    console.log(props);
   });
   // if (values.actractReviewDate <= values.abstractSubmissionDate) {
   //   errors.actractReviewDate =
