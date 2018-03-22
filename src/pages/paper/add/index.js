@@ -9,6 +9,7 @@ import Form from '../form';
 import { alertOptions, MyExclamationTriangle, MyFaCheck } from 'theme/alert';
 import AlertContainer from 'react-alert';
 import Loading from 'components/render/renderLoading';
+import '../style/style.css';
 
 class Index extends Component {
   constructor(props) {
