@@ -7,6 +7,7 @@ import 'react-table/react-table.css';
 import { RaisedButton } from 'material-ui';
 import { ActionNoteAdd } from 'material-ui/svg-icons';
 import Loading from 'components/render/renderLoading';
+import { cutString } from '../../../utils/stringSolve';
 
 const style = {
   textAlign: 'center',
@@ -76,7 +77,7 @@ class Index extends Component {
         Header: 'Title',
         accessor: 'title',
         minWidth: 300,
-        Cell: props => <div style={style}>{props.value}</div>,
+        Cell: props => <div style={style}>{cutString(props.value, 41)}</div>,
       },
       {
         Header: 'Reviewer',
