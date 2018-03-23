@@ -25,6 +25,7 @@ const GET_PAPERS_BY_CONFERENCE_ID = gql`
         author_name
       }
       topic_name
+      status
     }
   }
 `;

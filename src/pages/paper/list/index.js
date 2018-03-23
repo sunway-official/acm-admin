@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import { RaisedButton } from 'material-ui';
-import { ActionNoteAdd } from 'material-ui/svg-icons';
 import Loading from 'components/render/renderLoading';
 import { cutString } from '../../../utils/stringSolve';
 
@@ -44,7 +43,11 @@ class Index extends Component {
       if (index != reviewers.length - 1) {
         result = result + ' ' + element.reviewer_name + ', ';
       } else {
-        result = result + ' ' + element.reviewer_name;
+        if (index === 2) {
+          result = result + '...';
+        } else {
+          result = result + ' ' + element.reviewer_name;
+        }
       }
     });
     return result;
@@ -54,24 +57,7 @@ class Index extends Component {
     const loadingListPaper = this.props.GET_PAPERS_BY_CONFERENCE_ID.loading;
     if (loadingListPaper) return <Loading />;
     let papers;
-    let addPaperButton;
-    papers = this.props.GET_PAPERS_BY_CONFERENCE_ID.getPapersByConferenceID;
-    // eslint-disable-next-line
-    if (role == 1 || role == 6) {
-      addPaperButton = (
-        <div className="d-flex justify-content-center save-btn btn-group">
-          <Link to="/conference/paper/add">
-            <RaisedButton
-              style={{ marginTop: '20px' }}
-              className="marginBottom"
-              icon={<ActionNoteAdd />}
-              primary={true}
-              label={'Add New Paper'}
-            />
-          </Link>
-        </div>
-      );
-    }
+    papers = this.props.GET_PAPERS_BY_CONFERENCE_ID.getPapersByConferenceID; // get all paper by role
     const columns = [
       {
         Header: 'Title',
@@ -80,7 +66,7 @@ class Index extends Component {
         Cell: props => <div style={style}>{cutString(props.value, 41)}</div>,
       },
       {
-        Header: 'Reviewer',
+        Header: 'Reviewers',
         minWidth: 200,
         accessor: 'reviewers',
         // eslint-disable-next-line
@@ -105,7 +91,7 @@ class Index extends Component {
         filterable: false,
         accessor: '',
         Cell: props => (
-          <div style={style}>
+          <div style={{ textAlign: 'left', paddingLeft: '15%' }}>
             <RaisedButton
               label="View"
               primary={true}
@@ -117,14 +103,14 @@ class Index extends Component {
               }
             />
             {// eslint-disable-next-line
-            (role == 1 || role == 7) && // if user is an organizer or reviewer
-            (props.value.status == 'reviewing' ||
-              props.value.status == 're-reviewing') ? ( // and if paper status is reviewing or re-reviewing
+            (role === '1' || role === '6') && // if user is an organizer or reviewer
+            (props.value.status === 'Reviewing' ||
+              props.value.status === 'Re-reviewing') ? ( // and if paper status is reviewing or re-reviewing
               <RaisedButton label="Review" secondary={true} style={styleBtn} />
             ) : // eslint-disable-next-line
-            role == 6 && // if user is an author
-            (props.value.status == 'submitting' ||
-              props.value.status == 're-submitting') ? ( // and if paper status is submitting or re-submitting
+            role === '7' && // if user is an author
+            (props.value.status === 'Submitting' ||
+              props.value.status === 'Re-submitting') ? ( // and if paper status is submitting or re-submitting
               <RaisedButton label="Submit" secondary={true} style={styleBtn} />
             ) : (
               ''
@@ -144,7 +130,6 @@ class Index extends Component {
           className="-striped -highlight"
           showPaginationTop
         />
-        {addPaperButton}
       </div>
     );
   }
@@ -160,7 +145,4 @@ export default compose(
       },
     }),
   }),
-  // graphql(queries.GET_PAPERS_WITH_AUTHOR_BY_CONFERENCE_ID, {
-  //   name: 'GET_PAPERS_WITH_AUTHOR_BY_CONFERENCE_ID',
-  // }),
 )(Index);
