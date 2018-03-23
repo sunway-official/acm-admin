@@ -9,24 +9,63 @@ import {
 import { reduxForm } from 'redux-form';
 import validate from './validate';
 import Fields from './Fields';
-import { compose, withApollo } from 'react-apollo';
+import { graphql, compose, withApollo } from 'react-apollo';
 import { connect } from 'react-redux';
 import { scheduleOperations } from 'store/ducks/schedule';
+import { mutations } from '../helpers';
 class OrganizationDate extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      finished: false,
       stepIndex: 0,
     };
+  }
+  async handleUpdateDeadline({
+    id,
+    dl_submit_abstract,
+    dl_review_abstract,
+    dl_release_abstract,
+    dl_re_submit_abstract,
+    dl_re_review_abstract,
+    dl_release_final_abstract,
+    dl_submit_paper,
+    dl_review_paper,
+    dl_release_paper,
+    dl_re_submit_paper,
+    dl_re_review_paper,
+    dl_release_final_paper,
+  }) {
+    try {
+      const deadline = await this.props.UPDATE_CONFERENCE_MUTATION({
+        variables: {
+          id: this.props.conference_id,
+          dl_submit_abstract: dl_submit_abstract,
+          dl_review_abstract: dl_review_abstract,
+          dl_release_abstract: dl_release_abstract,
+          dl_re_submit_abstract: dl_re_submit_abstract,
+          dl_re_review_abstract: dl_re_review_abstract,
+          dl_release_final_abstract: dl_release_final_abstract,
+          dl_submit_paper: dl_submit_paper,
+          dl_review_paper: dl_review_paper,
+          dl_release_paper: dl_release_paper,
+          dl_re_submit_paper: dl_re_submit_paper,
+          dl_re_review_paper: dl_re_review_paper,
+          dl_release_final_paper: dl_release_final_paper,
+        },
+      });
+    } catch (error) {
+      console.log('error');
+    }
   }
 
   handleNext = () => {
     const { stepIndex } = this.state;
-    this.setState({
-      stepIndex: stepIndex + 1,
-      finished: stepIndex >= 2,
-    });
+    if (stepIndex < 1) {
+      this.setState({ stepIndex: stepIndex + 1 });
+    }
+    if (stepIndex === 1) {
+      alert('Submit');
+    }
   };
 
   handlePrev = () => {
@@ -39,22 +78,20 @@ class OrganizationDate extends PureComponent {
   getStepContent(stepIndex) {
     switch (stepIndex) {
       case 0:
-        return <Fields />;
+        return <Fields stepIndex={0} />;
       case 1:
-        return '';
-      case 2:
-        return 'This is the bit I really care about!';
+        return <Fields stepIndex={1} />;
       default:
         return '';
     }
   }
 
   render() {
-    const { finished, stepIndex } = this.state;
+    const { stepIndex } = this.state;
     const { handleSubmit } = this.props;
     return (
       <form onSubmit={handleSubmit}>
-        <div style={{ width: '100%', maxWidth: 1000, margin: 'auto' }}>
+        <div style={{ width: '100%', maxWidth: 1200, margin: 'auto' }}>
           <Stepper activeStep={stepIndex}>
             <Step>
               <StepLabel>Abstracts Submission Date</StepLabel>
@@ -62,47 +99,28 @@ class OrganizationDate extends PureComponent {
             <Step>
               <StepLabel>Paper Submission Date</StepLabel>
             </Step>
-            <Step>
-              <StepLabel>Conference Date</StepLabel>
-            </Step>
           </Stepper>
+
           <div>
-            {finished ? (
-              <div>
-                <a
-                  href=""
-                  onClick={event => {
-                    event.preventDefault();
-                    this.setState({ stepIndex: 0, finished: false });
-                  }}
-                >
-                  Click here
-                </a>
-                to reset the example.
-              </div>
-            ) : (
-              <div>
-                <div>{this.getStepContent(stepIndex)}</div>
-                <div style={{ marginTop: 12 }}>
-                  <FlatButton
-                    label="Back"
-                    disabled={stepIndex === 0}
-                    onClick={this.handlePrev}
-                    style={{ marginRight: 12 }}
-                  />
-                  <RaisedButton
-                    label={stepIndex === 2 ? 'Submit' : 'Next'}
-                    primary={true}
-                    type="submit"
-                    onClick={
-                      this.props.fieldError === false
-                        ? this.handleNext
-                        : () => {}
-                    }
-                  />
-                </div>
-              </div>
-            )}
+            <div>{this.getStepContent(stepIndex)}</div>
+            <div style={{ marginTop: 12 }}>
+              <FlatButton
+                label="Back"
+                disabled={stepIndex === 0}
+                onClick={this.handlePrev}
+                style={{ marginRight: 12 }}
+              />
+              <RaisedButton
+                label={stepIndex === 1 ? 'Submit' : 'Next'}
+                primary={true}
+                type="submit"
+                onClick={
+                  this.props.fieldError === false
+                    ? () => this.handleNext()
+                    : () => {}
+                }
+              />
+            </div>
           </div>
         </div>
       </form>
@@ -113,9 +131,12 @@ OrganizationDate = reduxForm({
   form: 'OrganizationDate',
   validate,
 })(OrganizationDate);
-const mapStateToProps = state => {
-  if (state.schedule) {
-    return { fieldError: state.schedule.error };
+const mapStateToProps = (state, ownProps) => {
+  if (state) {
+    return {
+      fieldError: state.schedule.error,
+      conference_id: state.auth.currentUser.currentConference.id,
+    };
   }
 };
 const mapDispatchToProps = dispatch => {
@@ -128,4 +149,7 @@ const mapDispatchToProps = dispatch => {
 export default compose(
   withApollo,
   connect(mapStateToProps, mapDispatchToProps),
+  graphql(mutations.UPDATE_CONFERENCE_MUTATION, {
+    name: 'UPDATE_CONFERENCE_MUTATION',
+  }),
 )(OrganizationDate);

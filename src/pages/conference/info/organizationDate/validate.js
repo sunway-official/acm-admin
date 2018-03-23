@@ -3,12 +3,12 @@ const validate = (values, props) => {
   let arrayErrors = [];
   let checkError = 0;
   const requiredFields = [
-    'abstractSubmissionDate',
-    'actractReviewDate',
-    'abstractFirstResultDate',
-    'abstractReSubmissionDate',
-    'abstractReReviewDate',
-    'abstractFinalResult',
+    'dl_submit_abstract',
+    'dl_review_abstract',
+    'dl_release_abstract',
+    'dl_re_submit_abstract',
+    'dl_re_review_abstract',
+    'dl_release_final_abstract',
   ];
   requiredFields.forEach(field => {
     if (!values[field]) {
