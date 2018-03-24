@@ -48,10 +48,9 @@ const DELETE_PAPER_TOPIC = gql`
 const INSERT_PAPER_AUTHOR = gql`
   mutation insertPaperAuthor(
     $paper_id: ID!
-    $user_id: ID!
-    $topic_id: ID!
+    $user_id: ID
     $corresponding: Int!
-    $author_name: string
+    $author_name: String
     $author_email: String
     $author_title: String
     $author_organizer: String
@@ -61,7 +60,6 @@ const INSERT_PAPER_AUTHOR = gql`
     insertPaperAuthor(
       paper_id: $paper_id
       user_id: $user_id
-      topic_id: $topic_id
       corresponding: $corresponding
       author_name: $author_name
       author_email: $author_email

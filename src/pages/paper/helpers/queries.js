@@ -85,6 +85,21 @@ export const ME_QUERY = gql`
   query Me {
     me {
       id
+      firstname
+      lastname
+      gender
+      email
+      bio
+      dob
+      avatar
+      position
+      organization
+      address {
+        id
+        street
+        city
+        country
+      }
     }
   }
 `;
