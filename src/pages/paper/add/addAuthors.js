@@ -1,11 +1,10 @@
 import React from 'react';
 import { Field } from 'redux-form';
-import { ActionAlarmAdd, ActionDeleteForever } from 'material-ui/svg-icons';
-import { renderTextField } from '../../schedule/render/textField';
+import { ActionDeleteForever } from 'material-ui/svg-icons';
 import { MenuItem, RaisedButton, IconButton, Divider } from 'material-ui';
 import CustomInput from 'components/CustomInput';
 import { renderSelectField } from 'components/render';
-import renderCheckbox from 'components/renderCheckbox';
+// import renderCheckbox from 'components/renderCheckbox';
 import { Subheader } from 'material-ui';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
@@ -70,7 +69,7 @@ class AddAuthors extends React.Component {
               <div className="d-flex form-group">
                 <label>Last name :</label>
                 <Field
-                  name="lastname"
+                  name={`${author}.lastname`}
                   component={CustomInput}
                   fullWidth={true}
                   hintText="Enter the last name"
@@ -79,7 +78,7 @@ class AddAuthors extends React.Component {
               <div className="d-flex form-group">
                 <label>Title :</label>
                 <Field
-                  name="status"
+                  name={`${author}.status`}
                   component={renderSelectField}
                   fullWidth={true}
                 >
@@ -90,7 +89,7 @@ class AddAuthors extends React.Component {
               <div className="d-flex form-group">
                 <label>Email:</label>
                 <Field
-                  name="email"
+                  name={`${author}.email`}
                   component={CustomInput}
                   fullWidth={true}
                   hintText="Enter the email"
@@ -99,7 +98,7 @@ class AddAuthors extends React.Component {
               <div className="d-flex form-group">
                 <label>Organization:</label>
                 <Field
-                  name="organization"
+                  name={`${author}.organization`}
                   component={CustomInput}
                   fullWidth={true}
                   hintText="Enter the organization"
@@ -108,7 +107,7 @@ class AddAuthors extends React.Component {
               <div className="d-flex form-group">
                 <label>Street :</label>
                 <Field
-                  name="authorstreet"
+                  name={`${author}.authorstreet`}
                   component={CustomInput}
                   fullWidth={true}
                   hintText="Enter the street"
@@ -117,7 +116,7 @@ class AddAuthors extends React.Component {
               <div className="d-flex form-group">
                 <label>City :</label>
                 <Field
-                  name="authorCity"
+                  name={`${author}.authorCity`}
                   component={CustomInput}
                   fullWidth={true}
                   hintText="Enter the city"
@@ -126,14 +125,14 @@ class AddAuthors extends React.Component {
               <div className="d-flex form-group">
                 <label>Country :</label>
                 <Field
-                  name="authorCountry"
+                  name={`${author}.authorCountry`}
                   component={CustomInput}
                   fullWidth={true}
                   hintText="Enter the country"
                 />
               </div>
 
-              <div className="form-group">
+              {/* <div className="form-group">
                 <div className="f-right pb-6">
                   <Field
                     label="Corresponding"
@@ -143,7 +142,7 @@ class AddAuthors extends React.Component {
                     type="checkbox"
                   />
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         ))}

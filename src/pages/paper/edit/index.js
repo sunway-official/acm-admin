@@ -149,12 +149,12 @@ class Index extends Component {
           <span>Paper Management</span>
         </div>
         <div className="dashboard content d-flex">
-          <Form
+          {/* <Form
             initialValues={initialValues}
             onSubmit={this.handleSave}
             topics={topics}
             paperTopicsActive={paperTopicsActive[0].topic.name}
-          />
+          /> */}
         </div>
         <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />
       </div>

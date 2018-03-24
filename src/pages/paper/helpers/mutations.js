@@ -8,8 +8,20 @@ const DELETE_PAPER = gql`
   }
 `;
 const INSERT_PAPER = gql`
-  mutation insertPaper($title: String!, $abstract: String!, $keywords: String) {
-    insertPaper(title: $title, abstract: $abstract, keywords: $keywords) {
+  mutation insertPaper(
+    $paper_status_id: ID!
+    $title: String!
+    $abstract: String!
+    $keywords: String
+    $file: String!
+  ) {
+    insertPaper(
+      paper_status_id: $paper_status_id
+      title: $title
+      abstract: $abstract
+      keywords: $keywords
+      file: $file
+    ) {
       id
       papersTopic {
         topic_id
@@ -33,6 +45,36 @@ const DELETE_PAPER_TOPIC = gql`
     }
   }
 `;
+const INSERT_PAPER_AUTHOR = gql`
+  mutation insertPaperAuthor(
+    $paper_id: ID!
+    $user_id: ID!
+    $topic_id: ID!
+    $corresponding: Int!
+    $author_name: string
+    $author_email: String
+    $author_title: String
+    $author_organizer: String
+    $author_country: String
+    $paper_status: String
+  ) {
+    insertPaperAuthor(
+      paper_id: $paper_id
+      user_id: $user_id
+      topic_id: $topic_id
+      corresponding: $corresponding
+      author_name: $author_name
+      author_email: $author_email
+      author_title: $author_title
+      author_organizer: $author_organizer
+      author_country: $author_country
+      paper_status: $paper_status
+    ) {
+      id
+    }
+  }
+`;
+
 const UPDATE_PAPER = gql`
   mutation updatePaper(
     $id: ID!
@@ -69,4 +111,5 @@ export default {
   UPDATE_PAPER,
   DELETE_PAPER_TOPIC,
   UPDATE_TOPIC_OF_PAPER,
+  INSERT_PAPER_AUTHOR,
 };

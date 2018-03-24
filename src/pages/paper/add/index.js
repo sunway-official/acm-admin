@@ -10,6 +10,7 @@ import { alertOptions, MyExclamationTriangle, MyFaCheck } from 'theme/alert';
 import AlertContainer from 'react-alert';
 import Loading from 'components/render/renderLoading';
 import '../style/style.css';
+import { CLIENT_RENEG_LIMIT } from 'tls';
 
 class Index extends Component {
   constructor(props) {
@@ -32,37 +33,28 @@ class Index extends Component {
     });
   };
   async handleAdd(values) {
+    console.log('value', values);
     try {
-      const isAuthor = localStorage.getItem('roles').indexOf('7');
       let paper;
-      if (isAuthor > -1) {
-        paper = await this.props.INSERT_PAPER({
-          variables: {
-            title: values.title,
-            abstract: values.abstract,
-            keywords: values.keywords,
-          },
-          refetchQueries: [
-            {
-              query: queries.GET_PAPERS_WITH_AUTHOR_BY_CONFERENCE_ID,
+      paper = await this.props.INSERT_PAPER({
+        variables: {
+          paper_status_id: 1,
+          title: values.title,
+          abstract: values.abstract,
+          keywords: values.keywords,
+          file: values.file,
+        },
+        refetchQueries: [
+          {
+            query: queries.getPaperByID,
+            variables: {
+              paper_id: paper.data.insertPaper.id,
             },
-          ],
-        });
-      } else {
-        paper = await this.props.INSERT_PAPER({
-          variables: {
-            title: values.title,
-            abstract: values.abstract,
-            keywords: values.keywords,
           },
-          refetchQueries: [
-            {
-              query: queries.GET_PAPERS_BY_CONFERENCE_ID,
-            },
-          ],
-        });
-      }
+        ],
+      });
 
+      console.log('paper', paper);
       await this.props.INSERT_PAPER_TOPIC({
         variables: {
           paper_id: paper.data.insertPaper.id,
@@ -83,14 +75,78 @@ class Index extends Component {
           },
         ],
       });
+
+      await this.props.INSERT_PAPER_AUTHOR({
+        variables: {
+          paper_id: paper.data.insertPaperAuthor.id,
+          user_id: this.props.data.me.id,
+          topic_id: values.topic,
+          corresponding: 1,
+          author_name:
+            this.props.data.me.lastname + this.props.data.me.lastname,
+          author_email: this.props.data.me.email,
+          author_title: this.props.data.me.title,
+          author_organizer: this.props.data.me.organization,
+          author_country: this.props.data.me.address.id,
+        },
+        refetchQueries: [
+          {
+            query: queries.GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
+            variables: {
+              topic_id: values.topic,
+            },
+          },
+          {
+            query: queries.GET_TOPICS_BY_PAPER_ID,
+            variables: {
+              paper_id: paper.data.insertPaper.id,
+            },
+          },
+        ],
+      });
+
+      await values.addAuthors.map(author => {
+        this.props.INSERT_PAPER_AUTHOR({
+          variables: {
+            paper_id: paper.data.insertPaperAuthor.id,
+            topic_id: author.topic,
+            corresponding: 2,
+            author_name: author.author_name,
+            author_email: author.author_email,
+            author_title: author.author_title,
+            author_organizer: author.author_organizer,
+            author_country: author.author_country,
+          },
+          refetchQueries: [
+            {
+              query: queries.GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
+              variables: {
+                topic_id: values.topic,
+              },
+            },
+            {
+              query: queries.GET_TOPICS_BY_PAPER_ID,
+              variables: {
+                paper_id: paper.data.insertPaper.id,
+              },
+            },
+          ],
+        });
+      });
+
       this.showAlertSuccess();
     } catch (error) {
-      let temp = error.graphQLErrors[0].message;
-      this.showAlertError(temp.substring(7, temp.length));
+      // let temp = error.graphQLErrors[0].message;
+      // this.showAlertError(
+      //   error,
+      // .substring(7, temp.length)
+      // );
+      console.log('errr', error);
     }
   }
 
   render() {
+    console.log('pro', this.props);
     const {
       loading,
       getTopicsOfConference,
@@ -124,7 +180,7 @@ class Index extends Component {
         <div className="dashboard content d-flex">
           <Form onSubmit={this.handleAdd} topics={topics} />
         </div>
-        <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />
+        {/* <AlertContainer ref={a => (this.msg = a)} {...alertOptions} /> */}
       </div>
     );
   }
@@ -142,4 +198,5 @@ export default compose(
   graphql(queries.GET_TOPICS_OF_CONFERENCE, {
     name: 'GET_TOPICS_OF_CONFERENCE',
   }),
+  graphql(queries.ME_QUERY),
 )(Index);

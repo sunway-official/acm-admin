@@ -5,9 +5,6 @@ import { reduxForm, Field } from 'redux-form';
 import validate from './validate';
 import { RaisedButton, Subheader, MenuItem } from 'material-ui';
 import { Link } from 'react-router-dom';
-import renderCheckbox from 'components/renderCheckbox';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
 import AddAuthors from './add/addAuthors';
 import { FieldArray } from 'redux-form';
 
@@ -216,12 +213,13 @@ class EditPaperForm extends Component {
           <div className="d-flex form-group">
             <label>File :</label>
             <Field
-              name="keywords"
+              name="file"
               component={CustomInput}
               fullWidth={true}
               multiLine
               rows={1}
               hintText="Drop the file"
+              type="file"
             />
           </div>
         </div>
