@@ -14,15 +14,18 @@ const GET_PAPERS_WITH_AUTHOR_BY_CONFERENCE_ID = gql`
   }
 `;
 const GET_PAPERS_BY_CONFERENCE_ID = gql`
-  query getPapersByConferenceID {
-    getPapersByConferenceID {
+  query getPapersByConferenceID($role_id: ID!) {
+    getPapersByConferenceID(role_id: $role_id) {
       id
       title
-      abstract
-      keywords
-      papersTopic {
-        topic_id
+      reviewers {
+        reviewer_name
       }
+      authors {
+        author_name
+      }
+      topic_name
+      status
     }
   }
 `;

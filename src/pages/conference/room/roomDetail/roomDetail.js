@@ -54,7 +54,6 @@ class RoomDetail extends Component {
           <Col xs={9}>
             <Row className="landing-page-second-column">
               <Field
-                id="text-field-default"
                 name={field.name}
                 type={field.type}
                 hintText={field.hintText}

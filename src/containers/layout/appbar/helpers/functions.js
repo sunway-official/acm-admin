@@ -53,7 +53,7 @@ export const getRolesComponent = () => {
     },
     {
       component: 'papers',
-      roles: ['1', '7'],
+      roles: ['1', '6', '7'],
     },
     {
       component: 'rooms',
