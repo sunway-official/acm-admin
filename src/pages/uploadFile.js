@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { toBase64Async } from 'lib/fileTransformer';
 import S3 from 'lib/s3';
 import { gql, graphql } from 'react-apollo';
 
@@ -22,13 +21,12 @@ class UploadFile extends Component {
   async handleUploadFile({ target: { files } }) {
     const file = files[0];
     const fileName = file.name;
-    // const hashedFile = await toBase64Async(file, 'pdf');
     const { Key } = await S3.putAsync({
       name: fileName,
       bodyFile: file,
       isImage: false,
     });
-    const paper = await this.props.updatePaper({
+    await this.props.updatePaper({
       variables: {
         id: 1,
         file: Key,
