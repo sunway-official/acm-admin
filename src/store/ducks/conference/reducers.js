@@ -3,8 +3,10 @@
  */
 // import { combineReducers } from "redux";
 import types from './types';
-
-const reducer = (state = {}, action) => {
+const initialState = {
+  stepIndex: 0,
+};
+const reducer = (state = initialState, action) => {
   switch (action.type) {
     // GET CONFERENCE
     case types.GET_CONFERENCE_SUCCESS: {
@@ -39,7 +41,15 @@ const reducer = (state = {}, action) => {
     case types.GET_POSITION_FAILURE: {
       return state;
     }
-
+    case types.SET_STEPINDEX_SUCCESS: {
+      const newState = Object.assign({}, state, {
+        stepIndex: action.payload.stepIndex,
+      });
+      return newState;
+    }
+    case types.SET_STEPINDEX_FAILURE: {
+      return state;
+    }
     default: {
       return state;
     }

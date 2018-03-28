@@ -1,155 +1,86 @@
-import React, { PureComponent } from 'react';
-import {
-  Step,
-  Stepper,
-  StepLabel,
-  RaisedButton,
-  FlatButton,
-} from 'material-ui';
-import { reduxForm } from 'redux-form';
-import validate from './validate';
-import Fields from './Fields';
-import { graphql, compose, withApollo } from 'react-apollo';
+import React from 'react';
+import SetDeadlineForm from './Form';
+import { graphql, compose } from 'react-apollo';
+import { queries, mutations } from '../helpers';
 import { connect } from 'react-redux';
-import { scheduleOperations } from 'store/ducks/schedule';
-import { mutations } from '../helpers';
-class OrganizationDate extends PureComponent {
+class Index extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      stepIndex: 0,
-    };
+    this.handleUpdateDeadline = this.handleUpdateDeadline.bind(this);
   }
-  async handleUpdateDeadline({
-    id,
-    dl_submit_abstract,
-    dl_review_abstract,
-    dl_release_abstract,
-    dl_re_submit_abstract,
-    dl_re_review_abstract,
-    dl_release_final_abstract,
-    dl_submit_paper,
-    dl_review_paper,
-    dl_release_paper,
-    dl_re_submit_paper,
-    dl_re_review_paper,
-    dl_release_final_paper,
-  }) {
-    try {
-      const deadline = await this.props.UPDATE_CONFERENCE_MUTATION({
-        variables: {
-          id: this.props.conference_id,
-          dl_submit_abstract: dl_submit_abstract,
-          dl_review_abstract: dl_review_abstract,
-          dl_release_abstract: dl_release_abstract,
-          dl_re_submit_abstract: dl_re_submit_abstract,
-          dl_re_review_abstract: dl_re_review_abstract,
-          dl_release_final_abstract: dl_release_final_abstract,
-          dl_submit_paper: dl_submit_paper,
-          dl_review_paper: dl_review_paper,
-          dl_release_paper: dl_release_paper,
-          dl_re_submit_paper: dl_re_submit_paper,
-          dl_re_review_paper: dl_re_review_paper,
-          dl_release_final_paper: dl_release_final_paper,
-        },
-      });
-    } catch (error) {
-      console.log('error');
-    }
-  }
-
-  handleNext = () => {
-    const { stepIndex } = this.state;
-    if (stepIndex < 1) {
-      this.setState({ stepIndex: stepIndex + 1 });
-    }
-    if (stepIndex === 1) {
-      alert('Submit');
-    }
-  };
-
-  handlePrev = () => {
-    const { stepIndex } = this.state;
-    if (stepIndex > 0) {
-      this.setState({ stepIndex: stepIndex - 1 });
-    }
-  };
-
-  getStepContent(stepIndex) {
-    switch (stepIndex) {
-      case 0:
-        return <Fields stepIndex={0} />;
-      case 1:
-        return <Fields stepIndex={1} />;
-      default:
-        return '';
+  async handleUpdateDeadline(values) {
+    if (this.props.stepIndex == 1) {
+      console.log('submit');
+      try {
+        await this.props.UPDATE_CONFERENCE_MUTATION({
+          variables: {
+            id: this.props.GET_CURRENT_CONFERENCE.getCurrentConference.id,
+            dl_submit_abstract: values.dl_submit_abstract,
+            dl_review_abstract: values.dl_review_abstract,
+            dl_release_abstract: values.dl_release_abstract,
+            dl_re_submit_abstract: values.dl_re_submit_abstract,
+            dl_re_review_abstract: values.dl_re_review_abstract,
+            dl_release_final_abstract: values.dl_release_final_abstract,
+            dl_submit_paper: values.dl_submit_paper,
+            dl_review_paper: values.dl_review_paper,
+            dl_release_paper: values.dl_release_paper,
+            dl_re_submit_paper: values.dl_re_submit_paper,
+            dl_re_review_paper: values.dl_re_review_paper,
+            dl_release_final_paper: values.dl_release_final_paper,
+          },
+        });
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 
   render() {
-    const { stepIndex } = this.state;
-    const { handleSubmit } = this.props;
-    return (
-      <form onSubmit={handleSubmit}>
-        <div style={{ width: '100%', maxWidth: 1200, margin: 'auto' }}>
-          <Stepper activeStep={stepIndex}>
-            <Step>
-              <StepLabel>Abstracts Submission Date</StepLabel>
-            </Step>
-            <Step>
-              <StepLabel>Paper Submission Date</StepLabel>
-            </Step>
-          </Stepper>
+    const { loading, getCurrentConference } = this.props.GET_CURRENT_CONFERENCE;
+    let conference, initialValues;
+    if (getCurrentConference) {
+      conference = getCurrentConference;
+      initialValues = {
+        dl_submit_abstract: new Date(conference.dl_submit_abstract),
+        dl_review_abstract: new Date(conference.dl_review_abstract),
+        dl_release_abstract: new Date(conference.dl_release_abstract),
+        dl_re_submit_abstract: new Date(conference.dl_re_submit_abstract),
+        dl_re_review_abstract: new Date(conference.dl_re_review_abstract),
+        dl_release_final_abstract: new Date(
+          conference.dl_release_final_abstract,
+        ),
+        dl_submit_paper: new Date(conference.dl_submit_paper),
+        dl_review_paper: new Date(conference.dl_review_paper),
+        dl_release_paper: new Date(conference.dl_release_paper),
+        dl_re_submit_paper: new Date(conference.dl_re_submit_paper),
+        dl_re_review_paper: new Date(conference.dl_re_review_paper),
+        dl_release_final_paper: new Date(conference.dl_release_final_paper),
+      };
+    }
+    if (loading) {
+      return <div>Loading...</div>;
+    }
 
-          <div>
-            <div>{this.getStepContent(stepIndex)}</div>
-            <div style={{ marginTop: 12 }}>
-              <FlatButton
-                label="Back"
-                disabled={stepIndex === 0}
-                onClick={this.handlePrev}
-                style={{ marginRight: 12 }}
-              />
-              <RaisedButton
-                label={stepIndex === 1 ? 'Submit' : 'Next'}
-                primary={true}
-                type="submit"
-                onClick={
-                  this.props.fieldError === false
-                    ? () => this.handleNext()
-                    : () => {}
-                }
-              />
-            </div>
-          </div>
-        </div>
-      </form>
+    return (
+      <SetDeadlineForm
+        initialValues={initialValues}
+        onSubmit={this.handleUpdateDeadline}
+      />
     );
   }
 }
-OrganizationDate = reduxForm({
-  form: 'OrganizationDate',
-  validate,
-})(OrganizationDate);
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = state => {
   if (state) {
-    return {
-      fieldError: state.schedule.error,
-      conference_id: state.auth.currentUser.currentConference.id,
-    };
+    console.log(state.conference.stepIndex);
+    return { stepIndex: state.conference.stepIndex };
   }
 };
-const mapDispatchToProps = dispatch => {
-  return {
-    checkError: error => {
-      dispatch(scheduleOperations.checkErrorOperation(error));
-    },
-  };
-};
 export default compose(
-  withApollo,
-  connect(mapStateToProps, mapDispatchToProps),
+  connect(mapStateToProps, undefined),
+  graphql(queries.GET_CURRENT_CONFERENCE, {
+    name: 'GET_CURRENT_CONFERENCE',
+  }),
   graphql(mutations.UPDATE_CONFERENCE_MUTATION, {
     name: 'UPDATE_CONFERENCE_MUTATION',
   }),
-)(OrganizationDate);
+)(Index);

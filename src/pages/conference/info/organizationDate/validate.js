@@ -1,7 +1,10 @@
 const validate = (values, props) => {
   const errors = {};
-  let arrayErrors = [];
-  let checkError = 0;
+  let arrayErrors = [],
+    arrayKeys = [],
+    arrayValues = [],
+    checkError = 0,
+    i = 0;
   const requiredFields = [
     'dl_submit_abstract',
     'dl_review_abstract',
@@ -9,20 +12,33 @@ const validate = (values, props) => {
     'dl_re_submit_abstract',
     'dl_re_review_abstract',
     'dl_release_final_abstract',
+    'dl_submit_paper',
+    'dl_review_paper',
+    'dl_release_paper',
+    'dl_re_submit_paper',
+    'dl_re_review_paper',
+    'dl_release_final_paper',
   ];
-  requiredFields.forEach(field => {
+  console.log(props);
+  arrayKeys = Object.keys(values);
+  arrayValues = Object.values(values);
+  requiredFields.forEach((field, index) => {
     if (!values[field]) {
       errors[field] = 'This field is required';
       arrayErrors[checkError] = errors;
     }
-    if (arrayErrors.length) {
-      props.checkError(true);
-    } else props.checkError(false);
   });
-  // if (values.actractReviewDate <= values.abstractSubmissionDate) {
-  //   errors.actractReviewDate =
-  //     'End date of conference must be greater than start date';
-  // }
+
+  for (i; i < arrayKeys.length; i++) {
+    if (arrayValues[i] >= arrayValues[i + 1]) {
+      errors[arrayKeys[i + 1]] = 'Invalid date';
+      arrayErrors[checkError] = errors;
+    }
+  }
+
+  if (arrayErrors.length) {
+    props.checkError(true);
+  } else props.checkError(false);
 
   return errors;
 };
