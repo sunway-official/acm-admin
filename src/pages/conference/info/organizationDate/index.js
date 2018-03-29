@@ -9,7 +9,7 @@ class Index extends React.Component {
     this.handleUpdateDeadline = this.handleUpdateDeadline.bind(this);
   }
   async handleUpdateDeadline(values) {
-    if (this.props.stepIndex == 1) {
+    if (this.props.stepIndex == 2) {
       console.log('submit');
       try {
         await this.props.UPDATE_CONFERENCE_MUTATION({
@@ -63,7 +63,7 @@ class Index extends React.Component {
 
     return (
       <SetDeadlineForm
-        initialValues={initialValues}
+        // initialValues={initialValues}
         onSubmit={this.handleUpdateDeadline}
       />
     );
@@ -71,7 +71,6 @@ class Index extends React.Component {
 }
 const mapStateToProps = state => {
   if (state) {
-    console.log(state.conference.stepIndex);
     return { stepIndex: state.conference.stepIndex };
   }
 };

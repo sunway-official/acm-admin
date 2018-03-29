@@ -22,14 +22,14 @@ class SetDeadlineForm extends PureComponent {
         stepIndex: stepIndex + 1,
       });
     }
-    this.props.setStepIndex(this.state.stepIndex);
+    this.props.setStepIndex(stepIndex + 1);
   };
   handlePrev = () => {
     const { stepIndex } = this.state;
     if (stepIndex > 0) {
       this.setState({ stepIndex: stepIndex - 1 });
     }
-    this.props.setStepIndex(this.state.stepIndex);
+    this.props.setStepIndex(stepIndex - 1);
   };
 
   getStepContent(stepIndex) {
@@ -44,7 +44,7 @@ class SetDeadlineForm extends PureComponent {
   }
 
   render() {
-    const { stepIndex, finished } = this.state;
+    const { stepIndex } = this.state;
     const { handleSubmit } = this.props;
     return (
       <form onSubmit={handleSubmit}>
@@ -89,9 +89,12 @@ SetDeadlineForm = reduxForm({
 })(SetDeadlineForm);
 const mapStateToProps = state => {
   if (state) {
+    // console.log('index', state.conference.stepIndex);
+    console.log('eror', state.schedule.error);
     return {
       fieldError: state.schedule.error,
       conference_id: state.auth.currentUser.currentConference.id,
+      stepIndex: state.conference.stepIndex,
     };
   }
 };

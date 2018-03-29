@@ -5,13 +5,15 @@ const validate = (values, props) => {
     arrayValues = [],
     checkError = 0,
     i = 0;
-  const requiredFields = [
+  const requiredFields1 = [
     'dl_submit_abstract',
     'dl_review_abstract',
     'dl_release_abstract',
     'dl_re_submit_abstract',
     'dl_re_review_abstract',
     'dl_release_final_abstract',
+  ];
+  const requiredFields2 = [
     'dl_submit_paper',
     'dl_review_paper',
     'dl_release_paper',
@@ -19,22 +21,35 @@ const validate = (values, props) => {
     'dl_re_review_paper',
     'dl_release_final_paper',
   ];
-  console.log(props);
+
   arrayKeys = Object.keys(values);
   arrayValues = Object.values(values);
-  requiredFields.forEach((field, index) => {
-    if (!values[field]) {
-      errors[field] = 'This field is required';
-      arrayErrors[checkError] = errors;
-    }
-  });
 
-  for (i; i < arrayKeys.length; i++) {
-    if (arrayValues[i] >= arrayValues[i + 1]) {
-      errors[arrayKeys[i + 1]] = 'Invalid date';
-      arrayErrors[checkError] = errors;
-    }
+  if (props.stepIndex === 0) {
+    requiredFields1.map((field, index) => {
+      if (!values[field]) {
+        errors[field] = 'This field is required';
+        arrayErrors[checkError] = errors;
+      }
+      return {};
+    });
   }
+  if (props.stepIndex === 1) {
+    requiredFields2.map((field, index) => {
+      if (!values[field]) {
+        errors[field] = 'This field is required';
+        arrayErrors[checkError] = errors;
+      }
+      return {};
+    });
+  }
+
+  // for (i; i < arrayKeys.length; i++) {
+  //   if (arrayValues[i] >= arrayValues[i + 1]) {
+  //     errors[arrayKeys[i + 1]] = 'Invalid date';
+  //     arrayErrors[checkError] = errors;
+  //   }
+  // }
 
   if (arrayErrors.length) {
     props.checkError(true);
