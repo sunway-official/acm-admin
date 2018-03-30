@@ -4,7 +4,7 @@ import { ActionDeleteForever } from 'material-ui/svg-icons';
 import { MenuItem, RaisedButton, IconButton, Divider } from 'material-ui';
 import CustomInput from 'components/CustomInput';
 import { renderSelectField } from 'components/render';
-// import renderCheckbox from 'components/renderCheckbox';
+import renderCheckbox from 'components/renderCheckbox';
 import { Subheader } from 'material-ui';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
@@ -25,6 +25,42 @@ const styles = {
     padding: 16,
   },
 };
+
+const titleData = [
+  {
+    value: 'Prof',
+    primaryText: 'Prof',
+  },
+
+  {
+    value: 'Ac Prof',
+    primaryText: 'Ac Prof',
+  },
+
+  {
+    value: 'AssProf',
+    primaryText: 'Ass Prof',
+  },
+
+  {
+    value: 'Dr',
+    primaryText: 'Dr',
+  },
+
+  {
+    value: 'Mr',
+    primaryText: 'Mr',
+  },
+
+  {
+    value: 'Ms',
+    primaryText: 'Ms',
+  },
+  {
+    value: 'Mrs',
+    primaryText: 'Mrs',
+  },
+];
 
 class AddAuthors extends React.Component {
   componentDidMount() {
@@ -78,12 +114,19 @@ class AddAuthors extends React.Component {
               <div className="d-flex form-group">
                 <label>Title :</label>
                 <Field
-                  name={`${author}.status`}
+                  name={`${author}.title`}
                   component={renderSelectField}
                   fullWidth={true}
                 >
-                  <MenuItem value="mr" primaryText="Mr" />
-                  <MenuItem value="ms" primaryText="Ms" />
+                  {titleData.map(title => {
+                    return (
+                      <MenuItem
+                        key={title.value}
+                        value={title.value}
+                        primaryText={title.primaryText}
+                      />
+                    );
+                  })}
                 </Field>
               </div>
               <div className="d-flex form-group">
@@ -96,18 +139,18 @@ class AddAuthors extends React.Component {
                 />
               </div>
               <div className="d-flex form-group">
-                <label>Organization:</label>
+                <label>institution:</label>
                 <Field
                   name={`${author}.organization`}
                   component={CustomInput}
                   fullWidth={true}
-                  hintText="Enter the organization"
+                  hintText="Enter the institution"
                 />
               </div>
               <div className="d-flex form-group">
                 <label>Street :</label>
                 <Field
-                  name={`${author}.authorstreet`}
+                  name={`${author}.authorStreet`}
                   component={CustomInput}
                   fullWidth={true}
                   hintText="Enter the street"
@@ -132,32 +175,30 @@ class AddAuthors extends React.Component {
                 />
               </div>
 
-              {/* <div className="form-group">
+              <div className="form-group">
                 <div className="f-right pb-6">
                   <Field
                     label="Corresponding"
-                    name="corresponding"
+                    name={`${author}.corresponding`}
                     value={false}
                     component={renderCheckbox}
                     type="checkbox"
                   />
                 </div>
-              </div> */}
+              </div>
             </div>
           </div>
         ))}
         <div className="d-flex add-schedule-icon btn-group">
-          <IconButton
-            iconStyle={styles.smallIcon}
-            style={styles.small}
+          <FloatingActionButton
+            mini={true}
+            className="f-right mb-20"
             onClick={() => fields.push({})}
             tooltip="Add Author"
             disabled={this.props.checkError}
           >
-            <FloatingActionButton mini={true} className="f-right mb-20">
-              <ContentAdd />
-            </FloatingActionButton>
-          </IconButton>
+            <ContentAdd />
+          </FloatingActionButton>
           {submitFailed && error && <span>{error}</span>}
         </div>
       </div>

@@ -53,9 +53,10 @@ const INSERT_PAPER_AUTHOR = gql`
     $author_name: String
     $author_email: String
     $author_title: String
-    $author_organizer: String
+    $author_organization: String
+    $author_street: String
+    $author_city: String
     $author_country: String
-    $paper_status: String
   ) {
     insertPaperAuthor(
       paper_id: $paper_id
@@ -64,9 +65,10 @@ const INSERT_PAPER_AUTHOR = gql`
       author_name: $author_name
       author_email: $author_email
       author_title: $author_title
-      author_organizer: $author_organizer
+      author_organization: $author_organization
+      author_street: $author_street
+      author_city: $author_city
       author_country: $author_country
-      paper_status: $paper_status
     ) {
       id
     }

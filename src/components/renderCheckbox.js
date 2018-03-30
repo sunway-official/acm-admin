@@ -6,7 +6,7 @@ const renderCheckbox = ({ input, label, ...custom }) => (
     {...input}
     {...custom}
     label={label}
-    checked={input.value}
+    value={input.value}
     onCheck={(e, checked) => input.onChange(checked)}
     type="checkbox"
   />

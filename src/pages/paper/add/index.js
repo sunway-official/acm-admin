@@ -35,8 +35,9 @@ class Index extends Component {
   async handleAdd(values) {
     console.log('value', values);
     console.log('props', this.props);
+    let correspondingValue = 2;
     try {
-      let paper, paperAuthor;
+      let paper, paperAuthor, corressponding;
       paper = await this.props.INSERT_PAPER({
         variables: {
           paper_status_id: 1,
@@ -54,60 +55,48 @@ class Index extends Component {
           paper_id: paper.data.insertPaper.id,
           topic_id: values.topic,
         },
-        // refetchQueries: [
-        //   {
-        //     query: queries.GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
-        //     variables: {
-        //       topic_id: values.topic,
-        //     },
-        //   },
-        //   {
-        //     query: queries.GET_TOPICS_BY_PAPER_ID,
-        //     variables: {
-        //       paper_id: paper.data.insertPaper.id,
-        //     },
-        //   },
-        // ],
       });
 
-      paperAuthor = await this.props.INSERT_PAPER_AUTHOR({
+      corressponding = await this.props.INSERT_PAPER_AUTHOR({
         variables: {
           paper_id: paper.data.insertPaper.id,
           user_id: this.props.data.me.id,
           corresponding: 1,
-          author_name:
-            this.props.data.me.lastname + this.props.data.me.lastname,
-          author_email: this.props.data.me.email,
-          author_title: this.props.data.me.title,
-          // author_organizer: this.props.data.me.organization,
+          author_organization: this.props.data.me.organization,
           author_street: values.street,
           author_city: values.city,
           author_country: values.country,
-          paper_status_id: 1,
         },
       });
 
-      console.log('paperAuthor', paperAuthor);
+      console.log('corressponding', corressponding);
       await values.addAuthors.map(author => {
+        if (values.addAuthors.corresponding === true) {
+          correspondingValue = 1;
+        } else {
+          correspondingValue = 2;
+        }
         this.props.INSERT_PAPER_AUTHOR({
           variables: {
             paper_id: paper.data.insertPaper.id,
             topic_id: author.topic,
-            corresponding: 2,
-            author_name: author.author_name,
-            author_email: author.author_email,
-            author_title: author.author_title,
-            // author_organizer: author.author_organizer,
-            author_country: author.author_country,
-            paper_status_id: 1,
+            corresponding: correspondingValue,
+            author_name: author.firstname + author.lastname,
+            author_email: author.email,
+            author_title: author.title,
+            author_organization: author.organization,
+            author_street: author.authorStreet,
+            author_city: author.authorCity,
+            author_country: author.authorCountry,
           },
         });
       });
 
-      this.showAlertSuccess();
+      // this.showAlertSuccess();
     } catch (error) {
       // let temp = error.graphQLErrors[0].message;
-      this.showAlertError(error);
+      // this.showAlertError(error);
+      console.log(error);
     }
   }
 

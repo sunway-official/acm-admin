@@ -29,132 +29,6 @@ class EditPaperForm extends Component {
     const { handleSubmit, pristine } = this.props;
     return (
       <form className="form conference-info" onSubmit={handleSubmit}>
-        {/* corresponser */}
-        <div className="paper-submit-block">
-          <Subheader className="subheader submit-header">
-            Address For Corresponser
-          </Subheader>
-          <div className="d-flex form-group">
-            <label>Street :</label>
-            <Field
-              name="street"
-              component={CustomInput}
-              fullWidth={true}
-              hintText="Enter the street"
-            />
-          </div>
-          <div className="d-flex form-group">
-            <label>City :</label>
-            <Field
-              name="city"
-              component={CustomInput}
-              fullWidth={true}
-              hintText="Enter the city"
-            />
-          </div>
-          <div className="d-flex form-group">
-            <label>Country :</label>
-            <Field
-              name="country"
-              component={CustomInput}
-              fullWidth={true}
-              hintText="Enter the country"
-            />
-          </div>
-        </div>
-        {/* corresponser */}
-
-        {/* authors */}
-        {/* <div className="paper-submit-block">
-          <Subheader className="subheader submit-header">Authors</Subheader>
-          <div className="d-flex form-group">
-            <label>First name :</label>
-            <Field
-              name="firstname"
-              component={CustomInput}
-              fullWidth={true}
-              hintText="Enter the first name"
-            />
-          </div>
-          <div className="d-flex form-group">
-            <label>Last name :</label>
-            <Field
-              name="lastname"
-              component={CustomInput}
-              fullWidth={true}
-              hintText="Enter the last name"
-            />
-          </div>
-          <div className="d-flex form-group">
-            <label>Title :</label>
-            <Field name="status" component={renderSelectField} fullWidth={true}>
-              <MenuItem value="mr" primaryText="Mr" />
-              <MenuItem value="ms" primaryText="Ms" />
-            </Field>
-          </div>
-          <div className="d-flex form-group">
-            <label>Email:</label>
-            <Field
-              name="email"
-              component={CustomInput}
-              fullWidth={true}
-              hintText="Enter the email"
-            />
-          </div>
-          <div className="d-flex form-group">
-            <label>Organization:</label>
-            <Field
-              name="organization"
-              component={CustomInput}
-              fullWidth={true}
-              hintText="Enter the organization"
-            />
-          </div>
-          <div className="d-flex form-group">
-            <label>Street :</label>
-            <Field
-              name="authorstreet"
-              component={CustomInput}
-              fullWidth={true}
-              hintText="Enter the street"
-            />
-          </div>
-          <div className="d-flex form-group">
-            <label>City :</label>
-            <Field
-              name="authorCity"
-              component={CustomInput}
-              fullWidth={true}
-              hintText="Enter the city"
-            />
-          </div>
-          <div className="d-flex form-group">
-            <label>Country :</label>
-            <Field
-              name="authorCountry"
-              component={CustomInput}
-              fullWidth={true}
-              hintText="Enter the country"
-            />
-          </div>
-
-          <div className="form-group">
-            <div className="f-right pb-6">
-              <Field
-                label="Corresponding"
-                name="corresponding"
-                value={false}
-                component={renderCheckbox}
-                type="checkbox"
-              />
-            </div>
-          </div>
-        </div> */}
-        {/* authors */}
-
-        {/* aa */}
-        <FieldArray name="addAuthors" component={AddAuthors} />
-        {/*  */}
         {/* paper */}
         <div className="paper-submit-block mt-50">
           <Subheader className="subheader submit-header">
@@ -224,6 +98,44 @@ class EditPaperForm extends Component {
           </div>
         </div>
         {/* paper */}
+        {/* corresponser */}
+        <div className="paper-submit-block">
+          <Subheader className="subheader submit-header">
+            Address For Corresponser
+          </Subheader>
+          <div className="d-flex form-group">
+            <label>Street :</label>
+            <Field
+              name="street"
+              component={CustomInput}
+              fullWidth={true}
+              hintText="Enter the street"
+            />
+          </div>
+          <div className="d-flex form-group">
+            <label>City :</label>
+            <Field
+              name="city"
+              component={CustomInput}
+              fullWidth={true}
+              hintText="Enter the city"
+            />
+          </div>
+          <div className="d-flex form-group">
+            <label>Country :</label>
+            <Field
+              name="country"
+              component={CustomInput}
+              fullWidth={true}
+              hintText="Enter the country"
+            />
+          </div>
+        </div>
+        {/* corresponser */}
+
+        {/* author */}
+        <FieldArray name="addAuthors" component={AddAuthors} />
+        {/* author */}
 
         <div
           style={{ marginBottom: '20px' }}
