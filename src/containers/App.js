@@ -10,6 +10,7 @@ import ConferenceInfo from '../pages/conference/info';
 import Paper from '../pages/paper';
 import PaperAdd from '../pages/paper/add';
 import PaperEdit from '../pages/paper/edit';
+import PaperDetail from '../pages/paper/detail';
 import ConferenceStaffList from '../pages/conference/people/staff';
 import UserProfile from '../pages/conference/people/userProfile/userProfile';
 import Dashboard from '../pages/dashboard';
@@ -119,6 +120,12 @@ export default () => (
             exact
             path="/conference/papers"
             component={Paper}
+          />
+          <AuthRoute
+            needAuth
+            exact
+            path="/conference/paper/detail/:id"
+            component={PaperDetail}
           />
           <AuthRoute
             needAuth

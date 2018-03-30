@@ -26,6 +26,14 @@ const GET_PAPERS_BY_CONFERENCE_ID = gql`
       }
       topic_name
       status
+      comments {
+        id
+        point
+        reviewer_name
+        review_question_id
+        content
+        comment
+      }
     }
   }
 `;
@@ -66,8 +74,33 @@ const GET_PAPER_BY_ID = gql`
   query getPaperByID($id: ID!) {
     getPaperByID(id: $id) {
       id
+      conference {
+        id
+      }
+      papersTopic {
+        topic_name
+      }
+      authors {
+        id
+        author_name
+        author_title
+        corresponding
+      }
+      status
       title
       abstract
+      reviewers {
+        id
+        reviewer_name
+      }
+      comments {
+        id
+        point
+        reviewer_name
+        review_question_id
+        content
+        comment
+      }
       keywords
     }
   }
