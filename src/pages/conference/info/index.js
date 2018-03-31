@@ -6,7 +6,6 @@ import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import ConferenceInfo from './conferenceInfo';
 import { connect } from 'react-redux';
 import CoOrganizerList from './coOrganizer';
-import OrganizationDate from './organizationDate';
 import { graphql, compose } from 'react-apollo';
 import { functions } from 'containers/layout/appbar/helpers';
 
@@ -50,13 +49,6 @@ class Index extends Component {
               />
               {/* truyen conference qua conferenceInfo  */}
             </Tab>
-            {isShow['edit-conference-date'] ? (
-              <Tab label="Deadline">
-                <OrganizationDate onSubmit={() => {}} />
-              </Tab>
-            ) : (
-              ''
-            )}
             {isShow['view-co-organizer'] ? (
               <Tab label="Co-Organizer">
                 <CoOrganizerList

@@ -46,18 +46,6 @@ const getPositionSuccess = position => ({
 const getPositionFailure = () => ({
   type: types.GET_POSITION_FAILURE,
 });
-const setStepIndexRequested = () => ({
-  type: types.SET_STEPINDEX_REQUESTED,
-});
-const setStepIndexSuccess = stepIndex => ({
-  type: types.SET_STEPINDEX_SUCCESS,
-  payload: {
-    stepIndex,
-  },
-});
-const setStepIndexFailure = () => ({
-  type: types.SET_STEPINDEX_FAILURE,
-});
 
 export default {
   getConferenceRequested,
@@ -69,7 +57,4 @@ export default {
   getPositionRequested,
   getPositionSuccess,
   getPositionFailure,
-  setStepIndexRequested,
-  setStepIndexSuccess,
-  setStepIndexFailure,
 };

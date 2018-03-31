@@ -32,19 +32,9 @@ const getPositionOperation = position => async dispatch => {
     return dispatch(actions.getPositionFailure());
   }
 };
-const setStepIndexOperation = stepIndex => async dispatch => {
-  dispatch(actions.setStepIndexRequested());
-  try {
-    return dispatch(actions.setStepIndexSuccess(stepIndex));
-  } catch (e) {
-    console.log(e);
-    return dispatch(actions.setStepIndexFailure());
-  }
-};
 
 export default {
   getConferenceOperation,
   getIdOperation,
   getPositionOperation,
-  setStepIndexOperation,
 };
