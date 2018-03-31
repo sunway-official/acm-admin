@@ -40,7 +40,7 @@ export const getRolesComponent = () => {
       roles: ['1'],
     },
     {
-      component: 'edit-conference-date',
+      component: 'edit-deadline',
       roles: ['1'],
     },
     {
