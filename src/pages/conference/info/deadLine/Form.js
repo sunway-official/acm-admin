@@ -1,60 +1,71 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import CustomDatePicker from 'components/CustomDatePicker';
-const arrDeadlines = [
-  {
-    label: 'Submit Deadline',
-    name: 'dl_submit_abstract',
-    hintText: '1',
-  },
-  {
-    label: 'Review Deadline',
-    name: 'dl_review_abstract',
-    hintText: '2',
-  },
-  {
-    label: 'Release Result',
-    name: 'dl_release_abstract',
-    hintText: '3',
-  },
-  {
-    label: 'Re-Submit Deadline',
-    name: 'dl_re_submit_abstract',
-    hintText: '4',
-  },
-  {
-    label: 'Re-Review Deadline',
-    name: 'dl_re_review_abstract',
-    hintText: '5',
-  },
-  {
-    label: 'Release Final Result',
-    name: 'dl_release_final_abstract',
-    hintText: '6',
-  },
-];
+import { abstractDeadlineArr, paperDeadlineArr } from './fields';
+import { Subheader, RaisedButton } from 'material-ui';
 class Form extends Component {
   render() {
-    const { handleSubmit, initialValues } = this.props;
+    const { handleSubmit } = this.props;
     return (
-      <section className="container">
-        <form>
-          {arrDeadlines.map((data, index) => {
-            return (
-              <div className="d-flex date form-group" key={index}>
-                <label className={data.name}>{data.label}:</label>
-                <Field
-                  minDate={new Date()}
-                  name={data.name}
-                  component={CustomDatePicker}
-                  format={null}
-                  hintText={data.hintText}
-                />
-              </div>
-            );
-          })}
-        </form>
-      </section>
+      <main className="container-form">
+        <section className="section-deadline">
+          <form onSubmit={handleSubmit}>
+            <Subheader className="deadline-subheader">
+              Absrtact Submission Deadline
+            </Subheader>
+            <div className="d-flex flex-wrap justify-content-center">
+              {abstractDeadlineArr.map((data, index) => {
+                return (
+                  <div
+                    className="d-flex date deadline-input form-group"
+                    key={index}
+                  >
+                    <label className="label-deadline">{data.label}:</label>
+                    <Field
+                      minDate={new Date()}
+                      name={data.name}
+                      component={CustomDatePicker}
+                      format={null}
+                      hintText={data.hintText}
+                      textFieldStyle={{ width: '80%' }}
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          </form>
+        </section>
+        <section className="section-deadline">
+          <form onSubmit={handleSubmit}>
+            <Subheader className="deadline-subheader">
+              Paper Submission Deadline
+            </Subheader>
+            <div className="d-flex flex-wrap justify-content-center">
+              {paperDeadlineArr.map((data, index) => {
+                return (
+                  <div
+                    className="d-flex date deadline-input form-group"
+                    key={index}
+                  >
+                    <label className="label-deadline">{data.label}:</label>
+                    <Field
+                      minDate={new Date()}
+                      name={data.name}
+                      component={CustomDatePicker}
+                      format={null}
+                      hintText={data.hintText}
+                      textFieldStyle={{ width: '80%' }}
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          </form>
+        </section>
+        <div className="d-flex save-btn btn-group marginBottom">
+          <RaisedButton primary={true} type="submit" label="Save" />
+        </div>
+      </main>
     );
   }
 }

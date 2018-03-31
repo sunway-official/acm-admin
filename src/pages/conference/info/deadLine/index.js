@@ -8,7 +8,6 @@ class Index extends Component {
     let conference, initialValues;
     if (getCurrentConference) {
       conference = getCurrentConference;
-      console.log(conference);
       initialValues = {
         dl_submit_abstract: new Date(conference.dl_submit_abstract),
         dl_review_abstract: new Date(conference.dl_review_abstract),
@@ -29,11 +28,7 @@ class Index extends Component {
     if (loading) {
       return <div>Loading...</div>;
     }
-    return (
-      <div>
-        <Form initialValues={initialValues} />
-      </div>
-    );
+    return <Form initialValues={initialValues} />;
   }
 }
 
