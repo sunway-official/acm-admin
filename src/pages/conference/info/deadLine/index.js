@@ -45,7 +45,6 @@ class Index extends Component {
 
   render() {
     const { loading, getCurrentConference } = this.props.GET_CURRENT_CONFERENCE;
-    console.log(this.props.conferenceId);
     let conference, initialValues;
     if (getCurrentConference) {
       conference = getCurrentConference;
