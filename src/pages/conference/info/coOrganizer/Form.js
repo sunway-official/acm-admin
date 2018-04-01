@@ -15,9 +15,7 @@ class CoOrganizerForm extends Component {
           onSubmit={handleSubmit(onSubmit)}
           style={{ width: '800px' }}
         >
-          <Subheader className="subheader subtitle">
-            CoOrganizer Information
-          </Subheader>
+          <Subheader className="subheader">CoOrganizer Information</Subheader>
 
           <div className="d-flex form-group">
             <label>Name :</label>

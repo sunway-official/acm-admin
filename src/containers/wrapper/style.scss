@@ -78,9 +78,6 @@ body {
   margin: 70px auto 10px;
   padding: 0 !important;
   font-size: 30px !important;
-  &.subtitle {
-    margin: 20px auto 10px !important;
-  }
 }
 .body-content {
   margin: 15px auto 20px;
@@ -114,7 +111,7 @@ body {
 #content {
   width: 102% !important;
 }
-.deadline-subheader {
+.subtitle {
   padding-left: 0 !important;
   font-size: 25px !important;
 }

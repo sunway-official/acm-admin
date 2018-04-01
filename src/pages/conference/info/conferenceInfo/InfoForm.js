@@ -23,7 +23,12 @@ class ConferenceInfoForm extends React.Component {
     });
   };
   render() {
-    const { handleSubmit, initialValues, onMapPositionChanged } = this.props;
+    const {
+      handleSubmit,
+      initialValues,
+      onMapPositionChanged,
+      pristine,
+    } = this.props;
 
     return (
       <form className="form conference-info" onSubmit={handleSubmit}>
@@ -143,7 +148,7 @@ class ConferenceInfoForm extends React.Component {
             label="Save"
             primary={true}
             type="submit"
-            // disabled={pristine}
+            disabled={pristine}
             // onClick={() => {
             //   if (!invalid) {
             //     this.showAlertSuccess();

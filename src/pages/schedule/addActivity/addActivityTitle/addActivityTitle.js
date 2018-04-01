@@ -16,7 +16,7 @@ class AddActivityTitle extends Component {
     }
     return (
       <form className="form conference-info m-auto" onSubmit={handleSubmit}>
-        <Subheader className="subheader">Add Activity</Subheader>
+        <Subheader className="subtitle">Add Activity</Subheader>
 
         {error && <div className="error">{error}</div>}
         <div className="d-flex form-group">
