@@ -55,7 +55,6 @@ class TopicDetail extends Component {
           <Col xs={9}>
             <Row className="landing-page-second-column">
               <Field
-                id="text-field-default"
                 name={field.name}
                 type="text"
                 hintText={field.hintText}
