@@ -6,23 +6,21 @@ import CustomDatePicker from 'components/CustomDatePicker';
 import AppMap from 'components/AppMap';
 import normalizePhone from 'utils/normalizePhone';
 import validate from '../helpers/validate';
+import { alertOptions } from 'theme/alert';
+import AlertContainer from 'react-alert';
 
-const AddConferenceForm = ({
-  handleSubmit,
-  invalid,
-  onMapPositionChanged,
-  handleSwitch,
-  reset,
-  submitting,
-  pristine,
-}) => (
-  <form className="form conference-info " onSubmit={handleSubmit}>
-    <div>
-      <div>
-        <div className="form-body">
-          <Subheader className="header title organizer-inf">
-            Conference Information
-          </Subheader>
+class AddConferenceForm extends React.Component {
+  render() {
+    const {
+      handleSubmit,
+      onMapPositionChanged,
+      pristine,
+      reset,
+      submitting,
+    } = this.props;
+    return (
+      <form className="form conference-info" onSubmit={handleSubmit}>
+        <div className="form-body d-flex justify-content-space-between">
           <div className="map">
             <AppMap
               onMapPositionChanged={onMapPositionChanged}
@@ -31,21 +29,21 @@ const AddConferenceForm = ({
                 long: 108.2076032,
               }}
               googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyAhGSgJvoGdeOzzDDDyTxWyQj7YRA2lZiA"
-              loadingElement={<div style={{ height: `100%` }} />}
-              containerElement={<div style={{ height: `400px` }} />}
+              loadingElement={<div style={{ height: '100%' }} />}
+              containerElement={<div style={{ height: '550px' }} />}
               mapElement={
                 <div
                   style={{
-                    height: `100%`,
+                    height: '100%',
                     marginLeft: '0%',
-                    marginRight: '-24%',
                   }}
                 />
               }
             />
           </div>
-          <div>
-            <div className="d-flex form-group title-information">
+          <div style={{ padding: '0 10px' }}>
+            <Subheader className="header title">Basic Information</Subheader>
+            <div className="d-flex form-group">
               <label>Title :</label>
               <Field
                 name="title"
@@ -61,6 +59,7 @@ const AddConferenceForm = ({
                 component={CustomInput}
                 multiLine
                 rows={1}
+                rowsMax={3}
                 fullWidth={true}
                 hintText="Conference Description"
               />
@@ -89,9 +88,7 @@ const AddConferenceForm = ({
                 />
               </div>
             </div>
-          </div>
-          <div>
-            <Subheader className="header title organizer-inf">
+            <Subheader className="header title">
               Organizer Information
             </Subheader>
             <div>
@@ -144,30 +141,27 @@ const AddConferenceForm = ({
             </div>
           </div>
         </div>
-        <div
-          className="d-flex submit-btn btn-group"
-          style={{ paddingBottom: '20px' }}
-        >
+        <div className="d-flex save-btn btn-group marginBottom">
           <RaisedButton
-            className="btn"
             label="Save"
             primary={true}
             type="submit"
-            // disabled={pristine || submitting}
+            disabled={pristine}
           />
           <RaisedButton
             className="btn"
             label="Reset"
             secondary={true}
             type="reset"
-            disabled={pristine || submitting}
+            disabled={submitting}
             onClick={reset}
           />
         </div>
-      </div>
-    </div>
-  </form>
-);
+        <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />
+      </form>
+    );
+  }
+}
 
 export default reduxForm({
   form: 'AddconferenceForm',

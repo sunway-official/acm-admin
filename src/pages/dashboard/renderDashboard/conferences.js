@@ -4,9 +4,9 @@ import { graphql, compose, gql } from 'react-apollo';
 import { List, ListItem } from 'material-ui/List';
 import Badge from 'material-ui/Badge';
 import style from './../style.css';
-//import { RaisedButton } from 'material-ui';
+import { RaisedButton } from 'material-ui';
 import Loading from '../../../components/render/renderLoading';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 
 const subTitleString = (text, limit) => {
   if (text.length > limit) return text.substring(0, limit);
@@ -71,12 +71,12 @@ class listCoferences extends React.Component {
               />
             );
           })}
-          {/* <RaisedButton
+          <RaisedButton
             label="Create new conference"
             fullWidth={true}
             primary={true}
             containerElement={<Link to={`/conference/add`} />}
-          /> */}
+          />
         </List>
       </div>
     );

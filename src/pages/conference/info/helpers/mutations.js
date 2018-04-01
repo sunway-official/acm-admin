@@ -76,6 +76,7 @@ const UPDATE_ORGANIZER_DETAIL_MUTATION = gql`
     $email: String
     $website: String
     $phone: String
+    $address: String
   ) {
     updateOrganizerDetail(
       id: $id
@@ -83,12 +84,14 @@ const UPDATE_ORGANIZER_DETAIL_MUTATION = gql`
       email: $email
       website: $website
       phone: $phone
+      address: $address
     ) {
       id
       name
       email
       website
       phone
+      address
     }
   }
 `;

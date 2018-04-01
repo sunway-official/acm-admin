@@ -48,6 +48,7 @@ class ConferenceInfoForm extends PureComponent {
     organizerEmail,
     organizerWebsite,
     organizerPhoneNumber,
+    organizerAddress,
   }) {
     try {
       const conference = await this.props.UPDATE_CONFERENCE_MUTATION({
@@ -66,6 +67,7 @@ class ConferenceInfoForm extends PureComponent {
           email: organizerEmail,
           website: organizerWebsite,
           phone: organizerPhoneNumber,
+          address: organizerAddress,
         },
       });
       let address;
@@ -90,6 +92,7 @@ class ConferenceInfoForm extends PureComponent {
     this.props.getPosition(position);
   }
   render() {
+    console.log(this.props.conference);
     if (this.props.isShow['edit-conference-info']) {
       return (
         <div>
@@ -129,6 +132,7 @@ const mapStateToProps = (state, ownProps) => {
   const conference = ownProps.conference;
   const organizer = conference.organizerDetail;
   const address = conference.address;
+  console.log(organizer);
   return {
     address_id: address.id,
     conference_id: conference.id,
@@ -141,6 +145,7 @@ const mapStateToProps = (state, ownProps) => {
       endDate: new Date(conference.end_date),
       lat: parseFloat(conference.address.lat),
       long: parseFloat(conference.address.long),
+      organizerAddress: organizer.address,
       organizerName: organizer.name,
       organizerEmail: organizer.email,
       organizerWebsite: organizer.website,
