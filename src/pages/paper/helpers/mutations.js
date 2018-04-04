@@ -80,12 +80,14 @@ const INSERT_PAPER_AUTHOR = gql`
 const UPDATE_PAPER = gql`
   mutation updatePaper(
     $id: ID!
+    $paper_status_id: ID
     $title: String
     $abstract: String
     $keywords: String
   ) {
     updatePaper(
       id: $id
+      paper_status_id: $paper_status_id
       title: $title
       abstract: $abstract
       keywords: $keywords
@@ -106,6 +108,14 @@ const UPDATE_TOPIC_OF_PAPER = gql`
   }
 `;
 
+const INSERT_PAPER_REVIEWER = gql`
+  mutation insertPaperReviewer($user_id: ID!, $paper_id: ID!) {
+    insertPaperReviewer(user_id: $user_id, paper_id: $paper_id) {
+      id
+    }
+  }
+`;
+
 export default {
   DELETE_PAPER,
   INSERT_PAPER,
@@ -113,5 +123,6 @@ export default {
   UPDATE_PAPER,
   DELETE_PAPER_TOPIC,
   UPDATE_TOPIC_OF_PAPER,
+  INSERT_PAPER_REVIEWER,
   INSERT_PAPER_AUTHOR,
 };
