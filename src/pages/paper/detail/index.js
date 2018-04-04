@@ -81,7 +81,7 @@ class Index extends Component {
           <Row center="xs">
             <ActionAccountCircle
               color={colors.main}
-              className="first-row paper-detail-icon"
+              className="first-row paper-detail-icon reviewer-icon"
             />
           </Row>
         </Col>

@@ -11,8 +11,9 @@ class CoOrganizerForm extends Component {
     return (
       <div>
         <form
-          className="form  conference-info"
+          className="form conference-info"
           onSubmit={handleSubmit(onSubmit)}
+          style={{ width: '800px' }}
         >
           <Subheader className="subheader">CoOrganizer Information</Subheader>
 
