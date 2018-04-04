@@ -7,6 +7,8 @@ import { RaisedButton, Subheader, MenuItem } from 'material-ui';
 import { Link } from 'react-router-dom';
 import AddAuthors from './add/addAuthors';
 import { FieldArray } from 'redux-form';
+import renderUploadFile from 'components/render/renderUploadFile';
+import FileInput from 'components/render/FileRender';
 
 class EditPaperForm extends Component {
   constructor(props) {
@@ -26,7 +28,8 @@ class EditPaperForm extends Component {
 
   render() {
     const topics = this.props.topics;
-    const { handleSubmit, pristine } = this.props;
+    console.log('form', this.props);
+    const { handleSubmit, pristine, handleUploadFile } = this.props;
     return (
       <form className="form conference-info" onSubmit={handleSubmit}>
         {/* paper */}
@@ -88,12 +91,13 @@ class EditPaperForm extends Component {
             <label>File :</label>
             <Field
               name="file"
-              component={CustomInput}
-              fullWidth={true}
-              multiLine
-              rows={1}
-              hintText="Drop the file"
-              type="file"
+              component={FileInput}
+              // fullWidth={true}
+              onChange={handleUploadFile}
+              // multiLine
+              // rows={1}
+              // hintText="Drop the file"
+              // ref={el => (this.file = el)}
             />
           </div>
         </div>
@@ -128,6 +132,15 @@ class EditPaperForm extends Component {
               component={CustomInput}
               fullWidth={true}
               hintText="Enter the country"
+            />
+          </div>
+          <div className="d-flex form-group">
+            <label>Zipcode :</label>
+            <Field
+              name="zipcode"
+              component={CustomInput}
+              fullWidth={true}
+              hintText="Enter the zipcode"
             />
           </div>
         </div>

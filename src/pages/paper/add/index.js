@@ -11,12 +11,39 @@ import AlertContainer from 'react-alert';
 import Loading from 'components/render/renderLoading';
 import '../style/style.css';
 import { connect } from 'react-redux';
+import S3 from 'lib/s3';
+import { toBase64Async } from 'lib/fileTransformer';
+
+const S3_GET_PREFIX = process.env.REACT_APP_S3_GET_PREFIX;
 
 class Index extends Component {
   constructor(props) {
     super(props);
     this.handleAdd = this.handleAdd.bind(this);
+
+    this.handleUploadFile = this.handleUploadFile.bind(this);
+    this.state = {
+      url: '',
+      key: '',
+    };
   }
+
+  async handleUploadFile(e) {
+    console.log('eeeee', e);
+    const file = e.target.files[0];
+    console.log('file', file);
+    const fileName = file.name;
+    // const hashedFile = await toBase64Async(file, 'pdf');
+    const { Key } = await S3.putAsync({
+      name: fileName,
+      bodyFile: file,
+      isImage: false,
+    });
+    console.log('key', Key);
+    this.setState({ key: Key });
+    return Key;
+  }
+
   showAlertSuccess = () => {
     this.msg.success('Saved!', {
       type: 'success',
@@ -33,6 +60,7 @@ class Index extends Component {
     });
   };
   async handleAdd(values) {
+    const key = this.state.key;
     console.log('value', values);
     console.log('props', this.props);
     let correspondingValue = 2;
@@ -66,6 +94,7 @@ class Index extends Component {
           author_street: values.street,
           author_city: values.city,
           author_country: values.country,
+          author_zipcode: values.zipcode,
         },
       });
 
@@ -88,6 +117,7 @@ class Index extends Component {
             author_street: author.authorStreet,
             author_city: author.authorCity,
             author_country: author.authorCountry,
+            author_zipcode: values.authorZipcode,
           },
         });
       });
@@ -133,7 +163,11 @@ class Index extends Component {
           <span>Paper Management</span>
         </div>
         <div className="dashboard content d-flex">
-          <Form onSubmit={this.handleAdd} topics={topics} />
+          <Form
+            onSubmit={this.handleAdd}
+            topics={topics}
+            handleUploadFile={this.handleUploadFile}
+          />
         </div>
         <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />
       </div>

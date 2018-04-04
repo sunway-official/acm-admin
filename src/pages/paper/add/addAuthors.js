@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field } from 'redux-form';
 import { ActionDeleteForever } from 'material-ui/svg-icons';
-import { MenuItem, RaisedButton, IconButton, Divider } from 'material-ui';
+import { MenuItem, RaisedButton, Divider } from 'material-ui';
 import CustomInput from 'components/CustomInput';
 import { renderSelectField } from 'components/render';
 import renderCheckbox from 'components/renderCheckbox';
@@ -174,7 +174,15 @@ class AddAuthors extends React.Component {
                   hintText="Enter the country"
                 />
               </div>
-
+              <div className="d-flex form-group">
+                <label>Zipcode :</label>
+                <Field
+                  name={`${author}.authorZipcode`}
+                  component={CustomInput}
+                  fullWidth={true}
+                  hintText="Enter the zipcode"
+                />
+              </div>
               <div className="form-group">
                 <div className="f-right pb-6">
                   <Field

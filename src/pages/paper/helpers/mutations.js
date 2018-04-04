@@ -57,6 +57,7 @@ const INSERT_PAPER_AUTHOR = gql`
     $author_street: String
     $author_city: String
     $author_country: String
+    $author_zipcode: String
   ) {
     insertPaperAuthor(
       paper_id: $paper_id
@@ -69,6 +70,7 @@ const INSERT_PAPER_AUTHOR = gql`
       author_street: $author_street
       author_city: $author_city
       author_country: $author_country
+      author_zipcode: $author_zipcode
     ) {
       id
     }

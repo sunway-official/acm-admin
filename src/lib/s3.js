@@ -15,15 +15,17 @@ const S3 = new AWS.S3({
   },
 });
 
-export const putAsync = ({ name, base64, ...options }) => {
+export const putAsync = ({ name, bodyFile, isImage = true, ...options }) => {
   return new Promise((resolve, reject) => {
     let uriParts = name.split('.');
     let fileType = uriParts[uriParts.length - 1];
+    // console.log('bodyFile', bodyFile);
 
     const params = {
       Bucket: S3_BUCKET_NAME,
       Key: uuid() + '.' + fileType, // Generate random UUID
-      Body: new Buffer(base64, 'base64'), // Tranform file to base64
+      Body: isImage ? new Buffer(bodyFile, 'base64') : bodyFile, // Tranform file to base64
+      // Body: bodyFile,
       ACL: 'public-read', // By default: putObject will set file to public
       ...options,
     };
