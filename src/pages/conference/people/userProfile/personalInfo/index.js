@@ -127,7 +127,6 @@ class EditablePersonalInfo extends Component {
                 <Row className="secondColunm firstRow">
                   <Col xs className="subname">
                     <Field
-                      id="text-field-default"
                       name="lastname"
                       type="text"
                       hintText="Last name"
@@ -138,7 +137,6 @@ class EditablePersonalInfo extends Component {
                   </Col>
                   <Col xs>
                     <Field
-                      id="text-field-default"
                       name="firstname"
                       type="text"
                       hintText="First name"
@@ -171,7 +169,6 @@ class EditablePersonalInfo extends Component {
                 </Row>
                 <Row className="secondColunm">
                   <Field
-                    id="text-field-default"
                     name="position"
                     type="text"
                     hintText="Position"
@@ -181,7 +178,6 @@ class EditablePersonalInfo extends Component {
                 </Row>
                 <Row className="secondColunm">
                   <Field
-                    id="text-field-default"
                     name="organization"
                     type="text"
                     hintText="Organization"
@@ -191,7 +187,6 @@ class EditablePersonalInfo extends Component {
                 </Row>
                 <Row className="secondColunm">
                   <Field
-                    id="text-field-default"
                     name="bio"
                     type="text"
                     hintText="Description"

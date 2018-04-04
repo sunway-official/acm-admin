@@ -25,7 +25,6 @@ export const putAsync = ({ name, bodyFile, isImage = true, ...options }) => {
       Bucket: S3_BUCKET_NAME,
       Key: uuid() + '.' + fileType, // Generate random UUID
       Body: isImage ? new Buffer(bodyFile, 'base64') : bodyFile, // Tranform file to base64
-      // Body: bodyFile,
       ACL: 'public-read', // By default: putObject will set file to public
       ...options,
     };
