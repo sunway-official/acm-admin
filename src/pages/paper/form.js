@@ -7,7 +7,6 @@ import { RaisedButton, Subheader, MenuItem } from 'material-ui';
 import { Link } from 'react-router-dom';
 import AddAuthors from './add/addAuthors';
 import { FieldArray } from 'redux-form';
-// import renderUploadFile from 'components/render/renderUploadFile';
 import FileInput from 'components/render/FileRender';
 
 class EditPaperForm extends Component {
@@ -91,12 +90,7 @@ class EditPaperForm extends Component {
             <Field
               name="file"
               component={FileInput}
-              // fullWidth={true}
               onChange={handleUploadFile}
-              // multiLine
-              // rows={1}
-              // hintText="Drop the file"
-              // ref={el => (this.file = el)}
             />
           </div>
         </div>

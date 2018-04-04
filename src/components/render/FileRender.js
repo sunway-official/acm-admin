@@ -8,20 +8,11 @@ class FileInput extends React.Component {
 
   onChange(e) {
     const { input: { onChange } } = this.props;
-    // onChange(e.target.files[0]);
     onChange(e);
   }
 
   render() {
-    // const { input: { value } } = this.props;
-
-    return (
-      <input
-        type="file"
-        // value={value ? value[0].name : 'notfound'}
-        onChange={this.onChange}
-      />
-    );
+    return <input type="file" onChange={this.onChange} />;
   }
 }
 

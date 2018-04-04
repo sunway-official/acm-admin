@@ -19,7 +19,6 @@ export const putAsync = ({ name, bodyFile, isImage = true, ...options }) => {
   return new Promise((resolve, reject) => {
     let uriParts = name.split('.');
     let fileType = uriParts[uriParts.length - 1];
-    // console.log('bodyFile', bodyFile);
 
     const params = {
       Bucket: S3_BUCKET_NAME,

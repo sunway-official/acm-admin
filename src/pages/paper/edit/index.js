@@ -6,6 +6,7 @@ import { graphql, compose } from 'react-apollo';
 import { queries, mutations } from '../helpers';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
+import Form from '../form';
 import { alertOptions, MyExclamationTriangle, MyFaCheck } from 'theme/alert';
 import AlertContainer from 'react-alert';
 
@@ -149,12 +150,12 @@ class Index extends Component {
           <span>Paper Management</span>
         </div>
         <div className="dashboard content d-flex">
-          {/* <Form
+          <Form
             initialValues={initialValues}
             onSubmit={this.handleSave}
             topics={topics}
             paperTopicsActive={paperTopicsActive[0].topic.name}
-          /> */}
+          />
         </div>
         <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />
       </div>
