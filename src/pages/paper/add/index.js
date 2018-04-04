@@ -9,12 +9,35 @@ import Form from '../form';
 import { alertOptions, MyExclamationTriangle, MyFaCheck } from 'theme/alert';
 import AlertContainer from 'react-alert';
 import Loading from 'components/render/renderLoading';
+import '../style/style.css';
+import { connect } from 'react-redux';
+import S3 from 'lib/s3';
 
 class Index extends Component {
   constructor(props) {
     super(props);
     this.handleAdd = this.handleAdd.bind(this);
+
+    this.handleUploadFile = this.handleUploadFile.bind(this);
+    this.state = {
+      url: '',
+      key: '',
+    };
   }
+
+  async handleUploadFile(e) {
+    const file = e.target.files[0];
+    const fileName = file.name;
+    // const hashedFile = await toBase64Async(file, 'pdf');
+    const { Key } = await S3.putAsync({
+      name: fileName,
+      bodyFile: file,
+      isImage: false,
+    });
+    this.setState({ key: Key });
+    return Key;
+  }
+
   showAlertSuccess = () => {
     this.msg.success('Saved!', {
       type: 'success',
@@ -31,61 +54,68 @@ class Index extends Component {
     });
   };
   async handleAdd(values) {
+    const key = this.state.key;
+    let correspondingValue = 2;
     try {
-      const isAuthor = localStorage.getItem('roles').indexOf('7');
-      let paper;
-      if (isAuthor > -1) {
-        paper = await this.props.INSERT_PAPER({
-          variables: {
-            title: values.title,
-            abstract: values.abstract,
-            keywords: values.keywords,
-          },
-          refetchQueries: [
-            {
-              query: queries.GET_PAPERS_WITH_AUTHOR_BY_CONFERENCE_ID,
-            },
-          ],
-        });
-      } else {
-        paper = await this.props.INSERT_PAPER({
-          variables: {
-            title: values.title,
-            abstract: values.abstract,
-            keywords: values.keywords,
-          },
-          refetchQueries: [
-            {
-              query: queries.GET_PAPERS_BY_CONFERENCE_ID,
-            },
-          ],
-        });
-      }
+      let paper, corressponding;
+      paper = await this.props.INSERT_PAPER({
+        variables: {
+          paper_status_id: 1,
+          title: values.title,
+          abstract: values.abstract,
+          keywords: values.keywords,
+          topic_id: values.topic,
+          file: key,
+        },
+      });
 
       await this.props.INSERT_PAPER_TOPIC({
         variables: {
           paper_id: paper.data.insertPaper.id,
           topic_id: values.topic,
         },
-        refetchQueries: [
-          {
-            query: queries.GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
-            variables: {
-              topic_id: values.topic,
-            },
-          },
-          {
-            query: queries.GET_TOPICS_BY_PAPER_ID,
-            variables: {
-              paper_id: paper.data.insertPaper.id,
-            },
-          },
-        ],
       });
+
+      corressponding = await this.props.INSERT_PAPER_AUTHOR({
+        variables: {
+          paper_id: paper.data.insertPaper.id,
+          user_id: this.props.data.me.id,
+          corresponding: 1,
+          author_organization: this.props.data.me.organization,
+          author_street: values.street,
+          author_city: values.city,
+          author_country: values.country,
+          author_zipcode: values.zipcode,
+        },
+      });
+
+      await values.addAuthors.map(author => {
+        if (values.addAuthors.corresponding === true) {
+          correspondingValue = 1;
+        } else {
+          correspondingValue = 2;
+        }
+        this.props.INSERT_PAPER_AUTHOR({
+          variables: {
+            paper_id: paper.data.insertPaper.id,
+            topic_id: author.topic,
+            corresponding: correspondingValue,
+            author_name: author.firstname + author.lastname,
+            author_email: author.email,
+            author_title: author.title,
+            author_organization: author.organization,
+            author_street: author.authorStreet,
+            author_city: author.authorCity,
+            author_country: author.authorCountry,
+            author_zipcode: values.authorZipcode,
+          },
+        });
+      });
+
       this.showAlertSuccess();
     } catch (error) {
       let temp = error.graphQLErrors[0].message;
-      this.showAlertError(temp.substring(7, temp.length));
+      this.showAlertError(error);
     }
   }
 
@@ -121,7 +151,11 @@ class Index extends Component {
           <span>Paper Management</span>
         </div>
         <div className="dashboard content d-flex">
-          <Form onSubmit={this.handleAdd} topics={topics} />
+          <Form
+            onSubmit={this.handleAdd}
+            topics={topics}
+            handleUploadFile={this.handleUploadFile}
+          />
         </div>
         <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />
       </div>
@@ -129,16 +163,28 @@ class Index extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  if (state.auth.currentUser.currentConference) {
+    return {
+      conference: state.auth.currentUser.currentConference,
+    };
+  }
+};
+
 export default compose(
   withRouter,
-  // connect(mapStateToProps, undefined),
+  connect(mapStateToProps, undefined),
   graphql(mutations.INSERT_PAPER_TOPIC, {
     name: 'INSERT_PAPER_TOPIC',
   }),
   graphql(mutations.INSERT_PAPER, {
     name: 'INSERT_PAPER',
   }),
+  graphql(mutations.INSERT_PAPER_AUTHOR, {
+    name: 'INSERT_PAPER_AUTHOR',
+  }),
   graphql(queries.GET_TOPICS_OF_CONFERENCE, {
     name: 'GET_TOPICS_OF_CONFERENCE',
   }),
+  graphql(queries.ME_QUERY),
 )(Index);
