@@ -4,8 +4,6 @@ import { Subheader, IconButton } from 'material-ui';
 import { Link } from 'react-router-dom';
 import { graphql, compose } from 'react-apollo';
 import { queries } from '../helpers';
-import { withRouter } from 'react-router';
-import { connect } from 'react-redux';
 import { List, ListItem } from 'material-ui/List';
 import ActionAccountCircle from 'material-ui/svg-icons/action/account-circle';
 import CommunicationVpnKey from 'material-ui/svg-icons/communication/vpn-key';
@@ -20,7 +18,8 @@ import Loading from 'components/render/renderLoading';
 class Index extends Component {
   render() {
     const loadingPaper = this.props.GET_PAPER_BY_ID.loading;
-    if (loadingPaper) return <Loading />;
+    const loadingReviewer = this.props.GET_ALL_USERS_BY_ROLE_ID_QUERY.loading;
+    if (loadingPaper || loadingReviewer) return <Loading />;
     let paper;
     paper = this.props.GET_PAPER_BY_ID.getPaperByID;
     let authors;
@@ -65,7 +64,14 @@ class Index extends Component {
         </ListItem>
       ));
     } else {
-      reviewers = <MultipleSelect />;
+      reviewers = (
+        <MultipleSelect
+          reviewers={
+            this.props.GET_ALL_USERS_BY_ROLE_ID_QUERY.getAllUsersByRoleID
+          }
+          paper_id={paper.id}
+        />
+      );
     }
 
     // map comment of each reviewer
@@ -99,7 +105,7 @@ class Index extends Component {
         </Col>
       </div>
     ));
-    console.log(paper);
+
     return (
       <div className="conference">
         <Subheader className="subheader">Paper Management</Subheader>
@@ -134,7 +140,7 @@ class Index extends Component {
                   <Col xs={3} className="paper-detail-title">
                     Topics
                   </Col>
-                  <Col xs={9}>{paper.papersTopic[0].topic_name}</Col>
+                  <Col xs={9}>{paper.topic_name}</Col>
                 </Row>
                 <Row around="xs" className="card-detail-row">
                   <Col xs={3} className="paper-detail-title">
@@ -178,7 +184,7 @@ class Index extends Component {
                 </List>
               </Col>
             </Row>
-            <div className="abc">
+            <div className="paper-review">
               <Row arround="xs" className="paper-card paper-review-row">
                 {comments}
               </Row>
@@ -189,21 +195,21 @@ class Index extends Component {
     );
   }
 }
-const mapStateToProps = state => {
-  if (state.topics) {
-    return {
-      topic: state.topics.data,
-    };
-  }
-};
+
 export default compose(
-  withRouter,
-  connect(mapStateToProps, undefined),
   graphql(queries.GET_PAPER_BY_ID, {
     name: 'GET_PAPER_BY_ID',
     options: ownProps => ({
       variables: {
         id: ownProps.match.params.id,
+      },
+    }),
+  }),
+  graphql(queries.GET_ALL_USERS_BY_ROLE_ID_QUERY, {
+    name: 'GET_ALL_USERS_BY_ROLE_ID_QUERY',
+    options: ownProps => ({
+      variables: {
+        role_id: 6,
       },
     }),
   }),

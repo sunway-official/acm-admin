@@ -117,6 +117,18 @@ export const GET_ALL_PAPERS_BY_TOPIC_ID_QUERY = gql`
   }
 `;
 
+export const GET_ALL_USERS_BY_ROLE_ID_QUERY = gql`
+  query getAllUsersByRoleID($role_id: ID!) {
+    getAllUsersByRoleID(role_id: $role_id) {
+      user {
+        id
+        firstname
+        lastname
+      }
+    }
+  }
+`;
+
 export default {
   GET_PAPERS_BY_CONFERENCE_ID,
   GET_PAPERS_BY_USER_ID,
@@ -125,4 +137,5 @@ export default {
   GET_PAPER_BY_ID,
   GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
   GET_PAPERS_WITH_AUTHOR_BY_CONFERENCE_ID,
+  GET_ALL_USERS_BY_ROLE_ID_QUERY,
 };
