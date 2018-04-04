@@ -58,6 +58,7 @@ class Index extends Component {
     if (loadingListPaper) return <Loading />;
     let papers;
     papers = this.props.GET_PAPERS_BY_CONFERENCE_ID.getPapersByConferenceID; // get all paper by role
+    console.log(papers);
     const columns = [
       {
         Header: 'Title',
