@@ -1,68 +1,22 @@
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import { grey300 } from 'material-ui/styles/colors';
+import { grey300, deepOrange500, red600 } from 'material-ui/styles/colors';
 const colors = {
-  shark: '#2f3440',
-  sanJuan: '#3E5566',
-  milkPunch: '#f6e6be',
-  sunglow: '#f9cb3e',
-  outrageousOrange: '#ec5f3e',
   white: '#ffffff',
 };
 const muiTheme = getMuiTheme({
   palette: {
-    primary1Color: colors.sanJuan,
-    accent1Color: grey300,
-  },
-  appBar: {
-    color: colors.sanJuan,
-  },
-  badge: {
-    color: colors.sunglow,
-    textColor: colors.sanJuan,
-    primaryColor: colors.sunglow,
-    primaryTextColor: colors.sanJuan,
-  },
-  datePicker: {
-    color: colors.sanJuan,
-    selectColor: colors.sunglow,
-    headerColor: colors.sanJuan,
-  },
-  dialog: {
-    titleFontSize: 30,
-    padding: 0,
-  },
-  floatingActionButton: {
-    color: colors.sanJuan,
-  },
-  listItem: {
-    nestedLevelDepth: 1000,
+    primary1Color: deepOrange500,
+    accent1Color: deepOrange500,
   },
   raisedButton: {
-    color: colors.white,
-    primaryColor: colors.sunglow,
-    secondaryColor: colors.outrageousOrange,
-  },
-  subheader: {
-    color: colors.sanJuan,
+    // primaryColor: colors.white,
+    // primaryTextColor: deepOrange500,
+    secondaryColor: red600,
   },
   tabs: {
-    backgroundColor: colors.sanJuan,
-    selectedTextColor: colors.milkPunch,
-  },
-  textField: {
-    textColor: colors.sanJuan,
-    errorColor: colors.outrageousOrange,
-    focusColor: colors.sunglow,
-  },
-  timePicker: {
-    color: colors.sanJuan,
-    accentColor: colors.sunglow,
-    headerColor: colors.sanJuan,
-    selectColor: colors.sunglow,
-  },
-  toggle: {
-    thumbOnColor: colors.sunglow,
-    trackOnColor: colors.sunglow,
+    backgroundColor: colors.white,
+    textColor: grey300,
+    selectedTextColor: deepOrange500,
   },
 });
 
