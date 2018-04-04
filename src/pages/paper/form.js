@@ -63,7 +63,7 @@ class EditPaperForm extends Component {
               fullWidth={true}
               multiLine
               rows={1}
-              hintText="Paper Abstract"
+              hintText="Paper keywords"
             />
           </div>
           <div className="d-flex form-group">

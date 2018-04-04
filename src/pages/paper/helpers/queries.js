@@ -68,7 +68,28 @@ const GET_PAPER_BY_ID = gql`
       id
       title
       abstract
+      conference {
+        id
+      }
+      papersTopic {
+        id
+      }
+      status
       keywords
+      file
+      authors {
+        id
+        author_name
+        author_email
+        corresponding
+        author_title
+        author_organization
+        author_street
+        author_city
+        author_country
+        author_zipcode
+        paper_status
+      }
     }
   }
 `;
