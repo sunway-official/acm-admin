@@ -1,0 +1,65 @@
+.card-detail-row {
+  padding-bottom: 24px;
+}
+.first-row {
+  padding-top: 24px;
+}
+.paper-card {
+  margin-top: 36px;
+}
+.paper-col {
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
+  padding-left: 24px;
+  padding-right: 24px;
+  margin-bottom: 24px;
+}
+
+.paper-review-row {
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
+  width: 98% !important;
+}
+
+.paper-review {
+  margin-left: 26px;
+}
+
+.paper-detail-grid {
+  margin-top: 24px;
+  margin-bottom: 24px;
+  width: 100%;
+}
+
+.paper-detail-comment {
+  width: 100%;
+  display: flex;
+}
+
+.comment-content-row {
+  justify-content: left;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.paper-detail-icon {
+  margin: auto !important;
+  padding-top: 6px;
+  width: 36px !important;
+  height: 36px !important;
+}
+
+.paper-detail-title {
+  color: rgb(0, 0, 0);
+  font-weight: bold;
+}
+
+.paper-detail-select {
+  text-align: center;
+}
+.save-change {
+  margin: auto;
+  margin-bottom: 24px;
+}
+
+.reviewer-icon {
+  padding-top: 16px;
+}

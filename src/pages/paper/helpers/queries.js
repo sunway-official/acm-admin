@@ -26,6 +26,14 @@ const GET_PAPERS_BY_CONFERENCE_ID = gql`
       }
       topic_name
       status
+      comments {
+        id
+        point
+        reviewer_name
+        review_question_id
+        content
+        comment
+      }
     }
   }
 `;
@@ -66,8 +74,33 @@ const GET_PAPER_BY_ID = gql`
   query getPaperByID($id: ID!) {
     getPaperByID(id: $id) {
       id
+      conference {
+        id
+      }
+      papersTopic {
+        topic_name
+      }
+      authors {
+        id
+        author_name
+        author_title
+        corresponding
+      }
+      status
       title
       abstract
+      reviewers {
+        id
+        reviewer_name
+      }
+      comments {
+        id
+        point
+        reviewer_name
+        review_question_id
+        content
+        comment
+      }
       keywords
     }
   }
@@ -84,6 +117,17 @@ export const GET_ALL_PAPERS_BY_TOPIC_ID_QUERY = gql`
   }
 `;
 
+export const GET_ALL_USERS_BY_ROLE_ID_QUERY = gql`
+  query getAllUsersByRoleID($role_id: ID!) {
+    getAllUsersByRoleID(role_id: $role_id) {
+      user {
+        id
+        firstname
+        lastname
+      }
+    }
+  }
+`;
 export const ME_QUERY = gql`
   query Me {
     me {
@@ -115,5 +159,6 @@ export default {
   GET_PAPER_BY_ID,
   GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
   GET_PAPERS_WITH_AUTHOR_BY_CONFERENCE_ID,
+  GET_ALL_USERS_BY_ROLE_ID_QUERY,
   ME_QUERY,
 };
