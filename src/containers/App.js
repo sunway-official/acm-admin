@@ -36,6 +36,8 @@ import EditActivityPaper from '../pages/schedule/editActivity/editAcitvityPaper'
 import EditActivityTitle from '../pages/schedule/editActivity/editAcitvityTitle';
 import AddCoOrganizer from '../pages/conference/info/coOrganizer/add';
 import EditCoOrganizer from '../pages/conference/info/coOrganizer/edit';
+import UploadFile from '../pages/uploadFile';
+import ReactRating from '../pages/react-rating';
 
 export default () => (
   <MuiThemeProvider muiTheme={muiTheme}>
@@ -53,6 +55,8 @@ export default () => (
         <Switch>
           <AuthRoute needAuth exact path="/" component={Dashboard} />
           <AuthRoute path="/conference/info" component={ConferenceInfo} />
+          <AuthRoute path="/upload" component={UploadFile} />
+          <AuthRoute path="/react-rating" component={ReactRating} />
           <AuthRoute path="/conference/add" component={Addconference} />
           <AuthRoute
             path="/conference/add-co-organizer"
