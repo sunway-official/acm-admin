@@ -14,7 +14,7 @@ class FileInput extends React.Component {
 
   render() {
     console.log('file input', this.props);
-    const { input: { value } } = this.props;
+    // const { input: { value } } = this.props;
 
     return (
       <input

@@ -12,9 +12,6 @@ import Loading from 'components/render/renderLoading';
 import '../style/style.css';
 import { connect } from 'react-redux';
 import S3 from 'lib/s3';
-import { toBase64Async } from 'lib/fileTransformer';
-
-const S3_GET_PREFIX = process.env.REACT_APP_S3_GET_PREFIX;
 
 class Index extends Component {
   constructor(props) {
@@ -29,9 +26,7 @@ class Index extends Component {
   }
 
   async handleUploadFile(e) {
-    console.log('eeeee', e);
     const file = e.target.files[0];
-    console.log('file', file);
     const fileName = file.name;
     // const hashedFile = await toBase64Async(file, 'pdf');
     const { Key } = await S3.putAsync({
@@ -39,7 +34,6 @@ class Index extends Component {
       bodyFile: file,
       isImage: false,
     });
-    console.log('key', Key);
     this.setState({ key: Key });
     return Key;
   }
@@ -61,11 +55,9 @@ class Index extends Component {
   };
   async handleAdd(values) {
     const key = this.state.key;
-    console.log('value', values);
-    console.log('props', this.props);
     let correspondingValue = 2;
     try {
-      let paper, paperAuthor, corressponding;
+      let paper, corressponding;
       paper = await this.props.INSERT_PAPER({
         variables: {
           paper_status_id: 1,
@@ -73,11 +65,10 @@ class Index extends Component {
           abstract: values.abstract,
           keywords: values.keywords,
           topic_id: values.topic,
-          file: values.file,
+          file: key,
         },
       });
 
-      console.log('paper', paper);
       await this.props.INSERT_PAPER_TOPIC({
         variables: {
           paper_id: paper.data.insertPaper.id,
@@ -98,7 +89,6 @@ class Index extends Component {
         },
       });
 
-      console.log('corressponding', corressponding);
       await values.addAuthors.map(author => {
         if (values.addAuthors.corresponding === true) {
           correspondingValue = 1;
@@ -122,16 +112,14 @@ class Index extends Component {
         });
       });
 
-      // this.showAlertSuccess();
+      this.showAlertSuccess();
     } catch (error) {
-      // let temp = error.graphQLErrors[0].message;
-      // this.showAlertError(error);
-      console.log(error);
+      let temp = error.graphQLErrors[0].message;
+      this.showAlertError(error);
     }
   }
 
   render() {
-    console.log('pro', this.props);
     const {
       loading,
       getTopicsOfConference,

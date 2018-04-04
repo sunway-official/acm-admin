@@ -4,7 +4,6 @@ import { Subheader, IconButton } from 'material-ui';
 import { Link } from 'react-router-dom';
 import { graphql, compose } from 'react-apollo';
 import { queries, mutations } from '../helpers';
-import Form from '../form';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { alertOptions, MyExclamationTriangle, MyFaCheck } from 'theme/alert';

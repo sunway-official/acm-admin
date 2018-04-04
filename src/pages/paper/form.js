@@ -7,7 +7,7 @@ import { RaisedButton, Subheader, MenuItem } from 'material-ui';
 import { Link } from 'react-router-dom';
 import AddAuthors from './add/addAuthors';
 import { FieldArray } from 'redux-form';
-import renderUploadFile from 'components/render/renderUploadFile';
+// import renderUploadFile from 'components/render/renderUploadFile';
 import FileInput from 'components/render/FileRender';
 
 class EditPaperForm extends Component {
@@ -28,7 +28,6 @@ class EditPaperForm extends Component {
 
   render() {
     const topics = this.props.topics;
-    console.log('form', this.props);
     const { handleSubmit, pristine, handleUploadFile } = this.props;
     return (
       <form className="form conference-info" onSubmit={handleSubmit}>
