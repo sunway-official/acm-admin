@@ -92,7 +92,6 @@ class ConferenceInfoForm extends PureComponent {
     this.props.getPosition(position);
   }
   render() {
-    console.log(this.props.conference);
     if (this.props.isShow['edit-conference-info']) {
       return (
         <div>
@@ -132,7 +131,6 @@ const mapStateToProps = (state, ownProps) => {
   const conference = ownProps.conference;
   const organizer = conference.organizerDetail;
   const address = conference.address;
-  console.log(organizer);
   return {
     address_id: address.id,
     conference_id: conference.id,

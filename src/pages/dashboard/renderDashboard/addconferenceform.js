@@ -8,7 +8,10 @@ import normalizePhone from 'utils/normalizePhone';
 import validate from '../helpers/validate';
 import { alertOptions } from 'theme/alert';
 import AlertContainer from 'react-alert';
-
+import {
+  abstractDeadlineArr,
+  paperDeadlineArr,
+} from '../../conference/info/deadLine/fields';
 class AddConferenceForm extends React.Component {
   render() {
     const {
@@ -20,29 +23,9 @@ class AddConferenceForm extends React.Component {
     } = this.props;
     return (
       <form className="form conference-info" onSubmit={handleSubmit}>
-        <div className="form-body d-flex justify-content-space-between">
-          <div className="map">
-            <AppMap
-              onMapPositionChanged={onMapPositionChanged}
-              initalPosition={{
-                lat: 16.0598934,
-                long: 108.2076032,
-              }}
-              googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyAhGSgJvoGdeOzzDDDyTxWyQj7YRA2lZiA"
-              loadingElement={<div style={{ height: '100%' }} />}
-              containerElement={<div style={{ height: '550px' }} />}
-              mapElement={
-                <div
-                  style={{
-                    height: '100%',
-                    marginLeft: '0%',
-                  }}
-                />
-              }
-            />
-          </div>
-          <div style={{ padding: '0 10px' }}>
-            <Subheader className="header title">Basic Information</Subheader>
+        <section className="section-conference-info">
+          <Subheader className="header subtitle">Basic Information</Subheader>
+          <div className="section-content">
             <div className="d-flex form-group">
               <label>Title :</label>
               <Field
@@ -64,83 +47,167 @@ class AddConferenceForm extends React.Component {
                 hintText="Conference Description"
               />
             </div>
-            <div className="d-flex date">
-              <div className="d-flex form-group">
-                <label className="start">Start From :</label>
-                <Field
-                  minDate={new Date()}
-                  name="startDate"
-                  component={CustomDatePicker}
-                  format={null}
-                  textFieldStyle={{ width: '100%', marginLeft: -46 }}
-                  hintText="Start Date"
-                />
-              </div>
-              <div className="d-flex form-group">
-                <label className="end">To :</label>
-                <Field
-                  name="endDate"
-                  component={CustomDatePicker}
-                  minDate={new Date()}
-                  format={null}
-                  textFieldStyle={{ width: '100%' }}
-                  hintText="End Date"
-                />
-              </div>
+          </div>
+        </section>
+        <section className="section-deadline">
+          <Subheader className="subtitle">
+            Absrtact Submission Deadline
+          </Subheader>
+          <div className="d-flex flex-wrap justify-content-center">
+            {abstractDeadlineArr.map((data, index) => {
+              return (
+                <div
+                  className="d-flex date deadline-input form-group"
+                  key={index}
+                >
+                  <label>{data.label}:</label>
+                  <Field
+                    minDate={new Date()}
+                    name={data.name}
+                    component={CustomDatePicker}
+                    format={null}
+                    hintText={data.hintText}
+                    textFieldStyle={{ width: '80%' }}
+                  />
+                </div>
+              );
+            })}
+          </div>
+        </section>
+        <section className="section-deadline">
+          <Subheader className="subtitle">Paper Submission Deadline</Subheader>
+          <div className="d-flex flex-wrap justify-content-center">
+            {paperDeadlineArr.map((data, index) => {
+              return (
+                <div
+                  className="d-flex date deadline-input form-group"
+                  key={index}
+                >
+                  <label className="label-deadline">{data.label}:</label>
+                  <Field
+                    minDate={new Date()}
+                    name={data.name}
+                    component={CustomDatePicker}
+                    format={null}
+                    hintText={data.hintText}
+                    textFieldStyle={{ width: '80%' }}
+                  />
+                </div>
+              );
+            })}
+          </div>
+        </section>
+        <section className="section-organization-date">
+          <Subheader className="subtitle">Organization Date</Subheader>
+          <div className="section-content d-flex justify-content-center">
+            <div className="d-flex form-group">
+              <label>Registration Date:</label>
+              <Field
+                name="dl_registration"
+                component={CustomDatePicker}
+                minDate={new Date()}
+                format={null}
+                textFieldStyle={{ width: '100%' }}
+                hintText="Registration Date"
+              />
             </div>
-            <Subheader className="header title">
-              Organizer Information
-            </Subheader>
-            <div>
-              <div className="d-flex form-group">
-                <label>Name :</label>
-                <Field
-                  name="organizerName"
-                  component={CustomInput}
-                  hintText="Organizer Name"
-                  fullWidth={true}
-                />
-              </div>
-              <div className="d-flex form-group">
-                <label>Email :</label>
-                <Field
-                  name="organizerEmail"
-                  component={CustomInput}
-                  hintText="Organizer Email"
-                  fullWidth={true}
-                />
-              </div>
-              <div className="d-flex form-group">
-                <label>Address :</label>
-                <Field
-                  name="organizerAddress"
-                  component={CustomInput}
-                  hintText="Organizer Address"
-                  fullWidth={true}
-                />
-              </div>
-              <div className="d-flex form-group">
-                <label>Website :</label>
-                <Field
-                  name="organizerWebsite"
-                  component={CustomInput}
-                  hintText="Organizer Website"
-                  fullWidth={true}
-                />
-              </div>
-              <div className="d-flex form-group">
-                <label>Phone Number :</label>
-                <Field
-                  name="organizerPhoneNumber"
-                  component={CustomInput}
-                  hintText="Organizer Phone Number"
-                  fullWidth={true}
-                  normalize={normalizePhone}
-                />
-              </div>
+            <div className="d-flex form-group">
+              <label>Conference Start Date :</label>
+              <Field
+                minDate={new Date()}
+                name="startDate"
+                component={CustomDatePicker}
+                format={null}
+                textFieldStyle={{ width: '100%' }}
+                hintText="Start Date"
+              />
+            </div>
+            <div className="d-flex form-group">
+              <label>Conference End Date :</label>
+              <Field
+                name="endDate"
+                component={CustomDatePicker}
+                minDate={new Date()}
+                format={null}
+                textFieldStyle={{ width: '100%' }}
+                hintText="End Date"
+              />
             </div>
           </div>
+        </section>
+        <div className="map add">
+          <AppMap
+            onMapPositionChanged={onMapPositionChanged}
+            initalPosition={{
+              lat: 16.0598934,
+              long: 108.2076032,
+            }}
+            googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyAhGSgJvoGdeOzzDDDyTxWyQj7YRA2lZiA"
+            loadingElement={<div style={{ height: '100%' }} />}
+            containerElement={<div style={{ height: '550px' }} />}
+            mapElement={
+              <div
+                style={{
+                  height: '100%',
+                  marginLeft: '0%',
+                }}
+              />
+            }
+          />
         </div>
+        <section className="section-organizer">
+          <Subheader className="header subtitle">
+            Organizer Information
+          </Subheader>
+          <div className="section-content">
+            <div className="d-flex form-group">
+              <label>Name :</label>
+              <Field
+                name="organizerName"
+                component={CustomInput}
+                hintText="Organizer Name"
+                fullWidth={true}
+              />
+            </div>
+            <div className="d-flex form-group">
+              <label>Email :</label>
+              <Field
+                name="organizerEmail"
+                component={CustomInput}
+                hintText="Organizer Email"
+                fullWidth={true}
+              />
+            </div>
+            <div className="d-flex form-group">
+              <label>Address :</label>
+              <Field
+                name="organizerAddress"
+                component={CustomInput}
+                hintText="Organizer Address"
+                fullWidth={true}
+              />
+            </div>
+            <div className="d-flex form-group">
+              <label>Website :</label>
+              <Field
+                name="organizerWebsite"
+                component={CustomInput}
+                hintText="Organizer Website"
+                fullWidth={true}
+              />
+            </div>
+            <div className="d-flex form-group">
+              <label>Phone Number :</label>
+              <Field
+                name="organizerPhoneNumber"
+                component={CustomInput}
+                hintText="Organizer Phone Number"
+                fullWidth={true}
+                normalize={normalizePhone}
+              />
+            </div>
+          </div>
+        </section>
         <div className="d-flex save-btn btn-group marginBottom">
           <RaisedButton
             label="Save"
