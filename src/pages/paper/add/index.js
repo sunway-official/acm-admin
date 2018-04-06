@@ -57,7 +57,6 @@ class Index extends Component {
     // author create paper: corresponding 1
     // choose corresponding : coresponding 1
     // do not choose corresponding : coresponding 3
-    console.log('values', values);
 
     const key = this.state.key;
     let correspondingValue = 3;
@@ -100,8 +99,6 @@ class Index extends Component {
         } else {
           correspondingValue = 3;
         }
-        const paperAuthorName = author.firstname + ' ' + author.lastname;
-        console.log('trim', paperAuthorName.trim());
         if (author.firstname !== undefined && author.lastname !== undefined) {
           this.props.INSERT_PAPER_AUTHOR({
             variables: {
