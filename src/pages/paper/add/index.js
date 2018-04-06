@@ -57,11 +57,12 @@ class Index extends Component {
     // author create paper: corresponding 1
     // choose corresponding : coresponding 1
     // do not choose corresponding : coresponding 3
+    console.log('values', values);
 
     const key = this.state.key;
     let correspondingValue = 3;
     try {
-      let paper, corressponding;
+      let paper;
       paper = await this.props.INSERT_PAPER({
         variables: {
           paper_status_id: 1,
@@ -80,7 +81,7 @@ class Index extends Component {
         },
       });
 
-      corressponding = await this.props.INSERT_PAPER_AUTHOR({
+      await this.props.INSERT_PAPER_AUTHOR({
         variables: {
           paper_id: paper.data.insertPaper.id,
           user_id: this.props.data.me.id,
@@ -99,28 +100,33 @@ class Index extends Component {
         } else {
           correspondingValue = 3;
         }
-        this.props.INSERT_PAPER_AUTHOR({
-          variables: {
-            paper_id: paper.data.insertPaper.id,
-            topic_id: author.topic,
-            corresponding: correspondingValue,
-            author_name: author.firstname + author.lastname,
-            author_email: author.email,
-            author_title: author.title,
-            author_organization: author.organization,
-            author_street: author.authorStreet,
-            author_city: author.authorCity,
-            author_country: author.authorCountry,
-            author_zipcode: values.authorZipcode,
-          },
-        });
+        const paperAuthorName = author.firstname + ' ' + author.lastname;
+        console.log('trim', paperAuthorName.trim());
+        if (author.firstname !== undefined && author.lastname !== undefined) {
+          this.props.INSERT_PAPER_AUTHOR({
+            variables: {
+              paper_id: paper.data.insertPaper.id,
+              topic_id: author.topic,
+              corresponding: correspondingValue,
+              author_name: author.firstname + ' ' + author.lastname,
+              author_email: author.email,
+              author_title: author.title,
+              author_organization: author.organization,
+              author_street: author.authorStreet,
+              author_city: author.authorCity,
+              author_country: author.authorCountry,
+              author_zipcode: values.authorZipcode,
+            },
+          });
+        } else {
+          console.log('no other authors');
+        }
       });
 
       this.showAlertSuccess();
     } catch (error) {
       // let temp = error.graphQLErrors[0].message;
-      // this.showAlertError(error);
-      console.log('Eee', error);
+      this.showAlertError('Submit paper fail');
     }
   }
 

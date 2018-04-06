@@ -86,15 +86,16 @@ const GET_PAPER_BY_ID = gql`
         author_title
         corresponding
       }
+      status
       title
       abstract
+      keywords
       conference {
         id
       }
       papersTopic {
         id
       }
-      status
       file
       reviewers {
         id
@@ -125,7 +126,6 @@ const GET_PAPER_BY_ID = gql`
         content
         comment
       }
-      keywords
     }
   }
 `;
