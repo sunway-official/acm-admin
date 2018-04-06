@@ -1,6 +1,6 @@
 import { gql } from 'react-apollo';
 
-export const GET_ALL_CONFERENCES_BY_USER_ID_QUERY = gql`
+export const GET_CONFERENCE_BY_USER_ID_QUERY = gql`
   query getConferenceByUserID($user_id: ID!) {
     getConferenceByUserID(user_id: $user_id) {
       id
@@ -29,6 +29,16 @@ export const GET_ALL_CONFERENCES_BY_USER_ID_QUERY = gql`
         currentConference {
           id
         }
+      }
+    }
+  }
+`;
+export const GET_ALL_CONFERENCES_BY_USER_ID_QUERY = gql`
+  query getAllConferencesByUserID {
+    getAllConferencesByUserID {
+      conference {
+        id
+        title
       }
     }
   }

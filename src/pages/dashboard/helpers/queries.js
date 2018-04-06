@@ -48,7 +48,6 @@ export const GET_ALL_CONFERENCES_BY_USER_ID_QUERY = gql`
         description
         start_date
         end_date
-        bg_image
         address {
           id
           city

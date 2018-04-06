@@ -55,6 +55,9 @@
 
     .map {
       width: 70% !important;
+      &.add {
+        width: 100% !important;
+      }
     }
   }
 
