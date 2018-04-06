@@ -4,14 +4,16 @@ import { Subheader, IconButton } from 'material-ui';
 import { Link } from 'react-router-dom';
 import { graphql, compose } from 'react-apollo';
 import { queries } from '../helpers';
-import { List, ListItem } from 'material-ui/List';
+import { ListItem } from 'material-ui/List';
 import ActionAccountCircle from 'material-ui/svg-icons/action/account-circle';
 import CommunicationVpnKey from 'material-ui/svg-icons/communication/vpn-key';
 import { AppBar } from 'material-ui';
-import { Col, Grid, Row } from 'react-flexbox-grid';
+import { Col, Row } from 'react-flexbox-grid';
 import colors from '../../../theme/color';
 import MultipleSelect from './multipleSelect';
 import './style.css';
+import OrganizerDetail from './organizerDetail';
+import ReviewerDetail from './reviewerDetail';
 
 import Loading from 'components/render/renderLoading';
 
@@ -25,31 +27,34 @@ class Index extends Component {
     let authors;
     let reviewers;
     let comments;
+    const role = localStorage.getItem('roles');
 
     // map author information
-    authors = paper.authors.map(author => (
-      <ListItem
-        key={author.id}
-        leftIcon={
-          <ActionAccountCircle
-            color={colors.main}
-            className="paper-detail-icon"
-          />
-        }
-        rightIcon={
-          // eslint-disable-next-line
-          author.corresponding == 1 ? (
-            <CommunicationVpnKey color="37d67a" />
-          ) : (
-            <p />
-          )
-        }
-      >
-        {author.author_name}
-      </ListItem>
-    ));
+    if (paper.authors) {
+      authors = paper.authors.map(author => (
+        <ListItem
+          key={author.id}
+          leftIcon={
+            <ActionAccountCircle
+              color={colors.main}
+              className="paper-detail-icon"
+            />
+          }
+          rightIcon={
+            // eslint-disable-next-line
+            author.corresponding == 1 ? (
+              <CommunicationVpnKey color="37d67a" />
+            ) : (
+              <p />
+            )
+          }
+        >
+          {author.author_name}
+        </ListItem>
+      ));
+    }
     //map reviewer information
-    if (paper.status !== 'Assigning') {
+    if (paper.status !== 'Assigning' && paper.reviewers) {
       reviewers = paper.reviewers.map(reviewer => (
         <ListItem
           key={reviewer.id}
@@ -75,36 +80,38 @@ class Index extends Component {
     }
 
     // map comment of each reviewer
-    comments = paper.comments.map(comment => (
-      <div key={comment.id} className="paper-detail-comment">
-        <Col xs={2}>
-          <Row center="xs">
-            <ActionAccountCircle
-              color={colors.main}
-              className="first-row paper-detail-icon reviewer-icon"
-            />
-          </Row>
-        </Col>
-        <Col xs={9}>
-          <Row className="card-detail-row first-row">
-            <Col xs={9}>
-              <Row className="card-detail-row">{comment.reviewer_name}</Row>
-              <Row className="card-detail-row">Point : {comment.point}</Row>
-              <Row className="card-detail-row">
-                Detail review:{' '}
-                <u style={{ color: 'rgb(114, 181, 240)' }}> this is a link</u>
-              </Row>
-            </Col>
-            <Col xs={3}>
-              <div>24/03/2018</div>
-            </Col>
-          </Row>
-          <Row around="xs" className="card-detail-row comment-content-row">
-            <div>{comment.content}</div>
-          </Row>
-        </Col>
-      </div>
-    ));
+    if (paper.comments) {
+      comments = paper.comments.map(comment => (
+        <div key={comment.id} className="paper-detail-comment">
+          <Col xs={2}>
+            <Row center="xs">
+              <ActionAccountCircle
+                color={colors.main}
+                className="first-row paper-detail-icon reviewer-icon"
+              />
+            </Row>
+          </Col>
+          <Col xs={9}>
+            <Row className="card-detail-row first-row">
+              <Col xs={9}>
+                <Row className="card-detail-row">{comment.reviewer_name}</Row>
+                <Row className="card-detail-row">Point : {comment.point}</Row>
+                <Row className="card-detail-row">
+                  Detail review:{' '}
+                  <u style={{ color: 'rgb(114, 181, 240)' }}> this is a link</u>
+                </Row>
+              </Col>
+              <Col xs={3}>
+                <div>24/03/2018</div>
+              </Col>
+            </Row>
+            <Row around="xs" className="card-detail-row comment-content-row">
+              <div>{comment.content}</div>
+            </Row>
+          </Col>
+        </div>
+      ));
+    }
 
     return (
       <div className="conference">
@@ -114,7 +121,7 @@ class Index extends Component {
             <IconButton>
               <ActionHome />
             </IconButton>
-            <span>Conference Information</span>
+            <span>Dashboard</span>
           </Link>
           <IconButton>
             <HardwareKeyboardArrowRight />
@@ -133,63 +140,16 @@ class Index extends Component {
           showMenuIconButton={false}
         />
         <div className="dashboard content d-flex">
-          <Grid fluid className="paper-detail-grid">
-            <Row className="paper-card" around="xs">
-              <Col xs={12} sm={12} md={7} lg={7} className="paper-col">
-                <Row className="card-detail-row first-row">
-                  <Col xs={3} className="paper-detail-title">
-                    Topics
-                  </Col>
-                  <Col xs={9}>{paper.topic_name}</Col>
-                </Row>
-                <Row around="xs" className="card-detail-row">
-                  <Col xs={3} className="paper-detail-title">
-                    Keywords
-                  </Col>
-                  <Col xs={9}>{paper.keywords}</Col>
-                </Row>
-                <Row around="xs" className="card-detail-row">
-                  <Col xs={3} className="paper-detail-title">
-                    Abstract
-                  </Col>
-                  <Col xs={9}>{paper.abstract}</Col>
-                </Row>
-              </Col>
-              <Col xs={12} sm={12} md={4} lg={4} className="paper-col">
-                <List style={{ padding: '0px' }}>
-                  <div className="first-row paper-detail-title">Author</div>
-                  {authors}
-                </List>
-              </Col>
-            </Row>
-            <Row className="paper-card" around="xs">
-              <Col xs={12} sm={12} md={7} lg={7} className="paper-col">
-                <Row around="xs" className="card-detail-row first-row">
-                  <Col xs={3} className="paper-detail-title">
-                    Average point
-                  </Col>
-                  <Col xs={9}>4.5</Col>
-                </Row>
-                <Row around="xs" className="card-detail-row">
-                  <Col xs={3} className="paper-detail-title">
-                    Paper status
-                  </Col>
-                  <Col xs={9}>{paper.status}</Col>
-                </Row>
-              </Col>
-              <Col xs={12} sm={12} md={4} lg={4} className="paper-col">
-                <List style={{ padding: '0px' }}>
-                  <div className="first-row paper-detail-title">Reviewers</div>
-                  {reviewers}
-                </List>
-              </Col>
-            </Row>
-            <div className="paper-review">
-              <Row arround="xs" className="paper-card paper-review-row">
-                {comments}
-              </Row>
-            </div>
-          </Grid>
+          {role === '1' ? (
+            <OrganizerDetail
+              paper={paper}
+              authors={authors}
+              reviewers={reviewers}
+              comments={comments}
+            />
+          ) : (
+            <ReviewerDetail paper={paper} conference={paper.conference} />
+          )}
         </div>
       </div>
     );

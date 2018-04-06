@@ -94,7 +94,7 @@ class LandingPageForm extends Component {
                 <RaisedButton
                   className="btn save-change"
                   label="Save Change"
-                  primary={true}
+                  default={true}
                   disabled={submitting || detail ? pristine : submitting}
                   type="submit"
                 />

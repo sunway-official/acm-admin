@@ -76,6 +76,10 @@ const GET_PAPER_BY_ID = gql`
       id
       conference {
         id
+        dl_review_abstract
+        dl_re_review_abstract
+        dl_review_paper
+        dl_re_review_paper
       }
       papersTopic {
         topic_name

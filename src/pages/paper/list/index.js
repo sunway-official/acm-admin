@@ -60,14 +60,20 @@ class Index extends Component {
     papers = this.props.GET_PAPERS_BY_CONFERENCE_ID.getPapersByConferenceID; // get all paper by role
     const columns = [
       {
+        Header: 'Id',
+        accessor: '',
+        minWidth: 50,
+        Cell: props => <div style={style} />,
+      },
+      {
         Header: 'Title',
         accessor: 'title',
-        minWidth: 300,
+        minWidth: 250,
         Cell: props => <div style={style}>{cutString(props.value, 41)}</div>,
       },
       {
         Header: 'Authors',
-        minWidth: 200,
+        minWidth: 150,
         accessor: 'authors',
         // eslint-disable-next-line
         show: role == 1 ? true : false,
@@ -75,20 +81,28 @@ class Index extends Component {
       },
       {
         Header: 'Topic',
-        minWidth: 150,
+        minWidth: 100,
         accessor: 'topic_name',
         Cell: props => <div style={style}>{props.value}</div>,
       },
       {
+        Header: 'Status',
+        minWidth: 100,
+        accessor: 'status',
+        // eslint-disable-next-line
+        show: role == 1 ? true : false,
+        Cell: props => <div style={style}>{props.value}</div>,
+      },
+      {
         Header: 'Action',
-        minWidth: 170,
+        minWidth: 200,
         filterable: false,
         accessor: '',
         Cell: props => (
           <div style={{ textAlign: 'left', paddingLeft: '15%' }}>
             <RaisedButton
               label="View"
-              primary={true}
+              default={true}
               onClick={() => {
                 this.handleEdit(props.value);
               }}
@@ -105,7 +119,11 @@ class Index extends Component {
             role === '7' && // if user is an author
             (props.value.status === 'Submitting' ||
               props.value.status === 'Re-submitting') ? ( // and if paper status is submitting or re-submitting
-              <RaisedButton label="Submit" secondary={true} style={styleBtn} />
+              <RaisedButton
+                label="Re-Submit"
+                secondary={true}
+                style={styleBtn}
+              />
             ) : (
               ''
             )}
