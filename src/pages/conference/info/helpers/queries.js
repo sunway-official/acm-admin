@@ -28,6 +28,7 @@ const GET_CURRENT_CONFERENCE = gql`
         id
         name
         email
+        address
         website
         phone
       }
@@ -62,6 +63,7 @@ const GET_CONFERENCE_BY_ID_QUERY = gql`
         name
         email
         website
+        address
         phone
       }
       coOrganizerDetails {
@@ -121,6 +123,7 @@ const ME_QUERY = gql`
           email
           website
           phone
+          address
         }
       }
     }

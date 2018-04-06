@@ -11,15 +11,12 @@ import ConfMgtSidebar from 'pages/conference/add';
 import { queries } from '../helpers';
 import style from './style.css';
 import { functions } from 'containers/layout/appbar/helpers';
-// import Loading from 'components/render/renderLoading';
 
 class BadgeExampleSimple extends Component {
   constructor(props) {
     super(props);
     this.state = {
       openUser: false,
-      // openNotification: false,
-      // openMail: false,
       openCalendar: false,
       openListConf: false,
     };
@@ -81,15 +78,9 @@ class BadgeExampleSimple extends Component {
     window.location.reload();
   }
   render() {
-    // const { loading } = this.props.data;
-    // if (loading) return <div>Loading...</div>;
-    //const avatar = this.props.me.avatar;
     let first = '';
     if (this.props.me !== undefined) {
-      //console.log(this.props.me.firstname);
       first = this.props.me.firstname;
-      //const avatar = this.props.me.avatar;
-      //console.log(avatar);
     }
     const loadingRole = this.props.GET_ALL_ROLE_OF_USER.loading;
     if (loadingRole) return <div />;
@@ -176,8 +167,3 @@ export default compose(
     name: 'GET_ALL_ROLE_OF_USER',
   }),
 )(BadgeExampleSimple);
-//<Avatar className="avatar" src={images.defaultAvatar} />
-// <Avatar
-// className="avatar"
-// src={avatar ? S3_GET_PREFIX + avatar : images.defaultAvatar}
-// />

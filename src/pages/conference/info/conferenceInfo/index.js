@@ -48,6 +48,7 @@ class ConferenceInfoForm extends PureComponent {
     organizerEmail,
     organizerWebsite,
     organizerPhoneNumber,
+    organizerAddress,
   }) {
     try {
       const conference = await this.props.UPDATE_CONFERENCE_MUTATION({
@@ -66,6 +67,7 @@ class ConferenceInfoForm extends PureComponent {
           email: organizerEmail,
           website: organizerWebsite,
           phone: organizerPhoneNumber,
+          address: organizerAddress,
         },
       });
       let address;
@@ -141,6 +143,7 @@ const mapStateToProps = (state, ownProps) => {
       endDate: new Date(conference.end_date),
       lat: parseFloat(conference.address.lat),
       long: parseFloat(conference.address.long),
+      organizerAddress: organizer.address,
       organizerName: organizer.name,
       organizerEmail: organizer.email,
       organizerWebsite: organizer.website,

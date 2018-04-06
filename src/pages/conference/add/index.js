@@ -3,7 +3,6 @@ import { ME_QUERY } from './helpers/mutation';
 import { graphql, compose } from 'react-apollo';
 import GetAllConfs from './addConference/getAllConferences';
 import Loading from 'components/render/renderLoading';
-// import GetAllConfs from './addConference/getAllConferences';
 
 class ConfMgtSidebar extends React.Component {
   render() {

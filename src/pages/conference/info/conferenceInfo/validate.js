@@ -11,6 +11,7 @@ const validate = values => {
     'organizerEmail',
     'organizerWebsite',
     'organizerPhoneNumber',
+    'organizerAddress',
   ];
   requiredFields.forEach(field => {
     if (!values[field]) {

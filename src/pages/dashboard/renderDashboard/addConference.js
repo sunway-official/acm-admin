@@ -6,31 +6,23 @@ import {
   INSERT_CONFERENCE_ATTENDEE_MUTATION,
 } from '../helpers/mutations';
 import { ME_QUERY } from '../helpers/queries';
-import AddForm from './addconferenceform';
+import Form from './addconferenceform';
 import { conferenceOperations } from 'store/ducks/conference';
 import { connect } from 'react-redux';
 import { graphql, compose, gql } from 'react-apollo';
 import '../style.scss';
 import { Link } from 'react-router-dom';
-import { IconButton } from 'material-ui';
+import { IconButton, Subheader } from 'material-ui';
 import { ActionHome } from 'material-ui/svg-icons';
-import { Subheader } from 'material-ui';
 import DashboardMenu from './menu';
 import { alertOptions, MyExclamationTriangle, MyFaCheck } from 'theme/alert';
 import AlertContainer from 'react-alert';
 import { withRouter } from 'react-router';
-
 class ConferenceAddForm extends PureComponent {
   constructor(props) {
     super(props);
     this.handleAddConference = this.handleAddConference.bind(this);
 
-    this.state = {
-      position: {
-        lat: 16.0598934,
-        long: 108.2076032,
-      },
-    };
     this.onMapPositionChanged = this.onMapPositionChanged.bind(this);
   }
   showAlertSuccess = () => {
@@ -49,6 +41,7 @@ class ConferenceAddForm extends PureComponent {
     });
   };
   async handleAddConference(values) {
+    console.log(values);
     const user_id = this.props.data.me.id;
     try {
       if (!this.props.position) {
@@ -84,6 +77,19 @@ class ConferenceAddForm extends PureComponent {
           start_date: values.startDate,
           end_date: values.endDate,
           bg_image: 'Background image',
+          dl_submit_abstract: values.dl_submit_abstract,
+          dl_review_abstract: values.dl_review_abstract,
+          dl_release_abstract: values.dl_release_abstract,
+          dl_re_submit_abstract: values.dl_re_submit_abstract,
+          dl_re_review_abstract: values.dl_re_review_abstract,
+          dl_release_final_abstract: values.dl_release_final_abstract,
+          dl_submit_paper: values.dl_submit_paper,
+          dl_review_paper: values.dl_review_paper,
+          dl_release_paper: values.dl_release_paper,
+          dl_re_submit_paper: values.dl_re_submit_paper,
+          dl_re_review_paper: values.dl_re_review_paper,
+          dl_release_final_paper: values.dl_release_final_paper,
+          dl_registration: values.dl_registration,
         },
       });
       await this.props.INSERT_CONFERENCE_ATTENDEE_MUTATION({
@@ -104,8 +110,7 @@ class ConferenceAddForm extends PureComponent {
       });
       this.showAlertSuccess();
     } catch (error) {
-      let temp = error.graphQLErrors[0].message;
-      this.showAlertError(temp);
+      console.log(error);
     }
   }
 
@@ -130,7 +135,7 @@ class ConferenceAddForm extends PureComponent {
           </Link>
         </div>
         <div className="add-form-bg">
-          <AddForm
+          <Form
             onSubmit={this.handleAddConference}
             onMapPositionChanged={this.onMapPositionChanged}
             handleSwitch={this.handleSwitch}
