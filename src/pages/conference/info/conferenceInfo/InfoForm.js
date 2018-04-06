@@ -158,11 +158,6 @@ class ConferenceInfoForm extends React.Component {
             primary={true}
             type="submit"
             disabled={pristine}
-            // onClick={() => {
-            //   if (!invalid) {
-            //     this.showAlertSuccess();
-            //   }
-            // }}
           />
         </div>
         <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />
