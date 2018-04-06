@@ -41,7 +41,6 @@ class listCoferences extends React.Component {
   render() {
     const { loading, getAllConferencesByUserID } = this.props.data;
     if (loading) return <Loading />;
-
     const conferences = getAllConferencesByUserID;
     return (
       <div className="list-dashboard">
@@ -104,13 +103,7 @@ export const ME_QUERY = gql`
 
 export default compose(
   withRouter,
-  graphql(queries.GET_ALL_CONFERENCES_BY_USER_ID_QUERY, {
-    options: ownProps => ({
-      variables: {
-        user_id: ownProps.user_id,
-      },
-    }),
-  }),
+  graphql(queries.GET_ALL_CONFERENCES_BY_USER_ID_QUERY, {}),
   graphql(SWITCH_CURRENT_CONFERENCE, {
     name: 'SWITCH_CURRENT_CONFERENCE',
   }),
