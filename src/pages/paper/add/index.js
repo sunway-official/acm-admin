@@ -94,13 +94,11 @@ class Index extends Component {
       });
 
       await values.addAuthors.map(author => {
-        console.log('author.corresponding', author);
         if (author.corresponding === true) {
           correspondingValue = 2;
         } else {
           correspondingValue = 3;
         }
-        console.logog('value submir', correspondingValue);
         this.props.INSERT_PAPER_AUTHOR({
           variables: {
             paper_id: paper.data.insertPaper.id,
@@ -122,6 +120,7 @@ class Index extends Component {
     } catch (error) {
       // let temp = error.graphQLErrors[0].message;
       // this.showAlertError(error);
+      console.log('Eee', error);
     }
   }
 
