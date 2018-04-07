@@ -54,10 +54,14 @@ class Index extends Component {
     });
   };
   async handleAdd(values) {
+    // author create paper: corresponding 1
+    // choose corresponding : coresponding 1
+    // do not choose corresponding : coresponding 3
+
     const key = this.state.key;
-    let correspondingValue = 2;
+    let correspondingValue = 3;
     try {
-      let paper, corressponding;
+      let paper;
       paper = await this.props.INSERT_PAPER({
         variables: {
           paper_status_id: 1,
@@ -76,7 +80,7 @@ class Index extends Component {
         },
       });
 
-      corressponding = await this.props.INSERT_PAPER_AUTHOR({
+      await this.props.INSERT_PAPER_AUTHOR({
         variables: {
           paper_id: paper.data.insertPaper.id,
           user_id: this.props.data.me.id,
@@ -90,32 +94,36 @@ class Index extends Component {
       });
 
       await values.addAuthors.map(author => {
-        if (values.addAuthors.corresponding === true) {
-          correspondingValue = 1;
-        } else {
+        if (author.corresponding === true) {
           correspondingValue = 2;
+        } else {
+          correspondingValue = 3;
         }
-        this.props.INSERT_PAPER_AUTHOR({
-          variables: {
-            paper_id: paper.data.insertPaper.id,
-            topic_id: author.topic,
-            corresponding: correspondingValue,
-            author_name: author.firstname + author.lastname,
-            author_email: author.email,
-            author_title: author.title,
-            author_organization: author.organization,
-            author_street: author.authorStreet,
-            author_city: author.authorCity,
-            author_country: author.authorCountry,
-            author_zipcode: values.authorZipcode,
-          },
-        });
+        if (author.firstname !== undefined && author.lastname !== undefined) {
+          this.props.INSERT_PAPER_AUTHOR({
+            variables: {
+              paper_id: paper.data.insertPaper.id,
+              topic_id: author.topic,
+              corresponding: correspondingValue,
+              author_name: author.firstname + ' ' + author.lastname,
+              author_email: author.email,
+              author_title: author.title,
+              author_organization: author.organization,
+              author_street: author.authorStreet,
+              author_city: author.authorCity,
+              author_country: author.authorCountry,
+              author_zipcode: values.authorZipcode,
+            },
+          });
+        } else {
+          console.log('no other authors');
+        }
       });
 
       this.showAlertSuccess();
     } catch (error) {
-      let temp = error.graphQLErrors[0].message;
-      this.showAlertError(error);
+      // let temp = error.graphQLErrors[0].message;
+      this.showAlertError('Submit paper fail');
     }
   }
 
@@ -131,13 +139,13 @@ class Index extends Component {
     if (loading) return <Loading />;
     return (
       <div className="conference">
-        <Subheader className="subheader">Paper Management</Subheader>
+        <Subheader className="subheader">Add paper</Subheader>
         <div className="page-breadcrumb d-flex">
           <Link className="d-flex" to="/">
             <IconButton>
               <ActionHome />
             </IconButton>
-            <span>Conference Information</span>
+            <span>Dashboard</span>
           </Link>
           <IconButton>
             <HardwareKeyboardArrowRight />
@@ -148,7 +156,7 @@ class Index extends Component {
           <IconButton>
             <HardwareKeyboardArrowRight />
           </IconButton>
-          <span>Paper Management</span>
+          <span>Add paper</span>
         </div>
         <div className="dashboard content d-flex">
           <Form

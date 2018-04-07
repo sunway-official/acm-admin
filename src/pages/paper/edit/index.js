@@ -118,6 +118,7 @@ class Index extends Component {
     if (getTopicsOfConference) {
       topics = getTopicsOfConference;
     }
+    console.log('paper', getPaperByID);
     if (getPaperByID) {
       paper = getPaperByID;
       initialValues = {
@@ -126,17 +127,22 @@ class Index extends Component {
         abstract: paper.abstract,
         keywords: paper.keywords,
         topic: paperTopicsActive[0].topic.id,
+        street: paper.authors[0].author_street,
+        city: paper.authors[0].author_city,
+        country: paper.authors[0].author_country,
+        zipcode: paper.authors[0].author_zipcode,
+        addAuthors: paper.authors,
       };
     }
     return (
       <div className="conference">
-        <Subheader className="subheader">Paper Management</Subheader>
+        <Subheader className="subheader">Edit paper</Subheader>
         <div className="page-breadcrumb d-flex">
           <Link className="d-flex" to="/">
             <IconButton>
               <ActionHome />
             </IconButton>
-            <span>Conference Information</span>
+            <span>Dasboard</span>
           </Link>
           <IconButton>
             <HardwareKeyboardArrowRight />
@@ -147,7 +153,7 @@ class Index extends Component {
           <IconButton>
             <HardwareKeyboardArrowRight />
           </IconButton>
-          <span>Paper Management</span>
+          <span>Edit paper</span>
         </div>
         <div className="dashboard content d-flex">
           <Form

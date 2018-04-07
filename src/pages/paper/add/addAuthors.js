@@ -139,7 +139,7 @@ class AddAuthors extends React.Component {
                 />
               </div>
               <div className="d-flex form-group">
-                <label>institution:</label>
+                <label>Institution:</label>
                 <Field
                   name={`${author}.organization`}
                   component={CustomInput}
