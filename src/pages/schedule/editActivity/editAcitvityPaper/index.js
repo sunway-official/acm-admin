@@ -113,7 +113,7 @@ class Index extends Component {
           </IconButton>
           <span>Edit Activity</span>
         </div>
-        <div className="dashboard  content d-flex">
+        <div className="dashboard content d-flex">
           <EditActivityPaper
             initialValues={initialValues}
             topics={topics}
