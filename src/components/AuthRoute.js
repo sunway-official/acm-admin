@@ -48,6 +48,7 @@ class AuthRoute extends PureComponent {
                 email
                 website
                 phone
+                address
               }
               coOrganizerDetails {
                 id
@@ -149,6 +150,7 @@ const ME_QUERY = gql`
           id
           name
           email
+          address
           website
           phone
         }

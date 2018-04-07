@@ -1,6 +1,6 @@
 import React from 'react';
 import { reduxForm, Field } from 'redux-form';
-import { Subheader, RaisedButton, Dialog } from 'material-ui';
+import { Subheader, RaisedButton } from 'material-ui';
 import CustomInput from 'components/CustomInput';
 import CustomDatePicker from 'components/CustomDatePicker';
 import AppMap from 'components/AppMap';
@@ -122,6 +122,15 @@ class ConferenceInfoForm extends React.Component {
                 />
               </div>
               <div className="d-flex form-group">
+                <label>Address :</label>
+                <Field
+                  name="organizerAddress"
+                  component={CustomInput}
+                  hintText="Organizer Address"
+                  fullWidth={true}
+                />
+              </div>
+              <div className="d-flex form-group">
                 <label>Website :</label>
                 <Field
                   name="organizerWebsite"
@@ -149,14 +158,8 @@ class ConferenceInfoForm extends React.Component {
             primary={true}
             type="submit"
             disabled={pristine}
-            // onClick={() => {
-            //   if (!invalid) {
-            //     this.showAlertSuccess();
-            //   }
-            // }}
           />
         </div>
-        <Dialog open={this.state.openDialog} />
         <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />
       </form>
     );

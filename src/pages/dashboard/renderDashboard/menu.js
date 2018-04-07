@@ -6,10 +6,7 @@ import { compose, withApollo } from 'react-apollo';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { AppBar } from 'material-ui';
-// import { ActionReorder } from 'material-ui/svg-icons';
 import { images } from './../../../theme';
-
-// import { images } from '../../../../';
 import style from './../style.css';
 
 class DashboardMenu extends Component {
@@ -17,8 +14,6 @@ class DashboardMenu extends Component {
     super(props);
     this.state = {
       openUser: false,
-      // openNotification: false,
-      // openMail: false,
       openCalendar: false,
       openListConf: false,
     };
@@ -49,11 +44,8 @@ class DashboardMenu extends Component {
     this.props.history.replace('/login');
   }
   render() {
-    // const { loading } = this.props.data;
-    // if (loading) return <div>Loading...</div>;
     var first = '';
     if (this.props.me !== undefined) {
-      //console.log(this.props.me.firstname);
       first = this.props.me.firstname;
     }
     return (
@@ -102,4 +94,3 @@ const mapStateToProps = state => ({
 export default compose(withRouter, withApollo, connect(mapStateToProps))(
   DashboardMenu,
 );
-//<Avatar className="avatar" src={images.defaultAvatar} />

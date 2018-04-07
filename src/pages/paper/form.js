@@ -29,7 +29,10 @@ class EditPaperForm extends Component {
     const topics = this.props.topics;
     const { handleSubmit, pristine, handleUploadFile } = this.props;
     return (
-      <form className="form conference-info" onSubmit={handleSubmit}>
+      <form
+        className="form conference-info add-paper-form"
+        onSubmit={handleSubmit}
+      >
         {/* paper */}
         <div className="paper-submit-block mt-50">
           <Subheader className="subheader submit-header">
@@ -63,7 +66,7 @@ class EditPaperForm extends Component {
               fullWidth={true}
               multiLine
               rows={1}
-              hintText="Paper Abstract"
+              hintText="Paper keywords"
             />
           </div>
           <div className="d-flex form-group">

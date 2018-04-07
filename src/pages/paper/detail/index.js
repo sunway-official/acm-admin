@@ -30,7 +30,7 @@ class Index extends Component {
     const role = localStorage.getItem('roles');
 
     // map author information
-    if (paper.authors) {
+    if (paper && paper.authors) {
       authors = paper.authors.map(author => (
         <ListItem
           key={author.id}
@@ -54,7 +54,7 @@ class Index extends Component {
       ));
     }
     //map reviewer information
-    if (paper.status !== 'Assigning' && paper.reviewers) {
+    if (paper && paper.status !== 'Assigning' && paper.reviewers) {
       reviewers = paper.reviewers.map(reviewer => (
         <ListItem
           key={reviewer.id}
@@ -74,13 +74,13 @@ class Index extends Component {
           reviewers={
             this.props.GET_ALL_USERS_BY_ROLE_ID_QUERY.getAllUsersByRoleID
           }
-          paper_id={paper.id}
+          paper_id={paper && paper.id}
         />
       );
     }
 
     // map comment of each reviewer
-    if (paper.comments) {
+    if (paper && paper.comments) {
       comments = paper.comments.map(comment => (
         <div key={comment.id} className="paper-detail-comment">
           <Col xs={2}>
