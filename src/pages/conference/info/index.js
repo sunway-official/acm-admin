@@ -6,6 +6,7 @@ import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import ConferenceInfo from './conferenceInfo';
 import { connect } from 'react-redux';
 import CoOrganizerList from './coOrganizer';
+import Deadline from './deadLine';
 import { graphql, compose } from 'react-apollo';
 import { functions } from 'containers/layout/appbar/helpers';
 
@@ -15,10 +16,7 @@ class Index extends Component {
     if (this.props.currentConference) {
       conference = this.props.currentConference;
     } else return window.location.reload();
-    // khai bao conference dua tren query getConferenceByID
     const coOrganizerDetails = conference.coOrganizerDetails;
-    // khai bao coOrganizerDetails dua tren query coOrganizerDetails bang getConferenceByID
-
     const roles = localStorage.getItem('roles');
     const isShow = functions.checkRoleAllComponents(roles);
     return (
@@ -46,8 +44,14 @@ class Index extends Component {
                 conference={conference}
                 onSubmit={() => {}}
               />
-              {/* truyen conference qua conferenceInfo  */}
             </Tab>
+            {isShow['edit-deadline'] ? (
+              <Tab label="Set Deadline">
+                <Deadline onSubmit={() => {}} conferenceId={conference.id} />
+              </Tab>
+            ) : (
+              ''
+            )}
             {isShow['view-co-organizer'] ? (
               <Tab label="Co-Organizer">
                 <CoOrganizerList
@@ -79,5 +83,6 @@ export default compose(
   graphql(queries.ME_QUERY, {
     name: 'queryMe',
   }),
+
   connect(mapStateToProps, undefined),
 )(Index);

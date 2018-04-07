@@ -8,6 +8,7 @@ const CustomDatePicker = ({
   ...custom
 }) => (
   <DatePicker
+    mode="landscape"
     errorText={touched && error}
     onChange={(e, val) => {
       return input.onChange(val);

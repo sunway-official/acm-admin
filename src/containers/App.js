@@ -10,6 +10,7 @@ import ConferenceInfo from '../pages/conference/info';
 import Paper from '../pages/paper';
 import PaperAdd from '../pages/paper/add';
 import PaperEdit from '../pages/paper/edit';
+import PaperDetail from '../pages/paper/detail';
 import ConferenceStaffList from '../pages/conference/people/staff';
 import UserProfile from '../pages/conference/people/userProfile/userProfile';
 import Dashboard from '../pages/dashboard';
@@ -36,6 +37,8 @@ import EditActivityPaper from '../pages/schedule/editActivity/editAcitvityPaper'
 import EditActivityTitle from '../pages/schedule/editActivity/editAcitvityTitle';
 import AddCoOrganizer from '../pages/conference/info/coOrganizer/add';
 import EditCoOrganizer from '../pages/conference/info/coOrganizer/edit';
+import UploadFile from '../pages/uploadFile';
+import ReactRating from '../pages/react-rating';
 
 export default () => (
   <MuiThemeProvider muiTheme={muiTheme}>
@@ -53,6 +56,8 @@ export default () => (
         <Switch>
           <AuthRoute needAuth exact path="/" component={Dashboard} />
           <AuthRoute path="/conference/info" component={ConferenceInfo} />
+          <AuthRoute path="/upload" component={UploadFile} />
+          <AuthRoute path="/react-rating" component={ReactRating} />
           <AuthRoute path="/conference/add" component={Addconference} />
           <AuthRoute
             path="/conference/add-co-organizer"
@@ -119,6 +124,12 @@ export default () => (
             exact
             path="/conference/papers"
             component={Paper}
+          />
+          <AuthRoute
+            needAuth
+            exact
+            path="/conference/paper/detail/:id"
+            component={PaperDetail}
           />
           <AuthRoute
             needAuth

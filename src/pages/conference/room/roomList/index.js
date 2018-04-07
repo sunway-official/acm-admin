@@ -106,7 +106,7 @@ class RoomList extends Component {
             <Link
               to={`/conference/rooms-management/room-detail/${props.value}`}
             >
-              <RaisedButton label="Edit" primary={true} />
+              <RaisedButton label="Edit" default={true} />
             </Link>
             <RaisedButton
               secondary={true}

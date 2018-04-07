@@ -31,22 +31,22 @@ class Index extends Component {
       papers: [],
     };
     this.handleEdit = this.handleEdit.bind(this);
-    this.mapReviewer = this.mapReviewer.bind(this);
+    this.mapAuthor = this.mapAuthor.bind(this);
   }
   handleEdit(paper) {
     this.props.setPaper(paper);
   }
-  mapReviewer(reviewers) {
+  mapAuthor(authors) {
     let result = '';
-    reviewers.forEach((element, index) => {
+    authors.forEach((element, index) => {
       // eslint-disable-next-line
-      if (index != reviewers.length - 1) {
-        result = result + ' ' + element.reviewer_name + ', ';
+      if (index != authors.length - 1) {
+        result = result + ' ' + element.author_name + ', ';
       } else {
         if (index === 2) {
           result = result + '...';
         } else {
-          result = result + ' ' + element.reviewer_name;
+          result = result + ' ' + element.author_name;
         }
       }
     });
@@ -62,44 +62,46 @@ class Index extends Component {
       {
         Header: 'Title',
         accessor: 'title',
-        minWidth: 300,
+        minWidth: 250,
         Cell: props => <div style={style}>{cutString(props.value, 41)}</div>,
       },
       {
-        Header: 'Reviewers',
-        minWidth: 200,
-        accessor: 'reviewers',
+        Header: 'Authors',
+        minWidth: 150,
+        accessor: 'authors',
         // eslint-disable-next-line
         show: role == 1 ? true : false,
-        Cell: props => <div style={style}>{this.mapReviewer(props.value)}</div>,
+        Cell: props => <div style={style}>{this.mapAuthor(props.value)}</div>,
       },
       {
         Header: 'Topic',
-        minWidth: 150,
+        minWidth: 100,
         accessor: 'topic_name',
         Cell: props => <div style={style}>{props.value}</div>,
       },
-      // {
-      //   Header: 'Status',
-      //   minWidth: 150,
-      //   accessor: 'status',
-      //   Cell: props => <div style={style}>{props.value}</div>,
-      // },
+      {
+        Header: 'Status',
+        minWidth: 100,
+        accessor: 'status',
+        // eslint-disable-next-line
+        show: role == 1 ? true : false,
+        Cell: props => <div style={style}>{props.value}</div>,
+      },
       {
         Header: 'Action',
-        minWidth: 170,
+        minWidth: 200,
         filterable: false,
         accessor: '',
         Cell: props => (
           <div style={{ textAlign: 'left', paddingLeft: '15%' }}>
             <RaisedButton
               label="View"
-              primary={true}
+              default={true}
               onClick={() => {
                 this.handleEdit(props.value);
               }}
               containerElement={
-                <Link to={`/conference/paper/edit/${props.value.id}`} />
+                <Link to={`/conference/paper/detail/${props.value.id}`} />
               }
             />
             {// eslint-disable-next-line
@@ -111,7 +113,11 @@ class Index extends Component {
             role === '7' && // if user is an author
             (props.value.status === 'Submitting' ||
               props.value.status === 'Re-submitting') ? ( // and if paper status is submitting or re-submitting
-              <RaisedButton label="Submit" secondary={true} style={styleBtn} />
+              <RaisedButton
+                label="Re-Submit"
+                secondary={true}
+                style={styleBtn}
+              />
             ) : (
               ''
             )}
