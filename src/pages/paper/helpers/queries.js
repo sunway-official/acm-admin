@@ -76,30 +76,13 @@ const GET_PAPER_BY_ID = gql`
       id
       conference {
         id
-      }
-      papersTopic {
-        topic_name
-      }
-      authors {
-        id
-        author_name
-        author_title
-        corresponding
-      }
-      status
-      title
-      abstract
-      keywords
-      conference {
-        id
+        dl_review_abstract
+        dl_re_review_abstract
+        dl_review_paper
+        dl_re_review_paper
       }
       papersTopic {
         id
-      }
-      file
-      reviewers {
-        id
-        reviewer_name
       }
       authors {
         id
@@ -126,6 +109,12 @@ const GET_PAPER_BY_ID = gql`
         content
         comment
       }
+      topic_name
+      status
+      title
+      abstract
+      keywords
+      file
     }
   }
 `;

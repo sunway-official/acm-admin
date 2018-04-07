@@ -103,7 +103,7 @@ class TopicList extends Component {
             <Link
               to={`/conference/topics-management/topic-detail/${props.value}`}
             >
-              <RaisedButton label="Edit" primary={true} />
+              <RaisedButton label="Edit" default={true} />
             </Link>
             <RaisedButton
               className="marginLeft"
@@ -119,7 +119,7 @@ class TopicList extends Component {
     const actionDelete = [
       <RaisedButton
         label="Yes"
-        primary={true}
+        default={true}
         onClick={this.handleDelete}
         type="submit"
       />,

@@ -39,6 +39,7 @@ class MultipleSelect extends Component {
           paper_status_id: 5,
         },
       });
+      window.location.reload();
     } catch (error) {
       console.log(error);
     }
@@ -76,7 +77,7 @@ class MultipleSelect extends Component {
           {this.menuItems(values)}
         </SelectField>
         <RaisedButton
-          className="btn save-change"
+          className="btn paper-save-change"
           label="Save Change"
           primary={true}
           type="submit"

@@ -72,7 +72,7 @@ class Index extends Component {
             <IconButton>
               <ActionHome />
             </IconButton>
-            <span>Conference Information</span>
+            <span>Dashboard</span>
           </Link>
           <IconButton>
             <HardwareKeyboardArrowRight />
