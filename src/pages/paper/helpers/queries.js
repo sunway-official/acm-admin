@@ -81,9 +81,7 @@ const GET_PAPER_BY_ID = gql`
         dl_review_paper
         dl_re_review_paper
       }
-      papersTopic {
-        topic_name
-      }
+      topic_name
       authors {
         id
         author_name
@@ -106,6 +104,7 @@ const GET_PAPER_BY_ID = gql`
         comment
       }
       keywords
+      file
     }
   }
 `;

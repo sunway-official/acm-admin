@@ -4,6 +4,7 @@ import './style.css';
 import { RaisedButton } from 'material-ui';
 import * as moment from 'moment';
 
+const S3_GET_PREFIX = process.env.REACT_APP_S3_GET_PREFIX;
 const styleBtn = {
   margin: '0px 10px',
 };
@@ -29,7 +30,7 @@ const OrganizerDetail = props => {
             <Col xs={3} className="paper-detail-title">
               Topics
             </Col>
-            <Col xs={9}>{props.paper.papersTopic.topic_name}</Col>
+            <Col xs={9}>{props.paper.topic_name}</Col>
           </Row>
           <Row around="xs" className="card-detail-row">
             <Col xs={3} className="paper-detail-title">
@@ -46,28 +47,35 @@ const OrganizerDetail = props => {
         </Col>
         <Col xs={12} sm={12} md={4} lg={4} className="paper-col">
           <Row className="card-detail-row first-row">
-            <Col xs={3} className="paper-detail-title">
+            <Col xs={5} className="paper-detail-title">
               Review deadline
             </Col>
-            <Col xs={9}>{reviewDeadline}</Col>
+            <Col xs={7}>{reviewDeadline}</Col>
           </Row>
           <Row around="xs" className="card-detail-row">
-            <Col xs={3} className="paper-detail-title">
+            <Col xs={5} className="paper-detail-title">
               Download paper
             </Col>
-            <Col xs={9}>
-              <u style={{ color: 'rgb(114, 181, 240)' }}>
-                Click here to download!
-              </u>
+            <Col xs={7}>
+              {props.paper.file && (
+                <a href={S3_GET_PREFIX + props.paper.file} target="_blank">
+                  Click here
+                </a>
+              )}
             </Col>
           </Row>
-          <Row around="xs" className="card-detail-row">
-            <RaisedButton
-              label="Review now"
-              secondary={true}
-              style={styleBtn}
-            />
-          </Row>
+          {props.paper.status === 'Reviewing' ||
+          props.paper.status === 'Re-reviewing' ? ( // and if paper status is reviewing or re-reviewing
+            <Row around="xs" className="card-detail-row">
+              <RaisedButton
+                label="Review now"
+                secondary={true}
+                style={styleBtn}
+              />
+            </Row>
+          ) : (
+            <div />
+          )}
         </Col>
       </Row>
     </Grid>

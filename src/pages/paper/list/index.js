@@ -60,12 +60,6 @@ class Index extends Component {
     papers = this.props.GET_PAPERS_BY_CONFERENCE_ID.getPapersByConferenceID; // get all paper by role
     const columns = [
       {
-        Header: 'Id',
-        accessor: '',
-        minWidth: 50,
-        Cell: props => <div style={style} />,
-      },
-      {
         Header: 'Title',
         accessor: 'title',
         minWidth: 250,
