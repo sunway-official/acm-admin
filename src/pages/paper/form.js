@@ -88,7 +88,7 @@ class EditPaperForm extends Component {
               })}
             </Field>
           </div>
-          <div className="d-flex form-group">
+          <div className="d-flex form-group file-field">
             <label>File :</label>
             <Field
               name="file"
