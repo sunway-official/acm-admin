@@ -5,9 +5,21 @@ const GET_CURRENT_CONFERENCE = gql`
     getCurrentConference {
       id
       title
-      description
       start_date
       end_date
+      dl_submit_abstract
+      dl_review_abstract
+      dl_release_abstract
+      dl_re_submit_abstract
+      dl_re_review_abstract
+      dl_release_final_abstract
+      dl_submit_paper
+      dl_review_paper
+      dl_release_paper
+      dl_re_submit_paper
+      dl_re_review_paper
+      dl_release_final_paper
+      dl_registration
       address {
         id
         lat
@@ -17,6 +29,7 @@ const GET_CURRENT_CONFERENCE = gql`
         id
         name
         email
+        address
         website
         phone
       }
@@ -51,6 +64,7 @@ const GET_CONFERENCE_BY_ID_QUERY = gql`
         name
         email
         website
+        address
         phone
       }
       coOrganizerDetails {
@@ -110,6 +124,7 @@ const ME_QUERY = gql`
           email
           website
           phone
+          address
         }
       }
     }

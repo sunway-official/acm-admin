@@ -42,12 +42,11 @@ class ConferenceInfoForm extends PureComponent {
   async handleUpdateConferenceInfo({
     title,
     description,
-    startDate,
-    endDate,
     organizerName,
     organizerEmail,
     organizerWebsite,
     organizerPhoneNumber,
+    organizerAddress,
   }) {
     try {
       const conference = await this.props.UPDATE_CONFERENCE_MUTATION({
@@ -55,8 +54,6 @@ class ConferenceInfoForm extends PureComponent {
           id: this.props.conference_id,
           title: title,
           description: description,
-          start_date: startDate,
-          end_date: endDate,
         },
       });
       const organizer = await this.props.UPDATE_ORGANIZER_DETAIL_MUTATION({
@@ -66,6 +63,7 @@ class ConferenceInfoForm extends PureComponent {
           email: organizerEmail,
           website: organizerWebsite,
           phone: organizerPhoneNumber,
+          address: organizerAddress,
         },
       });
       let address;
@@ -137,10 +135,11 @@ const mapStateToProps = (state, ownProps) => {
     initialValues: {
       title: conference.title,
       description: conference.description,
-      startDate: new Date(conference.start_date),
-      endDate: new Date(conference.end_date),
+      start_date: new Date(conference.start_date),
+      end_date: new Date(conference.end_date),
       lat: parseFloat(conference.address.lat),
       long: parseFloat(conference.address.long),
+      organizerAddress: organizer.address,
       organizerName: organizer.name,
       organizerEmail: organizer.email,
       organizerWebsite: organizer.website,

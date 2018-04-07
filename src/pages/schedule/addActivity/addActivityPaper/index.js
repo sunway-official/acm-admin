@@ -91,7 +91,7 @@ class Index extends Component {
           </IconButton>
           <span>Add Activity with Paper</span>
         </div>
-        <div className="dashboard  content d-flex">
+        <div className="dashboard content d-flex">
           <AddActivityPaper
             topics={topics}
             rooms={rooms}

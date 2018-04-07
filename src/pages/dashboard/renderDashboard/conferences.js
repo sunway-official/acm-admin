@@ -4,9 +4,9 @@ import { graphql, compose, gql } from 'react-apollo';
 import { List, ListItem } from 'material-ui/List';
 import Badge from 'material-ui/Badge';
 import style from './../style.css';
-//import { RaisedButton } from 'material-ui';
+import { RaisedButton } from 'material-ui';
 import Loading from '../../../components/render/renderLoading';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 
 const subTitleString = (text, limit) => {
   if (text.length > limit) return text.substring(0, limit);
@@ -41,10 +41,9 @@ class listCoferences extends React.Component {
   render() {
     const { loading, getAllConferencesByUserID } = this.props.data;
     if (loading) return <Loading />;
-
     const conferences = getAllConferencesByUserID;
     return (
-      <div className="list-dashboard">
+      <section className="list-dashboard">
         <style dangerouslySetInnerHTML={{ __html: style }} />
         <div className="list-conf">
           MY LIST CONFERENCES
@@ -71,14 +70,14 @@ class listCoferences extends React.Component {
               />
             );
           })}
-          {/* <RaisedButton
+          <RaisedButton
             label="Create new conference"
             fullWidth={true}
             primary={true}
             containerElement={<Link to={`/conference/add`} />}
-          /> */}
+          />
         </List>
-      </div>
+      </section>
     );
   }
 }
@@ -104,13 +103,7 @@ export const ME_QUERY = gql`
 
 export default compose(
   withRouter,
-  graphql(queries.GET_ALL_CONFERENCES_BY_USER_ID_QUERY, {
-    options: ownProps => ({
-      variables: {
-        user_id: ownProps.user_id,
-      },
-    }),
-  }),
+  graphql(queries.GET_ALL_CONFERENCES_BY_USER_ID_QUERY, {}),
   graphql(SWITCH_CURRENT_CONFERENCE, {
     name: 'SWITCH_CURRENT_CONFERENCE',
   }),

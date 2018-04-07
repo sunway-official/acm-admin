@@ -80,7 +80,7 @@ class ParticipantList extends Component {
           <div className="action-column">
             <RaisedButton
               label="View Detail"
-              primary={true}
+              default={true}
               onClick={() => this.handleOpenDelete(props.value)}
               icon={<ActionVisibility />}
             />

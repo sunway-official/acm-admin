@@ -132,7 +132,7 @@ class Index extends Component {
           <div style={style}>
             <RaisedButton
               label="Edit"
-              primary={true}
+              default={true}
               onClick={() => {
                 this.props.history.push(
                   `/conference/edit-co-organizer/${props.value.id}`,
@@ -154,15 +154,16 @@ class Index extends Component {
 
     return (
       <div>
-        <ReactTable
-          filterable
-          data={coOrganizerDetails}
-          columns={columns}
-          defaultSorted={sorted}
-          defaultPageSize={5}
-          className="-striped -highlight"
-        />
-
+        <section>
+          <ReactTable
+            filterable
+            data={coOrganizerDetails}
+            columns={columns}
+            defaultSorted={sorted}
+            defaultPageSize={5}
+            className="-striped -highlight"
+          />
+        </section>
         <Dialog
           title={<p>Do you want to delete {this.state.coOrganizerName} ?</p>}
           modal={true}
@@ -172,7 +173,6 @@ class Index extends Component {
         />
         <div className="d-flex btn-group justify-content-center marginBottom">
           <RaisedButton
-            style={{ marginTop: '20px' }}
             label="Add Co-Organizer"
             primary={true}
             disabled={this.state.disableAdd}
