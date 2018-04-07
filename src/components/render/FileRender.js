@@ -12,7 +12,9 @@ class FileInput extends React.Component {
   }
 
   render() {
-    return <input type="file" onChange={this.onChange} />;
+    return (
+      <input accept="application/pdf" type="file" onChange={this.onChange} />
+    );
   }
 }
 
