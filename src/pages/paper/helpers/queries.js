@@ -81,27 +81,8 @@ const GET_PAPER_BY_ID = gql`
         dl_review_paper
         dl_re_review_paper
       }
-      topic_name
-      authors {
-        id
-        author_name
-        author_title
-        corresponding
-      }
-      status
-      title
-      abstract
-      keywords
-      conference {
-        id
-      }
       papersTopic {
         id
-      }
-      file
-      reviewers {
-        id
-        reviewer_name
       }
       authors {
         id
@@ -128,6 +109,10 @@ const GET_PAPER_BY_ID = gql`
         content
         comment
       }
+      topic_name
+      status
+      title
+      abstract
       keywords
       file
     }
