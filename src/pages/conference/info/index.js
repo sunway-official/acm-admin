@@ -46,7 +46,7 @@ class Index extends Component {
               />
             </Tab>
             {isShow['edit-deadline'] ? (
-              <Tab label="Set Deadline">
+              <Tab label="Set Conference Date">
                 <Deadline onSubmit={() => {}} conferenceId={conference.id} />
               </Tab>
             ) : (

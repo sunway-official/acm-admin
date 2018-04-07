@@ -154,15 +154,16 @@ class Index extends Component {
 
     return (
       <div>
-        <ReactTable
-          filterable
-          data={coOrganizerDetails}
-          columns={columns}
-          defaultSorted={sorted}
-          defaultPageSize={5}
-          className="-striped -highlight"
-        />
-
+        <section>
+          <ReactTable
+            filterable
+            data={coOrganizerDetails}
+            columns={columns}
+            defaultSorted={sorted}
+            defaultPageSize={5}
+            className="-striped -highlight"
+          />
+        </section>
         <Dialog
           title={<p>Do you want to delete {this.state.coOrganizerName} ?</p>}
           modal={true}

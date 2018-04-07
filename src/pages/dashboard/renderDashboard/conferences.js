@@ -43,7 +43,7 @@ class listCoferences extends React.Component {
     if (loading) return <Loading />;
     const conferences = getAllConferencesByUserID;
     return (
-      <div className="list-dashboard">
+      <section className="list-dashboard">
         <style dangerouslySetInnerHTML={{ __html: style }} />
         <div className="list-conf">
           MY LIST CONFERENCES
@@ -77,7 +77,7 @@ class listCoferences extends React.Component {
             containerElement={<Link to={`/conference/add`} />}
           />
         </List>
-      </div>
+      </section>
     );
   }
 }

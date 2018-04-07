@@ -39,6 +39,9 @@
         &.end {
           width: 38px !important;
         }
+        &.startDate {
+          width: 179px !important;
+        }
         &.schedule-date {
           width: 180px !important;
         }
@@ -54,7 +57,8 @@
     }
 
     .map {
-      width: 70% !important;
+      width: 48% !important;
+      margin: 20px 0 0 0;
       &.add {
         width: 100% !important;
       }

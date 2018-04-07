@@ -70,7 +70,10 @@ class MyCalendar extends React.PureComponent {
           </IconButton>
           <span>Activity Schedule</span>
         </div>
-        <div className="dashboard content d-flex">
+        <div
+          className="dashboard content d-flex"
+          style={{ background: 'white' }}
+        >
           <BigCalendar
             style={style}
             popup
