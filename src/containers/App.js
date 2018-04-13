@@ -17,7 +17,6 @@ import Dashboard from '../pages/dashboard';
 import NoMatch from '../pages/NoMatch';
 import Schedule from '../pages/schedule';
 import WithThunk from '../pages/withThunk';
-
 import { muiTheme } from '../theme';
 import Wrapper from './wrapper';
 import LandingPage from '../pages/landingPage';
@@ -39,7 +38,7 @@ import AddCoOrganizer from '../pages/conference/info/coOrganizer/add';
 import EditCoOrganizer from '../pages/conference/info/coOrganizer/edit';
 import UploadFile from '../pages/uploadFile';
 import ReactRating from '../pages/react-rating';
-
+import InviteUser from '../pages/inviteUser';
 export default () => (
   <MuiThemeProvider muiTheme={muiTheme}>
     <Switch>
@@ -155,7 +154,6 @@ export default () => (
             path="/conference/activities/add-activity-paper"
             component={AddActivityPaper}
           />
-
           <AuthRoute
             needAuth
             exact
@@ -174,7 +172,12 @@ export default () => (
             path="/conference/activities/edit-activity-title/:id"
             component={EditActivityTitle}
           />
-
+          <AuthRoute
+            needAuth
+            exact
+            path="/invite-user"
+            component={InviteUser}
+          />
           <AuthRoute exact path="/conference/activities" component={Schedule} />
           <AuthRoute path="/withThunk" component={WithThunk} />
           <AuthRoute component={NoMatch} />
