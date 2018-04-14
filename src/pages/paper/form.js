@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import AddAuthors from './add/addAuthors';
 import { FieldArray } from 'redux-form';
 import FileInput from 'components/render/FileRender';
+import { countryData } from './countryData';
 
 class EditPaperForm extends Component {
   constructor(props) {
@@ -34,7 +35,7 @@ class EditPaperForm extends Component {
         onSubmit={handleSubmit}
       >
         {/* paper */}
-        <div className="paper-submit-block mt-50">
+        <div className="paper-submit-block">
           <Subheader className="subheader submit-header">
             Paper Information
           </Subheader>
@@ -48,13 +49,13 @@ class EditPaperForm extends Component {
             />
           </div>
           <div className="d-flex form-group">
-            <label>Abstract :</label>
+            <label className="mt30">Abstract :</label>
             <Field
               name="abstract"
               component={CustomInput}
               fullWidth={true}
               multiLine
-              rows={1}
+              rows={2}
               hintText="Paper Abstract"
             />
           </div>
@@ -125,10 +126,20 @@ class EditPaperForm extends Component {
             <label>Country :</label>
             <Field
               name="country"
-              component={CustomInput}
+              component={renderSelectField}
               fullWidth={true}
-              hintText="Enter the country"
-            />
+              hintText="Choose the country"
+            >
+              {countryData.map(country => {
+                return (
+                  <MenuItem
+                    key={country.label}
+                    value={country.label}
+                    primaryText={country.label}
+                  />
+                );
+              })}
+            </Field>
           </div>
           <div className="d-flex form-group">
             <label>Zipcode :</label>

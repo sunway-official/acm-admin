@@ -17,6 +17,10 @@ const validate = values => {
     }
   });
 
+  if (isNaN(Number(values.zipcode))) {
+    errors.zipcode = 'Zipcode is a number';
+  }
+
   return errors;
 };
 export default validate;

@@ -64,7 +64,7 @@ class Index extends Component {
       let paper;
       paper = await this.props.INSERT_PAPER({
         variables: {
-          paper_status_id: 1,
+          paper_status_id: 3,
           title: values.title,
           abstract: values.abstract,
           keywords: values.keywords,
@@ -72,7 +72,6 @@ class Index extends Component {
           file: key,
         },
       });
-
       await this.props.INSERT_PAPER_TOPIC({
         variables: {
           paper_id: paper.data.insertPaper.id,
@@ -118,6 +117,7 @@ class Index extends Component {
         } else {
           console.log('no other authors');
         }
+        return 1;
       });
 
       this.showAlertSuccess();
@@ -158,7 +158,7 @@ class Index extends Component {
           </IconButton>
           <span>Add paper</span>
         </div>
-        <div className="dashboard content d-flex">
+        <div className="dashboard main-paper d-flex">
           <Form
             onSubmit={this.handleAdd}
             topics={topics}
