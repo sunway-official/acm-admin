@@ -102,7 +102,7 @@ class EditPaperForm extends Component {
         {/* corresponser */}
         <div className="paper-submit-block">
           <Subheader className="subheader submit-header">
-            Address For Corresponser
+            Address For Correspondence
           </Subheader>
           <div className="d-flex form-group">
             <label>Street :</label>
@@ -166,6 +166,7 @@ class EditPaperForm extends Component {
             primary={true}
             type="submit"
             disabled={pristine}
+            className="mr15"
           />
           <RaisedButton
             label="Cancel"

@@ -9,6 +9,7 @@ import { Subheader } from 'material-ui';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import { countryData } from '../countryData';
+import { titleData } from '../authorTitleData';
 
 const styles = {
   divider: {
@@ -26,42 +27,6 @@ const styles = {
     padding: 16,
   },
 };
-
-const titleData = [
-  {
-    value: 'Prof',
-    primaryText: 'Prof',
-  },
-
-  {
-    value: 'Ac Prof',
-    primaryText: 'Ac Prof',
-  },
-
-  {
-    value: 'AssProf',
-    primaryText: 'Ass Prof',
-  },
-
-  {
-    value: 'Dr',
-    primaryText: 'Dr',
-  },
-
-  {
-    value: 'Mr',
-    primaryText: 'Mr',
-  },
-
-  {
-    value: 'Ms',
-    primaryText: 'Ms',
-  },
-  {
-    value: 'Mrs',
-    primaryText: 'Mrs',
-  },
-];
 
 class AddAuthors extends React.Component {
   componentDidMount() {
