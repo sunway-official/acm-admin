@@ -1,5 +1,4 @@
 const validate = values => {
-  console.log('prop', values);
   const errors = {};
   const requiredFields = [
     'title',
@@ -34,7 +33,6 @@ const validate = values => {
   }
   if (values.title !== undefined) {
     abstractArr = values.title.split(' ');
-    console.log('pas');
     if (abstractArr.length > 15) {
       errors.title = 'Title must be shorter than 15 words';
     }
