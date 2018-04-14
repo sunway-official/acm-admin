@@ -33,7 +33,6 @@ class BadgeExampleSimple extends Component {
 
   handleTouchTapUser = event => {
     event.preventDefault();
-
     this.setState({
       openUser: true,
       anchorEl: event.currentTarget,
@@ -41,7 +40,6 @@ class BadgeExampleSimple extends Component {
   };
   handleTouchTapNotification = event => {
     event.preventDefault();
-
     this.setState({
       openNotification: true,
       anchorEl: event.currentTarget,
@@ -56,7 +54,6 @@ class BadgeExampleSimple extends Component {
   };
   handleTouchTapCalendar = event => {
     event.preventDefault();
-
     this.setState({
       openCalendar: true,
       anchorEl: event.currentTarget,
@@ -158,6 +155,16 @@ class BadgeExampleSimple extends Component {
                   primaryText="Switch conference"
                   onClick={this.handleToggleConference}
                 />
+              ) : (
+                ''
+              )}
+              {isShow['invite-user'] ? (
+                <Link to="/invite-user">
+                  <MenuItem
+                    primaryText="Invite Author/Reviewer"
+                    onClick={this.handleRequestClose}
+                  />
+                </Link>
               ) : (
                 ''
               )}

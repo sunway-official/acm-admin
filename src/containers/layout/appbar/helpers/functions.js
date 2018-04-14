@@ -71,6 +71,10 @@ export const getRolesComponent = () => {
       component: 'landing-page',
       roles: ['1'],
     },
+    {
+      component: 'invite-user',
+      roles: ['1'],
+    },
   ];
 };
 
