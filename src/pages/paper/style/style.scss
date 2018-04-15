@@ -10,8 +10,6 @@
 
 .paper-submit-block {
   padding: 20px 20px 30px 20px;
-  background-color: #eae6e65c;
-  border: 2px solid #dfd7d71f;
   border-radius: 8px;
   margin-top: 20px;
 }
@@ -34,4 +32,21 @@
 
 .file-field {
   margin-top: 20px;
+}
+
+.main-paper {
+  background-color: white !important;
+}
+
+.mt30 {
+  margin-top: 30px;
+}
+
+.error-txt {
+  color: rgb(244, 67, 54) !important;
+  font-size: 12px !important;
+}
+
+.mr15 {
+  margin-right: 15px;
 }
