@@ -24,7 +24,9 @@ class Index extends Component {
     const listParticipant = getAllParticipantsInConference;
     return (
       <div className="conference">
-        <Subheader className="subheader"> Participants Management</Subheader>
+        <Subheader className="subheader">
+          {localStorage.getItem('conferenceTitle')}
+        </Subheader>
         <div className="page-breadcrumb d-flex">
           <Link className="d-flex" to="/">
             <IconButton>

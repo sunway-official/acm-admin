@@ -16,13 +16,14 @@ class Index extends Component {
     if (this.props.currentConference) {
       conference = this.props.currentConference;
     } else return window.location.reload();
+    localStorage.setItem('conferenceTitle', conference.title);
     const coOrganizerDetails = conference.coOrganizerDetails;
     const roles = localStorage.getItem('roles');
     const isShow = functions.checkRoleAllComponents(roles);
     return (
       <div className="conference">
         <Subheader className="subheader conf-infor-title">
-          Conference Information
+          {localStorage.getItem('conferenceTitle')}
         </Subheader>
         <div className="page-breadcrumb d-flex">
           <Link className="d-flex" to="/">

@@ -147,7 +147,7 @@ class BadgeExampleSimple extends Component {
               {isShow['invite-user'] ? (
                 <Link to="/invite-user">
                   <MenuItem
-                    primaryText="Invite Author/Reviewer"
+                    primaryText="Author/Reviewer Invitation"
                     onClick={this.handleRequestClose}
                   />
                 </Link>

@@ -56,7 +56,7 @@ class MyCalendar extends React.PureComponent {
     return (
       <div className="conference">
         <Subheader className="subheader paper-title">
-          Activity Schedule
+          {localStorage.getItem('conferenceTitle')}
         </Subheader>
         <div className="page-breadcrumb d-flex">
           <Link className="d-flex" to="/">
@@ -70,7 +70,7 @@ class MyCalendar extends React.PureComponent {
           </IconButton>
           <span>Activity Schedule</span>
         </div>
-        <div
+        <section
           className="dashboard content d-flex"
           style={{ background: 'white' }}
         >
@@ -112,7 +112,7 @@ class MyCalendar extends React.PureComponent {
           <div id="format-time">
             <Toggle label="24h" onToggle={this.handleTimeFormat} />
           </div>
-        </div>
+        </section>
       </div>
     );
   }

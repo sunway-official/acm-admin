@@ -11,7 +11,7 @@ class Form extends Component {
     return (
       <section style={{ width: '70%' }}>
         <form className="form conference-info" onSubmit={handleSubmit}>
-          <Subheader className="subtitle">Invite User</Subheader>
+          <Subheader className="subtitle">Author/Reviewer Invitation</Subheader>
           <div style={{ padding: '30px' }}>
             <div className="d-flex form-group">
               <label>Title :</label>
