@@ -1,0 +1,119 @@
+//list conf
+.card-content-dashboard {
+  width: 60%;
+  margin-top: 20px;
+  margin-right: 2%;
+  margin-left: 1%;
+  background: url('./../../images/conf-dashboard.png') no-repeat;
+  background-size: 100% auto;
+  height: 485px;
+}
+
+.list-conf {
+  background-color: rgb(62, 85, 102);
+  padding-bottom: 20px;
+  padding-top: 1px;
+  margin-bottom: -9px;
+  font-size: 16px;
+  color: white;
+  text-align: center;
+
+  .icon-conference {
+    padding-right: 7px !important;
+  }
+}
+
+.listitem-conf {
+  border-top: 1px solid rgb(216, 213, 213) !important;
+  padding-top: 0px !important;
+  color: black !important;
+  padding-bottom: 10px;
+}
+
+.listitem-add-conf {
+  background-color: rgb(62, 85, 102) !important;
+  color: white !important;
+  height: 48px !important;
+  text-transform: uppercase;
+  font-weight: bold !important;
+  text-align: center;
+  padding-left: 8% !important;
+
+  div {
+    div {
+      padding: 0 auto !important;
+    }
+  }
+}
+
+.data {
+  display: flex;
+}
+
+//menu
+.menu-dashboard {
+  margin-left: -3% !important;
+  padding-bottom: 4px;
+}
+.navbar {
+  h1 {
+    display: none;
+  }
+
+  button {
+    display: none;
+  }
+  .space {
+    flex: 1 1 0% !important;
+  }
+  // eslint-disable-next-line
+  .logo {
+    height: 30px;
+    margin-left: 0 !important;
+  }
+}
+
+.dashboard {
+  padding-left: 0% !important;
+  padding-right: 7% !important;
+  .conferences {
+    display: flex;
+  }
+
+  .content {
+    height: 100% !important;
+    padding: 0px !important;
+  }
+}
+
+.list-dashboard {
+  float: right;
+  width: 36%;
+  box-sizing: border-box;
+}
+
+.paper-title {
+  margin-left: 0px !important;
+  width: 95% !important;
+}
+
+#content {
+  width: 102%;
+}
+
+.organizer-inf {
+  text-align: center !important;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.add-form-bg {
+  background-color: white !important;
+}
+
+.btn {
+  margin-right: 20px;
+}
+.user-name {
+  font-weight: 600;
+}
