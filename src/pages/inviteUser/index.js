@@ -43,7 +43,9 @@ class Index extends Component {
   render() {
     return (
       <div className="conference">
-        <Subheader className="subheader">Invite User</Subheader>
+        <Subheader className="subheader">
+          {localStorage.getItem('conferenceTitle')}
+        </Subheader>
         <div className="page-breadcrumb d-flex">
           <Link className="d-flex" to="/">
             <IconButton>
@@ -54,7 +56,7 @@ class Index extends Component {
           <IconButton>
             <HardwareKeyboardArrowRight />
           </IconButton>
-          <span>Invite User</span>
+          <span>Author/Reviewer Invitation</span>
         </div>
         <div className="dashboard content d-flex justify-content-center">
           <Form onSubmit={this.handleSubmit} />

@@ -59,7 +59,9 @@ class Index extends Component {
     const end_date = conference.end_date;
     return (
       <div className="conference">
-        <Subheader className="subheader"> Activity Management</Subheader>
+        <Subheader className="subheader">
+          {localStorage.getItem('conferenceTitle')}
+        </Subheader>
         <div className="page-breadcrumb d-flex">
           <Link className="d-flex" to="/">
             <IconButton>

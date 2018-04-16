@@ -66,7 +66,9 @@ class Index extends Component {
     const topicDetail = getTopicByID;
     return (
       <div className="conference">
-        <Subheader className="subheader"> Topic Detail</Subheader>
+        <Subheader className="subheader">
+          {localStorage.getItem('conferenceTitle')}
+        </Subheader>
         <div className="page-breadcrumb d-flex">
           <Link className="d-flex" to="/">
             <IconButton>
