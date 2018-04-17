@@ -52,7 +52,7 @@ class AddConferenceForm extends React.Component {
         </section>
         <section className="section-deadline">
           <Subheader className="subtitle">
-            Absrtact Submission Deadline
+            Abstract Submission Deadline
           </Subheader>
           <div className="d-flex flex-wrap justify-content-center">
             {abstractDeadlineArr.map((data, index) => {

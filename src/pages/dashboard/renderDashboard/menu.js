@@ -8,6 +8,7 @@ import { withRouter } from 'react-router';
 import { AppBar } from 'material-ui';
 import { images } from './../../../theme';
 import style from './../style.css';
+import { Link } from 'react-router-dom';
 
 class DashboardMenu extends Component {
   constructor(props) {
@@ -77,6 +78,12 @@ class DashboardMenu extends Component {
               onRequestClose={this.handleRequestClose}
             >
               <Menu>
+                <Link to="/user-profile">
+                  <MenuItem
+                    primaryText="User Profile"
+                    onClick={this.handleRequestClose}
+                  />
+                </Link>
                 <MenuItem primaryText="Sign out" onClick={this.handleSignOut} />
               </Menu>
             </Popover>

@@ -1,12 +1,13 @@
 import React from 'react';
 import { reduxForm, Field } from 'redux-form';
-import { Subheader, RaisedButton } from 'material-ui';
+import { Subheader, RaisedButton, MenuItem } from 'material-ui';
 import CustomInput from 'components/CustomInput';
 import AppMap from 'components/AppMap';
 import normalizePhone from 'utils/normalizePhone';
 import validate from './validate';
 import AlertContainer from 'react-alert';
 import { alertOptions, MyFaCheck } from 'theme/alert';
+import { renderSelectField } from 'components/render';
 
 class ConferenceInfoForm extends React.Component {
   state = {
@@ -27,8 +28,9 @@ class ConferenceInfoForm extends React.Component {
       initialValues,
       onMapPositionChanged,
       pristine,
+      categories,
     } = this.props;
-
+    console.log(initialValues);
     return (
       <form className="form conference-info" onSubmit={handleSubmit}>
         <div className="form-body d-flex justify-content-space-between">
@@ -79,6 +81,22 @@ class ConferenceInfoForm extends React.Component {
                   rowsMax={3}
                   fullWidth={true}
                 />
+              </div>
+              <div className="d-flex form-group">
+                <label>Category :</label>
+                <Field
+                  name="category_name"
+                  component={renderSelectField}
+                  fullWidth={true}
+                >
+                  {categories.map(value => (
+                    <MenuItem
+                      key={value.id}
+                      value={value.id}
+                      primaryText={value.name}
+                    />
+                  ))}
+                </Field>
               </div>
             </section>
             <section>

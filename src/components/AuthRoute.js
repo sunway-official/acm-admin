@@ -146,6 +146,8 @@ const ME_QUERY = gql`
         start_date
         end_date
         dl_submit_abstract
+        category_id
+        category_name
         address {
           id
           lat
