@@ -1,14 +1,4 @@
 //list conf
-.card-content-dashboard {
-  width: 60%;
-  margin-top: 20px;
-  margin-right: 2%;
-  margin-left: 1%;
-  background: url('./../../images/conf-dashboard.png') no-repeat;
-  background-size: 100% auto;
-  height: 485px;
-}
-
 .list-conf {
   background-color: rgb(62, 85, 102);
   padding-bottom: 20px;
@@ -87,9 +77,19 @@
 }
 
 .list-dashboard {
-  float: right;
-  width: 36%;
+  width: 100%;
   box-sizing: border-box;
+  .card-item {
+    margin-bottom: 20px;
+  }
+  .card-header {
+    span {
+      font-size: 20px !important;
+    }
+  }
+  .btn {
+    width: 100px;
+  }
 }
 
 .paper-title {

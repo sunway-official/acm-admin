@@ -7,6 +7,8 @@ const GET_CURRENT_CONFERENCE = gql`
       title
       start_date
       end_date
+      category_id
+      category_name
       dl_submit_abstract
       dl_review_abstract
       dl_release_abstract
@@ -140,6 +142,14 @@ export const GET_ALL_ROLE_OF_USER = gql`
     }
   }
 `;
+export const GET_ALL_CATEGORIES = gql`
+  query getAllCategories {
+    getAllCategories {
+      id
+      name
+    }
+  }
+`;
 
 export default {
   ME_QUERY,
@@ -147,4 +157,5 @@ export default {
   GET_CONFERENCE_BY_ID_QUERY,
   GET_ALL_ROLE_OF_USER,
   GET_CO_ORGANIZER_DETAIL_BY_ID,
+  GET_ALL_CATEGORIES,
 };
