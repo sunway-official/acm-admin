@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Subheader, IconButton, Tabs, Tab } from 'material-ui';
 import { Link } from 'react-router-dom';
-import { queries } from './helpers';
+import { queries, mutations } from './helpers';
 import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import ConferenceInfo from './conferenceInfo';
 import { connect } from 'react-redux';
@@ -9,8 +9,21 @@ import CoOrganizerList from './coOrganizer';
 import Deadline from './deadLine';
 import { graphql, compose } from 'react-apollo';
 import { functions } from 'containers/layout/appbar/helpers';
+import * as moment from 'moment';
 
 class Index extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  componentDidMount() {
+    this.props.UPDATE_ALL_STATUS_PAPERS({
+      variables: {
+        current_date: new Date(),
+      },
+    });
+  }
+
   render() {
     let conference;
     if (this.props.currentConference) {
@@ -83,6 +96,9 @@ const mapStateToProps = state => {
 export default compose(
   graphql(queries.ME_QUERY, {
     name: 'queryMe',
+  }),
+  graphql(mutations.UPDATE_ALL_STATUS_PAPERS, {
+    name: 'UPDATE_ALL_STATUS_PAPERS',
   }),
 
   connect(mapStateToProps, undefined),
