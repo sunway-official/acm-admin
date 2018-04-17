@@ -149,6 +149,7 @@ const INSERT_COORGANIZER = gql`
     }
   }
 `;
+
 const DELETE_COORGANIZER = gql`
   mutation deleteCoOrganizerDetail($id: ID!) {
     deleteCoOrganizerDetail(id: $id) {
@@ -164,6 +165,14 @@ const DELETE_COORGANIZER = gql`
   }
 `;
 
+const UPDATE_ALL_STATUS_PAPERS = gql`
+  mutation updateAllStatusPapers($current_date: Date!) {
+    updateAllStatusPapers(current_date: $current_date) {
+      status
+    }
+  }
+`;
+
 export default {
   UPDATE_ADDRESS_MUTATION,
   UPDATE_CONFERENCE_MUTATION,
@@ -171,4 +180,5 @@ export default {
   INSERT_COORGANIZER,
   UPDATE_COORGANIZER_MUTATION,
   DELETE_COORGANIZER,
+  UPDATE_ALL_STATUS_PAPERS,
 };
