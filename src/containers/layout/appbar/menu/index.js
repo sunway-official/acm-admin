@@ -98,7 +98,7 @@ class BadgeExampleSimple extends Component {
     }
 
     let disable_submit = false;
-    if (this.props.me !== undefined) {
+    if (this.props.me && this.props.me.currentConference) {
       const currentConferenceData = this.props.me.currentConference;
       const deadline_sbm_abs = currentConferenceData.dl_submit_abstract;
 
