@@ -5,8 +5,7 @@ import { Link } from 'react-router-dom';
 import { graphql, compose } from 'react-apollo';
 import { queries, mutations } from '../../helpers';
 import { AppBar } from 'material-ui';
-import '../style.css';
-import PaperInfo from '../paperInfo';
+import PaperInfo from '../../paperInfo';
 import ReviewQuestions from './reviewQuestions';
 import { Grid } from 'react-flexbox-grid';
 import AlertContainer from 'react-alert';
@@ -58,6 +57,9 @@ class Index extends Component {
         (element, index) => {
           let input = 'input' + (index + 1);
           let point = 'point' + (index + 1);
+          console.log(index + 1);
+          console.log(values[point]);
+          console.log(values[input]);
           INSERT_PAPER_REVIEW_QUESTION({
             variables: {
               paper_id: this.props.GET_PAPER_BY_ID.getPaperByID.id,
@@ -80,7 +82,7 @@ class Index extends Component {
     const loadingReviewQuestions = this.props.GET_ALL_REVIEW_QUESTIONS_QUERY
       .loading;
     if (loadingReviewQuestions || loadingPaper || loadingMe) return <Loading />;
-    const paperInfo = this.props.GET_PAPER_BY_ID.getPaperByID;
+    const paper = this.props.GET_PAPER_BY_ID.getPaperByID;
     const questions = this.props.GET_ALL_REVIEW_QUESTIONS_QUERY
       .getAllReviewQuestions;
     return (
@@ -106,12 +108,12 @@ class Index extends Component {
         </div>
         <AppBar
           className="landing-page-app-bar"
-          title={paperInfo.title}
+          title=""
           showMenuIconButton={false}
         />
         <div className="dashboard content d-flex">
           <Grid fluid className="paper-detail-grid">
-            <PaperInfo paperInfo={paperInfo} />
+            <PaperInfo paper={paper} />
             <ReviewQuestions
               questions={questions}
               onSubmit={this.handleSubmit}

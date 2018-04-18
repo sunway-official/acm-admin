@@ -5,8 +5,7 @@ import { Link } from 'react-router-dom';
 import { graphql, compose } from 'react-apollo';
 import { queries } from '../../helpers';
 import { AppBar } from 'material-ui';
-import '../style.css';
-import PaperInfo from '../paperInfo';
+import PaperInfo from '../../paperInfo';
 import ReviewComment from './reviewComments';
 import { Grid } from 'react-flexbox-grid';
 
@@ -21,7 +20,7 @@ class Index extends Component {
     const loadingReviewer = this.props.GET_USER_BY_ID_QUERY.loading;
     if (loadingPaper || loadingPaperReview || loadingReviewer)
       return <Loading />;
-    const paperInfo = this.props.GET_PAPER_BY_ID.getPaperByID;
+    const paper = this.props.GET_PAPER_BY_ID.getPaperByID;
     const reviewComments = this.props.GET_PAPER_REVIEW_BY_USER_ID_PAPER_ID_QUERY
       .getPaperReviewByUserIdPaperId;
     const reviewerInfo = this.props.GET_USER_BY_ID_QUERY.getUserByID;
@@ -54,7 +53,7 @@ class Index extends Component {
         />
         <div className="dashboard content d-flex">
           <Grid fluid className="paper-detail-grid">
-            <PaperInfo paperInfo={paperInfo} />
+            <PaperInfo paper={paper} />
             {role === '1' ? <ReviewerInfo reviewerInfo={reviewerInfo} /> : ''}
             {reviewComments.length > 0 ? (
               <ReviewComment reviewComments={reviewComments} />

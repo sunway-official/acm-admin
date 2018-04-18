@@ -6,6 +6,7 @@ import MenuItem from 'material-ui/MenuItem';
 // map paper review question
 const ReviewQuestions = props => {
   let reviewComments;
+  console.log(props.reviewComments);
   if (props.reviewComments.length > 0) {
     reviewComments = props.reviewComments.map(
       (comment, index) =>

@@ -9,7 +9,7 @@ import Loading from 'components/render/renderLoading';
 import { cutString } from '../../../utils/stringSolve';
 
 const style = {
-  textAlign: 'center',
+  paddingLeft: '12px',
   lineHeight: '200%',
 };
 

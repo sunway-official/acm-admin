@@ -108,6 +108,9 @@ const GET_PAPER_BY_ID = gql`
         review_question_id
         content
         comment
+        user {
+          id
+        }
       }
       topic_name
       status

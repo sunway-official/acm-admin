@@ -3,6 +3,7 @@ import { Col, Grid, Row } from 'react-flexbox-grid';
 import './style.css';
 import { RaisedButton } from 'material-ui';
 import * as moment from 'moment';
+import { Link } from 'react-router-dom';
 
 const S3_GET_PREFIX = process.env.REACT_APP_S3_GET_PREFIX;
 const styleBtn = {
@@ -67,11 +68,13 @@ const OrganizerDetail = props => {
           {props.paper.status === 'Reviewing' ||
           props.paper.status === 'Re-reviewing' ? ( // and if paper status is reviewing or re-reviewing
             <Row around="xs" className="card-detail-row">
-              <RaisedButton
-                label="Review now"
-                secondary={true}
-                style={styleBtn}
-              />
+              <Link to={`/conference/paper/review/${props.paper.id}`}>
+                <RaisedButton
+                  label="Review now"
+                  secondary={true}
+                  style={styleBtn}
+                />
+              </Link>
             </Row>
           ) : (
             <div />

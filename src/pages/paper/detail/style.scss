@@ -16,7 +16,6 @@
 
 .paper-review-row {
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
-  width: 98% !important;
 }
 
 .paper-review {
@@ -61,5 +60,5 @@
 }
 
 .reviewer-icon {
-  padding-top: 16px;
+  padding-top: 0px !important;
 }
