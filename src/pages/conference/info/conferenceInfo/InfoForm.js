@@ -85,7 +85,7 @@ class ConferenceInfoForm extends React.Component {
               <div className="d-flex form-group">
                 <label>Category :</label>
                 <Field
-                  name="category_name"
+                  name="category_id"
                   component={renderSelectField}
                   fullWidth={true}
                 >
