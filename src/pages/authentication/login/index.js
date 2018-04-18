@@ -26,7 +26,7 @@ class Login extends PureComponent {
       const {
         data: { login: { token, refreshToken } },
       } = await this.props.loginMutation({
-        variables: { email, password },
+        variables: { email, username: email, password },
       });
       localStorage.setItem('token', token);
       localStorage.setItem('refreshToken', refreshToken);
@@ -63,8 +63,12 @@ class Login extends PureComponent {
 }
 
 const LOGIN_MUTATION = gql`
-  mutation LoginMutation($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
+  mutation LoginMutation(
+    $email: String!
+    $username: String!
+    $password: String!
+  ) {
+    login(email: $email, username: $username, password: $password) {
       token
       refreshToken
     }

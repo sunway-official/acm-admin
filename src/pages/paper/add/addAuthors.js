@@ -8,6 +8,8 @@ import renderCheckbox from 'components/renderCheckbox';
 import { Subheader } from 'material-ui';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
+import { countryData } from '../countryData';
+import { titleData } from '../authorTitleData';
 
 const styles = {
   divider: {
@@ -25,42 +27,6 @@ const styles = {
     padding: 16,
   },
 };
-
-const titleData = [
-  {
-    value: 'Prof',
-    primaryText: 'Prof',
-  },
-
-  {
-    value: 'Ac Prof',
-    primaryText: 'Ac Prof',
-  },
-
-  {
-    value: 'AssProf',
-    primaryText: 'Ass Prof',
-  },
-
-  {
-    value: 'Dr',
-    primaryText: 'Dr',
-  },
-
-  {
-    value: 'Mr',
-    primaryText: 'Mr',
-  },
-
-  {
-    value: 'Ms',
-    primaryText: 'Ms',
-  },
-  {
-    value: 'Mrs',
-    primaryText: 'Mrs',
-  },
-];
 
 class AddAuthors extends React.Component {
   componentDidMount() {
@@ -117,6 +83,7 @@ class AddAuthors extends React.Component {
                   name={`${author}.title`}
                   component={renderSelectField}
                   fullWidth={true}
+                  hintText="Choose a title"
                 >
                   {titleData.map(title => {
                     return (
@@ -169,10 +136,20 @@ class AddAuthors extends React.Component {
                 <label>Country :</label>
                 <Field
                   name={`${author}.authorCountry`}
-                  component={CustomInput}
+                  component={renderSelectField}
                   fullWidth={true}
-                  hintText="Enter the country"
-                />
+                  hintText="Choose the country"
+                >
+                  {countryData.map(country => {
+                    return (
+                      <MenuItem
+                        key={country.label}
+                        value={country.label}
+                        primaryText={country.label}
+                      />
+                    );
+                  })}
+                </Field>
               </div>
               <div className="d-flex form-group">
                 <label>Zipcode :</label>
@@ -180,6 +157,7 @@ class AddAuthors extends React.Component {
                   name={`${author}.authorZipcode`}
                   component={CustomInput}
                   fullWidth={true}
+                  type="number"
                   hintText="Enter the zipcode"
                 />
               </div>

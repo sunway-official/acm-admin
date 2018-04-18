@@ -12,7 +12,22 @@ class FileInput extends React.Component {
   }
 
   render() {
-    return <input type="file" onChange={this.onChange} />;
+    const { meta: { touched, error, warning } } = this.props;
+    return (
+      <div>
+        <input
+          accept="application/pdf"
+          type="file"
+          onChange={this.onChange}
+          name={this.props.name}
+        />
+        <div className="error-txt">
+          {touched &&
+            ((error && <span>{error}</span>) ||
+              (warning && <span>{warning}</span>))}
+        </div>
+      </div>
+    );
   }
 }
 

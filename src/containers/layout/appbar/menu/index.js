@@ -6,7 +6,7 @@ import { compose, withApollo, graphql } from 'react-apollo';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
-import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 import { AppBar, Drawer } from 'material-ui';
 import ConfMgtSidebar from 'pages/conference/add';
 import { queries } from '../helpers';
@@ -33,7 +33,6 @@ class BadgeExampleSimple extends Component {
 
   handleTouchTapUser = event => {
     event.preventDefault();
-
     this.setState({
       openUser: true,
       anchorEl: event.currentTarget,
@@ -41,7 +40,6 @@ class BadgeExampleSimple extends Component {
   };
   handleTouchTapNotification = event => {
     event.preventDefault();
-
     this.setState({
       openNotification: true,
       anchorEl: event.currentTarget,
@@ -56,7 +54,6 @@ class BadgeExampleSimple extends Component {
   };
   handleTouchTapCalendar = event => {
     event.preventDefault();
-
     this.setState({
       openCalendar: true,
       anchorEl: event.currentTarget,
@@ -99,6 +96,19 @@ class BadgeExampleSimple extends Component {
     if (localStorage.getItem('roles')) {
       isAuthor = localStorage.getItem('roles').indexOf('7');
     }
+
+    let disable_submit = false;
+    if (this.props.me && this.props.me.currentConference) {
+      const currentConferenceData = this.props.me.currentConference;
+      const deadline_sbm_abs = currentConferenceData.dl_submit_abstract;
+
+      const now = new Date();
+
+      if (now.toISOString() < deadline_sbm_abs) {
+        disable_submit = true;
+      }
+    }
+
     return (
       <div className="menu">
         <style
@@ -106,14 +116,15 @@ class BadgeExampleSimple extends Component {
             __html: style,
           }}
         />
-        {isAuthor !== -1 && (
-          <RaisedButton
-            label="Submit paper"
-            primary={true}
-            className="submit-btn"
-            href="/conference/paper/add/"
-          />
-        )}
+        {disable_submit === true &&
+          isAuthor !== -1 && (
+            <FlatButton
+              label="Submit paper"
+              primary={true}
+              className="submit-btn"
+              href="/conference/paper/add/"
+            />
+          )}
         <div className="badge user" onClick={this.handleTouchTapUser}>
           <span className="user-name"> {first} </span>
           <IconButton tooltip="User">
@@ -144,6 +155,16 @@ class BadgeExampleSimple extends Component {
                   primaryText="Switch conference"
                   onClick={this.handleToggleConference}
                 />
+              ) : (
+                ''
+              )}
+              {isShow['invite-user'] ? (
+                <Link to="/invite-user">
+                  <MenuItem
+                    primaryText="Author/Reviewer Invitation"
+                    onClick={this.handleRequestClose}
+                  />
+                </Link>
               ) : (
                 ''
               )}

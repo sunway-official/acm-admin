@@ -97,7 +97,9 @@ class Index extends Component {
     const landingPage = getLandingPageByConferenceId;
     return (
       <div className="conference">
-        <Subheader className="subheader"> Landing Page Management</Subheader>
+        <Subheader className="subheader">
+          {localStorage.getItem('conferenceTitle')}
+        </Subheader>
         <div className="page-breadcrumb d-flex">
           <Link className="d-flex" to="/">
             <IconButton>

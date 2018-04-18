@@ -16,27 +16,28 @@ class AddActivityTitle extends Component {
     }
     return (
       <form className="form conference-info m-auto" onSubmit={handleSubmit}>
-        <Subheader className="subtitle">Add Activity</Subheader>
-
-        {error && <div className="error">{error}</div>}
-        <div className="d-flex form-group">
-          <label>Title :</label>
-          <Field
-            name="title"
-            component={renderTextField}
-            hintText="Activity Title"
-            fullWidth={true}
-          />
-        </div>
-        <div className="d-flex form-group">
-          <label>Description :</label>
-          <Field
-            name="description"
-            component={renderTextField}
-            hintText="Activity Description"
-            fullWidth={true}
-          />
-        </div>
+        <section>
+          <Subheader className="subtitle">Add Activity</Subheader>
+          {error && <div className="error">{error}</div>}
+          <div className="d-flex form-group">
+            <label>Title :</label>
+            <Field
+              name="title"
+              component={renderTextField}
+              hintText="Activity Title"
+              fullWidth={true}
+            />
+          </div>
+          <div className="d-flex form-group">
+            <label>Description :</label>
+            <Field
+              name="description"
+              component={renderTextField}
+              hintText="Activity Description"
+              fullWidth={true}
+            />
+          </div>
+        </section>
         <div className="d-flex form-group">
           <FieldArray
             name="schedules"

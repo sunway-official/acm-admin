@@ -1,18 +1,22 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import CustomDatePicker from 'components/CustomDatePicker';
-import { abstractDeadlineArr, paperDeadlineArr } from './fields';
+import {
+  abstractDeadlineArr,
+  paperDeadlineArr,
+  organizationDateArr,
+} from './fields';
 import { Subheader, RaisedButton } from 'material-ui';
 import validate from './validate';
 class Form extends Component {
   render() {
     const { handleSubmit, pristine } = this.props;
     return (
-      <main className="container-form">
+      <main>
         <form onSubmit={handleSubmit}>
           <section className="section-deadline">
             <Subheader className="subtitle">
-              Absrtact Submission Deadline
+              Abstract Submission Deadline
             </Subheader>
             <div className="d-flex flex-wrap justify-content-center">
               {abstractDeadlineArr.map((data, index) => {
@@ -22,14 +26,16 @@ class Form extends Component {
                     key={index}
                   >
                     <label className="label-deadline">{data.label}:</label>
-                    <Field
-                      minDate={new Date()}
-                      name={data.name}
-                      component={CustomDatePicker}
-                      format={null}
-                      hintText={data.hintText}
-                      textFieldStyle={{ width: '80%' }}
-                    />
+                    <div className="datePicker-wrapper">
+                      <Field
+                        minDate={new Date()}
+                        name={data.name}
+                        component={CustomDatePicker}
+                        format={null}
+                        hintText={data.hintText}
+                        textFieldStyle={{ width: '100%' }}
+                      />
+                    </div>
                   </div>
                 );
               })}
@@ -47,14 +53,41 @@ class Form extends Component {
                     key={index}
                   >
                     <label className="label-deadline">{data.label}:</label>
-                    <Field
-                      minDate={new Date()}
-                      name={data.name}
-                      component={CustomDatePicker}
-                      format={null}
-                      hintText={data.hintText}
-                      textFieldStyle={{ width: '80%' }}
-                    />
+                    <div className="datePicker-wrapper">
+                      <Field
+                        minDate={new Date()}
+                        name={data.name}
+                        component={CustomDatePicker}
+                        format={null}
+                        hintText={data.hintText}
+                        textFieldStyle={{ width: '100%' }}
+                      />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+          <section className="section-organization-date">
+            <Subheader className="subtitle">Organization Date</Subheader>
+            <div className="d-flex flex-wrap justify-content-center">
+              {organizationDateArr.map((data, index) => {
+                return (
+                  <div
+                    className="d-flex date deadline-input form-group"
+                    key={index}
+                  >
+                    <label className="label-deadline">{data.label}:</label>
+                    <div className="datePicker-wrapper">
+                      <Field
+                        minDate={new Date()}
+                        name={data.name}
+                        component={CustomDatePicker}
+                        format={null}
+                        hintText={data.hintText}
+                        textFieldStyle={{ width: '100%' }}
+                      />
+                    </div>
                   </div>
                 );
               })}

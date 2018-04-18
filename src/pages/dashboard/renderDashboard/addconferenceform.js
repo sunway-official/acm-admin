@@ -11,6 +11,7 @@ import AlertContainer from 'react-alert';
 import {
   abstractDeadlineArr,
   paperDeadlineArr,
+  organizationDateArr,
 } from '../../conference/info/deadLine/fields';
 class AddConferenceForm extends React.Component {
   render() {
@@ -51,7 +52,7 @@ class AddConferenceForm extends React.Component {
         </section>
         <section className="section-deadline">
           <Subheader className="subtitle">
-            Absrtact Submission Deadline
+            Abstract Submission Deadline
           </Subheader>
           <div className="d-flex flex-wrap justify-content-center">
             {abstractDeadlineArr.map((data, index) => {
@@ -61,14 +62,16 @@ class AddConferenceForm extends React.Component {
                   key={index}
                 >
                   <label>{data.label}:</label>
-                  <Field
-                    minDate={new Date()}
-                    name={data.name}
-                    component={CustomDatePicker}
-                    format={null}
-                    hintText={data.hintText}
-                    textFieldStyle={{ width: '80%' }}
-                  />
+                  <div className="datePicker-wrapper">
+                    <Field
+                      minDate={new Date()}
+                      name={data.name}
+                      component={CustomDatePicker}
+                      format={null}
+                      hintText=" "
+                      textFieldStyle={{ width: '100%' }}
+                    />
+                  </div>
                 </div>
               );
             })}
@@ -84,14 +87,16 @@ class AddConferenceForm extends React.Component {
                   key={index}
                 >
                   <label className="label-deadline">{data.label}:</label>
-                  <Field
-                    minDate={new Date()}
-                    name={data.name}
-                    component={CustomDatePicker}
-                    format={null}
-                    hintText={data.hintText}
-                    textFieldStyle={{ width: '80%' }}
-                  />
+                  <div className="datePicker-wrapper">
+                    <Field
+                      minDate={new Date()}
+                      name={data.name}
+                      component={CustomDatePicker}
+                      format={null}
+                      hintText=" "
+                      textFieldStyle={{ width: '100%' }}
+                    />
+                  </div>
                 </div>
               );
             })}
@@ -99,43 +104,31 @@ class AddConferenceForm extends React.Component {
         </section>
         <section className="section-organization-date">
           <Subheader className="subtitle">Organization Date</Subheader>
-          <div className="section-content d-flex justify-content-center">
-            <div className="d-flex form-group">
-              <label>Registration Date:</label>
-              <Field
-                name="dl_registration"
-                component={CustomDatePicker}
-                minDate={new Date()}
-                format={null}
-                textFieldStyle={{ width: '100%' }}
-                hintText="Registration Date"
-              />
-            </div>
-            <div className="d-flex form-group">
-              <label>Conference Start Date :</label>
-              <Field
-                minDate={new Date()}
-                name="startDate"
-                component={CustomDatePicker}
-                format={null}
-                textFieldStyle={{ width: '100%' }}
-                hintText="Start Date"
-              />
-            </div>
-            <div className="d-flex form-group">
-              <label>Conference End Date :</label>
-              <Field
-                name="endDate"
-                component={CustomDatePicker}
-                minDate={new Date()}
-                format={null}
-                textFieldStyle={{ width: '100%' }}
-                hintText="End Date"
-              />
-            </div>
+          <div className="d-flex flex-wrap justify-content-center">
+            {organizationDateArr.map((data, index) => {
+              return (
+                <div
+                  className="d-flex date deadline-input form-group"
+                  key={index}
+                >
+                  <label className="label-deadline">{data.label}:</label>
+                  <div className="datePicker-wrapper">
+                    <Field
+                      minDate={new Date()}
+                      name={data.name}
+                      component={CustomDatePicker}
+                      format={null}
+                      hintText=" "
+                      textFieldStyle={{ width: '100%' }}
+                    />
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </section>
-        <div className="map add">
+        <section>
+          <Subheader className="header subtitle">Organization Place</Subheader>
           <AppMap
             onMapPositionChanged={onMapPositionChanged}
             initalPosition={{
@@ -154,7 +147,7 @@ class AddConferenceForm extends React.Component {
               />
             }
           />
-        </div>
+        </section>
         <section className="section-organizer">
           <Subheader className="header subtitle">
             Organizer Information
@@ -209,12 +202,14 @@ class AddConferenceForm extends React.Component {
           </div>
         </section>
         <div className="d-flex save-btn btn-group marginBottom">
-          <RaisedButton
-            label="Save"
-            primary={true}
-            type="submit"
-            disabled={pristine}
-          />
+          <div style={{ marginRight: '10px' }}>
+            <RaisedButton
+              label="Save"
+              primary={true}
+              type="submit"
+              disabled={pristine}
+            />
+          </div>
           <RaisedButton
             className="btn"
             label="Reset"

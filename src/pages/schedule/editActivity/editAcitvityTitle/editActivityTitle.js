@@ -67,37 +67,40 @@ class EditActivityPaper extends Component {
     ];
     return (
       <form className="form conference-info m-auto" onSubmit={handleSubmit}>
-        <div className="d-flex align-items-baseline">
-          <Subheader className="subtitle">Edit Activity Information</Subheader>
-          <RaisedButton
-            className="marginLeft"
-            label="Delete"
-            secondary={true}
-            onClick={() => {
-              this.props.setToggle();
-            }}
-          />
-        </div>
-
-        {error && <div className="error">{error}</div>}
-        <div className="d-flex form-group">
-          <label>Title :</label>
-          <Field
-            name="title"
-            component={renderTextField}
-            hintText="Activity Title"
-            fullWidth={true}
-          />
-        </div>
-        <div className="d-flex form-group">
-          <label>Description :</label>
-          <Field
-            name="description"
-            component={renderTextField}
-            hintText="Activity Description"
-            fullWidth={true}
-          />
-        </div>
+        <section>
+          <div className="d-flex align-items-baseline">
+            <Subheader className="subtitle">
+              Edit Activity Information
+            </Subheader>
+            <RaisedButton
+              className="marginLeft"
+              label="Delete"
+              secondary={true}
+              onClick={() => {
+                this.props.setToggle();
+              }}
+            />
+          </div>
+          {error && <div className="error">{error}</div>}
+          <div className="d-flex form-group">
+            <label>Title :</label>
+            <Field
+              name="title"
+              component={renderTextField}
+              hintText="Activity Title"
+              fullWidth={true}
+            />
+          </div>
+          <div className="d-flex form-group">
+            <label>Description :</label>
+            <Field
+              name="description"
+              component={renderTextField}
+              hintText="Activity Description"
+              fullWidth={true}
+            />
+          </div>
+        </section>
         <div className="d-flex form-group">
           <FieldArray
             name="schedules"

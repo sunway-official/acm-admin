@@ -6,9 +6,7 @@ import { sidebarActions } from 'store/ducks/sidebar';
 import {
   ActionInfoOutline,
   ActionSupervisorAccount,
-  // ActionChromeReaderMode,
   AvLibraryBooks,
-  // EditorShowChart,
   NotificationEventAvailable,
   HardwareKeyboardArrowRight,
   SocialLocationCity,
@@ -30,7 +28,6 @@ class ListExampleSimple extends React.Component {
       openLanding: false,
       conference_id: 0,
     };
-    // this.handleRequestClose = this.handleRequestClose.bind(this);
   }
   handleClickSidebar = () => {
     this.props.setSidebar();
@@ -42,7 +39,6 @@ class ListExampleSimple extends React.Component {
       open: true,
       anchorEl: event.currentTarget,
     });
-    // this.handleRequestClose();
   };
   handleLanding = event => {
     event.preventDefault();
@@ -161,12 +157,6 @@ class ListExampleSimple extends React.Component {
                       onClick={this.handleRequestClose}
                     />
                   </Link>
-                  {/*
-             <MenuItem primaryText={<a href="/dashboard">Speaker</a>} />
-              <MenuItem primaryText={<a href="/dashboard">Author</a>} />
-              <MenuItem primaryText={<a href="/dashboard">Reviewer</a>} />
-              <MenuItem primaryText={<a href="/dashboard">Participant</a>} />
-            */}
                 </Menu>
               </Popover>
             </ListItem>
@@ -231,23 +221,6 @@ class ListExampleSimple extends React.Component {
               />
             </Link>
           ) : null}
-          {/*
-          <ListItem
-            className="item"
-            primaryText={<a href="/dashboard">Paper</a>}
-            leftIcon={<AvLibraryBooks />}
-          />
-          <ListItem
-            className="item"
-            primaryText={<a href="/dashboard">Newfeed</a>}
-            leftIcon={<ActionChromeReaderMode />}
-          />
-          <ListItem
-            className="item"
-            primaryText={<a href="/dashboard">Statistic</a>}
-            leftIcon={<EditorShowChart />}
-          />
-          */}
         </List>
       </div>
     );

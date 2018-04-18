@@ -7,13 +7,13 @@ const validate = values => {
       errors[field] = 'This field is required';
     }
   });
-  if (values.email && !regex.EMAIL_REGEX.test(values.email)) {
-    errors.email = 'Invalid email address';
-  }
-  if (values.password && !regex.passwordRegex.test(values.password)) {
-    errors.password =
-      'Password must contains at least 6 character include number, capital and special character ';
-  }
+  // if (values.email && !regex.EMAIL_REGEX.test(values.email)) {
+  //   errors.email = 'Invalid email address';
+  // }
+  // if (values.password && !regex.passwordRegex.test(values.password)) {
+  //   errors.password =
+  //     'Password must contains at least 6 character include number, capital and special character ';
+  // }
   return errors;
 };
 

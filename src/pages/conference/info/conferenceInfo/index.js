@@ -42,8 +42,6 @@ class ConferenceInfoForm extends PureComponent {
   async handleUpdateConferenceInfo({
     title,
     description,
-    startDate,
-    endDate,
     organizerName,
     organizerEmail,
     organizerWebsite,
@@ -56,8 +54,6 @@ class ConferenceInfoForm extends PureComponent {
           id: this.props.conference_id,
           title: title,
           description: description,
-          start_date: startDate,
-          end_date: endDate,
         },
       });
       const organizer = await this.props.UPDATE_ORGANIZER_DETAIL_MUTATION({
@@ -92,6 +88,11 @@ class ConferenceInfoForm extends PureComponent {
     this.props.getPosition(position);
   }
   render() {
+    let { loading, getAllCategories } = this.props.data;
+    if (loading) {
+      return <div>Loading</div>;
+    }
+    const categories = getAllCategories;
     if (this.props.isShow['edit-conference-info']) {
       return (
         <div>
@@ -100,6 +101,7 @@ class ConferenceInfoForm extends PureComponent {
             conference={this.props.conference}
             onSubmit={this.handleUpdateConferenceInfo}
             onMapPositionChanged={this.onMapPositionChanged}
+            categories={categories}
           />
           <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />
         </div>
@@ -139,8 +141,10 @@ const mapStateToProps = (state, ownProps) => {
     initialValues: {
       title: conference.title,
       description: conference.description,
-      startDate: new Date(conference.start_date),
-      endDate: new Date(conference.end_date),
+      category_id: conference.category_id,
+      category_name: conference.category_name,
+      start_date: new Date(conference.start_date),
+      end_date: new Date(conference.end_date),
       lat: parseFloat(conference.address.lat),
       long: parseFloat(conference.address.long),
       organizerAddress: organizer.address,
@@ -157,6 +161,7 @@ export default compose(
   graphql(queries.GET_ALL_ROLE_OF_USER, {
     name: 'GET_ALL_ROLE_OF_USER',
   }),
+  graphql(queries.GET_ALL_CATEGORIES),
   graphql(mutations.UPDATE_CONFERENCE_MUTATION, {
     name: 'UPDATE_CONFERENCE_MUTATION',
   }),

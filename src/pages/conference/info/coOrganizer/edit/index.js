@@ -62,13 +62,15 @@ class Index extends Component {
     }
     return (
       <div className="conference">
-        <Subheader className="subheader">Co-Organizer Management</Subheader>
+        <Subheader className="subheader">
+          {localStorage.getItem('conferenceTitle')}
+        </Subheader>
         <div className="page-breadcrumb d-flex">
           <Link className="d-flex" to="/">
             <IconButton>
               <ActionHome />
             </IconButton>
-            <span>Home</span>
+            <span>Dashboard</span>
           </Link>
           <IconButton>
             <HardwareKeyboardArrowRight />
