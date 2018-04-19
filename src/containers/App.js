@@ -11,6 +11,8 @@ import Paper from '../pages/paper';
 import PaperAdd from '../pages/paper/add';
 import PaperEdit from '../pages/paper/edit';
 import PaperDetail from '../pages/paper/detail';
+import PaperReview from '../pages/paper/review/paperReview/index';
+import PaperReviewDetail from '../pages/paper/review/reviewDetail/index';
 import ConferenceStaffList from '../pages/conference/people/staff';
 import UserProfile from '../pages/conference/people/userProfile/userProfile';
 import Dashboard from '../pages/dashboard';
@@ -127,6 +129,18 @@ export default () => (
             exact
             path="/conference/paper/detail/:id"
             component={PaperDetail}
+          />
+          <AuthRoute
+            needAuth
+            exact
+            path="/conference/paper/review/:id"
+            component={PaperReview}
+          />
+          <AuthRoute
+            needAuth
+            exact
+            path="/conference/paper/review_detail/:reviewer_id/:paper_id"
+            component={PaperReviewDetail}
           />
           <AuthRoute
             needAuth

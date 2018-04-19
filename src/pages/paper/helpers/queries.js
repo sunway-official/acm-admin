@@ -108,6 +108,9 @@ const GET_PAPER_BY_ID = gql`
         review_question_id
         content
         comment
+        user {
+          id
+        }
       }
       topic_name
       status
@@ -141,6 +144,15 @@ export const GET_ALL_USERS_BY_ROLE_ID_QUERY = gql`
     }
   }
 `;
+export const GET_ALL_REVIEW_QUESTIONS_QUERY = gql`
+  query getAllReviewQuestions {
+    getAllReviewQuestions {
+      id
+      content
+    }
+  }
+`;
+
 export const ME_QUERY = gql`
   query Me {
     me {
@@ -164,6 +176,32 @@ export const ME_QUERY = gql`
   }
 `;
 
+export const GET_PAPER_REVIEW_BY_USER_ID_PAPER_ID_QUERY = gql`
+  query getPaperReviewByUserIdPaperId($user_id: ID!, $paper_id: ID!) {
+    getPaperReviewByUserIdPaperId(user_id: $user_id, paper_id: $paper_id) {
+      id
+      review_question_id
+      point
+      comment
+      content
+    }
+  }
+`;
+
+export const GET_USER_BY_ID_QUERY = gql`
+  query getUserByID($userId: ID!) {
+    getUserByID(userId: $userId) {
+      id
+      firstname
+      lastname
+      email
+      gender
+      bio
+      position
+    }
+  }
+`;
+
 export default {
   GET_PAPERS_BY_CONFERENCE_ID,
   GET_PAPERS_BY_USER_ID,
@@ -173,5 +211,8 @@ export default {
   GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
   GET_PAPERS_WITH_AUTHOR_BY_CONFERENCE_ID,
   GET_ALL_USERS_BY_ROLE_ID_QUERY,
+  GET_ALL_REVIEW_QUESTIONS_QUERY,
   ME_QUERY,
+  GET_PAPER_REVIEW_BY_USER_ID_PAPER_ID_QUERY,
+  GET_USER_BY_ID_QUERY,
 };

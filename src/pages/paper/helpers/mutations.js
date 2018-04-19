@@ -116,6 +116,24 @@ const INSERT_PAPER_REVIEWER = gql`
   }
 `;
 
+const INSERT_PAPER_REVIEW_QUESTION = gql`
+  mutation insertPaperReviewQuestion(
+    $paper_id: ID!
+    $review_question_id: ID!
+    $point: Float!
+    $comment: String
+  ) {
+    insertPaperReviewQuestion(
+      paper_id: $paper_id
+      review_question_id: $review_question_id
+      point: $point
+      comment: $comment
+    ) {
+      id
+    }
+  }
+`;
+
 export default {
   DELETE_PAPER,
   INSERT_PAPER,
@@ -125,4 +143,5 @@ export default {
   UPDATE_TOPIC_OF_PAPER,
   INSERT_PAPER_REVIEWER,
   INSERT_PAPER_AUTHOR,
+  INSERT_PAPER_REVIEW_QUESTION,
 };
