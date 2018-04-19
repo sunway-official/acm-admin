@@ -14,6 +14,7 @@ export const INSERT_CONFERENCE_MUTATION = gql`
     $address_id: ID!
     $title: String!
     $description: String!
+    $category_id: Int!
     $start_date: Date!
     $end_date: Date!
     $bg_image: String!
@@ -36,6 +37,7 @@ export const INSERT_CONFERENCE_MUTATION = gql`
       address_id: $address_id
       title: $title
       description: $description
+      category_id: $category_id
       start_date: $start_date
       end_date: $end_date
       bg_image: $bg_image
@@ -66,6 +68,7 @@ export const INSERT_CONFERENCE_MUTATION = gql`
       }
       title
       description
+      category_id
       start_date
       end_date
       bg_image
