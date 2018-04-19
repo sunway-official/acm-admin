@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { RaisedButton } from 'material-ui';
-import { ListItem } from 'material-ui';
 import { Field, reduxForm } from 'redux-form';
 import { compose } from 'react-apollo';
 import { connect } from 'react-redux';
