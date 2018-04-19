@@ -57,9 +57,9 @@ class Index extends Component {
         (element, index) => {
           let input = 'input' + (index + 1);
           let point = 'point' + (index + 1);
-          console.log(index + 1);
-          console.log(values[point]);
-          console.log(values[input]);
+          // console.log(index + 1);
+          // console.log(values[point]);
+          // console.log(values[input]);
           INSERT_PAPER_REVIEW_QUESTION({
             variables: {
               paper_id: this.props.GET_PAPER_BY_ID.getPaperByID.id,
@@ -112,7 +112,7 @@ class Index extends Component {
           showMenuIconButton={false}
         />
         <div className="dashboard content d-flex">
-          <Grid fluid className="paper-detail-grid">
+          <Grid className="paper-detail-grid">
             <PaperInfo paper={paper} />
             <ReviewQuestions
               questions={questions}

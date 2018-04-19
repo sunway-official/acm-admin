@@ -58,84 +58,89 @@ const ReviewQuestions = props => {
   const { handleSubmit } = props;
   return (
     <form onSubmit={handleSubmit}>
-      <Row className="paper-card" around="xs">
-        <Col xs={12} sm={12} md={12} lg={12} className="paper-col">
-          <Row center="xs" style={{ paddingTop: '24px' }}>
-            <Col xs={5}>
-              <b> Evaluation Category </b>
-            </Col>
-            <Col xs={3}>
-              <b>Point</b>
-            </Col>
-            <Col xs={4}>
-              <b>Comment </b>
-            </Col>
-          </Row>
-          {questions}
-          <hr
-            style={{
-              width: '50%',
-              height: '2px',
-              backgroundColor: 'rgba(0,0,0,0.3)',
-              border: '0',
-            }}
-          />
-          <Row className={'card-detail-row review-row'} key={1}>
-            <Col xs={12} style={{ paddingTop: '24px' }}>
-              <b>
-                <h2>Detail comment</h2>
-              </b>
-              <br />
-              {props.questions[1].content}
-            </Col>
-          </Row>
-          <Row>
-            <Field
-              name={'input' + 1}
-              component={CustomInput}
-              hintText="Enter your comment"
-              multiLine={true}
-              rows={2}
-              rowsMax={3}
-              fullWidth={true}
-              style={{ marginLeft: '10px' }}
+      <section className="paper-section">
+        <Row className="paper-card" around="xs">
+          <Col xs={12} sm={12} md={12} lg={12} className="paper-col">
+            <Row center="xs" className="card-detail-row first-row">
+              <b style={{ fontSize: '1.5em' }}>Reviewer Comments</b>
+            </Row>
+            <Row style={{ paddingTop: '24px' }}>
+              <Col xs={5}>
+                <b> Evaluation Category </b>
+              </Col>
+              <Col xs={3}>
+                <b>Point</b>
+              </Col>
+              <Col xs={4}>
+                <b>Comment </b>
+              </Col>
+            </Row>
+            {questions}
+            <hr
+              style={{
+                width: '50%',
+                height: '2px',
+                backgroundColor: 'rgba(0,0,0,0.3)',
+                border: '0',
+              }}
             />
-          </Row>
-          <Row className={'card-detail-row review-row'} key={2}>
-            <Col xs={12} style={{ paddingTop: '24px' }}>
-              <b>
-                <h2>Confidential Comments for Committee</h2>
-              </b>
-              <br />
-              {props.questions[2].content}
-            </Col>
-          </Row>
-          <Row>
-            <Field
-              name={'input' + 2}
-              component={CustomInput}
-              hintText="Enter your comment"
-              multiLine={true}
-              rows={2}
-              rowsMax={3}
-              fullWidth={true}
-              style={{ marginLeft: '10px' }}
-            />
-          </Row>
-          <Row
-            center="xs"
-            style={{ paddingBottom: '24px', paddingTop: '24px' }}
-          >
-            <RaisedButton
-              className="btn"
-              label="Submit"
-              primary={true}
-              type="submit"
-              onClick={props.handleSubmit}
-            />
-          </Row>
-        </Col>
-      </Row>
+            <Row className={'card-detail-row review-row'} key={1}>
+              <Col xs={12} style={{ paddingTop: '24px' }}>
+                <b>
+                  <h2>Detail comment</h2>
+                </b>
+                <br />
+                {props.questions[1].content}
+              </Col>
+            </Row>
+            <Row>
+              <Field
+                name={'input' + 1}
+                component={CustomInput}
+                hintText="Enter your comment"
+                multiLine={true}
+                rows={2}
+                rowsMax={3}
+                fullWidth={true}
+                style={{ marginLeft: '10px' }}
+              />
+            </Row>
+            <Row className={'card-detail-row review-row'} key={2}>
+              <Col xs={12} style={{ paddingTop: '24px' }}>
+                <b>
+                  <h2>Confidential Comments for Committee</h2>
+                </b>
+                <br />
+                {props.questions[2].content}
+              </Col>
+            </Row>
+            <Row>
+              <Field
+                name={'input' + 2}
+                component={CustomInput}
+                hintText="Enter your comment"
+                multiLine={true}
+                rows={2}
+                rowsMax={3}
+                fullWidth={true}
+                style={{ marginLeft: '10px' }}
+              />
+            </Row>
+            <Row
+              center="xs"
+              style={{ paddingBottom: '24px', paddingTop: '24px' }}
+            >
+              <RaisedButton
+                className="btn"
+                label="Submit"
+                primary={true}
+                type="submit"
+                onClick={props.handleSubmit}
+              />
+            </Row>
+          </Col>
+        </Row>
+      </section>
     </form>
   );
 };

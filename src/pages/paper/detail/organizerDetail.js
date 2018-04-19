@@ -10,11 +10,13 @@ const OrganizerDetail = props => {
   let paper = props.paper;
   const role = localStorage.getItem('roles');
   return (
-    <Grid fluid className="paper-detail-grid">
+    <Grid className="paper-detail-grid">
       <PaperInfo paper={paper} />
+
       {role === '1' || role === '7' ? (
         <div>
           <AuthorInfo authors={authors} />
+
           <ReviewInfo
             conferenceReviewer={props.conferenceReviewer}
             paper={paper}

@@ -6,13 +6,11 @@ import { Link } from 'react-router-dom';
 
 const CommentDetail = props => {
   const role = localStorage.getItem('roles');
-  return (
-    <Row className="paper-card" around="xs">
-      <Col xs={12} sm={12} md={12} lg={12} className="paper-col">
-        <Row center="xs" className="card-detail-row first-row">
-          <b style={{ fontSize: '1.5em' }}>Reviewer Comment</b>
-        </Row>
-        <Row>
+  let comments;
+  comments = props.paper.comments.map(
+    (comment, index) =>
+      (index + 1) % 10 === 1 ? (
+        <Row key={index}>
           <Col xs={2}>
             <Row center="xs">
               <ActionAccountCircle
@@ -30,16 +28,14 @@ const CommentDetail = props => {
                     Reviewer{' '}
                   </Col>
                   <Col xs={8}>
-                    {role === '1'
-                      ? props.paper.comments[1].reviewer_name
-                      : 'Anonymous'}
+                    {role === '1' ? comment.reviewer_name : 'Anonymous'}
                   </Col>
                 </Row>
                 <Row className="card-detail-row">
                   <Col className="paper-detail-title" xs={4}>
                     Point{' '}
                   </Col>
-                  <Col xs={8}>{props.paper.comments[1].point}</Col>
+                  <Col xs={8}>{comment.point}</Col>
                 </Row>
                 <Row className="card-detail-row">
                   <Col className="paper-detail-title" xs={4}>
@@ -48,10 +44,10 @@ const CommentDetail = props => {
                   <Col xs={8}>
                     <u style={{ color: 'rgb(114, 181, 240)' }}>
                       <Link
-                        to={`/conference/paper/review_detail/${props.paper
-                          .comments[1].user.id}/${props.paper.id}`}
+                        to={`/conference/paper/review_detail/${comment.user
+                          .id}/${props.paper.id}`}
                       >
-                        this is a link
+                        Click here
                       </Link>
                     </u>
                   </Col>
@@ -60,7 +56,7 @@ const CommentDetail = props => {
                   <Col className="paper-detail-title" xs={4}>
                     General Comment
                   </Col>
-                  <Col xs={8}>{props.paper.comments[1].content}</Col>
+                  <Col xs={8}>{comment.content}</Col>
                 </Row>
               </Col>
               <Col xs={3}>
@@ -69,9 +65,78 @@ const CommentDetail = props => {
             </Row>
           </Col>
         </Row>
+      ) : (
+        ''
+      ),
+  );
+  return (
+    <Row className="paper-card" around="xs">
+      <Col xs={12} sm={12} md={12} lg={12} className="paper-col">
+        <Row center="xs" className="card-detail-row first-row">
+          <b style={{ fontSize: '1.5em' }}>Reviewer Comment</b>
+        </Row>
+        {comments}
       </Col>
     </Row>
   );
 };
 
 export default CommentDetail;
+
+// <Row>
+//           <Col xs={2}>
+//             <Row center="xs">
+//               <ActionAccountCircle
+//                 color={colors.main}
+//                 className="paper-detail-icon reviewer-icon"
+//               />
+//             </Row>
+//           </Col>
+//           <Col xs={9}>
+//             <Row className="card-detail-row">
+//               <Col xs={9}>
+//                 <Row className="card-detail-row">
+//                   <Col className="paper-detail-title" xs={4}>
+//                     {' '}
+//                     Reviewer{' '}
+//                   </Col>
+//                   <Col xs={8}>
+//                     {role === '1'
+//                       ? props.paper.comments[1].reviewer_name
+//                       : 'Anonymous'}
+//                   </Col>
+//                 </Row>
+//                 <Row className="card-detail-row">
+//                   <Col className="paper-detail-title" xs={4}>
+//                     Point{' '}
+//                   </Col>
+//                   <Col xs={8}>{props.paper.comments[1].point}</Col>
+//                 </Row>
+//                 <Row className="card-detail-row">
+//                   <Col className="paper-detail-title" xs={4}>
+//                     Detail review{' '}
+//                   </Col>
+//                   <Col xs={8}>
+//                     <u style={{ color: 'rgb(114, 181, 240)' }}>
+//                       <Link
+//                         to={`/conference/paper/review_detail/${props.paper
+//                           .comments[1].user.id}/${props.paper.id}`}
+//                       >
+//                         this is a link
+//                       </Link>
+//                     </u>
+//                   </Col>
+//                 </Row>
+//                 <Row className="card-detail-row">
+//                   <Col className="paper-detail-title" xs={4}>
+//                     General Comment
+//                   </Col>
+//                   <Col xs={8}>{props.paper.comments[1].content}</Col>
+//                 </Row>
+//               </Col>
+//               <Col xs={3}>
+//                 <div>24/03/2018</div>
+//               </Col>
+//             </Row>
+//           </Col>
+//         </Row>

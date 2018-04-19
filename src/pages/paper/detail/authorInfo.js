@@ -25,31 +25,33 @@ const AuthorInfo = props => {
     ));
   }
   return (
-    <Row className="paper-card" around="xs">
-      <Col xs={12} sm={12} md={12} lg={12} className="paper-col">
-        <Row center="xs" className="card-detail-row first-row">
-          <b style={{ fontSize: '1.5em' }}>Author Information</b>
-        </Row>
-        <Row around="xs" className="card-detail-row">
-          <Col xs={3} className="paper-detail-title">
-            Name
-          </Col>
-          <Col xs={3} className="paper-detail-title">
-            Email
-          </Col>
-          <Col xs={2} className="paper-detail-title">
-            Country
-          </Col>
-          <Col xs={2} className="paper-detail-title">
-            Organization
-          </Col>
-          <Col xs={2} className="paper-detail-title">
-            Coresponding
-          </Col>
-        </Row>
-        {authors}
-      </Col>
-    </Row>
+    <section className="paper-section">
+      <Row className="paper-card" around="xs">
+        <Col xs={12} sm={12} md={12} lg={12} className="paper-col">
+          <Row center="xs" className="card-detail-row first-row">
+            <b style={{ fontSize: '1.5em' }}>Author Information</b>
+          </Row>
+          <Row around="xs" className="card-detail-row">
+            <Col xs={3} className="paper-detail-title">
+              Name
+            </Col>
+            <Col xs={3} className="paper-detail-title">
+              Email
+            </Col>
+            <Col xs={2} className="paper-detail-title">
+              Country
+            </Col>
+            <Col xs={2} className="paper-detail-title">
+              Organization
+            </Col>
+            <Col xs={2} className="paper-detail-title">
+              Coresponding
+            </Col>
+          </Row>
+          {authors}
+        </Col>
+      </Row>
+    </section>
   );
 };
 

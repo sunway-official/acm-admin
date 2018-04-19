@@ -26,14 +26,14 @@ const ReviewInfo = props => {
     </Row>
   );
   return (
-    <div>
+    <section className="paper-section">
       {props.paper.status === 'Assigning' && role === '1' ? selectReviewer : ''}
       {props.paper.comments.length > 0 ? (
         <CommentDetail paper={props.paper} />
       ) : (
         ''
       )}
-    </div>
+    </section>
   );
 };
 

@@ -119,7 +119,7 @@ class TopicList extends Component {
     const actionDelete = [
       <RaisedButton
         label="Yes"
-        default={true}
+        primary={true}
         onClick={this.handleDelete}
         type="submit"
       />,

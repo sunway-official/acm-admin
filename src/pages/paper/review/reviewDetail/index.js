@@ -52,7 +52,7 @@ class Index extends Component {
           showMenuIconButton={false}
         />
         <div className="dashboard content d-flex">
-          <Grid fluid className="paper-detail-grid">
+          <Grid className="paper-detail-grid">
             <PaperInfo paper={paper} />
             {role === '1' ? <ReviewerInfo reviewerInfo={reviewerInfo} /> : ''}
             {reviewComments.length > 0 ? (

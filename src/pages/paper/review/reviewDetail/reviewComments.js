@@ -1,12 +1,10 @@
 import React from 'react';
 import { Col, Row } from 'react-flexbox-grid';
-import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 
 // map paper review question
 const ReviewQuestions = props => {
   let reviewComments;
-  console.log(props.reviewComments);
   if (props.reviewComments.length > 0) {
     reviewComments = props.reviewComments.map(
       (comment, index) =>
@@ -14,16 +12,14 @@ const ReviewQuestions = props => {
           <MenuItem key={index}>
             <Row className={'card-detail-row review-row'} key={index}>
               <Col xs={5} style={{ paddingTop: '24px' }}>
-                <p>
+                <div>
                   {index - 1}
                   . <span />
-                  <b>{comment.content}</b>
-                </p>
+                  {comment.content}
+                </div>
               </Col>
               <Col xs={2}>
-                <Row center="xs">
-                  <div style={{ marginTop: '40px' }}>{comment.point}</div>
-                </Row>
+                <div style={{ marginTop: '40px' }}> {comment.point}</div>
               </Col>
               <Col xs={5}>
                 <div style={{ marginTop: '40px' }}>{comment.comment}</div>
@@ -35,13 +31,17 @@ const ReviewQuestions = props => {
         ),
     );
   }
+  const role = localStorage.getItem('roles');
   return (
-    <Menu>
+    <section className="paper-section">
       <Row className="paper-card" around="xs">
         <Col xs={12} sm={12} md={12} lg={12} className="paper-col">
-          <Row center="xs" style={{ paddingTop: '24px' }}>
+          <Row center="xs" className="card-detail-row first-row">
+            <b style={{ fontSize: '1.5em' }}>Reviewer Comments</b>
+          </Row>
+          <Row style={{ paddingTop: '24px' }}>
             <Col xs={5}>
-              <b> Evaluation Category </b>
+              <b style={{ paddingLeft: '24px' }}> Evaluation Category </b>
             </Col>
             <Col xs={2}>
               <b>Point</b>
@@ -59,29 +59,35 @@ const ReviewQuestions = props => {
               border: '0',
             }}
           />
-          <Row className={'card-detail-row review-row'} key={1}>
+          <Row className={'card-detail-row review-row'}>
             <Col xs={12} style={{ paddingTop: '24px' }}>
               <h2>Detail comment</h2>
             </Col>
           </Row>
-          <Row>
-            <div style={{ marginLeft: '10px' }}>
-              {props.reviewComments[1].comment}
-            </div>
-          </Row>
-          <Row className={'card-detail-row review-row'} key={2}>
-            <Col xs={12} style={{ paddingTop: '24px' }}>
-              <h2>Confidential Comments for Committee</h2>
-            </Col>
-          </Row>
           <Row style={{ paddingBottom: '24px' }}>
             <div style={{ marginLeft: '10px' }}>
-              {props.reviewComments[2].comment}
+              {props.reviewComments[0].comment}
             </div>
           </Row>
+          {role === '7' ? (
+            ''
+          ) : (
+            <div>
+              <Row className={'card-detail-row'}>
+                <Col xs={12}>
+                  <h2>Confidential Comments for Committee</h2>
+                </Col>
+              </Row>
+              <Row style={{ paddingBottom: '24px' }}>
+                <div style={{ marginLeft: '10px' }}>
+                  {props.reviewComments[1].comment}
+                </div>
+              </Row>
+            </div>
+          )}
         </Col>
       </Row>
-    </Menu>
+    </section>
   );
 };
 
