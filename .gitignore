@@ -13,6 +13,7 @@
 .vscode/
 
 **/*.css
+!/build/static/css/*.css
 
 # misc
 .DS_Store
