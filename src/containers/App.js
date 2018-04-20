@@ -139,7 +139,7 @@ export default () => (
           <AuthRoute
             needAuth
             exact
-            path="/conference/paper/review_detail/:reviewer_id/:paper_id"
+            path="/conference/paper/review-detail/:reviewer_id/:paper_id"
             component={PaperReviewDetail}
           />
           <AuthRoute

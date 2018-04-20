@@ -44,7 +44,7 @@ const CommentDetail = props => {
                   <Col xs={8}>
                     <u style={{ color: 'rgb(114, 181, 240)' }}>
                       <Link
-                        to={`/conference/paper/review_detail/${comment.user
+                        to={`/conference/paper/review-detail/${comment.user
                           .id}/${props.paper.id}`}
                       >
                         Click here
@@ -82,61 +82,3 @@ const CommentDetail = props => {
 };
 
 export default CommentDetail;
-
-// <Row>
-//           <Col xs={2}>
-//             <Row center="xs">
-//               <ActionAccountCircle
-//                 color={colors.main}
-//                 className="paper-detail-icon reviewer-icon"
-//               />
-//             </Row>
-//           </Col>
-//           <Col xs={9}>
-//             <Row className="card-detail-row">
-//               <Col xs={9}>
-//                 <Row className="card-detail-row">
-//                   <Col className="paper-detail-title" xs={4}>
-//                     {' '}
-//                     Reviewer{' '}
-//                   </Col>
-//                   <Col xs={8}>
-//                     {role === '1'
-//                       ? props.paper.comments[1].reviewer_name
-//                       : 'Anonymous'}
-//                   </Col>
-//                 </Row>
-//                 <Row className="card-detail-row">
-//                   <Col className="paper-detail-title" xs={4}>
-//                     Point{' '}
-//                   </Col>
-//                   <Col xs={8}>{props.paper.comments[1].point}</Col>
-//                 </Row>
-//                 <Row className="card-detail-row">
-//                   <Col className="paper-detail-title" xs={4}>
-//                     Detail review{' '}
-//                   </Col>
-//                   <Col xs={8}>
-//                     <u style={{ color: 'rgb(114, 181, 240)' }}>
-//                       <Link
-//                         to={`/conference/paper/review_detail/${props.paper
-//                           .comments[1].user.id}/${props.paper.id}`}
-//                       >
-//                         this is a link
-//                       </Link>
-//                     </u>
-//                   </Col>
-//                 </Row>
-//                 <Row className="card-detail-row">
-//                   <Col className="paper-detail-title" xs={4}>
-//                     General Comment
-//                   </Col>
-//                   <Col xs={8}>{props.paper.comments[1].content}</Col>
-//                 </Row>
-//               </Col>
-//               <Col xs={3}>
-//                 <div>24/03/2018</div>
-//               </Col>
-//             </Row>
-//           </Col>
-//         </Row>
