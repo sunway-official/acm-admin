@@ -4,7 +4,8 @@ import MenuItem from 'material-ui/MenuItem';
 import { RaisedButton } from 'material-ui';
 import { graphql, compose } from 'react-apollo';
 import { mutations } from '../helpers';
-
+import { alertOptions, MyExclamationTriangle, MyFaCheck } from 'theme/alert';
+import AlertContainer from 'react-alert';
 class MultipleSelect extends Component {
   constructor(props) {
     super(props);
@@ -13,7 +14,19 @@ class MultipleSelect extends Component {
     };
     this.handleSelectReviewers = this.handleSelectReviewers.bind(this);
   }
-
+  showAlertError = text => {
+    this.msg.error(text, {
+      type: 'error', // type of alert
+      icon: <MyExclamationTriangle />,
+    });
+  };
+  showAlertSuccess = () => {
+    this.msg.success('Saved!', {
+      type: 'success',
+      icon: <MyFaCheck />,
+      onClose: () => {},
+    });
+  };
   handleChange = (event, index, values) => {
     let selectedItems = values.length;
     if (selectedItems < 4) {
@@ -41,7 +54,8 @@ class MultipleSelect extends Component {
       });
       window.location.reload();
     } catch (error) {
-      console.log(error);
+      let temp = error.graphQLErrors[0].message;
+      this.showAlertError(temp.substring(7, temp.length));
     }
   }
   menuItems(values) {
@@ -84,6 +98,7 @@ class MultipleSelect extends Component {
           onClick={this.handleSelectReviewers}
           disabled={this.state.values.length > 0 ? false : true}
         />
+        <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />
       </div>
     );
   }
