@@ -2,7 +2,6 @@ import React from 'react';
 import { Col, Row } from 'react-flexbox-grid';
 import ActionCheckCircle from 'material-ui/svg-icons/action/check-circle';
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off';
-import { Link } from 'react-router-dom';
 
 const AuthorInfo = props => {
   let authors;

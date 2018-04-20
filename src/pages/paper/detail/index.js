@@ -4,7 +4,6 @@ import { Subheader, IconButton } from 'material-ui';
 import { Link } from 'react-router-dom';
 import { graphql, compose } from 'react-apollo';
 import { queries } from '../helpers';
-import { AppBar } from 'material-ui';
 import './style.css';
 import OrganizerDetail from './organizerDetail';
 import ReviewerDetail from './reviewerDetail';
@@ -46,11 +45,6 @@ class Index extends Component {
           </IconButton>
           <span>Paper Detail</span>
         </div>
-        <AppBar
-          className="landing-page-app-bar"
-          title=""
-          showMenuIconButton={false}
-        />
         <div className="dashboard content d-flex">
           {role === '6' ? (
             <ReviewerDetail paper={paper} conference={paper.conference} />

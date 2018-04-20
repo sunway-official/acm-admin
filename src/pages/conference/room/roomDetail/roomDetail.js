@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import { Col, Grid, Row } from 'react-flexbox-grid';
 import { renderField } from '../../../../utils';
 import { withRouter } from 'react-router';
-import { AppBar } from 'material-ui';
 import { listField } from './listField';
 import validate from './validate';
 import SelectField from 'material-ui/SelectField';
@@ -64,11 +63,6 @@ class RoomDetail extends Component {
     const detail = this.props.roomDetail ? true : false;
     return (
       <div className="landing-page-form">
-        <AppBar
-          className="landing-page-app-bar"
-          title=""
-          showMenuIconButton={false}
-        />
         <Grid className="landing-page-grid">
           <section>
             <Row around="xs">

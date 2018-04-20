@@ -4,7 +4,6 @@ import { Subheader, IconButton } from 'material-ui';
 import { Link } from 'react-router-dom';
 import { graphql, compose } from 'react-apollo';
 import { queries } from '../../helpers';
-import { AppBar } from 'material-ui';
 import PaperInfo from '../../paperInfo';
 import ReviewComment from './reviewComments';
 import { Grid } from 'react-flexbox-grid';
@@ -27,7 +26,9 @@ class Index extends Component {
     const role = localStorage.getItem('roles');
     return (
       <div className="conference">
-        <Subheader className="subheader">Paper Management</Subheader>
+        <Subheader className="subheader">
+          {localStorage.getItem('conferenceTitle')}
+        </Subheader>
         <div className="page-breadcrumb d-flex">
           <Link className="d-flex" to="/">
             <IconButton>
@@ -46,11 +47,6 @@ class Index extends Component {
           </IconButton>
           <span>Paper Review Detail</span>
         </div>
-        <AppBar
-          className="landing-page-app-bar"
-          title=""
-          showMenuIconButton={false}
-        />
         <div className="dashboard content d-flex">
           <Grid className="paper-detail-grid">
             <PaperInfo paper={paper} />
