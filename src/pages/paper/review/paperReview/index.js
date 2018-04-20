@@ -28,7 +28,7 @@ class Index extends Component {
       icon: <MyFaCheck />,
       onClose: () => {
         this.props.history.replace(
-          `/conference/paper/review_detail/${this.props.ME_QUERY.me.id}/${this
+          `/conference/paper/review-detail/${this.props.ME_QUERY.me.id}/${this
             .props.match.params.id}`,
         );
       },
