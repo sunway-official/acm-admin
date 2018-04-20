@@ -10,9 +10,7 @@ const AuthorInfo = props => {
   if (props.authors.length > 0) {
     authors = props.authors.map(author => (
       <Row around="xs" className="card-detail-row" key={author.id}>
-        <Col xs={3}>
-          <Link to={`/user-profile/${author.id}`}>{author.author_name}</Link>
-        </Col>
+        <Col xs={3}>{author.author_name}</Col>
         <Col xs={3}>{author.author_email}</Col>
         <Col xs={2}>{author.author_country}</Col>
         <Col xs={2}>{author.author_organization}</Col>
