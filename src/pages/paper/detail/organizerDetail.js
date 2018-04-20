@@ -16,7 +16,6 @@ const OrganizerDetail = props => {
       {role === '1' || role === '7' ? (
         <div>
           <AuthorInfo authors={authors} />
-
           <ReviewInfo
             conferenceReviewer={props.conferenceReviewer}
             paper={paper}

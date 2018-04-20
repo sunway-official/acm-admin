@@ -28,7 +28,13 @@ const CommentDetail = props => {
                     Reviewer{' '}
                   </Col>
                   <Col xs={8}>
-                    {role === '1' ? comment.reviewer_name : 'Anonymous'}
+                    {role === '1' ? (
+                      <Link to={`/user-profile/${comment.user.id}`}>
+                        {comment.reviewer_name}
+                      </Link>
+                    ) : (
+                      'Anonymous'
+                    )}
                   </Col>
                 </Row>
                 <Row className="card-detail-row">
@@ -42,14 +48,12 @@ const CommentDetail = props => {
                     Detail review{' '}
                   </Col>
                   <Col xs={8}>
-                    <u style={{ color: 'rgb(114, 181, 240)' }}>
-                      <Link
-                        to={`/conference/paper/review-detail/${comment.user
-                          .id}/${props.paper.id}`}
-                      >
-                        Click here
-                      </Link>
-                    </u>
+                    <Link
+                      to={`/conference/paper/review-detail/${comment.user
+                        .id}/${props.paper.id}`}
+                    >
+                      Click here
+                    </Link>
                   </Col>
                 </Row>
                 <Row className="card-detail-row">

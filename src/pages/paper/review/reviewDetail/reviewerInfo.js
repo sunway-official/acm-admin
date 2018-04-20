@@ -1,5 +1,6 @@
 import React from 'react';
 import { Col, Row } from 'react-flexbox-grid';
+import { Link } from 'react-router-dom';
 
 const ReviewerInfo = props => {
   return (
@@ -14,8 +15,10 @@ const ReviewerInfo = props => {
               Name
             </Col>
             <Col xs={9}>
-              {props.reviewerInfo.firstname} <span />
-              {props.reviewerInfo.lastname}
+              <Link to={`/user-profile/${props.reviewerInfo.id}`}>
+                {props.reviewerInfo.firstname} <span />
+                {props.reviewerInfo.lastname}
+              </Link>
             </Col>
           </Row>
           <Row around="xs" className="card-detail-row">
