@@ -12,6 +12,7 @@ const UPDATE_CONFERENCE_MUTATION = gql`
     $id: ID!
     $title: String
     $description: String
+    $category_id: Int
     $start_date: Date
     $end_date: Date
     $dl_submit_abstract: Date
@@ -32,6 +33,7 @@ const UPDATE_CONFERENCE_MUTATION = gql`
       id: $id
       title: $title
       description: $description
+      category_id: $category_id
       start_date: $start_date
       end_date: $end_date
       dl_submit_abstract: $dl_submit_abstract
@@ -51,6 +53,7 @@ const UPDATE_CONFERENCE_MUTATION = gql`
       id
       title
       description
+      category_id
       start_date
       end_date
       address {
