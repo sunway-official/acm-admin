@@ -3,7 +3,7 @@ import { images } from '../../../../../theme';
 import './style.css';
 
 const UserAvatar = () => (
-  <div className="img">
+  <div className="user-profile-img other-user-avatar">
     <img src={images.defaultAvatar} alt="avatar" id="avatar" />
   </div>
 );

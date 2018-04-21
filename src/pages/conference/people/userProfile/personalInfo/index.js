@@ -133,6 +133,8 @@ class EditablePersonalInfo extends Component {
                       component={renderField}
                       className="editField"
                       fullWidth={true}
+                      disabled={this.props.disabled}
+                      underlineShow={!this.props.disabled}
                     />
                   </Col>
                   <Col xs>
@@ -143,6 +145,8 @@ class EditablePersonalInfo extends Component {
                       component={renderField}
                       className="editField"
                       fullWidth={true}
+                      disabled={this.props.disabled}
+                      underlineShow={!this.props.disabled}
                     />
                   </Col>
                 </Row>
@@ -151,6 +155,8 @@ class EditablePersonalInfo extends Component {
                     name="gender"
                     component={renderSelectField}
                     fullWidth={true}
+                    disabled={this.props.disabled}
+                    underlineShow={!this.props.disabled}
                   >
                     <MenuItem value="male" primaryText="Male" />
                     <MenuItem value="female" primaryText="Female" />
@@ -165,6 +171,8 @@ class EditablePersonalInfo extends Component {
                     hintText="Birthday"
                     openToYearSelection={true}
                     className="birthday"
+                    disabled={this.props.disabled}
+                    underlineShow={!this.props.disabled}
                   />
                 </Row>
                 <Row className="secondColunm">
@@ -174,6 +182,8 @@ class EditablePersonalInfo extends Component {
                     hintText="Position"
                     component={renderField}
                     fullWidth={true}
+                    disabled={this.props.disabled}
+                    underlineShow={!this.props.disabled}
                   />
                 </Row>
                 <Row className="secondColunm">
@@ -183,6 +193,8 @@ class EditablePersonalInfo extends Component {
                     hintText="Organization"
                     component={renderField}
                     fullWidth={true}
+                    disabled={this.props.disabled}
+                    underlineShow={!this.props.disabled}
                   />
                 </Row>
                 <Row className="secondColunm">
@@ -195,23 +207,29 @@ class EditablePersonalInfo extends Component {
                     rows={1}
                     rowsMax={1}
                     fullWidth={true}
+                    disabled={this.props.disabled}
+                    underlineShow={!this.props.disabled}
                   />
                 </Row>
-                <div className="personal-info-button">
-                  <RaisedButton
-                    className="btn save-change"
-                    label="Save Change"
-                    primary={true}
-                    disabled={pristine || submitting || invalid}
-                    type="submit"
-                  />
-                  <RaisedButton
-                    className="btn cancel"
-                    label="Cancel"
-                    default={true}
-                    onClick={this.handleCancel}
-                  />
-                </div>
+                {this.props.disabled ? (
+                  ''
+                ) : (
+                  <div className="personal-info-button">
+                    <RaisedButton
+                      className="btn save-change"
+                      label="Save Change"
+                      primary={true}
+                      disabled={pristine || submitting || invalid}
+                      type="submit"
+                    />
+                    <RaisedButton
+                      className="btn cancel"
+                      label="Cancel"
+                      default={true}
+                      onClick={this.handleCancel}
+                    />
+                  </div>
+                )}
               </form>
             </Col>
           </Row>

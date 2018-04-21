@@ -101,6 +101,8 @@ class ContactInformation extends Component {
                     hintText="Facebook link"
                     component={renderField}
                     fullWidth={true}
+                    disabled={this.props.disabled}
+                    underlineShow={!this.props.disabled}
                   />
                 </Row>
                 <Row className="secondColunm">
@@ -110,7 +112,8 @@ class ContactInformation extends Component {
                     hintText="Twitter link"
                     component={renderField}
                     fullWidth={true}
-                    //className="editField"
+                    disabled={this.props.disabled}
+                    underlineShow={!this.props.disabled}
                   />
                 </Row>
                 <Row className="secondColunm">
@@ -120,24 +123,29 @@ class ContactInformation extends Component {
                     hintText="LinkedIn link"
                     component={renderField}
                     fullWidth={true}
-                    //className="editField"
+                    disabled={this.props.disabled}
+                    underlineShow={!this.props.disabled}
                   />
                 </Row>
-                <div className="contact-information-button">
-                  <RaisedButton
-                    className="btn contactInformation"
-                    label="Save Change"
-                    disabled={submitting || invalid || pristine}
-                    primary={true}
-                    type="submit"
-                  />
-                  <RaisedButton
-                    className="btn contactInformation"
-                    label="Cancel"
-                    default={true}
-                    onClick={this.handleCancel}
-                  />
-                </div>
+                {this.props.disabled ? (
+                  ''
+                ) : (
+                  <div className="contact-information-button">
+                    <RaisedButton
+                      className="btn contactInformation"
+                      label="Save Change"
+                      disabled={submitting || invalid || pristine}
+                      primary={true}
+                      type="submit"
+                    />
+                    <RaisedButton
+                      className="btn contactInformation"
+                      label="Cancel"
+                      default={true}
+                      onClick={this.handleCancel}
+                    />
+                  </div>
+                )}
               </form>
             </Col>
           </Row>

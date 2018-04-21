@@ -105,17 +105,33 @@ class InfoTabs extends React.Component {
         <Tabs onChange={this.handleChange} value={this.state.slideIndex}>
           <Tab label="Personal Info" value={0} />
           <Tab label="Contact Information" value={1} />
-          <Tab label="Change Password" value={2} />
+          {this.props.disabled ? (
+            ''
+          ) : (
+            <Tab
+              label="Change Password"
+              value={2}
+              disabled={this.props.disabled}
+            />
+          )}
         </Tabs>
         <SwipeableViews
           index={this.state.slideIndex}
           onChangeIndex={this.handleChange}
         >
           <div>
-            <EditablePersonalInfo me={me} onSubmit={this.saveInformation} />
+            <EditablePersonalInfo
+              me={me}
+              disabled={this.props.disabled}
+              onSubmit={this.saveInformation}
+            />
           </div>
           <div>
-            <ContactInformation me={me} onSubmit={this.saveInformation} />
+            <ContactInformation
+              me={me}
+              disabled={this.props.disabled}
+              onSubmit={this.saveInformation}
+            />
           </div>
           <div style={styles.slide}>
             <ChangePassword onSubmit={this.savePassword} />

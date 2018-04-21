@@ -9,7 +9,7 @@ import Loading from 'components/render/renderLoading';
 import { cutString } from '../../../utils/stringSolve';
 
 const style = {
-  textAlign: 'center',
+  paddingLeft: '12px',
   lineHeight: '200%',
 };
 
@@ -27,14 +27,7 @@ const sorted = [
 class Index extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      papers: [],
-    };
-    this.handleEdit = this.handleEdit.bind(this);
     this.mapAuthor = this.mapAuthor.bind(this);
-  }
-  handleEdit(paper) {
-    this.props.setPaper(paper);
   }
   mapAuthor(authors) {
     let result = '';
@@ -97,9 +90,6 @@ class Index extends Component {
             <RaisedButton
               label="View"
               default={true}
-              onClick={() => {
-                this.handleEdit(props.value);
-              }}
               containerElement={
                 <Link to={`/conference/paper/detail/${props.value.id}`} />
               }
@@ -108,11 +98,16 @@ class Index extends Component {
             (role === '1' || role === '6') && // if user is an organizer or reviewer
             (props.value.status === 'Reviewing' ||
               props.value.status === 'Re-reviewing') ? ( // and if paper status is reviewing or re-reviewing
-              <RaisedButton label="Review" secondary={true} style={styleBtn} />
+              <RaisedButton
+                label="Review"
+                secondary={true}
+                style={styleBtn}
+                containerElement={
+                  <Link to={`/conference/paper/review/${props.value.id}`} />
+                }
+              />
             ) : // eslint-disable-next-line
-            role === '7' && // if user is an author
-            (props.value.status === 'Submitting' ||
-              props.value.status === 'Re-submitting') ? ( // and if paper status is submitting or re-submitting
+            role === '7' && props.value.status === 'Re-submitting' ? ( // if user is an author // and if paper status is submitting or re-submitting
               <RaisedButton
                 label="Re-Submit"
                 secondary={true}
