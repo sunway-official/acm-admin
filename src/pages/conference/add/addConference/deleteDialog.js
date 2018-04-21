@@ -1,6 +1,5 @@
 import React from 'react';
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
+import { Dialog, RaisedButton } from 'material-ui';
 import { graphql, compose } from 'react-apollo';
 import {
   DELETE_CONFERENCE_BY_ID,
@@ -35,8 +34,13 @@ class DeleteDialog extends React.Component {
 
   render() {
     const actions = [
-      <FlatButton label="No" primary={true} onClick={this.props.handleClose} />,
-      <FlatButton label="Yes" primary={true} onClick={this.handleDelete} />,
+      <RaisedButton label="Yes" secondary={true} onClick={this.handleDelete} />,
+      <RaisedButton
+        label="No"
+        default={true}
+        onClick={this.props.handleClose}
+        style={{ marginLeft: '10px' }}
+      />,
     ];
 
     // const id = this.props.id;

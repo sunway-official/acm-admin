@@ -61,6 +61,15 @@ class ConferenceInfoForm extends React.Component {
                   disabled={true}
                 />
               </div>
+              <div className="d-flex form-group">
+                <label>Category :</label>
+                <Field
+                  name="category_name"
+                  component={CustomInput}
+                  fullWidth={true}
+                  disabled={true}
+                />
+              </div>
               <div className="d-flex date">
                 <div className="d-flex form-group">
                   <label className="startDate">Start From :</label>
