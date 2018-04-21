@@ -8,15 +8,12 @@
   margin-top: 36px;
 }
 .paper-col {
-  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
   padding-left: 24px;
   padding-right: 24px;
-  margin-bottom: 24px;
 }
 
 .paper-review-row {
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
-  width: 98% !important;
 }
 
 .paper-review {
@@ -24,7 +21,7 @@
 }
 
 .paper-detail-grid {
-  margin-top: 24px;
+  margin-top: 24px !important;
   margin-bottom: 24px;
   width: 100%;
 }
@@ -61,5 +58,12 @@
 }
 
 .reviewer-icon {
-  padding-top: 16px;
+  padding-top: 0px !important;
+}
+
+.paper-section {
+  padding: 0px;
+  margin: 0px;
+  margin-bottom: 24px;
+  padding-left: 24px;
 }

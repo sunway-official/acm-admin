@@ -150,14 +150,16 @@ class BadgeExampleSimple extends Component {
                   onClick={this.handleRequestClose}
                 />
               </Link>
-              {isShow['switch-conferences'] ? (
-                <MenuItem
-                  primaryText="Switch conference"
-                  onClick={this.handleToggleConference}
-                />
-              ) : (
-                ''
-              )}
+              {/*
+                {isShow['switch-conferences'] ? (
+                        <MenuItem
+                          primaryText="Switch conference"
+                          onClick={this.handleToggleConference}
+                        />
+                      ) : (
+                        ''
+                      )}
+                */}
               {isShow['invite-user'] ? (
                 <Link to="/invite-user">
                   <MenuItem
