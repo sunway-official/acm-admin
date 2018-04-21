@@ -96,8 +96,9 @@ class Index extends Component {
             />
             {// eslint-disable-next-line
             (role === '1' || role === '6') && // if user is an organizer or reviewer
-            (props.value.status === 'Reviewing' ||
-              props.value.status === 'Re-reviewing') ? ( // and if paper status is reviewing or re-reviewing
+            ((props.value.status === 'Reviewing' ||
+              props.value.status === 'Re-reviewing') &&
+              props.value.is_reviewed === 0) ? ( // and if paper status is reviewing or re-reviewing
               <RaisedButton
                 label="Review"
                 secondary={true}

@@ -21,7 +21,6 @@ class Index extends Component {
     const conferenceReviewer = this.props.GET_ALL_USERS_BY_ROLE_ID_QUERY
       .getAllUsersByRoleID;
     const role = localStorage.getItem('roles');
-
     return (
       <div className="conference">
         <Subheader className="subheader">

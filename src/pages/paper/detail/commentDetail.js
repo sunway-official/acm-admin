@@ -4,6 +4,22 @@ import colors from '../../../theme/color';
 import ActionAccountCircle from 'material-ui/svg-icons/action/account-circle';
 import { Link } from 'react-router-dom';
 
+const getStatus = point => {
+  switch (Math.round(point)) {
+    case 1:
+      return 'Reject';
+    case 2:
+      return 'Low Accept';
+    case 3:
+      return 'Strong Accept';
+    case 4:
+      return 'Strong Accept';
+    case 5:
+      return 'Strong Accept';
+    default:
+      return 'Unknow';
+  }
+};
 const CommentDetail = props => {
   const role = localStorage.getItem('roles');
   let comments;
@@ -39,9 +55,11 @@ const CommentDetail = props => {
                 </Row>
                 <Row className="card-detail-row">
                   <Col className="paper-detail-title" xs={4}>
-                    Point{' '}
+                    Point
                   </Col>
-                  <Col xs={8}>{comment.point}</Col>
+                  <Col xs={8}>
+                    {comment.point} <b>({getStatus(comment.point)})</b>
+                  </Col>
                 </Row>
                 <Row className="card-detail-row">
                   <Col className="paper-detail-title" xs={4}>

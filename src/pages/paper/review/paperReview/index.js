@@ -66,6 +66,14 @@ class Index extends Component {
               point: index + 1 > 2 ? values[point] : generalPoint, //if it is detail or general comment then use the general point
               comment: values[input],
             },
+            refetchQueries: [
+              {
+                query: queries.GET_PAPER_BY_ID,
+                variables: {
+                  id: this.props.match.params.id,
+                },
+              },
+            ],
           });
         },
       );

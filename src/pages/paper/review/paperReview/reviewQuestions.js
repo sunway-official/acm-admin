@@ -69,7 +69,7 @@ const ReviewQuestions = props => {
                 <b> Evaluation Category </b>
               </Col>
               <Col xs={3}>
-                <b>Point</b>
+                <b>Point</b> <span> (1 = Poor, 5 = Execellent) </span>
               </Col>
               <Col xs={4}>
                 <b>Comment </b>
