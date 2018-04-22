@@ -2,7 +2,7 @@
   "name": "cem-admin",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://acm-dtu.appspot.com",
+  "homepage": ".",
   "engines": {
     "node": "8.x"
   },
