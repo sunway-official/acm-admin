@@ -34,6 +34,7 @@ const GET_PAPERS_BY_CONFERENCE_ID = gql`
         content
         comment
       }
+      is_reviewed
     }
   }
 `;
