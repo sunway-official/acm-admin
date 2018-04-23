@@ -90,7 +90,7 @@ const ReviewQuestions = props => {
                   <h2>Detail comment</h2>
                 </b>
                 <br />
-                {props.questions[1].content}
+                {props.questions[0].content}
               </Col>
             </Row>
             <Row>
@@ -111,7 +111,7 @@ const ReviewQuestions = props => {
                   <h2>Confidential Comments for Committee</h2>
                 </b>
                 <br />
-                {props.questions[2].content}
+                {props.questions[1].content}
               </Col>
             </Row>
             <Row>

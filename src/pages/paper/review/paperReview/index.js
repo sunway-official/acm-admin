@@ -27,6 +27,7 @@ class Index extends Component {
       type: 'success',
       icon: <MyFaCheck />,
       onClose: () => {
+        window.location.reload();
         this.props.history.replace(
           `/conference/paper/review-detail/${this.props.ME_QUERY.me.id}/${this
             .props.match.params.id}`,
@@ -34,7 +35,7 @@ class Index extends Component {
       },
     });
   };
-  handleSubmit(values) {
+  async handleSubmit(values) {
     const {
       INSERT_PAPER_REVIEW_QUESTION,
       GET_ALL_REVIEW_QUESTIONS_QUERY,
@@ -52,35 +53,29 @@ class Index extends Component {
         },
       );
       generalPoint = generalPoint / (length - 2);
-      GET_ALL_REVIEW_QUESTIONS_QUERY.getAllReviewQuestions.forEach(
-        (element, index) => {
-          let input = 'input' + (index + 1);
-          let point = 'point' + (index + 1);
-          // console.log(index + 1);
-          // console.log(values[point]);
-          // console.log(values[input]);
-          INSERT_PAPER_REVIEW_QUESTION({
-            variables: {
-              paper_id: this.props.GET_PAPER_BY_ID.getPaperByID.id,
-              review_question_id: index + 1,
-              point: index + 1 > 2 ? values[point] : generalPoint, //if it is detail or general comment then use the general point
-              comment: values[input],
-            },
-            refetchQueries: [
-              {
-                query: queries.GET_PAPER_BY_ID,
-                variables: {
-                  id: this.props.match.params.id,
-                },
+      for (let element of GET_ALL_REVIEW_QUESTIONS_QUERY.getAllReviewQuestions) {
+        let input = 'input' + element.id;
+        let point = 'point' + element.id;
+        await INSERT_PAPER_REVIEW_QUESTION({
+          variables: {
+            paper_id: this.props.GET_PAPER_BY_ID.getPaperByID.id,
+            review_question_id: element.id,
+            point: element.id > 2 ? values[point] : generalPoint, //if it is detail or general comment then use the general point
+            comment: values[input],
+          },
+          refetchQueries: [
+            {
+              query: queries.GET_PAPER_BY_ID,
+              variables: {
+                id: this.props.match.params.id,
               },
-            ],
-          });
-        },
-      );
+            },
+          ],
+        });
+      }
       this.showAlertSuccess();
     } catch (error) {
-      let temp = error.graphQLErrors[0].message;
-      this.showAlertError(temp.substring(7, temp.length));
+      console.log(error);
     }
   }
   render() {
