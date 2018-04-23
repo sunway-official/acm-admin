@@ -60,6 +60,7 @@ const ReviewQuestions = props => {
               height: '2px',
               backgroundColor: 'rgba(0,0,0,0.3)',
               border: '0',
+              marginTop: '24px',
             }}
           />
           <Row className={'review-row'}>

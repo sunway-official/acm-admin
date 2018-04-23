@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import { Subheader, IconButton } from 'material-ui';
 import { Link } from 'react-router-dom';
-import { graphql, compose } from 'react-apollo';
+import { graphql, compose, withApollo } from 'react-apollo';
 import { queries, mutations } from '../../helpers';
 import PaperInfo from '../../paperInfo';
 import ReviewQuestions from './reviewQuestions';
@@ -63,14 +63,6 @@ class Index extends Component {
             point: element.id > 2 ? values[point] : generalPoint, //if it is detail or general comment then use the general point
             comment: values[input],
           },
-          refetchQueries: [
-            {
-              query: queries.GET_PAPER_BY_ID,
-              variables: {
-                id: this.props.match.params.id,
-              },
-            },
-          ],
         });
       }
       this.showAlertSuccess();
@@ -126,6 +118,7 @@ class Index extends Component {
 }
 
 export default compose(
+  withApollo,
   graphql(queries.GET_ALL_REVIEW_QUESTIONS_QUERY, {
     name: 'GET_ALL_REVIEW_QUESTIONS_QUERY',
   }),
