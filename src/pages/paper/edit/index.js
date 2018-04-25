@@ -118,7 +118,6 @@ class Index extends Component {
     if (getTopicsOfConference) {
       topics = getTopicsOfConference;
     }
-    console.log('paper', getPaperByID);
     if (getPaperByID) {
       paper = getPaperByID;
       initialValues = {

@@ -1,15 +1,58 @@
 import React from 'react';
 import { reduxForm, Field } from 'redux-form';
-import { Subheader } from 'material-ui';
+import { Subheader, Dialog, RaisedButton } from 'material-ui';
 import CustomInput from 'components/CustomInput';
 import AppMap from 'components/AppMap';
 import CustomDatePicker from 'components/CustomDatePicker';
+import { functions } from 'containers/layout/appbar/helpers';
 
 class ConferenceInfoForm extends React.Component {
+  state = {
+    open: true,
+  };
+  handleClose = () => {
+    this.setState({ open: false });
+  };
+  handleRegister = () => {
+    this.setState({ open: false });
+    window.location.pathname = '/author-registration';
+  };
   render() {
+    const actions = [
+      <RaisedButton
+        label="Register"
+        primary={true}
+        onClick={this.handleRegister}
+      />,
+      <RaisedButton
+        label="Ask me later"
+        onClick={this.handleClose}
+        style={{ marginLeft: '10px' }}
+      />,
+    ];
     const { initialValues } = this.props;
+    const roles = localStorage.getItem('roles');
+    const isShow = functions.checkRoleAllComponents(roles);
+    let today = new Date();
+    const registrationDeadline = initialValues.dl_registration;
+    const releaseFinalPaperDate = initialValues.dl_release_final_paper;
     return (
       <form className="form conference-info">
+        {isShow['paper-registration'] &&
+        (today > releaseFinalPaperDate && today <= registrationDeadline) ? (
+          <Dialog
+            title="Speaker Registration"
+            actions={actions}
+            modal={false}
+            open={this.state.open}
+            onRequestClose={this.handleClose}
+          >
+            Your paper was accepted. Please register to become a speaker of
+            {initialValues.title}
+          </Dialog>
+        ) : (
+          ''
+        )}
         <div className="form-body d-flex justify-content-space-between">
           <section className="map">
             <Subheader className="header subtitle">

@@ -40,7 +40,6 @@ class ConferenceInfoForm extends PureComponent {
   };
 
   async handleUpdateConferenceInfo(values) {
-    console.log(values);
     try {
       const conference = await this.props.UPDATE_CONFERENCE_MUTATION({
         variables: {
@@ -92,6 +91,7 @@ class ConferenceInfoForm extends PureComponent {
     if (loading) {
       return <div>Loading</div>;
     }
+
     const categories = getAllCategories;
     if (this.props.isShow['edit-conference-info']) {
       return (
@@ -152,6 +152,8 @@ const mapStateToProps = (state, ownProps) => {
       organizerEmail: organizer.email,
       organizerWebsite: organizer.website,
       organizerPhoneNumber: organizer.phone,
+      dl_release_final_paper: new Date(conference.dl_release_final_paper),
+      dl_registration: new Date(conference.dl_registration),
     },
   };
 };

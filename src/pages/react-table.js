@@ -62,7 +62,6 @@ const sorted = [
 ];
 
 const Index = props => {
-  console.log(props);
   const {
     loading,
     getTopicsOfConference,

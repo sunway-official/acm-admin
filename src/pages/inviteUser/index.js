@@ -24,7 +24,6 @@ class Index extends Component {
   };
   async handleSubmit(values) {
     const { INVITE_USER } = this.props;
-    console.log(values);
     try {
       await INVITE_USER({
         variables: {
