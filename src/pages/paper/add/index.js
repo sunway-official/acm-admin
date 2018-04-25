@@ -111,7 +111,7 @@ class Index extends Component {
               author_street: author.authorStreet,
               author_city: author.authorCity,
               author_country: author.authorCountry,
-              author_zipcode: values.authorZipcode,
+              author_zipcode: author.authorZipcode,
             },
           });
         } else {

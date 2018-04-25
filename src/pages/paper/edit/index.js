@@ -6,17 +6,38 @@ import { graphql, compose } from 'react-apollo';
 import { queries, mutations } from '../helpers';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
-import Form from '../form';
+import Form from './editForm';
 import { alertOptions, MyExclamationTriangle, MyFaCheck } from 'theme/alert';
 import AlertContainer from 'react-alert';
+import S3 from 'lib/s3';
 
 import Loading from 'components/render/renderLoading';
 
 class Index extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      url: '',
+      key: '',
+    };
     this.handleSave = this.handleSave.bind(this);
+    this.handleUploadFile = this.handleUploadFile.bind(this);
   }
+
+  async handleUploadFile(e) {
+    const file = e.target.files[0];
+    const fileName = file.name;
+    // const hashedFile = await toBase64Async(file, 'pdf');
+    const { Key } = await S3.putAsync({
+      name: fileName,
+      bodyFile: file,
+      isImage: false,
+    });
+    this.setState({ key: Key });
+    return Key;
+  }
+
   // eslint-disable-next-line
   showAlertSuccess = () => {
     this.msg.success('Saved!', {
@@ -34,32 +55,27 @@ class Index extends Component {
     });
   };
   async handleSave(values) {
-    const { UPDATE_PAPER, UPDATE_TOPIC_OF_PAPER } = this.props;
+    const {
+      UPDATE_PAPER,
+      UPDATE_TOPIC_OF_PAPER,
+      UPDATE_PAPER_AUTHOR,
+    } = this.props;
+
+    const key = this.state.key;
+    let correspondingValue = 3;
     try {
       const isAuthor = localStorage.getItem('roles').indexOf('7');
-      let paper;
+      let paper, author, topic;
 
       if (isAuthor > -1) {
         paper = await UPDATE_PAPER({
           variables: {
+            paper_status_id: 3,
             id: this.props.match.params.id,
             title: values.title,
             abstract: values.abstract,
             keywords: values.keywords,
-          },
-          refetchQueries: [
-            {
-              query: queries.GET_PAPERS_WITH_AUTHOR_BY_CONFERENCE_ID,
-            },
-          ],
-        });
-      } else {
-        paper = await UPDATE_PAPER({
-          variables: {
-            id: this.props.match.params.id,
-            title: values.title,
-            abstract: values.abstract,
-            keywords: values.keywords,
+            file: key,
           },
           refetchQueries: [
             {
@@ -67,10 +83,28 @@ class Index extends Component {
             },
           ],
         });
+        console.log('paper', paper);
+      } else {
+        paper = await UPDATE_PAPER({
+          variables: {
+            paper_status_id: 3,
+            id: this.props.match.params.id,
+            title: values.title,
+            abstract: values.abstract,
+            keywords: values.keywords,
+            file: key,
+          },
+          refetchQueries: [
+            {
+              query: queries.GET_PAPERS_BY_CONFERENCE_ID,
+            },
+          ],
+        });
+        console.log('paper', paper);
       }
       if (values.topic) {
         const topic_id = paper.data.updatePaper.papersTopic[0].topic_id;
-        await UPDATE_TOPIC_OF_PAPER({
+        topic = await UPDATE_TOPIC_OF_PAPER({
           variables: {
             paper_id: this.props.match.params.id,
             topic_id: values.topic,
@@ -96,11 +130,38 @@ class Index extends Component {
             },
           ],
         });
+
+        console.log('topic', topic);
+      }
+      if (values.editAuthors) {
+        author = await values.editAuthors.map(author => {
+          if (author.corresponding === true) {
+            correspondingValue = 2;
+          } else {
+            correspondingValue = 3;
+          }
+          UPDATE_PAPER_AUTHOR({
+            variables: {
+              paper_id: paper.data.insertPaper.id,
+              topic_id: author.topic,
+              corresponding: correspondingValue,
+              author_name: author.firstname + ' ' + author.lastname,
+              author_email: author.email,
+              author_title: author.title,
+              author_organization: author.organization,
+              author_street: author.authorStreet,
+              author_city: author.authorCity,
+              author_country: author.authorCountry,
+              author_zipcode: author.authorZipcode,
+            },
+          });
+          return 1;
+        });
+        console.log('author', author);
       }
       this.showAlertSuccess();
     } catch (error) {
-      let temp = error.graphQLErrors[0].message;
-      this.showAlertError(temp.substring(7, temp.length));
+      this.showAlertError('Resubmit paper fail');
     }
   }
   render() {
@@ -119,6 +180,7 @@ class Index extends Component {
       topics = getTopicsOfConference;
     }
     console.log('paper', getPaperByID);
+    console.log('props', this.props);
     if (getPaperByID) {
       paper = getPaperByID;
       initialValues = {
@@ -131,7 +193,7 @@ class Index extends Component {
         city: paper.authors[0].author_city,
         country: paper.authors[0].author_country,
         zipcode: paper.authors[0].author_zipcode,
-        addAuthors: paper.authors,
+        editAuthors: paper.authors,
       };
     }
     return (
@@ -202,5 +264,8 @@ export default compose(
   }),
   graphql(mutations.UPDATE_TOPIC_OF_PAPER, {
     name: 'UPDATE_TOPIC_OF_PAPER',
+  }),
+  graphql(mutations.UPDATE_PAPER_AUTHOR, {
+    name: 'UPDATE_PAPER_AUTHOR',
   }),
 )(Index);
