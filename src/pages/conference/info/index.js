@@ -36,7 +36,6 @@ class Index extends Component {
         <div className="page-breadcrumb d-flex">
           <Link className="d-flex" to="/">
             <IconButton>
-              z
               <ActionHome />
             </IconButton>
             <span>Dashboard</span>

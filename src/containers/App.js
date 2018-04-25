@@ -42,6 +42,7 @@ import EditCoOrganizer from '../pages/conference/info/coOrganizer/edit';
 import UploadFile from '../pages/uploadFile';
 import InviteUser from '../pages/inviteUser';
 import LandingPagePapers from '../pages/landingPage/paperList/index';
+import AuthorRegistration from '../pages/registration';
 
 export default () => (
   <MuiThemeProvider muiTheme={muiTheme}>
@@ -202,6 +203,12 @@ export default () => (
             exact
             path="/invite-user"
             component={InviteUser}
+          />
+          <AuthRoute
+            needAuth
+            exact
+            path="/author-registration"
+            component={AuthorRegistration}
           />
           <AuthRoute exact path="/conference/activities" component={Schedule} />
           <AuthRoute path="/withThunk" component={WithThunk} />

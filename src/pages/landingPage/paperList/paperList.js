@@ -12,7 +12,9 @@ const PaperList = props => {
       {moment(papers[0].conference.dl_release_final_paper).format('DD-MM-YYYY')}
     </div>
   );
-  const deadline = moment().isSameOrAfter(); //papers[0].conference.dl_release_final_paper,
+  const deadline = moment().isSameOrAfter(
+    papers[0].conference.dl_release_final_paper,
+  );
   let content;
   content = papers.map(
     topic =>

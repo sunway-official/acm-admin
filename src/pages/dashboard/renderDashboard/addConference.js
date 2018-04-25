@@ -111,7 +111,6 @@ class ConferenceAddForm extends PureComponent {
 
   onMapPositionChanged(position) {
     this.props.getPosition(position);
-    console.log(this.props);
   }
 
   render() {
