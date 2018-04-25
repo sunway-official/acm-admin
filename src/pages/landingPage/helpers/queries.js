@@ -45,7 +45,30 @@ export const GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY = gql`
   }
 `;
 
+export const GET_TOPICS_OF_CONFERENCE_QUERY = gql`
+  query getTopicsOfConference {
+    getTopicsOfConference {
+      id
+      name
+      papers {
+        id
+        title
+        status
+        file
+        authors {
+          author_name
+          corresponding
+        }
+      }
+      conference {
+        dl_release_final_paper
+      }
+    }
+  }
+`;
+
 export default {
   GET_LANDING_PAGE_BY_CONFERENCE_ID_QUERY,
   GET_ACTIVITIES_BY_CONFERENCE_ID_QUERY,
+  GET_TOPICS_OF_CONFERENCE_QUERY,
 };

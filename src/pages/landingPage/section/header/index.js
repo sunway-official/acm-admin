@@ -1,30 +1,69 @@
 import React from 'react';
 import { Component } from 'react';
 import { Link } from 'react-router-dom';
+import './style.css';
 
 class Index extends Component {
   render() {
     return (
-      <div className="cbp-af-inner">
-        <h2>ACM</h2>
-        <nav>
-          <Link
-            to={`/landingpage/${this.props.conference_id}`}
-            className="home"
-          >
-            Home
-          </Link>
-          <a href="">Speaker</a>
-          <a href="">Paper</a>
-          <Link to={`/landingpage/${this.props.conference_id}/schedule`}>
-            Schedules
-          </Link>
-          <a href="">Contact Us</a>
-        </nav>
-      </div>
+      <header className="header">
+        <a href="" className="logo">
+          ACM
+        </a>
+        <input className="menu-btn" type="checkbox" id="menu-btn" />
+        <label className="menu-icon" htmlFor="menu-btn">
+          <span className="navicon" />
+        </label>
+        <ul className="menu">
+          <li>
+            <Link
+              to={`/landingpage/${this.props.conference_id}`}
+              className="active"
+            >
+              Home
+            </Link>
+          </li>
+          <li>
+            <a href="">Speakers</a>
+          </li>
+          <li>
+            <Link to={`/landingpage/${this.props.conference_id}/papers`}>
+              Papers
+            </Link>
+          </li>
+          <li>
+            <Link to={`/landingpage/${this.props.conference_id}/schedule`}>
+              Schedules
+            </Link>
+          </li>
+          <li>
+            <a href="">Contact</a>
+          </li>
+        </ul>
+      </header>
     );
   }
 }
 export default Index;
 
-//<button className="btn get-ticket">Get Ticket</button>
+// <div className="header">
+//         <a href="" className="logo">
+//           ACM
+//         </a>
+//         <div className="header-right">
+//           <Link
+//             to={`/landingpage/${this.props.conference_id}`}
+//             className="active"
+//           >
+//             Home
+//           </Link>
+//           <a href="">Speaker</a>
+//           <Link to={`/landingpage/${this.props.conference_id}/papers`}>
+//             Papers
+//           </Link>
+//           <Link to={`/landingpage/${this.props.conference_id}/schedule`}>
+//             Schedules
+//           </Link>
+//           <a href="">Contact Us</a>
+//         </div>
+//       </div>
