@@ -79,7 +79,8 @@ const INSERT_PAPER_AUTHOR = gql`
 
 const UPDATE_PAPER = gql`
   mutation updatePaper(
-    $paper_status_id: ID!
+    $id: ID!
+    $paper_status_id: ID
     $title: String
     $abstract: String
     $keywords: String
@@ -91,6 +92,7 @@ const UPDATE_PAPER = gql`
       abstract: $abstract
       keywords: $keywords
       file: $file
+      id: $id
     ) {
       id
       papersTopic {

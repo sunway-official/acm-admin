@@ -66,8 +66,9 @@ class Index extends Component {
     try {
       const isAuthor = localStorage.getItem('roles').indexOf('7');
       let paper, author, topic;
-
+      console.log('isAuthor', isAuthor);
       if (isAuthor > -1) {
+        console.log('paper', this.props.match.params.id);
         paper = await UPDATE_PAPER({
           variables: {
             paper_status_id: 3,
@@ -102,63 +103,63 @@ class Index extends Component {
         });
         console.log('paper', paper);
       }
-      if (values.topic) {
-        const topic_id = paper.data.updatePaper.papersTopic[0].topic_id;
-        topic = await UPDATE_TOPIC_OF_PAPER({
-          variables: {
-            paper_id: this.props.match.params.id,
-            topic_id: values.topic,
-          },
-          refetchQueries: [
-            {
-              query: queries.GET_TOPICS_BY_PAPER_ID,
-              variables: {
-                paper_id: this.props.match.params.id,
-              },
-            },
-            {
-              query: queries.GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
-              variables: {
-                topic_id: values.topic,
-              },
-            },
-            {
-              query: queries.GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
-              variables: {
-                topic_id: topic_id,
-              },
-            },
-          ],
-        });
+      // if (values.topic) {
+      //   const topic_id = paper.data.updatePaper.papersTopic[0].topic_id;
+      //   topic = await UPDATE_TOPIC_OF_PAPER({
+      //     variables: {
+      //       paper_id: this.props.match.params.id,
+      //       topic_id: values.topic,
+      //     },
+      //     refetchQueries: [
+      //       {
+      //         query: queries.GET_TOPICS_BY_PAPER_ID,
+      //         variables: {
+      //           paper_id: this.props.match.params.id,
+      //         },
+      //       },
+      //       {
+      //         query: queries.GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
+      //         variables: {
+      //           topic_id: values.topic,
+      //         },
+      //       },
+      //       {
+      //         query: queries.GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
+      //         variables: {
+      //           topic_id: topic_id,
+      //         },
+      //       },
+      //     ],
+      //   });
 
-        console.log('topic', topic);
-      }
-      if (values.editAuthors) {
-        author = await values.editAuthors.map(author => {
-          if (author.corresponding === true) {
-            correspondingValue = 2;
-          } else {
-            correspondingValue = 3;
-          }
-          UPDATE_PAPER_AUTHOR({
-            variables: {
-              paper_id: paper.data.insertPaper.id,
-              topic_id: author.topic,
-              corresponding: correspondingValue,
-              author_name: author.firstname + ' ' + author.lastname,
-              author_email: author.email,
-              author_title: author.title,
-              author_organization: author.organization,
-              author_street: author.authorStreet,
-              author_city: author.authorCity,
-              author_country: author.authorCountry,
-              author_zipcode: author.authorZipcode,
-            },
-          });
-          return 1;
-        });
-        console.log('author', author);
-      }
+      //   console.log('topic', topic);
+      // }
+      // if (values.editAuthors) {
+      //   author = await values.editAuthors.map(author => {
+      //     if (author.corresponding === true) {
+      //       correspondingValue = 2;
+      //     } else {
+      //       correspondingValue = 3;
+      //     }
+      //     UPDATE_PAPER_AUTHOR({
+      //       variables: {
+      //         paper_id: paper.data.insertPaper.id,
+      //         topic_id: author.topic,
+      //         corresponding: correspondingValue,
+      //         author_name: author.firstname + ' ' + author.lastname,
+      //         author_email: author.email,
+      //         author_title: author.title,
+      //         author_organization: author.organization,
+      //         author_street: author.authorStreet,
+      //         author_city: author.authorCity,
+      //         author_country: author.authorCountry,
+      //         author_zipcode: author.authorZipcode,
+      //       },
+      //     });
+      //     return 1;
+      //   });
+      //   console.log('author', author);
+      // }
       this.showAlertSuccess();
     } catch (error) {
       this.showAlertError('Resubmit paper fail');
