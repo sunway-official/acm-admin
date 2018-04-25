@@ -24,7 +24,7 @@ class LandingPage extends Component {
     return (
       <div className="landingpage-body">
         <Header conference_id={this.props.match.params.conference_id} />
-        <div className="main">
+        <div className="landing-page-main">
           <Home landingPage={landingPage} />
           <Register
             landingPage={landingPage}

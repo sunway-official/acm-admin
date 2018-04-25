@@ -6,7 +6,7 @@
   height: 100%;
   padding-bottom: 2vw;
   min-height: 700px;
-  padding-top: 3vw;
+  padding-top: 3em;
 }
 .event-time {
   font-size: 1.7vw;
@@ -41,9 +41,6 @@
 
 .landing-page-th {
   padding: 10px;
-  text-align: left;
-  padding: 16px;
-  min-width: 160px;
 }
 landing-page-tr:nth-child(even) {
   background-color: #f7f7f7;

@@ -6,7 +6,7 @@ import './style.css';
 class Index extends Component {
   render() {
     return (
-      <header className="header">
+      <header className="landing-page-header">
         <a href="" className="logo">
           ACM
         </a>
