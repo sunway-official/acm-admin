@@ -1,12 +1,19 @@
 import React, { Component } from 'react';
 import { graphql, compose, withApollo } from 'react-apollo';
-import { queries } from '../helpers';
+import { queries, mutations } from '../helpers';
 import { Link } from 'react-router-dom';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
-import { RaisedButton } from 'material-ui';
+import { RaisedButton, Dialog } from 'material-ui';
 import Loading from 'components/render/renderLoading';
 import { cutString } from '../../../utils/stringSolve';
+import StatusForm from './statusForm';
+import AlertContainer from 'react-alert';
+import {
+  alertOptions,
+  MyExclamationTriangle,
+  MyFaCheck,
+} from '../../../theme/alert';
 
 const style = {
   textAlign: 'center',
@@ -28,14 +35,26 @@ class Index extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      papers: [],
+      openStatus: false,
+      paper_id: 0,
     };
-    this.handleEdit = this.handleEdit.bind(this);
     this.mapAuthor = this.mapAuthor.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+    this.handleOpenStatus = this.handleOpenStatus.bind(this);
+    this.handleSetStatus = this.handleSetStatus.bind(this);
   }
-  handleEdit(paper) {
-    this.props.setPaper(paper);
-  }
+  showAlertError = text => {
+    this.msg.error(text, {
+      type: 'error', // type of alert
+      icon: <MyExclamationTriangle />,
+    });
+  };
+  showAlertSuccess = () => {
+    this.msg.success('Saved!', {
+      type: 'success',
+      icon: <MyFaCheck />,
+    });
+  };
   mapAuthor(authors) {
     let result = '';
     authors.forEach((element, index) => {
@@ -52,12 +71,45 @@ class Index extends Component {
     });
     return result;
   }
+  handleOpenStatus(paper) {
+    this.setState({ openStatus: true, paper_id: paper.id });
+  }
+  handleClose() {
+    this.setState({ openStatus: false });
+  }
+  async handleSetStatus(value) {
+    this.setState({ openStatus: false });
+    const { UPDATE_PAPER } = this.props;
+    try {
+      await UPDATE_PAPER({
+        variables: {
+          id: this.state.paper_id,
+          paper_status_id: value.status,
+        },
+        refetchQueries: [
+          {
+            query: queries.GET_PAPERS_BY_CONFERENCE_ID,
+            variables: {
+              role_id: localStorage.getItem('roles'),
+            },
+          },
+        ],
+      });
+      this.showAlertSuccess();
+    } catch (error) {
+      let temp = error.graphQLErrors[0].message;
+      this.showAlertError(temp.substring(7, temp.length));
+    }
+  }
   render() {
     const role = localStorage.getItem('roles');
     const loadingListPaper = this.props.GET_PAPERS_BY_CONFERENCE_ID.loading;
     if (loadingListPaper) return <Loading />;
-    let papers;
+    let papers, initialValues;
     papers = this.props.GET_PAPERS_BY_CONFERENCE_ID.getPapersByConferenceID; // get all paper by role
+    initialValues = {
+      status: 1,
+    };
     const columns = [
       {
         Header: 'Title',
@@ -104,6 +156,12 @@ class Index extends Component {
                 <Link to={`/conference/paper/detail/${props.value.id}`} />
               }
             />
+            <RaisedButton
+              className="marginLeft"
+              secondary={true}
+              label="Set Status"
+              onClick={() => this.handleOpenStatus(props.value)}
+            />
             {// eslint-disable-next-line
             (role === '1' || role === '6') && // if user is an organizer or reviewer
             (props.value.status === 'Reviewing' ||
@@ -136,6 +194,19 @@ class Index extends Component {
           className="-striped -highlight"
           showPaginationTop
         />
+        <Dialog
+          title="Choose your paper status"
+          modal={true}
+          onRequestClose={this.handleClose}
+          open={this.state.openStatus}
+        >
+          <StatusForm
+            onSubmit={this.handleSetStatus}
+            handleClose={this.handleClose}
+            initialValues={initialValues}
+          />
+        </Dialog>
+        <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />
       </div>
     );
   }
@@ -150,5 +221,8 @@ export default compose(
         role_id: localStorage.getItem('roles'),
       },
     }),
+  }),
+  graphql(mutations.UPDATE_PAPER, {
+    name: 'UPDATE_PAPER',
   }),
 )(Index);

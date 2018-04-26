@@ -96,6 +96,7 @@ const UPDATE_PAPER = gql`
       papersTopic {
         topic_id
       }
+      status
     }
   }
 `;
