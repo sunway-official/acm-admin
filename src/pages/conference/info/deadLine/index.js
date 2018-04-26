@@ -35,6 +35,9 @@ class Index extends Component {
           dl_re_submit_paper: values.dl_re_submit_paper,
           dl_re_review_paper: values.dl_re_review_paper,
           dl_release_final_paper: values.dl_release_final_paper,
+          dl_registration: values.dl_registration,
+          end_date: values.end_date,
+          start_date: values.start_date,
         },
       });
       this.showAlertSuccess();
@@ -63,6 +66,9 @@ class Index extends Component {
         dl_re_submit_paper: new Date(conference.dl_re_submit_paper),
         dl_re_review_paper: new Date(conference.dl_re_review_paper),
         dl_release_final_paper: new Date(conference.dl_release_final_paper),
+        dl_registration: new Date(conference.dl_registration),
+        start_date: new Date(conference.start_date),
+        end_date: new Date(conference.end_date),
       };
     }
     if (loading) {

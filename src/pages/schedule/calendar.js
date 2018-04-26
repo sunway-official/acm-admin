@@ -59,18 +59,21 @@ class MyCalendar extends React.PureComponent {
           Activity Schedule
         </Subheader>
         <div className="page-breadcrumb d-flex">
-          <Link className="d-flex" to="/conference/info">
+          <Link className="d-flex" to="/">
             <IconButton>
               <ActionHome />
             </IconButton>
-            <span>Conference Information</span>
+            <span>Dashboard</span>
           </Link>
           <IconButton>
             <HardwareKeyboardArrowRight />
           </IconButton>
           <span>Activity Schedule</span>
         </div>
-        <div className="dashboard content d-flex">
+        <div
+          className="dashboard content d-flex"
+          style={{ background: 'white' }}
+        >
           <BigCalendar
             style={style}
             popup

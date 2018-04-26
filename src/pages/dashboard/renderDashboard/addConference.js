@@ -13,7 +13,7 @@ import { graphql, compose, gql } from 'react-apollo';
 import '../style.scss';
 import { Link } from 'react-router-dom';
 import { IconButton, Subheader } from 'material-ui';
-import { ActionHome } from 'material-ui/svg-icons';
+import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import DashboardMenu from './menu';
 import { alertOptions, MyExclamationTriangle, MyFaCheck } from 'theme/alert';
 import AlertContainer from 'react-alert';
@@ -133,14 +133,16 @@ class ConferenceAddForm extends PureComponent {
             </IconButton>
             <span>Dashboard</span>
           </Link>
+          <IconButton>
+            <HardwareKeyboardArrowRight />
+          </IconButton>
+          <span>Create Conference</span>
         </div>
-        <div className="add-form-bg">
-          <Form
-            onSubmit={this.handleAddConference}
-            onMapPositionChanged={this.onMapPositionChanged}
-            handleSwitch={this.handleSwitch}
-          />
-        </div>
+        <Form
+          onSubmit={this.handleAddConference}
+          onMapPositionChanged={this.onMapPositionChanged}
+          handleSwitch={this.handleSwitch}
+        />
         <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />
       </div>
     );

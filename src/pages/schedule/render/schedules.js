@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field } from 'redux-form';
 import { ActionAlarmAdd, ActionDeleteForever } from 'material-ui/svg-icons';
-import { MenuItem, RaisedButton, IconButton, Divider } from 'material-ui';
+import { MenuItem, RaisedButton, IconButton } from 'material-ui';
 import {
   renderDatePicker,
   renderSelectField,
@@ -38,12 +38,11 @@ class renderSchedules extends React.Component {
     return (
       <div>
         {fields.map((schedule, index) => (
-          <div key={index}>
+          <section key={index}>
             {index === 0 ? (
               ''
             ) : (
               <div>
-                <Divider style={styles.divider} />
                 <div className="d-flex align-items-center justify-content-space-around">
                   <h4 style={{ paddingTop: '0px' }}>Schedule #{index + 1}</h4>
                   <RaisedButton
@@ -103,7 +102,7 @@ class renderSchedules extends React.Component {
                 />
               </div>
             </div>
-          </div>
+          </section>
         ))}
         <div className="d-flex add-schedule-icon btn-group">
           <IconButton

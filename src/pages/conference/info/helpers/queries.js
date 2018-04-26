@@ -19,6 +19,7 @@ const GET_CURRENT_CONFERENCE = gql`
       dl_re_submit_paper
       dl_re_review_paper
       dl_release_final_paper
+      dl_registration
       address {
         id
         lat
