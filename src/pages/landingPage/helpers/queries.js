@@ -25,6 +25,7 @@ export const GET_LANDING_PAGE_BY_CONFERENCE_ID_QUERY = gql`
         description
         start_date
         end_date
+        dl_release_final_paper
       }
     }
   }

@@ -9,12 +9,15 @@ const PaperList = props => {
   const noData = (
     <div className="no-data">
       The papers will be published in <span />
-      {moment(papers[0].conference.dl_release_final_paper).format('DD-MM-YYYY')}
+      {moment(props.deadlinePaper).format('DD-MM-YYYY')}
     </div>
   );
-  const deadline = moment().isSameOrAfter(
-    papers[0].conference.dl_release_final_paper,
-  );
+  let deadline = false;
+  if (
+    papers.length > 0 &&
+    moment().isSameOrAfter(papers[0].conference.dl_release_final_paper)
+  )
+    deadline = true;
   let content;
   content = papers.map(
     topic =>
@@ -49,7 +52,7 @@ const PaperList = props => {
     <div className="event-body">
       <h1 className="schedule-title">Papers</h1>
       <Grid className="landing-page-papers-grid">
-        {papers.length > 0 && deadline ? (
+        {deadline ? (
           <div>
             <Row className="card-detail-row">
               <Col xs={3} className="landing-page-papers-first-row">
