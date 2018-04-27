@@ -14,6 +14,7 @@ const PaperList = props => {
   );
   let deadline = false;
   if (
+    papers &&
     papers.length > 0 &&
     moment().isSameOrAfter(papers[0].conference.dl_release_final_paper)
   )
