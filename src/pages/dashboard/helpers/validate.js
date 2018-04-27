@@ -5,8 +5,8 @@ const validate = values => {
   const requiredFields = [
     'title',
     'description',
-    'startDate',
-    'endDate',
+    'start_date',
+    'end_date',
     'organizerName',
     'organizerEmail',
     'organizerWebsite',
@@ -25,6 +25,7 @@ const validate = values => {
     'dl_re_review_paper',
     'dl_release_final_paper',
     'dl_registration',
+    'category_id',
   ];
   const arrDate = [
     'dl_submit_abstract',
@@ -40,8 +41,8 @@ const validate = values => {
     'dl_re_review_paper',
     'dl_release_final_paper',
     'dl_registration',
-    'startDate',
-    'endDate',
+    'start_date',
+    'end_date',
   ];
   requiredFields.forEach(field => {
     if (!values[field]) {

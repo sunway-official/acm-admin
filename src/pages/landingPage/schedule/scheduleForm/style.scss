@@ -1,14 +1,19 @@
 .event-body {
   padding-left: 10%;
+  padding-right: 10%;
   background-color: #ffffff;
   font-family: 'Roboto';
   height: 100%;
   padding-bottom: 2vw;
   min-height: 700px;
+  padding-top: 3em;
 }
 .event-time {
-  font-size: 1.3vw;
-  color: #868686;
+  font-size: 1.7vw;
+  font-weight: bold;
+  color: #ff5722;
+  margin-top: 0.5vw;
+  font-family: serif;
 }
 .event-title {
   font-size: 1.8vw;
@@ -16,8 +21,9 @@
   color: #5f5f5f;
 }
 .event-description {
-  font-size: 1vw;
+  font-size: 1.5vw;
   color: #868686;
+  font-family: serif;
 }
 .schedule-title {
   margin-bottom: 6vw;
@@ -32,14 +38,11 @@
   font-family: arial, sans-serif;
   width: 100%;
   border-collapse: collapse;
+  margin-top: 0px;
 }
 
 .landing-page-th {
   padding: 10px;
-  text-align: left;
-  padding: 16px;
-  border: 0.5px solid #dddddd;
-  min-width: 160px;
 }
 landing-page-tr:nth-child(even) {
   background-color: #f7f7f7;
@@ -53,9 +56,6 @@ body:not(.nohover) .landing-page-tbody .landing-page-tr:hover {
 }
 .landing-page-thead {
   box-shadow: 0px 2px 1px #b6b5b5;
-}
-.schedule-content {
-  width: 90%;
 }
 .no-data {
   text-align: center;

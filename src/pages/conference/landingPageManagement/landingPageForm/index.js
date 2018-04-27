@@ -8,7 +8,6 @@ import { Col, Grid, Row } from 'react-flexbox-grid';
 import validate from './validate';
 import { renderField } from '../../../../utils';
 import { withRouter } from 'react-router';
-import { AppBar } from 'material-ui';
 import { normalizePhone } from 'utils';
 import { listField } from './listField';
 class LandingPageForm extends Component {
@@ -50,11 +49,6 @@ class LandingPageForm extends Component {
     const detail = this.props.landingPage ? true : false;
     return (
       <div className="landing-page-form">
-        <AppBar
-          className="landing-page-app-bar"
-          title=""
-          showMenuIconButton={false}
-        />
         <Grid className="landing-page-grid">
           <section>
             <Row around="xs">

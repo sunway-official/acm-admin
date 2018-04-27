@@ -1,6 +1,6 @@
 import React from 'react';
 import { reduxForm, Field } from 'redux-form';
-import { Subheader, RaisedButton } from 'material-ui';
+import { Subheader, RaisedButton, MenuItem } from 'material-ui';
 import CustomInput from 'components/CustomInput';
 import CustomDatePicker from 'components/CustomDatePicker';
 import AppMap from 'components/AppMap';
@@ -13,6 +13,8 @@ import {
   paperDeadlineArr,
   organizationDateArr,
 } from '../../conference/info/deadLine/fields';
+import { renderSelectField } from 'components/render';
+
 class AddConferenceForm extends React.Component {
   render() {
     const {
@@ -47,6 +49,23 @@ class AddConferenceForm extends React.Component {
                 fullWidth={true}
                 hintText="Conference Description"
               />
+            </div>
+            <div className="d-flex form-group">
+              <label>Category :</label>
+              <Field
+                name="category_id"
+                component={renderSelectField}
+                fullWidth={true}
+                hintText="Conference Category"
+              >
+                {this.props.categories.map(value => (
+                  <MenuItem
+                    key={value.id}
+                    value={value.id}
+                    primaryText={value.name}
+                  />
+                ))}
+              </Field>
             </div>
           </div>
         </section>

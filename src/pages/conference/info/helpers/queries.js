@@ -147,10 +147,15 @@ export const GET_ALL_CATEGORIES = gql`
     getAllCategories {
       id
       name
+      conferences {
+        id
+        title
+        start_date
+        end_date
+      }
     }
   }
 `;
-
 export default {
   ME_QUERY,
   GET_CURRENT_CONFERENCE,

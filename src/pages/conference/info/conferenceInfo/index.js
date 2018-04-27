@@ -39,31 +39,29 @@ class ConferenceInfoForm extends PureComponent {
     });
   };
 
-  async handleUpdateConferenceInfo({
-    title,
-    description,
-    organizerName,
-    organizerEmail,
-    organizerWebsite,
-    organizerPhoneNumber,
-    organizerAddress,
-  }) {
+  async handleUpdateConferenceInfo(values) {
     try {
       const conference = await this.props.UPDATE_CONFERENCE_MUTATION({
         variables: {
           id: this.props.conference_id,
-          title: title,
-          description: description,
+          title: values.title,
+          description: values.description,
+          category_id: values.category_id,
         },
+        refetchQueries: [
+          {
+            query: queries.GET_ALL_CATEGORIES,
+          },
+        ],
       });
       const organizer = await this.props.UPDATE_ORGANIZER_DETAIL_MUTATION({
         variables: {
           id: this.props.organizer_id,
-          name: organizerName,
-          email: organizerEmail,
-          website: organizerWebsite,
-          phone: organizerPhoneNumber,
-          address: organizerAddress,
+          name: values.organizerName,
+          email: values.organizerEmail,
+          website: values.organizerWebsite,
+          phone: values.organizerPhoneNumber,
+          address: values.organizerAddress,
         },
       });
       let address;
@@ -82,6 +80,7 @@ class ConferenceInfoForm extends PureComponent {
     } catch (error) {
       let temp = error.graphQLErrors[0].message;
       this.showAlertError(temp);
+      console.log(error);
     }
   }
   onMapPositionChanged(position) {
@@ -92,6 +91,7 @@ class ConferenceInfoForm extends PureComponent {
     if (loading) {
       return <div>Loading</div>;
     }
+
     const categories = getAllCategories;
     if (this.props.isShow['edit-conference-info']) {
       return (
@@ -141,7 +141,7 @@ const mapStateToProps = (state, ownProps) => {
     initialValues: {
       title: conference.title,
       description: conference.description,
-      category_id: conference.category_id,
+      category_id: '' + conference.category_id,
       category_name: conference.category_name,
       start_date: new Date(conference.start_date),
       end_date: new Date(conference.end_date),
@@ -152,6 +152,8 @@ const mapStateToProps = (state, ownProps) => {
       organizerEmail: organizer.email,
       organizerWebsite: organizer.website,
       organizerPhoneNumber: organizer.phone,
+      dl_release_final_paper: new Date(conference.dl_release_final_paper),
+      dl_registration: new Date(conference.dl_registration),
     },
   };
 };

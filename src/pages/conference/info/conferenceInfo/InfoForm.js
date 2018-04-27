@@ -30,7 +30,6 @@ class ConferenceInfoForm extends React.Component {
       pristine,
       categories,
     } = this.props;
-    console.log(initialValues);
     return (
       <form className="form conference-info" onSubmit={handleSubmit}>
         <div className="form-body d-flex justify-content-space-between">
@@ -85,7 +84,7 @@ class ConferenceInfoForm extends React.Component {
               <div className="d-flex form-group">
                 <label>Category :</label>
                 <Field
-                  name="category_name"
+                  name="category_id"
                   component={renderSelectField}
                   fullWidth={true}
                 >

@@ -5,7 +5,7 @@ import {
   INSERT_ORGANIZER_DETAIL_MUTATION,
   INSERT_CONFERENCE_ATTENDEE_MUTATION,
 } from '../helpers/mutations';
-import { ME_QUERY } from '../helpers/queries';
+import { ME_QUERY, GET_ALL_CATEGORIES } from '../helpers/queries';
 import Form from './addconferenceform';
 import { conferenceOperations } from 'store/ducks/conference';
 import { connect } from 'react-redux';
@@ -41,11 +41,10 @@ class ConferenceAddForm extends PureComponent {
     });
   };
   async handleAddConference(values) {
-    console.log(values);
     const user_id = this.props.data.me.id;
     try {
       if (!this.props.position) {
-        this.showAlertError('Please set address');
+        this.showAlertError('Please set place on map');
       }
       const addressData = await this.props.INSERT_ADDRESS_MUTATION({
         variables: {
@@ -74,8 +73,9 @@ class ConferenceAddForm extends PureComponent {
           address_id: addressData.data.insertAddress.id,
           title: values.title,
           description: values.description,
-          start_date: values.startDate,
-          end_date: values.endDate,
+          category_id: values.category_id,
+          start_date: values.start_date,
+          end_date: values.end_date,
           bg_image: 'Background image',
           dl_submit_abstract: values.dl_submit_abstract,
           dl_review_abstract: values.dl_review_abstract,
@@ -92,12 +92,7 @@ class ConferenceAddForm extends PureComponent {
           dl_registration: values.dl_registration,
         },
       });
-      await this.props.INSERT_CONFERENCE_ATTENDEE_MUTATION({
-        variables: {
-          conference_id: conference.data.insertConference.id,
-          user_id: user_id,
-        },
-      });
+
       await this.props.SWITCH_CURRENT_CONFERENCE({
         variables: {
           conference_id: conference.data.insertConference.id,
@@ -116,10 +111,14 @@ class ConferenceAddForm extends PureComponent {
 
   onMapPositionChanged(position) {
     this.props.getPosition(position);
-    console.log(this.props);
   }
 
   render() {
+    const { loading, getAllCategories } = this.props.GET_ALL_CATEGORIES;
+    if (loading) {
+      return <div>Loading...</div>;
+    }
+    const categories = getAllCategories;
     return (
       <div>
         <DashboardMenu />
@@ -139,6 +138,7 @@ class ConferenceAddForm extends PureComponent {
           <span>Create Conference</span>
         </div>
         <Form
+          categories={categories}
           onSubmit={this.handleAddConference}
           onMapPositionChanged={this.onMapPositionChanged}
           handleSwitch={this.handleSwitch}
@@ -173,6 +173,9 @@ export const SWITCH_CURRENT_CONFERENCE = gql`
 export default compose(
   withRouter,
   connect(mapStateToProps, mapDispatchToProps),
+  graphql(GET_ALL_CATEGORIES, {
+    name: 'GET_ALL_CATEGORIES',
+  }),
   graphql(INSERT_CONFERENCE_MUTATION, {
     name: 'INSERT_CONFERENCE_MUTATION',
   }),

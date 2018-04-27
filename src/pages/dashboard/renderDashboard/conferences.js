@@ -10,6 +10,7 @@ import {
 } from 'material-ui';
 import Loading from 'components/render/renderLoading';
 import { withRouter, Link } from 'react-router-dom';
+import { functions } from 'containers/layout/appbar/helpers';
 
 const subTitleString = (text, limit) => {
   if (text.length > limit) return text.substring(0, limit);
@@ -42,10 +43,12 @@ class listCoferences extends React.Component {
   }
 
   render() {
-    console.log(this.props);
     const { loading, getAllCategories } = this.props.data;
     if (loading) return <Loading />;
     const categories = getAllCategories;
+    const roles = localStorage.getItem('roles');
+    const isShow = functions.checkRoleAllComponents(roles);
+
     return (
       <div className="list-dashboard">
         {categories.map(value => {
@@ -77,13 +80,17 @@ class listCoferences extends React.Component {
             );
           }
         })}
-        <RaisedButton
-          className="btn"
-          label="Create new conference"
-          fullWidth={true}
-          primary={true}
-          containerElement={<Link to={`/conference/add`} />}
-        />
+        {isShow['add-conference-btn'] ? (
+          <RaisedButton
+            className="btn"
+            label="Create new conference"
+            fullWidth={true}
+            primary={true}
+            containerElement={<Link to={`/conference/add`} />}
+          />
+        ) : (
+          ''
+        )}
       </div>
     );
   }

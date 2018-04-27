@@ -9,13 +9,8 @@ import CoOrganizerList from './coOrganizer';
 import Deadline from './deadLine';
 import { graphql, compose } from 'react-apollo';
 import { functions } from 'containers/layout/appbar/helpers';
-import * as moment from 'moment';
 
 class Index extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     this.props.UPDATE_ALL_STATUS_PAPERS({
       variables: {
@@ -41,7 +36,6 @@ class Index extends Component {
         <div className="page-breadcrumb d-flex">
           <Link className="d-flex" to="/">
             <IconButton>
-              z
               <ActionHome />
             </IconButton>
             <span>Dashboard</span>

@@ -16,7 +16,9 @@ class UserProfile extends Component {
     const me = this.props.GET_USER_BY_ID_QUERY.getUserByID;
     return (
       <div className="conference">
-        <Subheader className="subheader-user"> User Profile</Subheader>
+        <Subheader className="subheader-user subheader">
+          {localStorage.getItem('conferenceTitle')}
+        </Subheader>
         <div className="page-breadcrumb d-flex">
           <Link className="d-flex" to="/">
             <IconButton>
