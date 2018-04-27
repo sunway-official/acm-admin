@@ -65,7 +65,7 @@ class Index extends Component {
     let correspondingValue = 3;
     try {
       const isAuthor = localStorage.getItem('roles').indexOf('7');
-      let paper, author;
+      let paper;
       if (isAuthor > -1) {
         paper = await UPDATE_PAPER({
           variables: {
@@ -118,9 +118,8 @@ class Index extends Component {
         },
       });
 
-      console.log('values', values);
       if (values.editAuthors) {
-        author = await values.editAuthors.map(author => {
+        await values.editAuthors.map(author => {
           if (author.corresponding === true) {
             correspondingValue = 2;
           } else {
@@ -143,7 +142,6 @@ class Index extends Component {
           });
           return 1;
         });
-        console.log('author', author);
       }
       this.showAlertSuccess();
     } catch (error) {
