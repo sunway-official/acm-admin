@@ -28,7 +28,6 @@ const StatusForm = props => {
       <div>
         <Field name="status" component={renderRadioGroup}>
           <RadioButton value={1} label="Accept" style={styles.radioButton} />
-          <RadioButton value={7} label="Re-Submit" style={styles.radioButton} />
           <RadioButton value={2} label="Reject" style={styles.radioButton} />
         </Field>
       </div>

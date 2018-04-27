@@ -14,6 +14,10 @@ import {
   MyExclamationTriangle,
   MyFaCheck,
 } from '../../../theme/alert';
+import { connect } from 'react-redux';
+import * as moment from 'moment';
+import { Grid, Col, Row } from 'react-flexbox-grid';
+import PaperReviewInfo from './paperReviewInfo';
 
 const style = {
   paddingLeft: '12px',
@@ -102,6 +106,9 @@ class Index extends Component {
     }
   }
   render() {
+    const deadline =
+      moment().isAfter(this.props.currentConference.dl_re_review_paper) &&
+      moment().isSameOrBefore(this.props.currentConference.dl_release_paper);
     const role = localStorage.getItem('roles');
     const loadingListPaper = this.props.GET_PAPERS_BY_CONFERENCE_ID.loading;
     if (loadingListPaper) return <Loading />;
@@ -153,12 +160,18 @@ class Index extends Component {
                 <Link to={`/conference/paper/detail/${props.value.id}`} />
               }
             />
-            <RaisedButton
-              className="marginLeft"
-              secondary={true}
-              label="Set Status"
-              onClick={() => this.handleOpenStatus(props.value)}
-            />
+            {role === '1' &&
+            props.value.status !== 'Accepted' &&
+            props.value.status !== 'Rejected' ? (
+              <RaisedButton
+                className="marginLeft"
+                secondary={true}
+                label="Set Status"
+                onClick={() => this.handleOpenStatus(props.value)}
+              />
+            ) : (
+              ''
+            )}
             {// eslint-disable-next-line
             (role === '1' || role === '6') && // if user is an organizer or reviewer
             ((props.value.status === 'Reviewing' ||
@@ -198,22 +211,51 @@ class Index extends Component {
           showPaginationTop
         />
         <Dialog
-          title="Choose your paper status"
+          title="Set paper status"
           modal={true}
           onRequestClose={this.handleClose}
           open={this.state.openStatus}
+          titleStyle={{ textAlign: 'center', paddingBottom: '0px' }}
+          autoScrollBodyContent={true}
         >
-          <StatusForm
-            onSubmit={this.handleSetStatus}
-            handleClose={this.handleClose}
-            initialValues={initialValues}
-          />
+          <Grid className="paper-detail-grid">
+            <Row>
+              <Col xs={8} style={{ fontWeight: 'bold', paddingBottom: '1vw' }}>
+                General Information
+              </Col>
+              <Col xs={4} style={{ fontWeight: 'bold', paddingBottom: '1vw' }}>
+                Choose Status
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={8}>
+                <PaperReviewInfo id={this.state.paper_id} />
+              </Col>
+              <Col xs={4}>
+                <StatusForm
+                  onSubmit={this.handleSetStatus}
+                  handleClose={this.handleClose}
+                  initialValues={initialValues}
+                />
+              </Col>
+            </Row>
+          </Grid>
         </Dialog>
         <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />
       </div>
     );
   }
 }
+
+const mapStateToProps = state => {
+  if (
+    state.auth &&
+    state.auth.currentUser &&
+    state.auth.currentUser.currentConference
+  ) {
+    return { currentConference: state.auth.currentUser.currentConference };
+  }
+};
 
 export default compose(
   withApollo,
@@ -228,4 +270,5 @@ export default compose(
   graphql(mutations.UPDATE_PAPER, {
     name: 'UPDATE_PAPER',
   }),
+  connect(mapStateToProps, undefined),
 )(Index);
