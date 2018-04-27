@@ -47,7 +47,7 @@ class ConferenceInfoForm extends React.Component {
             open={this.state.open}
             onRequestClose={this.handleClose}
           >
-            Your paper was accepted. Please register to become a speaker of{' '}
+            Your paper was accepted. Please register to become a speaker of
             {' ' + initialValues.title}
           </Dialog>
         ) : (
