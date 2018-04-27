@@ -79,6 +79,10 @@ export const getRolesComponent = () => {
       component: 'add-conference-btn',
       roles: ['1'],
     },
+    {
+      component: 'paper-registration',
+      roles: ['7'],
+    },
   ];
 };
 

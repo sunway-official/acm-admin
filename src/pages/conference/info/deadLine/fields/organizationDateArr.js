@@ -1,8 +1,8 @@
 const organizationDateArr = [
   {
-    label: 'Registration Date',
+    label: 'Registration Dealine',
     name: 'dl_registration',
-    hintText: 'Registration Date',
+    hintText: 'Registration Deadline',
   },
   {
     label: 'Conference Start Date',

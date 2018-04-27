@@ -92,7 +92,6 @@ class InfoTabs extends React.Component {
       });
       this.showAlertSuccess();
     } catch (error) {
-      //console.log('abc');
       let temp = error.graphQLErrors[0].message;
       this.showAlertError(temp.substring(7, temp.length));
       console.log(error.graphQLErrors[0].message);
