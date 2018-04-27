@@ -38,10 +38,9 @@ class ConferenceInfoForm extends React.Component {
     const releaseFinalPaperDate = initialValues.dl_release_final_paper;
     return (
       <form className="form conference-info">
-        {isShow['paper-registration'] &&
-        (today > releaseFinalPaperDate && today <= registrationDeadline) ? (
+        {isShow['paper-registration'] ? (
           <Dialog
-            title="Speaker Registration"
+            title="Registration"
             actions={actions}
             modal={false}
             open={this.state.open}
