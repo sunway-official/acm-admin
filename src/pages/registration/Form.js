@@ -6,6 +6,8 @@ import { MenuItem, RaisedButton, Subheader } from 'material-ui';
 import { countryData } from '../paper/countryData';
 import userTitles from '../inviteUser/userTitles';
 import validate from './validate';
+import normalizePhone from 'utils/normalizePhone';
+
 class Form extends Component {
   render() {
     const { handleSubmit } = this.props;
@@ -96,6 +98,7 @@ class Form extends Component {
               component={CustomInput}
               fullWidth={true}
               hintText="Phone Number"
+              normalize={normalizePhone}
             />
           </div>
           <div className="d-flex form-group">
