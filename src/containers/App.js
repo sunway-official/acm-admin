@@ -41,6 +41,7 @@ import AddCoOrganizer from '../pages/conference/info/coOrganizer/add';
 import EditCoOrganizer from '../pages/conference/info/coOrganizer/edit';
 import UploadFile from '../pages/uploadFile';
 import InviteUser from '../pages/inviteUser';
+import LandingPagePapers from '../pages/landingPage/paperList/index';
 import AuthorRegistration from '../pages/registration';
 
 export default () => (
@@ -49,6 +50,10 @@ export default () => (
       <AuthRoute
         path="/landingpage/:conference_id/schedule"
         component={LandingPageSchedule}
+      />
+      <AuthRoute
+        path="/landingpage/:conference_id/papers"
+        component={LandingPagePapers}
       />
       <AuthRoute path="/landingpage/:conference_id" component={LandingPage} />
       <AuthRoute needGuest path="/login" component={Login} />
