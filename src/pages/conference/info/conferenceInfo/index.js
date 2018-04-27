@@ -39,33 +39,29 @@ class ConferenceInfoForm extends PureComponent {
     });
   };
 
-  async handleUpdateConferenceInfo({
-    title,
-    description,
-    startDate,
-    endDate,
-    organizerName,
-    organizerEmail,
-    organizerWebsite,
-    organizerPhoneNumber,
-  }) {
+  async handleUpdateConferenceInfo(values) {
     try {
       const conference = await this.props.UPDATE_CONFERENCE_MUTATION({
         variables: {
           id: this.props.conference_id,
-          title: title,
-          description: description,
-          start_date: startDate,
-          end_date: endDate,
+          title: values.title,
+          description: values.description,
+          category_id: values.category_id,
         },
+        refetchQueries: [
+          {
+            query: queries.GET_ALL_CATEGORIES,
+          },
+        ],
       });
       const organizer = await this.props.UPDATE_ORGANIZER_DETAIL_MUTATION({
         variables: {
           id: this.props.organizer_id,
-          name: organizerName,
-          email: organizerEmail,
-          website: organizerWebsite,
-          phone: organizerPhoneNumber,
+          name: values.organizerName,
+          email: values.organizerEmail,
+          website: values.organizerWebsite,
+          phone: values.organizerPhoneNumber,
+          address: values.organizerAddress,
         },
       });
       let address;
@@ -84,12 +80,19 @@ class ConferenceInfoForm extends PureComponent {
     } catch (error) {
       let temp = error.graphQLErrors[0].message;
       this.showAlertError(temp);
+      console.log(error);
     }
   }
   onMapPositionChanged(position) {
     this.props.getPosition(position);
   }
   render() {
+    let { loading, getAllCategories } = this.props.data;
+    if (loading) {
+      return <div>Loading</div>;
+    }
+
+    const categories = getAllCategories;
     if (this.props.isShow['edit-conference-info']) {
       return (
         <div>
@@ -98,6 +101,7 @@ class ConferenceInfoForm extends PureComponent {
             conference={this.props.conference}
             onSubmit={this.handleUpdateConferenceInfo}
             onMapPositionChanged={this.onMapPositionChanged}
+            categories={categories}
           />
           <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />
         </div>
@@ -137,14 +141,19 @@ const mapStateToProps = (state, ownProps) => {
     initialValues: {
       title: conference.title,
       description: conference.description,
-      startDate: new Date(conference.start_date),
-      endDate: new Date(conference.end_date),
+      category_id: '' + conference.category_id,
+      category_name: conference.category_name,
+      start_date: new Date(conference.start_date),
+      end_date: new Date(conference.end_date),
       lat: parseFloat(conference.address.lat),
       long: parseFloat(conference.address.long),
+      organizerAddress: organizer.address,
       organizerName: organizer.name,
       organizerEmail: organizer.email,
       organizerWebsite: organizer.website,
       organizerPhoneNumber: organizer.phone,
+      dl_release_final_paper: new Date(conference.dl_release_final_paper),
+      dl_registration: new Date(conference.dl_registration),
     },
   };
 };
@@ -154,6 +163,7 @@ export default compose(
   graphql(queries.GET_ALL_ROLE_OF_USER, {
     name: 'GET_ALL_ROLE_OF_USER',
   }),
+  graphql(queries.GET_ALL_CATEGORIES),
   graphql(mutations.UPDATE_CONFERENCE_MUTATION, {
     name: 'UPDATE_CONFERENCE_MUTATION',
   }),

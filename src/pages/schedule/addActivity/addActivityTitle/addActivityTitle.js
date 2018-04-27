@@ -15,28 +15,29 @@ class AddActivityTitle extends Component {
       rooms = this.props.rooms;
     }
     return (
-      <form className="form conference-info " onSubmit={handleSubmit}>
-        <Subheader className="subheader">Add Activity</Subheader>
-
-        {error && <div className="error">{error}</div>}
-        <div className="d-flex form-group">
-          <label>Title :</label>
-          <Field
-            name="title"
-            component={renderTextField}
-            hintText="Activity Title"
-            fullWidth={true}
-          />
-        </div>
-        <div className="d-flex form-group">
-          <label>Description :</label>
-          <Field
-            name="description"
-            component={renderTextField}
-            hintText="Activity Description"
-            fullWidth={true}
-          />
-        </div>
+      <form className="form conference-info m-auto" onSubmit={handleSubmit}>
+        <section>
+          <Subheader className="subtitle">Add Activity</Subheader>
+          {error && <div className="error">{error}</div>}
+          <div className="d-flex form-group">
+            <label>Title :</label>
+            <Field
+              name="title"
+              component={renderTextField}
+              hintText="Activity Title"
+              fullWidth={true}
+            />
+          </div>
+          <div className="d-flex form-group">
+            <label>Description :</label>
+            <Field
+              name="description"
+              component={renderTextField}
+              hintText="Activity Description"
+              fullWidth={true}
+            />
+          </div>
+        </section>
         <div className="d-flex form-group">
           <FieldArray
             name="schedules"

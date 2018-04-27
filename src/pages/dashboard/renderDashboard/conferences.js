@@ -1,12 +1,16 @@
 import React from 'react';
 import { queries } from './../helpers';
 import { graphql, compose, gql } from 'react-apollo';
-import { List, ListItem } from 'material-ui/List';
-import Badge from 'material-ui/Badge';
-import style from './../style.css';
-//import { RaisedButton } from 'material-ui';
-import Loading from '../../../components/render/renderLoading';
-import { withRouter } from 'react-router-dom';
+import {
+  Card,
+  ListItem,
+  RaisedButton,
+  CardHeader,
+  CardText,
+} from 'material-ui';
+import Loading from 'components/render/renderLoading';
+import { withRouter, Link } from 'react-router-dom';
+import { functions } from 'containers/layout/appbar/helpers';
 
 const subTitleString = (text, limit) => {
   if (text.length > limit) return text.substring(0, limit);
@@ -39,45 +43,54 @@ class listCoferences extends React.Component {
   }
 
   render() {
-    const { loading, getAllConferencesByUserID } = this.props.data;
+    const { loading, getAllCategories } = this.props.data;
     if (loading) return <Loading />;
+    const categories = getAllCategories;
+    const roles = localStorage.getItem('roles');
+    const isShow = functions.checkRoleAllComponents(roles);
 
-    const conferences = getAllConferencesByUserID;
     return (
       <div className="list-dashboard">
-        <style dangerouslySetInnerHTML={{ __html: style }} />
-        <div className="list-conf">
-          MY LIST CONFERENCES
-          <Badge
-            badgeContent={conferences.length}
-            primary={true}
-            className="icon-conference"
-          />
-        </div>
-        <List>
-          {conferences.map(data => {
-            const conference = data.conference;
+        {categories.map(value => {
+          if (value.conferences.length) {
             return (
-              <ListItem
-                key={conference.id}
-                primaryText={conference.title}
-                className="listitem-conf"
-                secondaryText={
-                  subTitleString(conference.start_date, 10) +
-                  '  To  ' +
-                  subTitleString(conference.end_date, 10)
-                }
-                onClick={() => this.handleSwitch(conference.id)}
-              />
+              <Card className="card-item" key={value.id}>
+                <CardHeader
+                  className="card-header"
+                  title={value.name}
+                  actAsExpander={true}
+                  showExpandableButton={true}
+                />
+                <CardText expandable={true}>
+                  {value.conferences.map(conference => (
+                    <ListItem
+                      key={conference.id}
+                      primaryText={conference.title}
+                      className="listitem-conf"
+                      secondaryText={
+                        subTitleString(conference.start_date, 10) +
+                        '  To  ' +
+                        subTitleString(conference.end_date, 10)
+                      }
+                      onClick={() => this.handleSwitch(conference.id)}
+                    />
+                  ))}
+                </CardText>
+              </Card>
             );
-          })}
-          {/* <RaisedButton
+          }
+        })}
+        {isShow['add-conference-btn'] ? (
+          <RaisedButton
+            className="btn"
             label="Create new conference"
             fullWidth={true}
             primary={true}
             containerElement={<Link to={`/conference/add`} />}
-          /> */}
-        </List>
+          />
+        ) : (
+          ''
+        )}
       </div>
     );
   }
@@ -104,13 +117,7 @@ export const ME_QUERY = gql`
 
 export default compose(
   withRouter,
-  graphql(queries.GET_ALL_CONFERENCES_BY_USER_ID_QUERY, {
-    options: ownProps => ({
-      variables: {
-        user_id: ownProps.user_id,
-      },
-    }),
-  }),
+  graphql(queries.GET_ALL_CATEGORIES),
   graphql(SWITCH_CURRENT_CONFERENCE, {
     name: 'SWITCH_CURRENT_CONFERENCE',
   }),

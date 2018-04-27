@@ -103,7 +103,7 @@ class TopicList extends Component {
             <Link
               to={`/conference/topics-management/topic-detail/${props.value}`}
             >
-              <RaisedButton label="Edit" primary={true} />
+              <RaisedButton label="Edit" default={true} />
             </Link>
             <RaisedButton
               className="marginLeft"
@@ -130,7 +130,7 @@ class TopicList extends Component {
       />,
     ];
     return (
-      <div className="react-table">
+      <section className="react-table">
         <ReactTable
           noDataText="No rows found"
           filterable
@@ -154,7 +154,7 @@ class TopicList extends Component {
           </Link>
         </div>
         <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />
-      </div>
+      </section>
     );
   }
 }

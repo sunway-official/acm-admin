@@ -10,13 +10,16 @@ import ConferenceInfo from '../pages/conference/info';
 import Paper from '../pages/paper';
 import PaperAdd from '../pages/paper/add';
 import PaperEdit from '../pages/paper/edit';
+import PaperDetail from '../pages/paper/detail';
+import PaperReview from '../pages/paper/review/paperReview/index';
+import PaperReviewDetail from '../pages/paper/review/reviewDetail/index';
 import ConferenceStaffList from '../pages/conference/people/staff';
+import MyProfile from '../pages/conference/people/userProfile/myProfile';
 import UserProfile from '../pages/conference/people/userProfile/userProfile';
 import Dashboard from '../pages/dashboard';
 import NoMatch from '../pages/NoMatch';
 import Schedule from '../pages/schedule';
 import WithThunk from '../pages/withThunk';
-
 import { muiTheme } from '../theme';
 import Wrapper from './wrapper';
 import LandingPage from '../pages/landingPage';
@@ -36,6 +39,9 @@ import EditActivityPaper from '../pages/schedule/editActivity/editAcitvityPaper'
 import EditActivityTitle from '../pages/schedule/editActivity/editAcitvityTitle';
 import AddCoOrganizer from '../pages/conference/info/coOrganizer/add';
 import EditCoOrganizer from '../pages/conference/info/coOrganizer/edit';
+import UploadFile from '../pages/uploadFile';
+import InviteUser from '../pages/inviteUser';
+import AuthorRegistration from '../pages/registration';
 
 export default () => (
   <MuiThemeProvider muiTheme={muiTheme}>
@@ -53,6 +59,7 @@ export default () => (
         <Switch>
           <AuthRoute needAuth exact path="/" component={Dashboard} />
           <AuthRoute path="/conference/info" component={ConferenceInfo} />
+          <AuthRoute path="/upload" component={UploadFile} />
           <AuthRoute path="/conference/add" component={Addconference} />
           <AuthRoute
             path="/conference/add-co-organizer"
@@ -123,6 +130,24 @@ export default () => (
           <AuthRoute
             needAuth
             exact
+            path="/conference/paper/detail/:id"
+            component={PaperDetail}
+          />
+          <AuthRoute
+            needAuth
+            exact
+            path="/conference/paper/review/:id"
+            component={PaperReview}
+          />
+          <AuthRoute
+            needAuth
+            exact
+            path="/conference/paper/review-detail/:reviewer_id/:paper_id"
+            component={PaperReviewDetail}
+          />
+          <AuthRoute
+            needAuth
+            exact
             path="/conference/paper/add"
             component={PaperAdd}
           />
@@ -136,6 +161,12 @@ export default () => (
             needAuth
             exact
             path="/user-profile"
+            component={MyProfile}
+          />
+          <AuthRoute
+            needAuth
+            exact
+            path="/user-profile/:id"
             component={UserProfile}
           />
           <AuthRoute
@@ -144,7 +175,6 @@ export default () => (
             path="/conference/activities/add-activity-paper"
             component={AddActivityPaper}
           />
-
           <AuthRoute
             needAuth
             exact
@@ -163,7 +193,18 @@ export default () => (
             path="/conference/activities/edit-activity-title/:id"
             component={EditActivityTitle}
           />
-
+          <AuthRoute
+            needAuth
+            exact
+            path="/invite-user"
+            component={InviteUser}
+          />
+          <AuthRoute
+            needAuth
+            exact
+            path="/author-registration"
+            component={AuthorRegistration}
+          />
           <AuthRoute exact path="/conference/activities" component={Schedule} />
           <AuthRoute path="/withThunk" component={WithThunk} />
           <AuthRoute component={NoMatch} />

@@ -1,30 +1,37 @@
 import React, { Component } from 'react';
 import { Subheader, IconButton, Tabs, Tab } from 'material-ui';
 import { Link } from 'react-router-dom';
-import { queries } from './helpers';
+import { queries, mutations } from './helpers';
 import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import ConferenceInfo from './conferenceInfo';
 import { connect } from 'react-redux';
 import CoOrganizerList from './coOrganizer';
+import Deadline from './deadLine';
 import { graphql, compose } from 'react-apollo';
 import { functions } from 'containers/layout/appbar/helpers';
 
 class Index extends Component {
+  componentDidMount() {
+    this.props.UPDATE_ALL_STATUS_PAPERS({
+      variables: {
+        current_date: new Date(),
+      },
+    });
+  }
+
   render() {
     let conference;
     if (this.props.currentConference) {
       conference = this.props.currentConference;
     } else return window.location.reload();
-    // khai bao conference dua tren query getConferenceByID
+    localStorage.setItem('conferenceTitle', conference.title);
     const coOrganizerDetails = conference.coOrganizerDetails;
-    // khai bao coOrganizerDetails dua tren query coOrganizerDetails bang getConferenceByID
-
     const roles = localStorage.getItem('roles');
     const isShow = functions.checkRoleAllComponents(roles);
     return (
       <div className="conference">
         <Subheader className="subheader conf-infor-title">
-          Conference Information
+          {localStorage.getItem('conferenceTitle')}
         </Subheader>
         <div className="page-breadcrumb d-flex">
           <Link className="d-flex" to="/">
@@ -46,8 +53,14 @@ class Index extends Component {
                 conference={conference}
                 onSubmit={() => {}}
               />
-              {/* truyen conference qua conferenceInfo  */}
             </Tab>
+            {isShow['edit-deadline'] ? (
+              <Tab label="Set Conference Date">
+                <Deadline onSubmit={() => {}} conferenceId={conference.id} />
+              </Tab>
+            ) : (
+              ''
+            )}
             {isShow['view-co-organizer'] ? (
               <Tab label="Co-Organizer">
                 <CoOrganizerList
@@ -79,5 +92,9 @@ export default compose(
   graphql(queries.ME_QUERY, {
     name: 'queryMe',
   }),
+  graphql(mutations.UPDATE_ALL_STATUS_PAPERS, {
+    name: 'UPDATE_ALL_STATUS_PAPERS',
+  }),
+
   connect(mapStateToProps, undefined),
 )(Index);

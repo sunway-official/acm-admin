@@ -5,63 +5,158 @@ import { reduxForm, Field } from 'redux-form';
 import validate from './validate';
 import { RaisedButton, Subheader, MenuItem } from 'material-ui';
 import { Link } from 'react-router-dom';
+import AddAuthors from './add/addAuthors';
+import { FieldArray } from 'redux-form';
+import FileInput from 'components/render/FileRender';
+import { countryData } from './countryData';
+
 class EditPaperForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      checked: false,
+    };
+  }
+
+  updateCheck() {
+    this.setState(oldState => {
+      return {
+        checked: !oldState.checked,
+      };
+    });
+  }
+
   render() {
     const topics = this.props.topics;
-    const { handleSubmit, pristine } = this.props;
+    const { handleSubmit, pristine, handleUploadFile } = this.props;
     return (
-      <form className="form conference-info" onSubmit={handleSubmit}>
-        <Subheader className="subheader">Paper Information</Subheader>
-        <div className="d-flex form-group">
-          <label>Title :</label>
-          <Field
-            name="title"
-            component={CustomInput}
-            fullWidth={true}
-            hintText="Paper Title"
-          />
+      <form
+        className="form conference-info add-paper-form"
+        onSubmit={handleSubmit}
+      >
+        {/* paper */}
+        <div className="paper-submit-block">
+          <Subheader className="subheader submit-header">
+            Paper Information
+          </Subheader>
+          <div className="d-flex form-group">
+            <label>Title :</label>
+            <Field
+              name="title"
+              component={CustomInput}
+              fullWidth={true}
+              hintText="Paper Title"
+            />
+          </div>
+          <div className="d-flex form-group">
+            <label className="mt30">Abstract :</label>
+            <Field
+              name="abstract"
+              component={CustomInput}
+              fullWidth={true}
+              multiLine
+              rows={2}
+              hintText="Paper Abstract"
+            />
+          </div>
+          <div className="d-flex form-group">
+            <label>Keywords :</label>
+            <Field
+              name="keywords"
+              component={CustomInput}
+              fullWidth={true}
+              multiLine
+              rows={1}
+              hintText="Paper keywords"
+            />
+          </div>
+          <div className="d-flex form-group">
+            <label>Topic :</label>
+            <Field
+              name="topic"
+              component={renderSelectField}
+              hintText="Paper Topic"
+              fullWidth={true}
+            >
+              {topics.map(topic => {
+                return (
+                  <MenuItem
+                    key={topic.id}
+                    value={topic.id}
+                    primaryText={topic.name}
+                  />
+                );
+              })}
+            </Field>
+          </div>
+          <div className="d-flex form-group file-field">
+            <label>File :</label>
+            <Field
+              name="file"
+              component={FileInput}
+              onChange={handleUploadFile}
+            />
+          </div>
         </div>
-        <div className="d-flex form-group">
-          <label>Abstract :</label>
-          <Field
-            name="abstract"
-            component={CustomInput}
-            fullWidth={true}
-            multiLine
-            rows={1}
-            hintText="Paper Abstract"
-          />
+        {/* paper */}
+        {/* corresponser */}
+        <div className="paper-submit-block">
+          <Subheader className="subheader submit-header">
+            Address For Correspondence
+          </Subheader>
+          <div className="d-flex form-group">
+            <label>Street :</label>
+            <Field
+              name="street"
+              component={CustomInput}
+              fullWidth={true}
+              hintText="Enter the street"
+            />
+          </div>
+          <div className="d-flex form-group">
+            <label>City :</label>
+            <Field
+              name="city"
+              component={CustomInput}
+              fullWidth={true}
+              hintText="Enter the city"
+            />
+          </div>
+          <div className="d-flex form-group">
+            <label>Country :</label>
+            <Field
+              name="country"
+              component={renderSelectField}
+              fullWidth={true}
+              hintText="Choose the country"
+            >
+              {countryData.map(country => {
+                return (
+                  <MenuItem
+                    key={country.label}
+                    value={country.label}
+                    primaryText={country.label}
+                  />
+                );
+              })}
+            </Field>
+          </div>
+          <div className="d-flex form-group">
+            <label>Zipcode :</label>
+            <Field
+              name="zipcode"
+              component={CustomInput}
+              fullWidth={true}
+              hintText="Enter the zipcode"
+            />
+          </div>
         </div>
-        <div className="d-flex form-group">
-          <label>Keywords :</label>
-          <Field
-            name="keywords"
-            component={CustomInput}
-            fullWidth={true}
-            multiLine
-            rows={1}
-            hintText="Paper Abstract"
-          />
-        </div>
-        <div className="d-flex form-group">
-          <label>Topic :</label>
-          <Field
-            name="topic"
-            component={renderSelectField}
-            hintText="Paper Topic"
-            fullWidth={true}
-          >
-            {topics.map(topic => {
-              return (
-                <MenuItem
-                  key={topic.id}
-                  value={topic.id}
-                  primaryText={topic.name}
-                />
-              );
-            })}
-          </Field>
-        </div>
+        {/* corresponser */}
+
+        {/* author */}
+        <FieldArray name="addAuthors" component={AddAuthors} />
+        {/* author */}
+
         <div
           style={{ marginBottom: '20px' }}
           className="d-flex save-btn btn-group"
@@ -71,6 +166,7 @@ class EditPaperForm extends Component {
             primary={true}
             type="submit"
             disabled={pristine}
+            className="mr15"
           />
           <RaisedButton
             label="Cancel"

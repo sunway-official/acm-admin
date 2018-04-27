@@ -5,7 +5,6 @@ import { withRouter } from 'react-router';
 import DashboardMenu from './renderDashboard/menu';
 import Conferences from './renderDashboard/conferences';
 import style from './style.css';
-import { Card } from 'material-ui/Card';
 import { Subheader, IconButton } from 'material-ui';
 import { Link } from 'react-router-dom';
 import { ActionHome } from 'material-ui/svg-icons';
@@ -28,7 +27,6 @@ function DashboardIndex(props) {
       </div>
       <DashboardMenu />
       <div className="dashboard content data">
-        <Card className="card-content-dashboard" />
         <Conferences user_id={user_id} />
       </div>
     </div>
