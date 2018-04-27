@@ -104,9 +104,8 @@ const UPDATE_PAPER = gql`
 
 const UPDATE_PAPER_AUTHOR = gql`
   mutation updatePaperAuthor(
-    $paper_id: ID!
-    $user_id: ID
-    $corresponding: Int!
+    $id: ID!
+    $corresponding: Int
     $author_name: String
     $author_email: String
     $author_title: String
@@ -117,8 +116,7 @@ const UPDATE_PAPER_AUTHOR = gql`
     $author_zipcode: String
   ) {
     updatePaperAuthor(
-      paper_id: $paper_id
-      user_id: $user_id
+      id: $id
       corresponding: $corresponding
       author_name: $author_name
       author_email: $author_email

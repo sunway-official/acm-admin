@@ -65,10 +65,8 @@ class Index extends Component {
     let correspondingValue = 3;
     try {
       const isAuthor = localStorage.getItem('roles').indexOf('7');
-      let paper, author, topic;
-      console.log('isAuthor', isAuthor);
+      let paper, author;
       if (isAuthor > -1) {
-        console.log('paper', this.props.match.params.id);
         paper = await UPDATE_PAPER({
           variables: {
             paper_status_id: 3,
@@ -78,88 +76,75 @@ class Index extends Component {
             keywords: values.keywords,
             file: key,
           },
-          refetchQueries: [
-            {
-              query: queries.GET_PAPERS_BY_CONFERENCE_ID,
-            },
-          ],
         });
-        console.log('paper', paper);
-      } else {
-        paper = await UPDATE_PAPER({
-          variables: {
-            paper_status_id: 3,
-            id: this.props.match.params.id,
-            title: values.title,
-            abstract: values.abstract,
-            keywords: values.keywords,
-            file: key,
-          },
-          refetchQueries: [
-            {
-              query: queries.GET_PAPERS_BY_CONFERENCE_ID,
-            },
-          ],
-        });
-        console.log('paper', paper);
       }
-      // if (values.topic) {
-      //   const topic_id = paper.data.updatePaper.papersTopic[0].topic_id;
-      //   topic = await UPDATE_TOPIC_OF_PAPER({
-      //     variables: {
-      //       paper_id: this.props.match.params.id,
-      //       topic_id: values.topic,
-      //     },
-      //     refetchQueries: [
-      //       {
-      //         query: queries.GET_TOPICS_BY_PAPER_ID,
-      //         variables: {
-      //           paper_id: this.props.match.params.id,
-      //         },
-      //       },
-      //       {
-      //         query: queries.GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
-      //         variables: {
-      //           topic_id: values.topic,
-      //         },
-      //       },
-      //       {
-      //         query: queries.GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
-      //         variables: {
-      //           topic_id: topic_id,
-      //         },
-      //       },
-      //     ],
-      //   });
+      if (values.topic) {
+        const topic_id = paper.data.updatePaper.papersTopic[0].topic_id;
+        await UPDATE_TOPIC_OF_PAPER({
+          variables: {
+            paper_id: this.props.match.params.id,
+            topic_id: values.topic,
+          },
+          refetchQueries: [
+            {
+              query: queries.GET_TOPICS_BY_PAPER_ID,
+              variables: {
+                paper_id: this.props.match.params.id,
+              },
+            },
+            {
+              query: queries.GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
+              variables: {
+                topic_id: values.topic,
+              },
+            },
+            {
+              query: queries.GET_ALL_PAPERS_BY_TOPIC_ID_QUERY,
+              variables: {
+                topic_id: topic_id,
+              },
+            },
+          ],
+        });
+      }
 
-      //   console.log('topic', topic);
-      // }
-      // if (values.editAuthors) {
-      //   author = await values.editAuthors.map(author => {
-      //     if (author.corresponding === true) {
-      //       correspondingValue = 2;
-      //     } else {
-      //       correspondingValue = 3;
-      //     }
-      //     UPDATE_PAPER_AUTHOR({
-      //       variables: {
-      //         paper_id: paper.data.insertPaper.id,
-      //         topic_id: author.topic,
-      //         corresponding: correspondingValue,
-      //         author_name: author.firstname + ' ' + author.lastname,
-      //         author_email: author.email,
-      //         author_title: author.title,
-      //         author_organization: author.organization,
-      //         author_street: author.authorStreet,
-      //         author_city: author.authorCity,
-      //         author_country: author.authorCountry,
-      //         author_zipcode: author.authorZipcode,
-      //       },
-      //     });
-      //     return 1;
-      //   });
-      //   console.log('author', author);
-      // }
+      await UPDATE_PAPER_AUTHOR({
+        variables: {
+          id: values.coresponding_id,
+          author_street: values.street,
+          author_city: values.city,
+          author_country: values.country,
+          author_zipcode: values.zipcode,
+        },
+      });
+
+      console.log('values', values);
+      if (values.editAuthors) {
+        author = await values.editAuthors.map(author => {
+          if (author.corresponding === true) {
+            correspondingValue = 2;
+          } else {
+            correspondingValue = 3;
+          }
+          UPDATE_PAPER_AUTHOR({
+            variables: {
+              id: author.id,
+              topic_id: author.topic,
+              corresponding: correspondingValue,
+              author_name: author.firstname + ' ' + author.lastname,
+              author_email: author.email,
+              author_title: author.title,
+              author_organization: author.organization,
+              author_street: author.authorStreet,
+              author_city: author.authorCity,
+              author_country: author.authorCountry,
+              author_zipcode: author.authorZipcode,
+            },
+          });
+          return 1;
+        });
+        console.log('author', author);
+      }
       this.showAlertSuccess();
     } catch (error) {
       this.showAlertError('Resubmit paper fail');
@@ -180,21 +165,39 @@ class Index extends Component {
     if (getTopicsOfConference) {
       topics = getTopicsOfConference;
     }
-    console.log('paper', getPaperByID);
-    console.log('props', this.props);
     if (getPaperByID) {
       paper = getPaperByID;
+
+      let corresponding_author;
+      corresponding_author = paper.authors
+        .filter(function(author) {
+          return author.corresponding === 1;
+        })
+        .map(author => {
+          return author;
+        });
+
+      let editAuthors;
+      editAuthors = paper.authors
+        .filter(function(author) {
+          return author.corresponding !== 1;
+        })
+        .map(author => {
+          return author;
+        });
+
       initialValues = {
         id: paper.id,
         title: paper.title,
         abstract: paper.abstract,
         keywords: paper.keywords,
         topic: paperTopicsActive[0].topic.id,
-        street: paper.authors[0].author_street,
-        city: paper.authors[0].author_city,
-        country: paper.authors[0].author_country,
-        zipcode: paper.authors[0].author_zipcode,
-        editAuthors: paper.authors,
+        street: corresponding_author[0].author_street,
+        city: corresponding_author[0].author_city,
+        country: corresponding_author[0].author_country,
+        zipcode: corresponding_author[0].author_zipcode,
+        editAuthors: editAuthors,
+        coresponding_id: corresponding_author[0].id,
       };
     }
     return (
@@ -218,12 +221,13 @@ class Index extends Component {
           </IconButton>
           <span>Edit paper</span>
         </div>
-        <div className="dashboard content d-flex">
+        <div className="dashboard content d-flex bg-white">
           <Form
             initialValues={initialValues}
             onSubmit={this.handleSave}
             topics={topics}
             paperTopicsActive={paperTopicsActive[0].topic.name}
+            handleUploadFile={this.handleUploadFile}
           />
         </div>
         <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />

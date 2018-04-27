@@ -27,7 +27,6 @@ class EditPaperForm extends Component {
   }
 
   render() {
-    console.log('thí props', this.props);
     const topics = this.props.topics;
     const { handleSubmit, pristine, handleUploadFile } = this.props;
     return (
@@ -158,7 +157,7 @@ class EditPaperForm extends Component {
         <FieldArray
           name="editAuthors"
           component={EditAuthors}
-          authors={this.props.initialValues.editAuthors}
+          authors={this.props.initialValues}
         />
         {/* author */}
 

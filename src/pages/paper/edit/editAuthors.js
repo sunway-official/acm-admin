@@ -1,17 +1,14 @@
 import React from 'react';
 import { Field } from 'redux-form';
-import { ActionDeleteForever } from 'material-ui/svg-icons';
-import { MenuItem, RaisedButton, Divider } from 'material-ui';
+import { MenuItem, Divider } from 'material-ui';
 import CustomInput from 'components/CustomInput';
 import { renderSelectField } from 'components/render';
 import renderCheckbox from 'components/renderCheckbox';
 import { Subheader } from 'material-ui';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
 import { countryData } from '../countryData';
 import { titleData } from '../authorTitleData';
 import { connect } from 'react-redux';
-import { PaperOperations } from 'store/ducks/paper';
+import { paperOperations } from 'store/ducks/paper';
 
 const styles = {
   divider: {
@@ -36,28 +33,18 @@ class EditAuthors extends React.Component {
     this.state = {
       deleteIds: [],
     };
-    this.handleDelete = this.handleDelete.bind(this);
-  }
-
-  handleDelete(index) {
-    const authors = this.props.authors;
-    if (authors[index] && !this.state.deleteIds.includes(authors[index].id)) {
-      this.state.deleteIds.push(authors[index].id);
-      this.props.deleteAuthors(this.state.deleteIds);
-    }
   }
 
   componentDidMount() {
     this.props.fields.removeAll();
-    const authors = this.props.authors;
+    const authors = this.props.authors.editAuthors;
     const length = authors.length;
-    // console.log("author authors[i].author_zipcode", authors[0].author_zipcode);
-    for (let i = 1; i < length; i = i + 1) {
+    for (let i = 0; i < length; i = i + 1) {
       let author = {};
       let name = [];
       let corresponding = false;
       name = authors[i].author_name.split(' ');
-      if (authors[i].corresponding === 1 || authors[i].corresponding === 2) {
+      if (authors[i].corresponding === 2) {
         corresponding = true;
       } else {
         corresponding = false;
@@ -91,19 +78,13 @@ class EditAuthors extends React.Component {
             ) : (
               <div>
                 <Divider style={styles.divider} />
-                <div className="d-flex align-items-center justify-content-space-around">
-                  <h4 style={{ paddingTop: '0px' }}>Author #{index + 1}</h4>
-                  <RaisedButton
-                    style={{ minWidth: '50px' }}
-                    onClick={() => fields.remove(index)}
-                    icon={<ActionDeleteForever />}
-                    primary={true}
-                  />
-                </div>
+                <div className="d-flex align-items-center justify-content-space-around" />
               </div>
             )}
             <div className="paper-submit-block">
-              <Subheader className="subheader submit-header">Authors</Subheader>
+              <Subheader className="subheader submit-header">
+                Author #{index + 1}
+              </Subheader>
               <div className="d-flex form-group">
                 <label>First name :</label>
                 <Field
@@ -221,7 +202,7 @@ class EditAuthors extends React.Component {
           </div>
         ))}
         <div className="d-flex add-schedule-icon btn-group">
-          <FloatingActionButton
+          {/* <FloatingActionButton
             mini={true}
             className="f-right mb-20"
             onClick={() => fields.push({})}
@@ -229,7 +210,7 @@ class EditAuthors extends React.Component {
             disabled={this.props.checkError}
           >
             <ContentAdd />
-          </FloatingActionButton>
+          </FloatingActionButton> */}
           {submitFailed && error && <span>{error}</span>}
         </div>
       </div>
@@ -240,7 +221,7 @@ class EditAuthors extends React.Component {
 const mapDispatchToProps = dispatch => {
   return {
     deleteAuthors: ids =>
-      dispatch(PaperOperations.deleteAuthorIdsOperation(ids)),
+      dispatch(paperOperations.deleteAuthorIdsOperation(ids)),
   };
 };
 
