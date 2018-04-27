@@ -158,6 +158,7 @@ const ME_QUERY = gql`
         dl_re_review_paper
         dl_release_final_paper
         dl_registration
+        category_id
         category_name
         address {
           id
