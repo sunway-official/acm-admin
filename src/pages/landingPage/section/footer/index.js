@@ -8,6 +8,7 @@ import FaFacebookSquare from 'react-icons/lib/fa/facebook-square';
 import FaTwitterSquare from 'react-icons/lib/fa/twitter-square';
 import FaLinkedinSquare from 'react-icons/lib/fa/linkedin-square';
 import Loading from 'components/render/renderLoading';
+import { images } from '../../../../theme';
 
 class Footer extends Component {
   render() {

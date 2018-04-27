@@ -13,38 +13,36 @@ const PaperList = props => {
     </div>
   );
   let deadline = false;
-  if (
-    papers &&
-    papers.length > 0 &&
-    moment().isSameOrAfter(papers[0].conference.dl_release_final_paper)
-  )
-    deadline = true;
+  if (papers && papers.length > 0 && moment().isSameOrAfter()) deadline = true;
   let content;
   content = papers.map(
     topic =>
       topic.papers.length > 0 ? (
-        <Row className="card-detail-row" key={topic.id}>
-          <Col xs={3} className="landing-page-topic-title">
-            {topic.name}
-          </Col>
-          <Col xs={9}>
-            {topic.papers.map((paper, index) => (
-              <Row key={paper.id}>
-                {paper.file && (
-                  <a
-                    href={S3_GET_PREFIX + paper.file}
-                    target="_blank"
-                    className="landing-page-paper-a"
-                  >
-                    <span className="landing-page-paper-title">
-                      {index + 1}. {paper.title} ({paper.authors[0].author_name})
-                    </span>
-                  </a>
-                )}
-              </Row>
-            ))}
-          </Col>
-        </Row>
+        <div key={topic.id}>
+          <hr />
+          <Row className="card-detail-row">
+            <Col xs={3} className="landing-page-topic-title">
+              {topic.name}
+            </Col>
+            <Col xs={9}>
+              {topic.papers.map((paper, index) => (
+                <Row key={paper.id}>
+                  {paper.file && (
+                    <a
+                      href={S3_GET_PREFIX + paper.file}
+                      target="_blank"
+                      className="landing-page-paper-a"
+                    >
+                      <span className="landing-page-paper-title">
+                        {index + 1}. {paper.title} ({paper.authors[0].author_name})
+                      </span>
+                    </a>
+                  )}
+                </Row>
+              ))}
+            </Col>
+          </Row>
+        </div>
       ) : (
         ''
       ),

@@ -15,6 +15,7 @@
   -ms-transition: opacity 0.5s ease-out;
   -o-transition: opacity 0.5s ease-out;
   transition: opacity 0.5s ease-out;
+  font-family: serif;
 }
 
 .landing-page-paper-title:hover {
@@ -23,6 +24,7 @@
 
 .landing-page-papers-first-row {
   font-size: 3vw;
+  font-family: serif;
 }
 
 .landing-page-paper-hr {
@@ -34,4 +36,6 @@
 
 .landing-page-paper-a {
   color: black !important;
+  margin-top: 1vw;
+  font-family: serif;
 }

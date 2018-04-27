@@ -12,24 +12,27 @@ class ScheduleForm extends Component {
       <div className="no-data">This conference has no specific calendar</div>
     );
     const content = events.map((event, index) => (
-      <Row key={index}>
-        <Col xs={3} className="event-time landing-page-th">
-          <div>
-            {moment(event.start).format('h:mm a')}
-            <span> - </span>
-            {moment(event.end).format('h:mm a')}
-            <br />
-            {moment(event.start).format('DD-MM-YYYY')}
-          </div>
-          <div>{event.schedules[0].room_name}</div>
-        </Col>
-        <Col xs={9} className="landing-page-th">
-          <div className="landing-page-paper-title">{event.title}</div>
-          <div className="event-description">
-            {cutString(event.description, 300)}
-          </div>
-        </Col>
-      </Row>
+      <div key={index}>
+        <hr />
+        <Row>
+          <Col xs={3} className="event-time landing-page-th">
+            <div>
+              {moment(event.start).format('h:mm a')}
+              <span> - </span>
+              {moment(event.end).format('h:mm a')}
+              <br />
+              {moment(event.start).format('DD-MM-YYYY')}
+            </div>
+            <div>{event.schedules[0].room_name}</div>
+          </Col>
+          <Col xs={9} className="landing-page-th">
+            <div className="landing-page-paper-title">{event.title}</div>
+            <div className="event-description">
+              {cutString(event.description, 300)}
+            </div>
+          </Col>
+        </Row>
+      </div>
     ));
     return (
       <div className="event-body">

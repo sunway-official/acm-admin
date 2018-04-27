@@ -2,14 +2,19 @@ import React from 'react';
 import { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './style.css';
+import { images } from '../../../../theme';
 
 class Index extends Component {
   render() {
     return (
       <header className="landing-page-header">
-        <a href="" className="logo">
-          ACM
-        </a>
+        <Link
+          to={`/landingpage/${this.props.conference_id}`}
+          href=""
+          className="logo"
+        >
+          <img className="logo" src={images.defaultLogo} alt="logo" />
+        </Link>
         <input className="menu-btn" type="checkbox" id="menu-btn" />
         <label className="menu-icon" htmlFor="menu-btn">
           <span className="navicon" />
