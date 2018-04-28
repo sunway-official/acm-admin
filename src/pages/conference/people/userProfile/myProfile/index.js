@@ -10,7 +10,9 @@ import InfoTabs from './tab';
 
 const MyProfile = ({ me }) => (
   <div className="conference">
-    <Subheader className="subheader-user"> User Profile</Subheader>
+    <Subheader className="subheader-user subheader">
+      {localStorage.getItem('conferenceTitle')}
+    </Subheader>
     <div className="page-breadcrumb d-flex">
       <Link className="d-flex" to="/">
         <IconButton>

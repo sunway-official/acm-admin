@@ -16,9 +16,9 @@ class Home extends Component {
           <h1 className="landingpage-title">
             <span className="home-title">{this.props.landingPage.slogan}</span>
           </h1>
-          <h3>
+          <div style={{ fontSize: '2vw' }}>
             Thank you for attending {this.props.landingPage.conference.title}
-          </h3>
+          </div>
         </div>
       </div>
     );

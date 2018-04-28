@@ -43,7 +43,6 @@ class listCoferences extends React.Component {
   }
 
   render() {
-    console.log(this.props);
     const { loading, getAllCategories } = this.props.data;
     if (loading) return <Loading />;
     const categories = getAllCategories;
