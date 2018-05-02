@@ -161,6 +161,7 @@ class Index extends Component {
               }
             />
             {role === '1' &&
+            deadline &&
             props.value.status !== 'Accepted' &&
             props.value.status !== 'Rejected' ? (
               <RaisedButton
