@@ -32,7 +32,7 @@ const StatusForm = props => {
         </Field>
       </div>
       <div>
-        <RaisedButton primary={true} label="Choose" type="submit" />
+        <RaisedButton primary={true} label="Update" type="submit" />
         <RaisedButton
           className="marginLeft"
           label="Cancel"

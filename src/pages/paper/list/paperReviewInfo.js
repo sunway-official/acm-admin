@@ -63,7 +63,7 @@ class CommentDetail extends Component {
     return (
       <Row className="paper-card">
         {paper ? (
-          <Row>
+          <Row style={{ width: '100%' }}>
             <Col xs={12}>
               <Row className="card-detail-row">
                 <Col xs={4}>Title</Col>

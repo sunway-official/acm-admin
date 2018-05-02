@@ -219,7 +219,7 @@ class Index extends Component {
           titleStyle={{ textAlign: 'center', paddingBottom: '0px' }}
           autoScrollBodyContent={true}
         >
-          <Grid className="paper-detail-grid">
+          <Grid className="paper-detail-grid" style={{ color: 'black' }}>
             <Row>
               <Col xs={8} style={{ fontWeight: 'bold', paddingBottom: '1vw' }}>
                 General Information
