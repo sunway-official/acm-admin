@@ -108,7 +108,9 @@ class Index extends Component {
   render() {
     const deadline =
       moment().isAfter(this.props.currentConference.dl_re_review_paper) &&
-      moment().isSameOrBefore(this.props.currentConference.dl_release_paper);
+      moment().isSameOrBefore(
+        this.props.currentConference.dl_release_final_paper,
+      );
     const role = localStorage.getItem('roles');
     const loadingListPaper = this.props.GET_PAPERS_BY_CONFERENCE_ID.loading;
     if (loadingListPaper) return <Loading />;
