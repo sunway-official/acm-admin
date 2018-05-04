@@ -10,7 +10,7 @@ const OrganizerDetail = props => {
   let paper = props.paper;
   const role = localStorage.getItem('roles');
   return (
-    <Grid className="paper-detail-grid">
+    <Grid className="paper-detail-grid wid100">
       <PaperInfo paper={paper} />
 
       {role === '1' || role === '7' ? (

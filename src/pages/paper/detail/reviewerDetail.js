@@ -24,7 +24,7 @@ const OrganizerDetail = props => {
     return false;
   });
   return (
-    <Grid className="paper-detail-grid">
+    <Grid className="paper-detail-grid wid100">
       <section className="paper-section">
         <Row className="paper-card" around="xs">
           <Row center="xs" className="card-detail-row first-row">
