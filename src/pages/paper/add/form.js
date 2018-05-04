@@ -5,7 +5,7 @@ import { reduxForm, Field } from 'redux-form';
 import validate from '../validate';
 import { RaisedButton, Subheader, MenuItem } from 'material-ui';
 import { Link } from 'react-router-dom';
-import EditAuthors from './editAuthors';
+import AddAuthors from './addAuthors';
 import { FieldArray } from 'redux-form';
 import FileInput from 'components/render/FileRender';
 import { countryData } from '../countryData';
@@ -158,11 +158,7 @@ class EditPaperForm extends Component {
         {/* corresponser */}
 
         {/* author */}
-        <FieldArray
-          name="editAuthors"
-          component={EditAuthors}
-          authors={this.props.initialValues}
-        />
+        <FieldArray name="addAuthors" component={AddAuthors} />
         {/* author */}
 
         <div

@@ -81,124 +81,126 @@ class EditAuthors extends React.Component {
                 <div className="d-flex align-items-center justify-content-space-around" />
               </div>
             )}
-            <div className="paper-submit-block">
-              <Subheader className="subheader submit-header">
-                Author #{index + 1}
-              </Subheader>
-              <div className="d-flex form-group">
-                <label>First name :</label>
-                <Field
-                  name={`${author}.firstname`}
-                  component={CustomInput}
-                  fullWidth={true}
-                  hintText="Enter the first name"
-                />
-              </div>
-              <div className="d-flex form-group">
-                <label>Last name :</label>
-                <Field
-                  name={`${author}.lastname`}
-                  component={CustomInput}
-                  fullWidth={true}
-                  hintText="Enter the last name"
-                />
-              </div>
-              <div className="d-flex form-group">
-                <label>Title :</label>
-                <Field
-                  name={`${author}.title`}
-                  component={renderSelectField}
-                  fullWidth={true}
-                  hintText="Choose a title"
-                >
-                  {titleData.map(title => {
-                    return (
-                      <MenuItem
-                        key={title.value}
-                        value={title.value}
-                        primaryText={title.primaryText}
-                      />
-                    );
-                  })}
-                </Field>
-              </div>
-              <div className="d-flex form-group">
-                <label>Email:</label>
-                <Field
-                  name={`${author}.email`}
-                  component={CustomInput}
-                  fullWidth={true}
-                  hintText="Enter the email"
-                />
-              </div>
-              <div className="d-flex form-group">
-                <label>Institution:</label>
-                <Field
-                  name={`${author}.organization`}
-                  component={CustomInput}
-                  fullWidth={true}
-                  hintText="Enter the institution"
-                />
-              </div>
-              <div className="d-flex form-group">
-                <label>Street :</label>
-                <Field
-                  name={`${author}.authorStreet`}
-                  component={CustomInput}
-                  fullWidth={true}
-                  hintText="Enter the street"
-                />
-              </div>
-              <div className="d-flex form-group">
-                <label>City :</label>
-                <Field
-                  name={`${author}.authorCity`}
-                  component={CustomInput}
-                  fullWidth={true}
-                  hintText="Enter the city"
-                />
-              </div>
-              <div className="d-flex form-group">
-                <label>Country :</label>
-                <Field
-                  name={`${author}.authorCountry`}
-                  component={renderSelectField}
-                  fullWidth={true}
-                  hintText="Choose the country"
-                >
-                  {countryData.map(country => {
-                    return (
-                      <MenuItem
-                        key={country.label}
-                        value={country.label}
-                        primaryText={country.label}
-                      />
-                    );
-                  })}
-                </Field>
-              </div>
-              <div className="d-flex form-group">
-                <label>Zipcode :</label>
-                <Field
-                  name={`${author}.authorZipcode`}
-                  component={CustomInput}
-                  fullWidth={true}
-                  type="number"
-                  hintText="Enter the zipcode"
-                />
-              </div>
-              <div className="form-group">
-                <div className="f-right pb-6">
+            <section className="paper-section">
+              <div className="paper-card card-add-paper" around="xs">
+                <Subheader className="subheader submit-header">
+                  Author #{index + 1}
+                </Subheader>
+                <div className="d-flex form-group">
+                  <label>First name :</label>
                   <Field
-                    label="Corresponding"
-                    name={`${author}.corresponding`}
-                    value={false}
-                    component={renderCheckbox}
-                    type="checkbox"
+                    name={`${author}.firstname`}
+                    component={CustomInput}
+                    fullWidth={true}
+                    hintText="Enter the first name"
                   />
                 </div>
+                <div className="d-flex form-group">
+                  <label>Last name :</label>
+                  <Field
+                    name={`${author}.lastname`}
+                    component={CustomInput}
+                    fullWidth={true}
+                    hintText="Enter the last name"
+                  />
+                </div>
+                <div className="d-flex form-group">
+                  <label>Title :</label>
+                  <Field
+                    name={`${author}.title`}
+                    component={renderSelectField}
+                    fullWidth={true}
+                    hintText="Choose a title"
+                  >
+                    {titleData.map(title => {
+                      return (
+                        <MenuItem
+                          key={title.value}
+                          value={title.value}
+                          primaryText={title.primaryText}
+                        />
+                      );
+                    })}
+                  </Field>
+                </div>
+                <div className="d-flex form-group">
+                  <label>Email:</label>
+                  <Field
+                    name={`${author}.email`}
+                    component={CustomInput}
+                    fullWidth={true}
+                    hintText="Enter the email"
+                  />
+                </div>
+                <div className="d-flex form-group">
+                  <label>Institution:</label>
+                  <Field
+                    name={`${author}.organization`}
+                    component={CustomInput}
+                    fullWidth={true}
+                    hintText="Enter the institution"
+                  />
+                </div>
+                <div className="d-flex form-group">
+                  <label>Street :</label>
+                  <Field
+                    name={`${author}.authorStreet`}
+                    component={CustomInput}
+                    fullWidth={true}
+                    hintText="Enter the street"
+                  />
+                </div>
+                <div className="d-flex form-group">
+                  <label>City :</label>
+                  <Field
+                    name={`${author}.authorCity`}
+                    component={CustomInput}
+                    fullWidth={true}
+                    hintText="Enter the city"
+                  />
+                </div>
+                <div className="d-flex form-group">
+                  <label>Country :</label>
+                  <Field
+                    name={`${author}.authorCountry`}
+                    component={renderSelectField}
+                    fullWidth={true}
+                    hintText="Choose the country"
+                  >
+                    {countryData.map(country => {
+                      return (
+                        <MenuItem
+                          key={country.label}
+                          value={country.label}
+                          primaryText={country.label}
+                        />
+                      );
+                    })}
+                  </Field>
+                </div>
+                <div className="d-flex form-group">
+                  <label>Zipcode :</label>
+                  <Field
+                    name={`${author}.authorZipcode`}
+                    component={CustomInput}
+                    fullWidth={true}
+                    type="number"
+                    hintText="Enter the zipcode"
+                  />
+                </div>
+                <div className="form-group">
+                  <div className="f-right pb-6">
+                    <Field
+                      label="Corresponding"
+                      name={`${author}.corresponding`}
+                      value={false}
+                      component={renderCheckbox}
+                      type="checkbox"
+                    />
+                  </div>
+                </div>
               </div>
-            </div>
+            </section>
           </div>
         ))}
         <div className="d-flex add-schedule-icon btn-group">

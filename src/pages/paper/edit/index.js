@@ -219,7 +219,7 @@ class Index extends Component {
           </IconButton>
           <span>Edit paper</span>
         </div>
-        <div className="dashboard content d-flex bg-white">
+        <div className="dashboard content d-flex">
           <Form
             initialValues={initialValues}
             onSubmit={this.handleSave}
