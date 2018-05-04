@@ -158,13 +158,11 @@ class Index extends Component {
           </IconButton>
           <span>Submit paper</span>
         </div>
-        <div className="dashboard main-paper d-flex">
-          <Form
-            onSubmit={this.handleAdd}
-            topics={topics}
-            handleUploadFile={this.handleUploadFile}
-          />
-        </div>
+        <Form
+          onSubmit={this.handleAdd}
+          topics={topics}
+          handleUploadFile={this.handleUploadFile}
+        />
         <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />
       </div>
     );
