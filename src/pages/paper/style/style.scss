@@ -1,7 +1,7 @@
 .add-paper-form {
   margin: 0 auto;
   margin-top: 20px;
-  min-width: 600px;
+  width:100%;
 }
 
 .submit-header {
@@ -49,4 +49,15 @@
 
 .mr15 {
   margin-right: 15px;
+}
+
+.bg-white {
+  background-color: white !important;
+}
+.wid100 {
+  width: 100% !important;
+}
+
+.card-add-paper {
+  padding: 30px;
 }
