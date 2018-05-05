@@ -1,15 +1,14 @@
 import React from 'react';
 import { Field } from 'redux-form';
-import { ActionDeleteForever } from 'material-ui/svg-icons';
-import { MenuItem, RaisedButton, Divider } from 'material-ui';
+import { MenuItem, Divider } from 'material-ui';
 import CustomInput from 'components/CustomInput';
 import { renderSelectField } from 'components/render';
 import renderCheckbox from 'components/renderCheckbox';
 import { Subheader } from 'material-ui';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
 import { countryData } from '../countryData';
 import { titleData } from '../authorTitleData';
+import { connect } from 'react-redux';
+import { paperOperations } from 'store/ducks/paper';
 
 const styles = {
   divider: {
@@ -28,10 +27,43 @@ const styles = {
   },
 };
 
-class AddAuthors extends React.Component {
+class EditAuthors extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      deleteIds: [],
+    };
+  }
+
   componentDidMount() {
     this.props.fields.removeAll();
-    this.props.fields.push({});
+    const authors = this.props.authors.editAuthors;
+    const length = authors.length;
+    for (let i = 0; i < length; i = i + 1) {
+      let author = {};
+      let name = [];
+      let corresponding = false;
+      name = authors[i].author_name.split(' ');
+      if (authors[i].corresponding === 2) {
+        corresponding = true;
+      } else {
+        corresponding = false;
+      }
+      author = {
+        id: authors[i].id,
+        firstname: name[1],
+        lastname: name[0],
+        title: authors[i].author_title,
+        email: authors[i].author_email,
+        organization: authors[i].author_organization,
+        authorStreet: authors[i].author_street,
+        authorCountry: authors[i].author_country,
+        authorCity: authors[i].author_city,
+        authorZipcode: authors[i].author_zipcode,
+        corresponding: corresponding,
+      };
+      this.props.fields.push(author);
+    }
   }
 
   render() {
@@ -46,21 +78,13 @@ class AddAuthors extends React.Component {
             ) : (
               <div>
                 <Divider style={styles.divider} />
-                <div className="d-flex align-items-center justify-content-space-around">
-                  <h4 style={{ paddingTop: '0px' }}>Author #{index + 1}</h4>
-                  <RaisedButton
-                    style={{ minWidth: '50px' }}
-                    onClick={() => fields.remove(index)}
-                    icon={<ActionDeleteForever />}
-                    primary={true}
-                  />
-                </div>
+                <div className="d-flex align-items-center justify-content-space-around" />
               </div>
             )}
             <section className="paper-section">
               <div className="paper-card card-add-paper" around="xs">
                 <Subheader className="subheader submit-header">
-                  Authors
+                  Author #{index + 1}
                 </Subheader>
                 <div className="d-flex form-group">
                   <label>First name :</label>
@@ -180,15 +204,15 @@ class AddAuthors extends React.Component {
           </div>
         ))}
         <div className="d-flex add-schedule-icon btn-group">
-          <FloatingActionButton
+          {/* <FloatingActionButton
             mini={true}
             className="f-right mb-20"
             onClick={() => fields.push({})}
-            tooltip="Add Author"
+            tooltip="Edit Author"
             disabled={this.props.checkError}
           >
             <ContentAdd />
-          </FloatingActionButton>
+          </FloatingActionButton> */}
           {submitFailed && error && <span>{error}</span>}
         </div>
       </div>
@@ -196,10 +220,11 @@ class AddAuthors extends React.Component {
   }
 }
 
-// const mapStateToProps = state => {
-//   return {
-//     checkError: state.schedule.error,
-//   };
-// };
+const mapDispatchToProps = dispatch => {
+  return {
+    deleteAuthors: ids =>
+      dispatch(paperOperations.deleteAuthorIdsOperation(ids)),
+  };
+};
 
-export default AddAuthors;
+export default connect(undefined, mapDispatchToProps)(EditAuthors);

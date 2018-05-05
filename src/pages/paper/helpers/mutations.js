@@ -84,21 +84,55 @@ const UPDATE_PAPER = gql`
     $title: String
     $abstract: String
     $keywords: String
+    $file: String
   ) {
     updatePaper(
-      id: $id
       paper_status_id: $paper_status_id
       title: $title
       abstract: $abstract
       keywords: $keywords
+      file: $file
+      id: $id
     ) {
       id
       papersTopic {
         topic_id
       }
+      status
     }
   }
 `;
+
+const UPDATE_PAPER_AUTHOR = gql`
+  mutation updatePaperAuthor(
+    $id: ID!
+    $corresponding: Int
+    $author_name: String
+    $author_email: String
+    $author_title: String
+    $author_organization: String
+    $author_street: String
+    $author_city: String
+    $author_country: String
+    $author_zipcode: String
+  ) {
+    updatePaperAuthor(
+      id: $id
+      corresponding: $corresponding
+      author_name: $author_name
+      author_email: $author_email
+      author_title: $author_title
+      author_organization: $author_organization
+      author_street: $author_street
+      author_city: $author_city
+      author_country: $author_country
+      author_zipcode: $author_zipcode
+    ) {
+      id
+    }
+  }
+`;
+
 const UPDATE_TOPIC_OF_PAPER = gql`
   mutation updateTopicOfPaper($paper_id: ID!, $topic_id: ID!) {
     updateTopicOfPaper(paper_id: $paper_id, topic_id: $topic_id) {
@@ -144,4 +178,5 @@ export default {
   INSERT_PAPER_REVIEWER,
   INSERT_PAPER_AUTHOR,
   INSERT_PAPER_REVIEW_QUESTION,
+  UPDATE_PAPER_AUTHOR,
 };

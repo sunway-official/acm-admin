@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { graphql, compose } from 'react-apollo';
 import { mutations, queries } from '../helpers';
 import { withRouter } from 'react-router';
-import Form from '../form';
+import Form from './form';
 import { alertOptions, MyExclamationTriangle, MyFaCheck } from 'theme/alert';
 import AlertContainer from 'react-alert';
 import Loading from 'components/render/renderLoading';
@@ -111,7 +111,7 @@ class Index extends Component {
               author_street: author.authorStreet,
               author_city: author.authorCity,
               author_country: author.authorCountry,
-              author_zipcode: values.authorZipcode,
+              author_zipcode: author.authorZipcode,
             },
           });
         } else {
@@ -158,13 +158,11 @@ class Index extends Component {
           </IconButton>
           <span>Submit paper</span>
         </div>
-        <div className="dashboard main-paper d-flex">
-          <Form
-            onSubmit={this.handleAdd}
-            topics={topics}
-            handleUploadFile={this.handleUploadFile}
-          />
-        </div>
+        <Form
+          onSubmit={this.handleAdd}
+          topics={topics}
+          handleUploadFile={this.handleUploadFile}
+        />
         <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />
       </div>
     );
