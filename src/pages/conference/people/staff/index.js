@@ -8,22 +8,24 @@ class Index extends Component {
   render() {
     return (
       <div className="conference">
-        <Subheader className="subheader"> Staff Managements</Subheader>
+        <Subheader className="subheader">
+          {localStorage.getItem('conferenceTitle')}
+        </Subheader>
         <div className="page-breadcrumb d-flex">
-          <Link className="d-flex" to="/conference/info">
+          <Link className="d-flex" to="/">
             <IconButton>
               <ActionHome />
             </IconButton>
-            <span>Conference Information</span>
+            <span>Dashboard</span>
           </Link>
           <IconButton>
             <HardwareKeyboardArrowRight />
           </IconButton>
           <span>Staff Managements</span>
         </div>
-        <div className="dashboard content">
+        <section className="dashboard content">
           <List conference_id={this.props.conference_id} />
-        </div>
+        </section>
       </div>
     );
   }

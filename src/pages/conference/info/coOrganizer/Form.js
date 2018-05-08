@@ -9,13 +9,13 @@ class CoOrganizerForm extends Component {
   render() {
     const { onSubmit, handleSubmit, pristine } = this.props;
     return (
-      <div>
+      <section style={{ width: '100%' }}>
         <form
-          className="form  conference-info"
+          className="form conference-info"
           onSubmit={handleSubmit(onSubmit)}
+          style={{ width: '800px', margin: 'auto' }}
         >
-          <Subheader className="subheader">CoOrganizer Information</Subheader>
-
+          <Subheader className="subtitle">CoOrganizer Information</Subheader>
           <div className="d-flex form-group">
             <label>Name :</label>
             <Field
@@ -67,7 +67,7 @@ class CoOrganizerForm extends Component {
             />
           </div>
         </form>
-      </div>
+      </section>
     );
   }
 }

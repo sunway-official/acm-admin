@@ -16,10 +16,13 @@ class EditUserAvatar extends React.PureComponent {
     this.handleChangeImage = this.handleChangeImage.bind(this);
   }
   async handleChangeImage({ target: { files } }) {
-    const firstImage = files[0];
-    const imageName = firstImage.name;
-    const hashedImage = await toBase64Async(firstImage);
-    const { Key } = await S3.putAsync({ name: imageName, base64: hashedImage });
+    const file = files[0];
+    const fileName = file.name;
+    const hashedFile = await toBase64Async(file);
+    const { Key } = await S3.putAsync({
+      name: fileName,
+      bodyFile: hashedFile,
+    });
     await this.props.updateAvatar({
       variables: {
         avatarUrl: Key,

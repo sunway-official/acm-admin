@@ -3,14 +3,9 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 import AddActivityButton from './addActivityButton';
-// import EditActivity from './editActivity';
 import { IconButton, Subheader, Toggle } from 'material-ui';
 import { Link } from 'react-router-dom';
-import {
-  // NavigationClose,
-  HardwareKeyboardArrowRight,
-  ActionHome,
-} from 'material-ui/svg-icons';
+import { HardwareKeyboardArrowRight, ActionHome } from 'material-ui/svg-icons';
 import { withRouter } from 'react-router';
 
 import { functions, queries } from './helpers';
@@ -56,21 +51,24 @@ class MyCalendar extends React.PureComponent {
     return (
       <div className="conference">
         <Subheader className="subheader paper-title">
-          Activity Schedule
+          {localStorage.getItem('conferenceTitle')}
         </Subheader>
         <div className="page-breadcrumb d-flex">
-          <Link className="d-flex" to="/conference/info">
+          <Link className="d-flex" to="/">
             <IconButton>
               <ActionHome />
             </IconButton>
-            <span>Conference Information</span>
+            <span>Dashboard</span>
           </Link>
           <IconButton>
             <HardwareKeyboardArrowRight />
           </IconButton>
           <span>Activity Schedule</span>
         </div>
-        <div className="dashboard content d-flex">
+        <section
+          className="dashboard content d-flex"
+          style={{ background: 'white' }}
+        >
           <BigCalendar
             style={style}
             popup
@@ -109,7 +107,7 @@ class MyCalendar extends React.PureComponent {
           <div id="format-time">
             <Toggle label="24h" onToggle={this.handleTimeFormat} />
           </div>
-        </div>
+        </section>
       </div>
     );
   }

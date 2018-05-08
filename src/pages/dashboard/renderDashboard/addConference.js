@@ -5,32 +5,26 @@ import {
   INSERT_ORGANIZER_DETAIL_MUTATION,
   INSERT_CONFERENCE_ATTENDEE_MUTATION,
 } from '../helpers/mutations';
-import { ME_QUERY } from '../helpers/queries';
-import AddForm from './addconferenceform';
+import { ME_QUERY, GET_ALL_CATEGORIES } from '../helpers/queries';
+import Form from './addconferenceform';
 import { conferenceOperations } from 'store/ducks/conference';
 import { connect } from 'react-redux';
 import { graphql, compose, gql } from 'react-apollo';
 import '../style.scss';
 import { Link } from 'react-router-dom';
-import { IconButton } from 'material-ui';
-import { ActionHome } from 'material-ui/svg-icons';
-import { Subheader } from 'material-ui';
+import { IconButton, Subheader } from 'material-ui';
+import { ActionHome, HardwareKeyboardArrowRight } from 'material-ui/svg-icons';
 import DashboardMenu from './menu';
 import { alertOptions, MyExclamationTriangle, MyFaCheck } from 'theme/alert';
 import AlertContainer from 'react-alert';
 import { withRouter } from 'react-router';
+import Loading from 'components/render/renderLoading';
 
 class ConferenceAddForm extends PureComponent {
   constructor(props) {
     super(props);
     this.handleAddConference = this.handleAddConference.bind(this);
 
-    this.state = {
-      position: {
-        lat: 16.0598934,
-        long: 108.2076032,
-      },
-    };
     this.onMapPositionChanged = this.onMapPositionChanged.bind(this);
   }
   showAlertSuccess = () => {
@@ -44,7 +38,7 @@ class ConferenceAddForm extends PureComponent {
   };
   showAlertError = text => {
     this.msg.error(text, {
-      type: 'error', // type of alert
+      type: 'error',
       icon: <MyExclamationTriangle />,
     });
   };
@@ -52,7 +46,7 @@ class ConferenceAddForm extends PureComponent {
     const user_id = this.props.data.me.id;
     try {
       if (!this.props.position) {
-        this.showAlertError('Please set address');
+        this.showAlertError('Please set place on map');
       }
       const addressData = await this.props.INSERT_ADDRESS_MUTATION({
         variables: {
@@ -81,17 +75,26 @@ class ConferenceAddForm extends PureComponent {
           address_id: addressData.data.insertAddress.id,
           title: values.title,
           description: values.description,
-          start_date: values.startDate,
-          end_date: values.endDate,
+          category_id: values.category_id,
+          start_date: values.start_date,
+          end_date: values.end_date,
           bg_image: 'Background image',
+          dl_submit_abstract: values.dl_submit_abstract,
+          dl_review_abstract: values.dl_review_abstract,
+          dl_release_abstract: values.dl_release_abstract,
+          dl_re_submit_abstract: values.dl_re_submit_abstract,
+          dl_re_review_abstract: values.dl_re_review_abstract,
+          dl_release_final_abstract: values.dl_release_final_abstract,
+          dl_submit_paper: values.dl_submit_paper,
+          dl_review_paper: values.dl_review_paper,
+          dl_release_paper: values.dl_release_paper,
+          dl_re_submit_paper: values.dl_re_submit_paper,
+          dl_re_review_paper: values.dl_re_review_paper,
+          dl_release_final_paper: values.dl_release_final_paper,
+          dl_registration: values.dl_registration,
         },
       });
-      await this.props.INSERT_CONFERENCE_ATTENDEE_MUTATION({
-        variables: {
-          conference_id: conference.data.insertConference.id,
-          user_id: user_id,
-        },
-      });
+
       await this.props.SWITCH_CURRENT_CONFERENCE({
         variables: {
           conference_id: conference.data.insertConference.id,
@@ -104,17 +107,20 @@ class ConferenceAddForm extends PureComponent {
       });
       this.showAlertSuccess();
     } catch (error) {
-      let temp = error.graphQLErrors[0].message;
-      this.showAlertError(temp);
+      console.log(error);
     }
   }
 
   onMapPositionChanged(position) {
     this.props.getPosition(position);
-    console.log(this.props);
   }
 
   render() {
+    const { loading, getAllCategories } = this.props.GET_ALL_CATEGORIES;
+    if (loading) {
+      return <Loading />;
+    }
+    const categories = getAllCategories;
     return (
       <div>
         <DashboardMenu />
@@ -128,14 +134,17 @@ class ConferenceAddForm extends PureComponent {
             </IconButton>
             <span>Dashboard</span>
           </Link>
+          <IconButton>
+            <HardwareKeyboardArrowRight />
+          </IconButton>
+          <span>Create Conference</span>
         </div>
-        <div className="add-form-bg">
-          <AddForm
-            onSubmit={this.handleAddConference}
-            onMapPositionChanged={this.onMapPositionChanged}
-            handleSwitch={this.handleSwitch}
-          />
-        </div>
+        <Form
+          categories={categories}
+          onSubmit={this.handleAddConference}
+          onMapPositionChanged={this.onMapPositionChanged}
+          handleSwitch={this.handleSwitch}
+        />
         <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />
       </div>
     );
@@ -166,6 +175,9 @@ export const SWITCH_CURRENT_CONFERENCE = gql`
 export default compose(
   withRouter,
   connect(mapStateToProps, mapDispatchToProps),
+  graphql(GET_ALL_CATEGORIES, {
+    name: 'GET_ALL_CATEGORIES',
+  }),
   graphql(INSERT_CONFERENCE_MUTATION, {
     name: 'INSERT_CONFERENCE_MUTATION',
   }),

@@ -37,6 +37,10 @@ class AuthRoute extends PureComponent {
               description
               start_date
               end_date
+              dl_submit_abstract
+              dl_re_submit_abstract
+              dl_submit_paper
+              dl_re_submit_paper
               address {
                 id
                 lat
@@ -48,6 +52,7 @@ class AuthRoute extends PureComponent {
                 email
                 website
                 phone
+                address
               }
               coOrganizerDetails {
                 id
@@ -140,6 +145,21 @@ const ME_QUERY = gql`
         description
         start_date
         end_date
+        dl_submit_abstract
+        dl_review_abstract
+        dl_release_abstract
+        dl_re_submit_abstract
+        dl_re_review_abstract
+        dl_release_final_abstract
+        dl_submit_paper
+        dl_review_paper
+        dl_release_paper
+        dl_re_submit_paper
+        dl_re_review_paper
+        dl_release_final_paper
+        dl_registration
+        category_id
+        category_name
         address {
           id
           lat
@@ -149,6 +169,7 @@ const ME_QUERY = gql`
           id
           name
           email
+          address
           website
           phone
         }

@@ -40,6 +40,10 @@ export const getRolesComponent = () => {
       roles: ['1'],
     },
     {
+      component: 'edit-deadline',
+      roles: ['1'],
+    },
+    {
       component: 'view-co-organizer',
       roles: ['1'],
     },
@@ -66,6 +70,18 @@ export const getRolesComponent = () => {
     {
       component: 'landing-page',
       roles: ['1'],
+    },
+    {
+      component: 'invite-user',
+      roles: ['1'],
+    },
+    {
+      component: 'add-conference-btn',
+      roles: ['1'],
+    },
+    {
+      component: 'paper-registration',
+      roles: ['7'],
     },
   ];
 };

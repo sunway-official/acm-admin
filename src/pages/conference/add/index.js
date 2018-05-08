@@ -3,7 +3,6 @@ import { ME_QUERY } from './helpers/mutation';
 import { graphql, compose } from 'react-apollo';
 import GetAllConfs from './addConference/getAllConferences';
 import Loading from 'components/render/renderLoading';
-// import GetAllConfs from './addConference/getAllConferences';
 
 class ConfMgtSidebar extends React.Component {
   render() {
@@ -18,7 +17,7 @@ class ConfMgtSidebar extends React.Component {
           handleCloseConference={this.props.handleCloseConference}
         />
       );
-    else return <div>Loading</div>;
+    else return <Loading />;
   }
 }
 

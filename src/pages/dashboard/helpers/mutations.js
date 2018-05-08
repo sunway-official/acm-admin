@@ -14,18 +14,46 @@ export const INSERT_CONFERENCE_MUTATION = gql`
     $address_id: ID!
     $title: String!
     $description: String!
+    $category_id: Int!
     $start_date: Date!
     $end_date: Date!
     $bg_image: String!
+    $dl_submit_abstract: Date!
+    $dl_review_abstract: Date!
+    $dl_release_abstract: Date!
+    $dl_re_submit_abstract: Date!
+    $dl_re_review_abstract: Date!
+    $dl_release_final_abstract: Date!
+    $dl_submit_paper: Date!
+    $dl_review_paper: Date!
+    $dl_release_paper: Date!
+    $dl_re_submit_paper: Date!
+    $dl_re_review_paper: Date!
+    $dl_release_final_paper: Date!
+    $dl_registration: Date!
   ) {
     insertConference(
       organizer_detail_id: $organizer_detail_id
       address_id: $address_id
       title: $title
       description: $description
+      category_id: $category_id
       start_date: $start_date
       end_date: $end_date
       bg_image: $bg_image
+      dl_submit_abstract: $dl_submit_abstract
+      dl_review_abstract: $dl_review_abstract
+      dl_release_abstract: $dl_release_abstract
+      dl_re_submit_abstract: $dl_re_submit_abstract
+      dl_re_review_abstract: $dl_re_review_abstract
+      dl_release_final_abstract: $dl_release_final_abstract
+      dl_submit_paper: $dl_submit_paper
+      dl_review_paper: $dl_review_paper
+      dl_release_paper: $dl_release_paper
+      dl_re_submit_paper: $dl_re_submit_paper
+      dl_re_review_paper: $dl_re_review_paper
+      dl_release_final_paper: $dl_release_final_paper
+      dl_registration: $dl_registration
     ) {
       id
       organizerDetail {
@@ -40,9 +68,23 @@ export const INSERT_CONFERENCE_MUTATION = gql`
       }
       title
       description
+      category_id
       start_date
       end_date
       bg_image
+      dl_submit_abstract
+      dl_review_abstract
+      dl_release_abstract
+      dl_re_submit_abstract
+      dl_re_review_abstract
+      dl_release_final_abstract
+      dl_submit_paper
+      dl_review_paper
+      dl_release_paper
+      dl_re_submit_paper
+      dl_re_review_paper
+      dl_release_final_paper
+      dl_registration
     }
   }
 `;

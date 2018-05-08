@@ -6,20 +6,18 @@ import { compose, withApollo, graphql } from 'react-apollo';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
+import FlatButton from 'material-ui/FlatButton';
 import { AppBar, Drawer } from 'material-ui';
 import ConfMgtSidebar from 'pages/conference/add';
 import { queries } from '../helpers';
 import style from './style.css';
 import { functions } from 'containers/layout/appbar/helpers';
-// import Loading from 'components/render/renderLoading';
 
 class BadgeExampleSimple extends Component {
   constructor(props) {
     super(props);
     this.state = {
       openUser: false,
-      // openNotification: false,
-      // openMail: false,
       openCalendar: false,
       openListConf: false,
     };
@@ -35,7 +33,6 @@ class BadgeExampleSimple extends Component {
 
   handleTouchTapUser = event => {
     event.preventDefault();
-
     this.setState({
       openUser: true,
       anchorEl: event.currentTarget,
@@ -43,7 +40,6 @@ class BadgeExampleSimple extends Component {
   };
   handleTouchTapNotification = event => {
     event.preventDefault();
-
     this.setState({
       openNotification: true,
       anchorEl: event.currentTarget,
@@ -58,7 +54,6 @@ class BadgeExampleSimple extends Component {
   };
   handleTouchTapCalendar = event => {
     event.preventDefault();
-
     this.setState({
       openCalendar: true,
       anchorEl: event.currentTarget,
@@ -81,15 +76,9 @@ class BadgeExampleSimple extends Component {
     window.location.reload();
   }
   render() {
-    // const { loading } = this.props.data;
-    // if (loading) return <div>Loading...</div>;
-    //const avatar = this.props.me.avatar;
     let first = '';
     if (this.props.me !== undefined) {
-      //console.log(this.props.me.firstname);
       first = this.props.me.firstname;
-      //const avatar = this.props.me.avatar;
-      //console.log(avatar);
     }
     const loadingRole = this.props.GET_ALL_ROLE_OF_USER.loading;
     if (loadingRole) return <div />;
@@ -103,6 +92,23 @@ class BadgeExampleSimple extends Component {
       isShow = functions.checkRoleAllComponents(rolesUserId);
     }
 
+    let isAuthor;
+    if (localStorage.getItem('roles')) {
+      isAuthor = localStorage.getItem('roles').indexOf('7');
+    }
+
+    let disable_submit = false;
+    if (this.props.me && this.props.me.currentConference) {
+      const currentConferenceData = this.props.me.currentConference;
+      const deadline_sbm_abs = currentConferenceData.dl_submit_abstract;
+
+      const now = new Date();
+
+      if (now.toISOString() < deadline_sbm_abs) {
+        disable_submit = true;
+      }
+    }
+
     return (
       <div className="menu">
         <style
@@ -110,6 +116,15 @@ class BadgeExampleSimple extends Component {
             __html: style,
           }}
         />
+        {disable_submit === true &&
+          isAuthor !== -1 && (
+            <FlatButton
+              label="Submit paper"
+              primary={true}
+              className="submit-btn"
+              href="/conference/paper/add/"
+            />
+          )}
         <div className="badge user" onClick={this.handleTouchTapUser}>
           <span className="user-name"> {first} </span>
           <IconButton tooltip="User">
@@ -135,11 +150,13 @@ class BadgeExampleSimple extends Component {
                   onClick={this.handleRequestClose}
                 />
               </Link>
-              {isShow['switch-conferences'] ? (
-                <MenuItem
-                  primaryText="Switch conference"
-                  onClick={this.handleToggleConference}
-                />
+              {isShow['invite-user'] ? (
+                <Link to="/invite-user">
+                  <MenuItem
+                    primaryText="Author/Reviewer Invitation"
+                    onClick={this.handleRequestClose}
+                  />
+                </Link>
               ) : (
                 ''
               )}
@@ -176,8 +193,3 @@ export default compose(
     name: 'GET_ALL_ROLE_OF_USER',
   }),
 )(BadgeExampleSimple);
-//<Avatar className="avatar" src={images.defaultAvatar} />
-// <Avatar
-// className="avatar"
-// src={avatar ? S3_GET_PREFIX + avatar : images.defaultAvatar}
-// />

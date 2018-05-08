@@ -22,6 +22,8 @@ export const ME_QUERY = gql`
         description
         start_date
         end_date
+        category_id
+        category_name
         address {
           id
           lat
@@ -48,7 +50,8 @@ export const GET_ALL_CONFERENCES_BY_USER_ID_QUERY = gql`
         description
         start_date
         end_date
-        bg_image
+        category_id
+        category_name
         address {
           id
           city
@@ -69,8 +72,22 @@ export const GET_ALL_CONFERENCES_BY_USER_ID_QUERY = gql`
     }
   }
 `;
-
+export const GET_ALL_CATEGORIES = gql`
+  query getAllCategories {
+    getAllCategories {
+      id
+      name
+      conferences {
+        id
+        title
+        start_date
+        end_date
+      }
+    }
+  }
+`;
 export default {
   ME_QUERY,
   GET_ALL_CONFERENCES_BY_USER_ID_QUERY,
+  GET_ALL_CATEGORIES,
 };

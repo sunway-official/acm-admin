@@ -20,5 +20,6 @@ module.exports = {
     'no-unused-vars': 1,
     'react/jsx-uses-vars': 2,
     'react/jsx-uses-react': 2,
+    'array-callback-return': 2,
   },
 };

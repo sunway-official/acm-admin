@@ -3,7 +3,6 @@
  */
 // import { combineReducers } from "redux";
 import types from './types';
-
 const reducer = (state = {}, action) => {
   switch (action.type) {
     // GET CONFERENCE

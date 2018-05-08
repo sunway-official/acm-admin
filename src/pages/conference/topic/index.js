@@ -23,13 +23,15 @@ class Index extends Component {
     const listTopic = getTopicsOfConference;
     return (
       <div className="conference">
-        <Subheader className="subheader"> Topics Management</Subheader>
+        <Subheader className="subheader">
+          {localStorage.getItem('conferenceTitle')}
+        </Subheader>
         <div className="page-breadcrumb d-flex">
-          <Link className="d-flex" to="/conference/info">
+          <Link className="d-flex" to="/">
             <IconButton>
               <ActionHome />
             </IconButton>
-            <span>Conference Information</span>
+            <span>Dashboard</span>
           </Link>
           <IconButton>
             <HardwareKeyboardArrowRight />

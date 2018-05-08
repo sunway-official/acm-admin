@@ -49,7 +49,6 @@ class List extends Component {
     if (getAllStaffInConference) {
       staffs = getAllStaffInConference;
     }
-    console.log(staffs);
     if (loading)
       return (
         <div>
@@ -89,7 +88,7 @@ class List extends Component {
           <div style={style}>
             <RaisedButton
               label="Edit"
-              primary={true}
+              default={true}
               onClick={() => {
                 this.handleOpenDialog(props.value, props.value.id);
               }}

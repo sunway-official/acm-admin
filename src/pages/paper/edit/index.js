@@ -4,19 +4,40 @@ import { Subheader, IconButton } from 'material-ui';
 import { Link } from 'react-router-dom';
 import { graphql, compose } from 'react-apollo';
 import { queries, mutations } from '../helpers';
-import Form from '../form';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
+import Form from './editForm';
 import { alertOptions, MyExclamationTriangle, MyFaCheck } from 'theme/alert';
 import AlertContainer from 'react-alert';
+import S3 from 'lib/s3';
 
 import Loading from 'components/render/renderLoading';
 
 class Index extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      url: '',
+      key: '',
+    };
     this.handleSave = this.handleSave.bind(this);
+    this.handleUploadFile = this.handleUploadFile.bind(this);
   }
+
+  async handleUploadFile(e) {
+    const file = e.target.files[0];
+    const fileName = file.name;
+    // const hashedFile = await toBase64Async(file, 'pdf');
+    const { Key } = await S3.putAsync({
+      name: fileName,
+      bodyFile: file,
+      isImage: false,
+    });
+    this.setState({ key: Key });
+    return Key;
+  }
+
   // eslint-disable-next-line
   showAlertSuccess = () => {
     this.msg.success('Saved!', {
@@ -34,38 +55,27 @@ class Index extends Component {
     });
   };
   async handleSave(values) {
-    const { UPDATE_PAPER, UPDATE_TOPIC_OF_PAPER } = this.props;
+    const {
+      UPDATE_PAPER,
+      UPDATE_TOPIC_OF_PAPER,
+      UPDATE_PAPER_AUTHOR,
+    } = this.props;
+
+    const key = this.state.key;
+    let correspondingValue = 3;
     try {
       const isAuthor = localStorage.getItem('roles').indexOf('7');
       let paper;
-
       if (isAuthor > -1) {
         paper = await UPDATE_PAPER({
           variables: {
+            paper_status_id: 3,
             id: this.props.match.params.id,
             title: values.title,
             abstract: values.abstract,
             keywords: values.keywords,
+            file: key,
           },
-          refetchQueries: [
-            {
-              query: queries.GET_PAPERS_WITH_AUTHOR_BY_CONFERENCE_ID,
-            },
-          ],
-        });
-      } else {
-        paper = await UPDATE_PAPER({
-          variables: {
-            id: this.props.match.params.id,
-            title: values.title,
-            abstract: values.abstract,
-            keywords: values.keywords,
-          },
-          refetchQueries: [
-            {
-              query: queries.GET_PAPERS_BY_CONFERENCE_ID,
-            },
-          ],
         });
       }
       if (values.topic) {
@@ -97,10 +107,45 @@ class Index extends Component {
           ],
         });
       }
+
+      await UPDATE_PAPER_AUTHOR({
+        variables: {
+          id: values.coresponding_id,
+          author_street: values.street,
+          author_city: values.city,
+          author_country: values.country,
+          author_zipcode: values.zipcode,
+        },
+      });
+
+      if (values.editAuthors) {
+        await values.editAuthors.map(author => {
+          if (author.corresponding === true) {
+            correspondingValue = 2;
+          } else {
+            correspondingValue = 3;
+          }
+          UPDATE_PAPER_AUTHOR({
+            variables: {
+              id: author.id,
+              topic_id: author.topic,
+              corresponding: correspondingValue,
+              author_name: author.firstname + ' ' + author.lastname,
+              author_email: author.email,
+              author_title: author.title,
+              author_organization: author.organization,
+              author_street: author.authorStreet,
+              author_city: author.authorCity,
+              author_country: author.authorCountry,
+              author_zipcode: author.authorZipcode,
+            },
+          });
+          return 1;
+        });
+      }
       this.showAlertSuccess();
     } catch (error) {
-      let temp = error.graphQLErrors[0].message;
-      this.showAlertError(temp.substring(7, temp.length));
+      this.showAlertError('Resubmit paper fail');
     }
   }
   render() {
@@ -120,23 +165,48 @@ class Index extends Component {
     }
     if (getPaperByID) {
       paper = getPaperByID;
+
+      let corresponding_author;
+      corresponding_author = paper.authors
+        .filter(function(author) {
+          return author.corresponding === 1;
+        })
+        .map(author => {
+          return author;
+        });
+
+      let editAuthors;
+      editAuthors = paper.authors
+        .filter(function(author) {
+          return author.corresponding !== 1;
+        })
+        .map(author => {
+          return author;
+        });
+
       initialValues = {
         id: paper.id,
         title: paper.title,
         abstract: paper.abstract,
         keywords: paper.keywords,
         topic: paperTopicsActive[0].topic.id,
+        street: corresponding_author[0].author_street,
+        city: corresponding_author[0].author_city,
+        country: corresponding_author[0].author_country,
+        zipcode: corresponding_author[0].author_zipcode,
+        editAuthors: editAuthors,
+        coresponding_id: corresponding_author[0].id,
       };
     }
     return (
       <div className="conference">
-        <Subheader className="subheader">Paper Management</Subheader>
+        <Subheader className="subheader">Edit paper</Subheader>
         <div className="page-breadcrumb d-flex">
           <Link className="d-flex" to="/">
             <IconButton>
               <ActionHome />
             </IconButton>
-            <span>Conference Information</span>
+            <span>Dasboard</span>
           </Link>
           <IconButton>
             <HardwareKeyboardArrowRight />
@@ -147,7 +217,7 @@ class Index extends Component {
           <IconButton>
             <HardwareKeyboardArrowRight />
           </IconButton>
-          <span>Paper Management</span>
+          <span>Edit paper</span>
         </div>
         <div className="dashboard content d-flex">
           <Form
@@ -155,6 +225,7 @@ class Index extends Component {
             onSubmit={this.handleSave}
             topics={topics}
             paperTopicsActive={paperTopicsActive[0].topic.name}
+            handleUploadFile={this.handleUploadFile}
           />
         </div>
         <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />
@@ -196,5 +267,8 @@ export default compose(
   }),
   graphql(mutations.UPDATE_TOPIC_OF_PAPER, {
     name: 'UPDATE_TOPIC_OF_PAPER',
+  }),
+  graphql(mutations.UPDATE_PAPER_AUTHOR, {
+    name: 'UPDATE_PAPER_AUTHOR',
   }),
 )(Index);
