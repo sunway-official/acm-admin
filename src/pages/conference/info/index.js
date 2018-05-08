@@ -12,11 +12,23 @@ import { functions } from 'containers/layout/appbar/helpers';
 
 class Index extends Component {
   componentDidMount() {
-    this.props.UPDATE_ALL_STATUS_PAPERS({
-      variables: {
-        current_date: new Date(),
-      },
-    });
+    const roles = localStorage.getItem('roles');
+    const isShow = functions.checkRoleAllComponents(roles);
+    if (isShow['update-all-papers-status']) {
+      this.props.UPDATE_ALL_STATUS_PAPERS({
+        variables: {
+          current_date: new Date(),
+        },
+        refetchQueries: [
+          {
+            query: queries.GET_PAPERS_BY_CONFERENCE_ID,
+            variables: {
+              role_id: roles,
+            },
+          },
+        ],
+      });
+    }
   }
 
   render() {
