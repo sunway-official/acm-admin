@@ -52,6 +52,7 @@ class Index extends React.Component {
             open={this.props.openModal}
             onRequestChange={() => this.handleToggle()}
             docked={false}
+            className="over-flow-hide"
           >
             <AppBar
               title={
