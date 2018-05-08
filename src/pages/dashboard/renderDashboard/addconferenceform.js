@@ -147,7 +147,7 @@ class AddConferenceForm extends React.Component {
           </div>
         </section>
         <section>
-          <Subheader className="header subtitle">Organization Place</Subheader>
+          <Subheader className="header subtitle">Location</Subheader>
           <AppMap
             onMapPositionChanged={onMapPositionChanged}
             initalPosition={{

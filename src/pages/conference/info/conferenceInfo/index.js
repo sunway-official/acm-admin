@@ -9,7 +9,7 @@ import { conferenceOperations } from 'store/ducks/conference';
 import ViewInfoForm from './ViewInfoForm';
 import { alertOptions, MyExclamationTriangle, MyFaCheck } from 'theme/alert';
 import AlertContainer from 'react-alert';
-
+import Loading from 'components/render/renderLoading';
 class ConferenceInfoForm extends PureComponent {
   constructor(props) {
     super(props);
@@ -89,7 +89,7 @@ class ConferenceInfoForm extends PureComponent {
   render() {
     let { loading, getAllCategories } = this.props.data;
     if (loading) {
-      return <div>Loading</div>;
+      return <Loading />;
     }
 
     const categories = getAllCategories;
