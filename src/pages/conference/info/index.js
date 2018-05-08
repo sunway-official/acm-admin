@@ -9,6 +9,7 @@ import CoOrganizerList from './coOrganizer';
 import Deadline from './deadLine';
 import { graphql, compose } from 'react-apollo';
 import { functions } from 'containers/layout/appbar/helpers';
+import Loading from 'components/render/renderLoading';
 
 class Index extends Component {
   componentDidMount() {
@@ -35,7 +36,8 @@ class Index extends Component {
     let conference;
     if (this.props.currentConference) {
       conference = this.props.currentConference;
-    } else return window.location.reload();
+    } else return <Loading />;
+
     localStorage.setItem('conferenceTitle', conference.title);
     const coOrganizerDetails = conference.coOrganizerDetails;
     const roles = localStorage.getItem('roles');
