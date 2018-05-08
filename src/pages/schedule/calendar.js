@@ -3,14 +3,9 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 import AddActivityButton from './addActivityButton';
-// import EditActivity from './editActivity';
 import { IconButton, Subheader, Toggle } from 'material-ui';
 import { Link } from 'react-router-dom';
-import {
-  // NavigationClose,
-  HardwareKeyboardArrowRight,
-  ActionHome,
-} from 'material-ui/svg-icons';
+import { HardwareKeyboardArrowRight, ActionHome } from 'material-ui/svg-icons';
 import { withRouter } from 'react-router';
 
 import { functions, queries } from './helpers';

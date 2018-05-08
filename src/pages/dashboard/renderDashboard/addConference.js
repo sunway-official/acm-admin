@@ -18,6 +18,8 @@ import DashboardMenu from './menu';
 import { alertOptions, MyExclamationTriangle, MyFaCheck } from 'theme/alert';
 import AlertContainer from 'react-alert';
 import { withRouter } from 'react-router';
+import Loading from 'components/render/renderLoading';
+
 class ConferenceAddForm extends PureComponent {
   constructor(props) {
     super(props);
@@ -36,7 +38,7 @@ class ConferenceAddForm extends PureComponent {
   };
   showAlertError = text => {
     this.msg.error(text, {
-      type: 'error', // type of alert
+      type: 'error',
       icon: <MyExclamationTriangle />,
     });
   };
@@ -116,7 +118,7 @@ class ConferenceAddForm extends PureComponent {
   render() {
     const { loading, getAllCategories } = this.props.GET_ALL_CATEGORIES;
     if (loading) {
-      return <div>Loading...</div>;
+      return <Loading />;
     }
     const categories = getAllCategories;
     return (

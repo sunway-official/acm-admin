@@ -31,7 +31,6 @@ class GetAllConfs extends React.Component {
     };
     this.handleOpen = this.handleOpen.bind(this);
     this.handleToggle = this.handleOpen.bind(this);
-    this.handLinkClick = this.handLinkClick.bind(this);
     this.handleSwitch = this.handleSwitch.bind(this);
   }
 
@@ -62,10 +61,6 @@ class GetAllConfs extends React.Component {
       openDialog: false,
     });
   };
-
-  handLinkClick() {
-    window.location.reload();
-  }
 
   render() {
     const { loading } = this.props.GET_ALL_CONFERENCES_BY_USER_ID_QUERY;
