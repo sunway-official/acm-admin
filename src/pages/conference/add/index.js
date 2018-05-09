@@ -17,7 +17,7 @@ class ConfMgtSidebar extends React.Component {
           handleCloseConference={this.props.handleCloseConference}
         />
       );
-    else return <div>Loading</div>;
+    else return <Loading />;
   }
 }
 

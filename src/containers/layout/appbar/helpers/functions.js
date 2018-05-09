@@ -83,6 +83,10 @@ export const getRolesComponent = () => {
       component: 'paper-registration',
       roles: ['7'],
     },
+    {
+      component: 'update-all-papers-status',
+      roles: ['1'],
+    },
   ];
 };
 

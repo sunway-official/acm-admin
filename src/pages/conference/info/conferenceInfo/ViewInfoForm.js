@@ -54,9 +54,7 @@ class ConferenceInfoForm extends React.Component {
         )}
         <div className="form-body d-flex justify-content-space-between">
           <section className="map">
-            <Subheader className="header subtitle">
-              Organization Place
-            </Subheader>
+            <Subheader className="header subtitle">Location</Subheader>
             <AppMap
               disabled={true}
               initalPosition={{

@@ -34,9 +34,7 @@ class ConferenceInfoForm extends React.Component {
       <form className="form conference-info" onSubmit={handleSubmit}>
         <div className="form-body d-flex justify-content-space-between">
           <section className="map">
-            <Subheader className="header subtitle">
-              Organization Place
-            </Subheader>
+            <Subheader className="header subtitle">Location</Subheader>
             <AppMap
               onMapPositionChanged={onMapPositionChanged}
               initalPosition={{

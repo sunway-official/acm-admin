@@ -156,7 +156,34 @@ export const GET_ALL_CATEGORIES = gql`
     }
   }
 `;
+export const GET_PAPERS_BY_CONFERENCE_ID = gql`
+  query getPapersByConferenceID($role_id: ID!) {
+    getPapersByConferenceID(role_id: $role_id) {
+      id
+      title
+      reviewers {
+        reviewer_name
+      }
+      authors {
+        author_name
+      }
+      topic_name
+      status
+      comments {
+        id
+        point
+        reviewer_name
+        review_question_id
+        content
+        comment
+      }
+      is_reviewed
+    }
+  }
+`;
+
 export default {
+  GET_PAPERS_BY_CONFERENCE_ID,
   ME_QUERY,
   GET_CURRENT_CONFERENCE,
   GET_CONFERENCE_BY_ID_QUERY,

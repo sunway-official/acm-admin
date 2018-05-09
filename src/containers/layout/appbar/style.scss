@@ -8,6 +8,13 @@
     h1 {
       flex: none !important;
     }
+
+    .over-flow-hide {
+      & > div {
+        overflow: hidden !important;
+      }
+    }
+
   }
 
   .logo {
@@ -39,3 +46,4 @@
     }
   }
 }
+
