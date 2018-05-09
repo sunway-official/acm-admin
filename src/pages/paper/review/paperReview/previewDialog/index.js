@@ -41,7 +41,7 @@ class Preview extends Component {
                 <Row className="card-detail-row">
                   <Col xs={4}>Point</Col>
                   <Col xs={8}>
-                    {Math.round(this.props.generalPoint)}{' '}
+                    {this.props.generalPoint}{' '}
                     <b>({getStatus(this.props.generalPoint)})</b>
                   </Col>
                 </Row>
