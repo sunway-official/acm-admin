@@ -30,7 +30,7 @@ const styleBtn = {
 
 const sorted = [
   {
-    id: 'title',
+    id: 'status',
     desc: false,
   },
 ];
