@@ -52,7 +52,7 @@
     "precommit": "npm-run-all lint-staged",
     "start": "serve -s build",
     "prestart": "npm install -g serve",
-    "postinstall": "cp -r lib/* node_modules/"
+    "postinstall": "cp -r lib/* node_modules/ && cp .env.heroku.example .env && npm run build"
   },
   "devDependencies": {
     "eslint-config-prettier": "^2.6.0",
