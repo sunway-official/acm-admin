@@ -44,8 +44,13 @@ class listCoferences extends React.Component {
 
   render() {
     const { loading, getAllCategories } = this.props.data;
-    if (loading) return <Loading />;
-    const categories = getAllCategories;
+    if (loading) {
+      return <Loading />;
+    }
+    let categories;
+    if (getAllCategories) {
+      categories = getAllCategories;
+    }
     const roles = localStorage.getItem('roles');
     const isShow = functions.checkRoleAllComponents(roles);
 
