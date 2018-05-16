@@ -58,7 +58,8 @@ body {
       padding: 0 !important;
     }
   }
-  font-family: 'Roboto', sans-serif;
+  font-family: 'system-ui', 'Roboto', sans-serif;
+  line-height: 1.5;
 }
 .date {
   align-items: center;
@@ -67,7 +68,7 @@ body {
   width: 82px;
 }
 .deadline-input {
-  padding: 20px 10px 20px 0;
+  padding: 5px 10px 5px 0;
   width: 30%;
 }
 .label-deadline {
@@ -79,7 +80,6 @@ body {
   padding: 0 !important;
   font-size: 30px !important;
   font-weight: normal !important;
-  font-style: italic !important;
 }
 .body-content {
   margin: 15px auto 20px;
@@ -116,6 +116,7 @@ body {
 .subtitle {
   padding-left: 0 !important;
   font-size: 25px !important;
+  font-style: italic;
 }
 
 section {

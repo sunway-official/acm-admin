@@ -4,6 +4,7 @@ const colors = {
   white: '#ffffff',
 };
 const muiTheme = getMuiTheme({
+  fontFamily: 'system-ui',
   palette: {
     primary1Color: deepOrange500,
     accent1Color: deepOrange500,
