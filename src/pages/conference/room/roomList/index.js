@@ -106,7 +106,7 @@ class RoomList extends Component {
             <Link
               to={`/conference/rooms-management/room-detail/${props.value}`}
             >
-              <RaisedButton label="Edit" primary={true} />
+              <RaisedButton label="Edit" default={true} />
             </Link>
             <RaisedButton
               secondary={true}
@@ -139,7 +139,7 @@ class RoomList extends Component {
       />,
     ];
     return (
-      <div className="react-table">
+      <section className="react-table">
         <ReactTable
           noDataText="No rows found"
           filterable
@@ -163,7 +163,7 @@ class RoomList extends Component {
           </Link>
         </div>
         <AlertContainer ref={a => (this.msg = a)} {...alertOptions} />
-      </div>
+      </section>
     );
   }
 }

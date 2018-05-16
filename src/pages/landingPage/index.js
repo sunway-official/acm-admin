@@ -23,23 +23,19 @@ class LandingPage extends Component {
     const landingPage = getLandingPageByConferenceId;
     return (
       <div className="landingpage-body">
-        <div className="container">
-          <div className="cbp-af-header">
-            <Header conference_id={this.props.match.params.conference_id} />
-          </div>
-          <div className="main">
-            <Home landingPage={landingPage} />
-            <Register
-              landingPage={landingPage}
-              id={this.props.match.params.conference_id}
-            />
-            <Description landingPage={landingPage} />
-            <Paper landingPage={landingPage} />
-            <CountDownTimer landingPage={landingPage} />
-            <Speaker landingPage={landingPage} />
-            <Map landingPage={landingPage} />
-            <Footer conference_id={this.props.match.params.conference_id} />
-          </div>
+        <Header conference_id={this.props.match.params.conference_id} />
+        <div className="landing-page-main">
+          <Home landingPage={landingPage} />
+          <Register
+            landingPage={landingPage}
+            id={this.props.match.params.conference_id}
+          />
+          <Description landingPage={landingPage} />
+          <Paper landingPage={landingPage} />
+          <CountDownTimer landingPage={landingPage} />
+          <Speaker landingPage={landingPage} />
+          <Map landingPage={landingPage} />
+          <Footer conference_id={this.props.match.params.conference_id} />
         </div>
       </div>
     );

@@ -4,21 +4,16 @@ import { GET_ALL_CONFERENCES_BY_USER_ID_QUERY } from './../helpers/mutation';
 import { graphql, compose, gql } from 'react-apollo';
 import { List, ListItem } from 'material-ui';
 import DeleteDialog from './deleteDialog';
-// import { red500 } from 'material-ui/styles/colors';
 import ContentSend from 'material-ui/svg-icons/content/send';
 import {
   ActionSupervisorAccount,
   NavigationClose,
 } from 'material-ui/svg-icons';
-
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import { FloatingActionButton } from 'material-ui';
-// import AddDialog from './addDialog';
 import { withRouter } from 'react-router-dom';
-// import style from '../../../containers/layout/appbar/style.css';
 import style from '../style/style.css';
 import Loading from 'components/render/renderLoading';
-
 const styles = {
   smallIcon: {
     width: 20,
@@ -36,7 +31,6 @@ class GetAllConfs extends React.Component {
     };
     this.handleOpen = this.handleOpen.bind(this);
     this.handleToggle = this.handleOpen.bind(this);
-    this.handLinkClick = this.handLinkClick.bind(this);
     this.handleSwitch = this.handleSwitch.bind(this);
   }
 
@@ -68,20 +62,14 @@ class GetAllConfs extends React.Component {
     });
   };
 
-  handLinkClick() {
-    window.location.reload();
-  }
-
   render() {
-    const { loading } = this.props.data;
-
+    const { loading } = this.props.GET_ALL_CONFERENCES_BY_USER_ID_QUERY;
     if (loading) return <Loading />;
-
-    const conferences = this.props.data.getConferenceByUserID;
+    const conferences = this.props.GET_ALL_CONFERENCES_BY_USER_ID_QUERY
+      .getAllConferencesByUserID;
     let currentConferenceID = 0;
     if (this.props.ME_QUERY.me && this.props.ME_QUERY.me.currentConference)
       currentConferenceID = this.props.ME_QUERY.me.currentConference.id;
-
     return (
       <div>
         <style
@@ -111,20 +99,19 @@ class GetAllConfs extends React.Component {
                     />
                   </Link>
                 </FloatingActionButton>
-
-                {/* <AddDialog onSubmit={this.insertConf} /> */}
               </span>
             }
           />
+
           <div name="conferences-sidebar">
             {// eslint-disable-next-line
-            conferences.map(conference => {
-              if (currentConferenceID !== conference.id) {
+            conferences.map((data, index) => {
+              if (currentConferenceID !== data.conference.id) {
                 return (
-                  <List key={conference.id}>
+                  <List key={data.conference.id}>
                     <ListItem
                       onToggle={this.handleToggle}
-                      primaryText={conference.title}
+                      primaryText={data.conference.title}
                       leftIcon={<ActionSupervisorAccount />}
                       initiallyOpen={false}
                       primaryTogglesNestedList={true}
@@ -134,7 +121,7 @@ class GetAllConfs extends React.Component {
                           primaryText="Switch"
                           className="switch-text"
                           leftIcon={<ContentSend style={styles.smallIcon} />}
-                          onClick={() => this.handleSwitch(conference.id)}
+                          onClick={() => this.handleSwitch(data.conference.id)}
                         />,
                         <ListItem
                           key={2}
@@ -143,7 +130,7 @@ class GetAllConfs extends React.Component {
                           leftIcon={
                             <NavigationClose style={styles.smallIcon} />
                           }
-                          onClick={() => this.handleOpen(conference.id)}
+                          onClick={() => this.handleOpen(data.conference.id)}
                         />,
                       ]}
                     />
@@ -152,6 +139,7 @@ class GetAllConfs extends React.Component {
               }
             })}
           </div>
+
           <DeleteDialog
             isOpen={this.state.openDialog}
             handleClose={this.handleClose}
@@ -187,11 +175,7 @@ export const ME_QUERY = gql`
 
 export default compose(
   graphql(GET_ALL_CONFERENCES_BY_USER_ID_QUERY, {
-    options: ownProps => ({
-      variables: {
-        user_id: ownProps.id,
-      },
-    }),
+    name: 'GET_ALL_CONFERENCES_BY_USER_ID_QUERY',
   }),
   graphql(SWITCH_CURRENT_CONFERENCE, {
     name: 'SWITCH_CURRENT_CONFERENCE',

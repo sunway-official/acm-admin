@@ -3,10 +3,13 @@ import { gql, graphql, compose } from 'react-apollo';
 import { SubmissionError } from 'redux-form';
 import { withRouter } from 'react-router';
 import { AppBar } from 'material-ui';
+import AlertContainer from 'react-alert';
+import qs from 'qs';
+
 import { alertOptions, MyExclamationTriangle } from '../../../theme/alert';
 import LoginForm from './LoginForm';
+
 import './style.css';
-import AlertContainer from 'react-alert';
 
 class Login extends PureComponent {
   constructor(props) {
@@ -15,22 +18,39 @@ class Login extends PureComponent {
     this.onLogin = this.onLogin.bind(this);
     this.showAlertError = this.showAlertError.bind(this);
   }
-  showAlertError = text => {
+  getRedirectParam = () => {
+    const queryStr = qs.parse(this.props.location.search, {
+      strictNullHandling: true,
+    });
+
+    if (queryStr && queryStr['?redirect']) {
+      return queryStr['?redirect'];
+    }
+
+    return null;
+  };
+  showAlertError(text) {
     this.msg.error(text, {
       type: 'error', // type of alert
       icon: <MyExclamationTriangle />,
     });
-  };
+  }
   async onLogin({ email, password }) {
     try {
       const {
         data: { login: { token, refreshToken } },
       } = await this.props.loginMutation({
-        variables: { email, password },
+        variables: { email, username: email, password },
       });
       localStorage.setItem('token', token);
       localStorage.setItem('refreshToken', refreshToken);
-      this.props.history.replace('/');
+
+      const redirectTo = this.getRedirectParam();
+      if (redirectTo) {
+        this.props.history.replace(redirectTo);
+      } else {
+        this.props.history.replace('/');
+      }
     } catch (error) {
       this.showAlertError(error.graphQLErrors[0].message);
       throw new SubmissionError({
@@ -63,8 +83,12 @@ class Login extends PureComponent {
 }
 
 const LOGIN_MUTATION = gql`
-  mutation LoginMutation($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
+  mutation LoginMutation(
+    $email: String!
+    $username: String!
+    $password: String!
+  ) {
+    login(email: $email, username: $username, password: $password) {
       token
       refreshToken
     }

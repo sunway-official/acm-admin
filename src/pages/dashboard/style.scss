@@ -1,15 +1,4 @@
 //list conf
-.card-content-dashboard {
-  width: 60%;
-  margin-top: 4%;
-  margin-right: 2%;
-  margin-left: 1%;
-  border: 1px solid rgb(197, 189, 189);
-  background: url('./../../images/conf-dashboard.png') no-repeat;
-  background-size: 100% auto;
-  height: 485px;
-}
-
 .list-conf {
   background-color: rgb(62, 85, 102);
   padding-bottom: 20px;
@@ -88,15 +77,23 @@
 }
 
 .list-dashboard {
-  margin-top: 4%;
-  float: right;
-  width: 36%;
-  // border: 1px solid gray;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  box-sizing: border-box;
+  .card-item {
+    margin-bottom: 10px;
+  }
+  .card-header {
+    span {
+      font-size: 20px !important;
+    }
+  }
+  .btn {
+    width: 100px;
+  }
 }
 
 .paper-title {
-  padding-left: 20px !important;
+  margin-left: 0px !important;
   width: 95% !important;
 }
 

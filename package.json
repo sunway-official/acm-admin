@@ -18,6 +18,7 @@
     "moment": "2.19.1",
     "node-sass-chokidar": "0.0.3",
     "prop-types": "^15.6.0",
+    "qs": "^6.5.2",
     "react": "^16.0.0",
     "react-alert": "^2.4.0",
     "react-apollo": "^1.4.15",
@@ -28,6 +29,7 @@
     "react-helmet": "^5.2.0",
     "react-icons": "^2.2.7",
     "react-load-script": "0.0.6",
+    "react-rating": "^1.1.0",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.14",
@@ -51,7 +53,7 @@
     "precommit": "npm-run-all lint-staged",
     "start": "serve -s build",
     "prestart": "npm install -g serve",
-    "postinstall": "cp -r lib/* node_modules/"
+    "postinstall": "cp -r lib/* node_modules/ && cp .env.heroku.example .env && npm run build"
   },
   "devDependencies": {
     "eslint-config-prettier": "^2.6.0",

@@ -1,0 +1,135 @@
+a {
+  color: #000;
+}
+
+/* header */
+
+.landing-page-header {
+  background-color: #fff;
+  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.1);
+  position: fixed;
+  width: 100%;
+  z-index: 3;
+  line-height: 3vw;
+}
+
+.landing-page-header ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+.landing-page-header li a {
+  display: block;
+  padding: 20px 1vw;
+  border-right: 1px solid #f4f4f4;
+  text-decoration: none;
+}
+
+.landing-page-header li a:hover,
+.landing-page-header .menu-btn:hover {
+  background-color: #f4f4f4;
+}
+
+.landing-page-header .logo {
+  display: block;
+  float: left;
+  padding-top: 1vw;
+  padding-left: 10%;
+  width: 5em;
+}
+
+/* menu */
+
+.landing-page-header .menu {
+  clear: both;
+  max-height: 0;
+  transition: max-height 0.2s ease-out;
+}
+
+/* menu icon */
+
+.landing-page-header .menu-icon {
+  cursor: pointer;
+  display: inline-block;
+  float: right;
+  padding: 28px 20px;
+  position: relative;
+  user-select: none;
+}
+
+.landing-page-header .menu-icon .navicon {
+  background: #333;
+  display: block;
+  height: 2px;
+  position: relative;
+  transition: background 0.2s ease-out;
+  width: 18px;
+}
+
+.landing-page-header .menu-icon .navicon:before,
+.landing-page-header .menu-icon .navicon:after {
+  background: #333;
+  content: '';
+  display: block;
+  height: 100%;
+  position: absolute;
+  transition: all 0.2s ease-out;
+  width: 100%;
+}
+
+.landing-page-header .menu-icon .navicon:before {
+  top: 5px;
+}
+
+.landing-page-header .menu-icon .navicon:after {
+  top: -5px;
+}
+
+/* menu btn */
+
+.landing-page-header .menu-btn {
+  display: none;
+}
+
+.landing-page-header .menu-btn:checked ~ .menu {
+  max-height: 240px;
+}
+
+.landing-page-header .menu-btn:checked ~ .menu-icon .navicon {
+  background: transparent;
+}
+
+.landing-page-header .menu-btn:checked ~ .menu-icon .navicon:before {
+  transform: rotate(-45deg);
+}
+
+.landing-page-header .menu-btn:checked ~ .menu-icon .navicon:after {
+  transform: rotate(45deg);
+}
+
+.landing-page-header .menu-btn:checked ~ .menu-icon:not(.steps) .navicon:before,
+.landing-page-header .menu-btn:checked ~ .menu-icon:not(.steps) .navicon:after {
+  top: 0;
+}
+
+/* 48em = 768px */
+
+@media (min-width: 48em) {
+  .landing-page-header li {
+    float: left;
+  }
+  .landing-page-header li a {
+    padding: 20px 1vw;
+  }
+  .landing-page-header .menu {
+    clear: none;
+    float: right;
+    max-height: none;
+  }
+  .landing-page-header .menu-icon {
+    display: none;
+  }
+}

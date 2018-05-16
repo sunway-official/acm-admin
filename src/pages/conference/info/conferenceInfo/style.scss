@@ -1,9 +1,6 @@
 .form {
   &.conference-info {
-    width: 680px;
-    margin: auto;
     justify-content: center;
-    .date,
     .place {
       justify-content: space-between;
       margin-bottom: 30px;
@@ -15,7 +12,6 @@
         padding-top: 20px;
       }
       &.save-btn {
-        margin-top: 70px;
         margin-bottom: 20px;
       }
       .add-btn {
@@ -43,15 +39,15 @@
         &.end {
           width: 38px !important;
         }
+        &.startDate {
+          width: 179px !important;
+        }
         &.schedule-date {
           width: 180px !important;
         }
         &.schedule-time-from {
           width: 190px !important;
         }
-      }
-      &.title-information {
-        margin-top: 20px;
       }
     }
     .header {
@@ -61,7 +57,11 @@
     }
 
     .map {
-      width: 80% !important;
+      width: 48% !important;
+      margin: 20px 0 0 0;
+      &.add {
+        width: 100% !important;
+      }
     }
   }
 
