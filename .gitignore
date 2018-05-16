@@ -7,7 +7,7 @@
 /coverage
 
 # production
-#/build
+/build
 
 # vscode settings
 .vscode/
