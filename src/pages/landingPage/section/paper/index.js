@@ -3,8 +3,17 @@ import { Component } from 'react';
 import { Col, Grid, Row } from 'react-flexbox-grid';
 import { images } from '../../../../theme';
 import './style.css';
+import { withRouter } from 'react-router';
 
 class Paper extends Component {
+  constructor() {
+    super();
+    this.handleRegister = this.handleRegister.bind(this);
+  }
+  handleRegister() {
+    localStorage.setItem('conference_id', this.props.id);
+    this.props.history.replace('/register');
+  }
   render() {
     return (
       <div className="description-section">
@@ -29,7 +38,12 @@ class Paper extends Component {
                 </Col>
               </Row>
               <Row around="xs">
-                <button className="btn paper-button">Submit Now</button>
+                <button
+                  className="btn paper-button"
+                  onClick={this.handleRegister}
+                >
+                  Submit Now
+                </button>
               </Row>
             </Col>
           </Row>
@@ -38,4 +52,4 @@ class Paper extends Component {
     );
   }
 }
-export default Paper;
+export default withRouter(Paper);
