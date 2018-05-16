@@ -102,7 +102,14 @@ class AuthRoute extends PureComponent {
     }
 
     if (error && needAuth) {
-      return <Route {...rest} render={props => <Redirect to="/login" />} />;
+      return (
+        <Route
+          {...rest}
+          render={props => (
+            <Redirect to={`/login?redirect=${this.props.path}`} />
+          )}
+        />
+      );
     }
 
     if (!error && needGuest) {
