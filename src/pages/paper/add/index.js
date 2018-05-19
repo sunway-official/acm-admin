@@ -84,7 +84,7 @@ class Index extends Component {
           paper_id: paper.data.insertPaper.id,
           user_id: this.props.data.me.id,
           corresponding: 1,
-          author_organization: this.props.data.me.organization,
+          author_organization: 'Duy Tan university',
           author_street: values.street,
           author_city: values.city,
           author_country: values.country,

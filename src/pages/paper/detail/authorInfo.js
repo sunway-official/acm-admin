@@ -12,7 +12,6 @@ const AuthorInfo = props => {
         <Col xs={3}>{author.author_name}</Col>
         <Col xs={3}>{author.author_email}</Col>
         <Col xs={2}>{author.author_country}</Col>
-        <Col xs={2}>{author.author_organization}</Col>
         <Col xs={2}>
           {//eslint-disable-next-line
           author.corresponding == 1 ? (
@@ -40,9 +39,6 @@ const AuthorInfo = props => {
             </Col>
             <Col xs={2} className="paper-detail-title">
               Country
-            </Col>
-            <Col xs={2} className="paper-detail-title">
-              Organization
             </Col>
             <Col xs={2} className="paper-detail-title">
               Coresponding
