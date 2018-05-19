@@ -31,6 +31,11 @@
 
     .form-group {
       align-items: center;
+      label::after {
+        content: '*';
+        color: red;
+        margin-left: 5px;
+      }
       label {
         @media (max-width: 650px) {
           font-size: 16px !important;

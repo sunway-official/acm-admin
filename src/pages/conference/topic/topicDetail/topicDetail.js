@@ -43,7 +43,9 @@ class TopicDetail extends Component {
         <Row around="xs" className={field.className}>
           <Col xs={3}>
             <Row className="firstColunm">
-              <b className="bold-title">{field.primaryText}</b>
+              <label className="bold-title title-label">
+                {field.primaryText}
+              </label>
             </Row>
           </Col>
           <Col xs={9}>
@@ -81,7 +83,9 @@ class TopicDetail extends Component {
                 <Row around="xs">
                   <Col xs={3}>
                     <Row className="firstColunm">
-                      <b className="bold-title">Topic title</b>
+                      <label className="bold-title title-label">
+                        Topic title
+                      </label>
                     </Row>
                   </Col>
                   <Col xs={9}>
@@ -90,6 +94,7 @@ class TopicDetail extends Component {
                         name="color_id"
                         component={renderSelectField}
                         fullWidth={true}
+                        hintText="Topic Title"
                       >
                         {listColors.map(color => (
                           <MenuItem

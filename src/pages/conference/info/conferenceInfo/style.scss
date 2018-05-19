@@ -29,6 +29,12 @@
     .form-group {
       align-items: center;
 
+      label::after {
+        content: '*';
+        color: red;
+        margin-left: 5px;
+      }
+
       label,
       .title-group {
         font-size: 18px;

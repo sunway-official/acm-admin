@@ -46,7 +46,7 @@ class AddActivityTitle extends Component {
           />
         </div>
         <div className="d-flex form-group">
-          <Field name="error" component="label" />
+          <Field name="error" component="p" />
         </div>
         <div className="marginBottom d-flex justify-content-flex-end">
           <RaisedButton

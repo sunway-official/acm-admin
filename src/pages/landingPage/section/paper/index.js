@@ -12,7 +12,7 @@ class Paper extends Component {
   }
   handleRegister() {
     localStorage.setItem('conference_id', this.props.id);
-    this.props.history.replace('/register');
+    window.location.replace('/login');
   }
   render() {
     return (
