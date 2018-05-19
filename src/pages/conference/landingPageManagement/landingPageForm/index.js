@@ -25,7 +25,9 @@ class LandingPageForm extends Component {
         <Row around="xs" className={field.className}>
           <Col xs={3}>
             <Row className="firstColunm">
-              <b className="bold-title">{field.primaryText}</b>
+              <label className="bold-title title-label">
+                {field.primaryText}
+              </label>
             </Row>
           </Col>
           <Col xs={9}>
@@ -62,7 +64,9 @@ class LandingPageForm extends Component {
                 <Row around="xs">
                   <Col xs={3}>
                     <Row className="firstColunm">
-                      <b className="bold-title">Phone Number</b>
+                      <label className="bold-title title-label">
+                        Phone Number
+                      </label>
                     </Row>
                   </Col>
                   <Col xs={9}>

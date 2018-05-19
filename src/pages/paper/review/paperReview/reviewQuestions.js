@@ -29,11 +29,11 @@ const ReviewQuestions = props => {
         index > 1 ? (
           <Row className={'card-detail-row review-row'} key={index}>
             <Col xs={5} style={{ paddingTop: '24px' }}>
-              <p>
+              <label className="title-label">
                 {index - 1}
                 . <span />
                 {question.content}
-              </p>
+              </label>
             </Col>
             <Col xs={3}>
               <SelectPoint id={'point' + (index + 1)} />
@@ -90,7 +90,9 @@ const ReviewQuestions = props => {
                   <h2>Detail comment</h2>
                 </b>
                 <br />
-                {props.questions[0].content}
+                <label className="title-label">
+                  {props.questions[0].content}
+                </label>
               </Col>
             </Row>
             <Row>
@@ -111,7 +113,9 @@ const ReviewQuestions = props => {
                   <h2>Confidential Comments for Committee</h2>
                 </b>
                 <br />
-                {props.questions[1].content}
+                <label className="title-label">
+                  {props.questions[1].content}
+                </label>
               </Col>
             </Row>
             <Row>

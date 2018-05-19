@@ -42,7 +42,9 @@ class RoomDetail extends Component {
         <Row around="xs" className={field.className}>
           <Col xs={3}>
             <Row className="firstColunm">
-              <b className="bold-title">{field.primaryText}</b>
+              <label className="title-label bold-title">
+                {field.primaryText}
+              </label>
             </Row>
           </Col>
           <Col xs={9}>
@@ -76,7 +78,7 @@ class RoomDetail extends Component {
                 <Row around="xs">
                   <Col xs={3}>
                     <Row className="firstColunm">
-                      <b className="bold-title">Status</b>
+                      <label className="bold-title title-label">Status</label>
                     </Row>
                   </Col>
                   <Col xs={9}>
@@ -85,6 +87,7 @@ class RoomDetail extends Component {
                         name="status"
                         component={renderSelectField}
                         fullWidth={true}
+                        hintText="Room Status"
                       >
                         <MenuItem value="on" primaryText="On" />
                         <MenuItem value="off" primaryText="Off" />

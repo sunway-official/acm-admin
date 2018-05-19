@@ -73,6 +73,18 @@ body {
 }
 .label-deadline {
   width: 170px;
+  &::after {
+    content: '*';
+    color: red;
+    margin-left: 5px;
+  }
+}
+.title-label {
+  &::after {
+    content: '*';
+    margin-left: 5px;
+    color: red;
+  }
 }
 .subheader {
   color: #fb7044 !important;
