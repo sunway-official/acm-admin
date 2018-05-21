@@ -47,9 +47,11 @@ class Register extends PureComponent {
   };
   async onRegister(values) {
     const { firstname, lastname, email, password } = values;
+    const username = email.split('@')[0];
+
     try {
       const user = await this.props.registerMutation({
-        variables: { firstname, lastname, email, password },
+        variables: { firstname, lastname, email, password, username },
       });
       //await console.log(user.data.register.id);
       await this.props.insertConferenceAttendee({

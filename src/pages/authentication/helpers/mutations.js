@@ -6,12 +6,14 @@ export const REGISTER_MUTATION = gql`
     $lastname: String!
     $email: String!
     $password: String!
+    $username: String!
   ) {
     register(
       firstname: $firstname
       lastname: $lastname
       email: $email
       password: $password
+      username: $username
     ) {
       id
     }
