@@ -141,7 +141,11 @@ class EditActivityPaper extends Component {
                   <MenuItem
                     key={topic.id}
                     value={topic.id}
-                    primaryText={topic.name}
+                    primaryText={
+                      topic.name.length >= 65
+                        ? topic.name.substring(0, 65) + '...'
+                        : topic.name
+                    }
                   />
                 );
               })}
@@ -162,7 +166,11 @@ class EditActivityPaper extends Component {
                   <MenuItem
                     key={paper.id}
                     value={paper.id}
-                    primaryText={paper.title}
+                    primaryText={
+                      paper.title.length >= 65
+                        ? paper.title.substring(0, 65) + '...'
+                        : paper.title
+                    }
                   />
                 );
               })}
