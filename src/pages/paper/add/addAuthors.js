@@ -63,7 +63,7 @@ class AddAuthors extends React.Component {
                   Authors
                 </Subheader>
                 <div className="d-flex form-group">
-                  <label>First name :</label>
+                  <label className="not-required">First name :</label>
                   <Field
                     name={`${author}.firstname`}
                     component={CustomInput}
@@ -72,7 +72,7 @@ class AddAuthors extends React.Component {
                   />
                 </div>
                 <div className="d-flex form-group">
-                  <label>Last name :</label>
+                  <label className="not-required">Last name :</label>
                   <Field
                     name={`${author}.lastname`}
                     component={CustomInput}
@@ -81,7 +81,7 @@ class AddAuthors extends React.Component {
                   />
                 </div>
                 <div className="d-flex form-group">
-                  <label>Title :</label>
+                  <label className="not-required">Title :</label>
                   <Field
                     name={`${author}.title`}
                     component={renderSelectField}
@@ -100,7 +100,7 @@ class AddAuthors extends React.Component {
                   </Field>
                 </div>
                 <div className="d-flex form-group">
-                  <label>Email:</label>
+                  <label className="not-required">Email:</label>
                   <Field
                     name={`${author}.email`}
                     component={CustomInput}
@@ -109,7 +109,7 @@ class AddAuthors extends React.Component {
                   />
                 </div>
                 <div className="d-flex form-group">
-                  <label>Institution:</label>
+                  <label className="not-required">Institution:</label>
                   <Field
                     name={`${author}.organization`}
                     component={CustomInput}
@@ -118,7 +118,7 @@ class AddAuthors extends React.Component {
                   />
                 </div>
                 <div className="d-flex form-group">
-                  <label>Street :</label>
+                  <label className="not-required">Street :</label>
                   <Field
                     name={`${author}.authorStreet`}
                     component={CustomInput}
@@ -127,7 +127,7 @@ class AddAuthors extends React.Component {
                   />
                 </div>
                 <div className="d-flex form-group">
-                  <label>City :</label>
+                  <label className="not-required">City :</label>
                   <Field
                     name={`${author}.authorCity`}
                     component={CustomInput}
@@ -136,7 +136,7 @@ class AddAuthors extends React.Component {
                   />
                 </div>
                 <div className="d-flex form-group">
-                  <label>Country :</label>
+                  <label className="not-required">Country :</label>
                   <Field
                     name={`${author}.authorCountry`}
                     component={renderSelectField}
@@ -155,7 +155,7 @@ class AddAuthors extends React.Component {
                   </Field>
                 </div>
                 <div className="d-flex form-group">
-                  <label>Zipcode :</label>
+                  <label className="not-required">Zipcode :</label>
                   <Field
                     name={`${author}.authorZipcode`}
                     component={CustomInput}
@@ -165,9 +165,9 @@ class AddAuthors extends React.Component {
                   />
                 </div>
                 <div className="form-group">
-                  <div className="f-right pb-6">
+                  <div className="f-right pb-6 d-flex">
+                    <label className="not-required">Correspoding</label>
                     <Field
-                      label="Corresponding"
                       name={`${author}.corresponding`}
                       value={false}
                       component={renderCheckbox}
