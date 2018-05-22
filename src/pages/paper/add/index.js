@@ -69,7 +69,7 @@ class Index extends Component {
           abstract: values.abstract,
           keywords: values.keywords,
           topic_id: values.topic,
-          file: key,
+          file: '72c891c0-39ae-11e8-af3f-0d8a8ca7032a.pdf',
         },
       });
       await this.props.INSERT_PAPER_TOPIC({
