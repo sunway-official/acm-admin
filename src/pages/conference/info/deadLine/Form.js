@@ -7,7 +7,7 @@ import {
   organizationDateArr,
 } from './fields';
 import { Subheader, RaisedButton } from 'material-ui';
-// import validate from './validate';
+import validate from './validate';
 class Form extends Component {
   render() {
     const { handleSubmit, pristine } = this.props;
@@ -28,7 +28,7 @@ class Form extends Component {
                     <label className="label-deadline">{data.label}:</label>
                     <div className="datePicker-wrapper">
                       <Field
-                        // minDate={new Date()}
+                        minDate={new Date()}
                         name={data.name}
                         component={CustomDatePicker}
                         format={null}
@@ -55,7 +55,7 @@ class Form extends Component {
                     <label className="label-deadline">{data.label}:</label>
                     <div className="datePicker-wrapper">
                       <Field
-                        // minDate={new Date()}
+                        minDate={new Date()}
                         name={data.name}
                         component={CustomDatePicker}
                         format={null}
@@ -80,7 +80,7 @@ class Form extends Component {
                     <label className="label-deadline">{data.label}:</label>
                     <div className="datePicker-wrapper">
                       <Field
-                        // minDate={new Date()}
+                        minDate={new Date()}
                         name={data.name}
                         component={CustomDatePicker}
                         format={null}
@@ -109,5 +109,5 @@ class Form extends Component {
 
 export default reduxForm({
   form: 'Form',
-  // validate,
+  validate,
 })(Form);
