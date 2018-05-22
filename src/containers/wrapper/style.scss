@@ -153,3 +153,6 @@ section {
 .startDate {
   width: 160px !important;
 }
+.not-required::after {
+  content: "" !important;
+}
